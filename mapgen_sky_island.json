@@ -32,7 +32,7 @@
         "                        ",
         "                        ",
         "                        ",
-        "                        ",
+        "           S            ",
         "                        ",
         "           YXZ          ",
         "                        ",
@@ -46,7 +46,8 @@
         "V": "t_concrete",
         "X": "t_grass",
         "Y": "t_grass",
-        "Z": "t_grass"
+        "Z": "t_grass",
+        "S": "t_skyisland_spawnpoint"
       },
       "furniture": {
         "X": "f_skyisland_warp_obelisk",
