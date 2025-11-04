@@ -1,7 +1,7 @@
 [
   {
     "type": "overmap_terrain",
-    "id": "sky_island_core",
+    "id": [ "sky_island_core", "sky_island_edge", "sky_island_corner" ],
     "name": "sky island",
     "sym": "#",
     "color": "white",
@@ -61,6 +61,84 @@
         { "item": "skyisland_warp_remote", "x": 11, "y": 19, "amount": 1 },
         { "item": "skyisland_return_remote", "x": 13, "y": 19, "amount": 1 }
       ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": "sky_island_edge",
+    "object": {
+      "fill_ter": "t_open_air",
+      "rows": [
+        ",,,,,,,,,,,,,,,,,,,,,,,,",
+        "........................",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        ",
+        "                        "
+      ],
+      "terrain": {
+        " ": "t_grass",
+        ".": "t_open_air",
+        ",": "t_open_air"
+      }
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": "sky_island_corner",
+    "object": {
+      "fill_ter": "t_open_air",
+      "rows": [
+        ",,,,,,,,,,,,,,,,,,,,,,,,",
+        ",,,,,...................",
+        ",,,...                  ",
+        ",,..                    ",
+        ",,.                     ",
+        ",..                     ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      ",
+        ",.                      "
+      ],
+      "terrain": {
+        " ": "t_grass",
+        ".": "t_open_air",
+        ",": "t_open_air"
+      }
     }
   }
 ]

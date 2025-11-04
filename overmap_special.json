@@ -3,7 +3,15 @@
     "type": "overmap_special",
     "id": "Sky Island",
     "overmaps": [
-      { "point": [ 0, 0, 10 ], "overmap": "sky_island_core" }
+      { "point": [ -1, -1, 10 ], "overmap": "sky_island_corner_north" },
+      { "point": [  0, -1, 10 ], "overmap": "sky_island_edge_north" },
+      { "point": [  1, -1, 10 ], "overmap": "sky_island_corner_east" },
+      { "point": [ -1,  0, 10 ], "overmap": "sky_island_edge_west" },
+      { "point": [  0,  0, 10 ], "overmap": "sky_island_core" },
+      { "point": [  1,  0, 10 ], "overmap": "sky_island_edge_east" },
+      { "point": [ -1,  1, 10 ], "overmap": "sky_island_corner_west" },
+      { "point": [  0,  1, 10 ], "overmap": "sky_island_edge_south" },
+      { "point": [  1,  1, 10 ], "overmap": "sky_island_corner_south" }
     ],
     "locations": [ "wilderness" ],
     "city_distance": [ 0, -1 ],
