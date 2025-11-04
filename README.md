@@ -116,6 +116,17 @@ After testing this PoC, the full port should implement:
 - Island upgrade system
 - All 115 EOCs converted to Lua
 
+## Known Issues
+
+### Scenario Selection Bug
+When creating a new character with this mod enabled, the scenario selection may default to "Evacuee" instead of "Sky Island Warper". You must manually select "Sky Island Warper" from the scenario list and press Enter to confirm.
+
+This is a BN engine issue that also affects other mods with custom scenarios (e.g., Innawoods). The SCENARIO_BLACKLIST whitelist makes the scenario available but doesn't prevent auto-selection of the default evacuee scenario.
+
+**Workaround**: Manually select "Sky Island Warper" before starting.
+
+**TODO**: Consider submitting a BN engine patch to support forced scenario selection or default scenario overrides.
+
 ## Troubleshooting
 
 ### Mod doesn't load
