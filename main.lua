@@ -8,6 +8,7 @@ local storage = game.mod_storage[game.current_mod]
 local missions = require("missions")
 local warp_sickness = require("warp_sickness")
 local teleport = require("teleport")
+local heart = require("heart")
 
 -- Initialize storage defaults (only for new games)
 -- These will be overwritten by saved data on load
@@ -27,6 +28,16 @@ end
 mod.use_return_obelisk = function(who, item, pos)
   return teleport.use_return_obelisk(who, item, pos, storage, missions)
 end
+
+-- Use Heart of the Island - show interactive menu
+mod.use_heart_menu = function(who, item, pos)
+  return heart.use_heart(who, item, pos, storage)
+end
+
+-- Register iuse functions
+game.iuse_functions["SKYISLAND_WARP_OBELISK"] = mod.use_warp_obelisk
+game.iuse_functions["SKYISLAND_RETURN_OBELISK"] = mod.use_return_obelisk
+game.iuse_functions["SKYISLAND_HEART_MENU"] = mod.use_heart_menu
 
 -- Game started hook - initialize for new games only
 mod.on_game_started = function()

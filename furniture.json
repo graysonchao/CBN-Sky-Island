@@ -69,5 +69,20 @@
     "crafting_pseudo_item": "skyisland_fakeitem_infinityore",
     "deployed_item": "skyisland_folded_infinityore",
     "examine_action": "deployed_furniture"
+  },
+  {
+    "type": "furniture",
+    "id": "f_skyisland_heart",
+    "name": "Heart of the Island",
+    "description": "A swirling, surreal statue of organic shapes carved from dark stone. In your head, a voice speaks faintly. Despite its massive size, it's surprisingly easy to move around the island.\n\nYou can examine it to access services and upgrades.",
+    "symbol": "S",
+    "color": "dark_gray",
+    "looks_like": "f_statue",
+    "move_cost_mod": -1,
+    "required_str": 1,
+    "flags": [ "TRANSPARENT" ],
+    "crafting_pseudo_item": "skyisland_fakeitem_heart",
+    "deployed_item": "skyisland_folded_heart",
+    "examine_action": "use_furn_fake_item"
   }
 ]

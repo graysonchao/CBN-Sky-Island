@@ -161,10 +161,22 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions)
     gapi.spawn_item_at(player:get_location(), "skyisland_material_token", material_tokens)
     gapi.add_msg(string.format("You've returned home safely! Earned %d material tokens.", material_tokens))
 
-    -- Clear away status
+    -- Clear away status and increment wins
     storage.is_away_from_home = false
     storage.sickness_counter = 0
-    storage.raids_won = (storage.raids_won or 0) + 1
+    local old_raids_won = storage.raids_won or 0
+    storage.raids_won = old_raids_won + 1
+
+    -- Check for progress gate rank-ups (automatic at 10 and 20 wins)
+    if old_raids_won < 10 and storage.raids_won >= 10 then
+      gapi.add_msg("=== RANK UP ===")
+      gapi.add_msg("You have survived 10 expeditions and achieved Adept rank!")
+      gapi.add_msg("New features and recipes may now be available.")
+    elseif old_raids_won < 20 and storage.raids_won >= 20 then
+      gapi.add_msg("=== RANK UP ===")
+      gapi.add_msg("You have survived 20 expeditions and achieved Master rank!")
+      gapi.add_msg("New features and recipes may now be available.")
+    end
 
     gapi.add_msg(string.format(
       "Stats: %d/%d raids completed successfully",

@@ -495,5 +495,51 @@
       [ [ "nail", 40 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_proof_determination",
+    "type": "recipe",
+    "activity_level": "NO_EXERCISE",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "survival",
+    "difficulty": 3,
+    "time": "15 m",
+    "autolearn": false,
+    "book_learn": [],
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "qualities": [
+      { "id": "HAMMER", "level": 2 },
+      { "id": "SAW_W", "level": 2 },
+      { "id": "WRENCH", "level": 2 }
+    ],
+    "components": [
+      [ [ "skyisland_warp_shard", 2 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_proof_mastery",
+    "type": "recipe",
+    "activity_level": "NO_EXERCISE",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_MATERIALS",
+    "skill_used": "survival",
+    "difficulty": 5,
+    "time": "15 m",
+    "autolearn": false,
+    "book_learn": [],
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "qualities": [
+      { "id": "BUTCHER", "level": 16 },
+      { "id": "CUT_FINE", "level": 2 },
+      { "id": "PRY", "level": 2 }
+    ],
+    "components": [
+      [ [ "skyisland_warp_shard", 4 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
   }
 ]

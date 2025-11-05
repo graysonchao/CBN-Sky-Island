@@ -308,5 +308,41 @@
     "material": [ "steel" ],
     "symbol": "X",
     "color": "red"
+  },
+  {
+    "id": "skyisland_fakeitem_heart",
+    "type": "TOOL",
+    "name": { "str": "Heart of the Island" },
+    "description": "This is a crafting_pseudo_item. If you have it, something is wrong.",
+    "weight": "70000 g",
+    "volume": "100 L",
+    "material": [ "stone" ],
+    "symbol": "X",
+    "color": "red",
+    "use_action": "SKYISLAND_HEART_MENU"
+  },
+  {
+    "id": "skyisland_proof_determination",
+    "type": "GENERIC",
+    "category": "spare_parts",
+    "name": { "str": "Proof of Determination" },
+    "description": "A metaphysical artifact proving your determination to survive. Crafting this demonstrates you have the skills and resources to progress to the next rank.",
+    "volume": "25 L",
+    "weight": "15 kg",
+    "material": [ "stone" ],
+    "symbol": "V",
+    "color": "white"
+  },
+  {
+    "id": "skyisland_proof_mastery",
+    "type": "GENERIC",
+    "category": "spare_parts",
+    "name": { "str": "Proof of Mastery" },
+    "description": "A metaphysical artifact proving your mastery of survival. Crafting this demonstrates you have achieved the highest rank of competence.",
+    "volume": "25 L",
+    "weight": "15 kg",
+    "material": [ "stone" ],
+    "symbol": "V",
+    "color": "white"
   }
 ]
