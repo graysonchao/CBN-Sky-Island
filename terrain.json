@@ -1,23 +1,6 @@
 [
   {
     "type": "terrain",
-    "id": "t_skyisland_spawnpoint",
-    "name": "grass",
-    "description": "Tall grass.",
-    "symbol": ".",
-    "color": "green",
-    "move_cost": 2,
-    "flags": [ "TRANSPARENT", "DIGGABLE", "GOES_UP" ],
-    "bash": {
-      "str_min": 8,
-      "str_max": 30,
-      "sound": "crunch!",
-      "sound_fail": "whump.",
-      "ter_set": "t_null"
-    }
-  },
-  {
-    "type": "terrain",
     "id": "t_skyisland_fake_air",
     "name": "open air",
     "description": "This is the edge of the island. A metaphysical border stops you from going over the edge yourself, but anything you drop here will be gone forever.",
@@ -36,13 +19,6 @@
     "symbol": "#",
     "color": "dark_gray",
     "move_cost": 0,
-    "flags": [ "NOITEM", "WALL", "NO_SCENT", "BLOCK_WIND" ],
-    "bash": {
-      "str_min": 4000,
-      "str_max": 5000,
-      "sound": "crash!",
-      "sound_fail": "glzt!",
-      "ter_set": "t_skyisland_warprock"
-    }
+    "flags": [ "NOITEM", "WALL", "NO_SCENT", "BLOCK_WIND" ]
   }
 ]

@@ -1,12 +1,51 @@
 [
   {
     "type": "overmap_terrain",
-    "id": [ "sky_island_core", "sky_island_edge", "sky_island_corner", "sky_island_subcore", "sky_island_subedge", "sky_island_subcorner" ],
+    "id": "sky_island_core",
     "name": "sky island",
     "sym": "#",
     "color": "white",
-    "see_cost": 1,
-    "flags": [ "NO_ROTATE" ]
+    "see_cost": 1
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "sky_island_edge",
+    "name": "sky island",
+    "sym": "#",
+    "color": "white",
+    "see_cost": 1
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "sky_island_corner",
+    "name": "sky island",
+    "sym": "#",
+    "color": "white",
+    "see_cost": 1
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "sky_island_subcore",
+    "name": "sky island",
+    "sym": "#",
+    "color": "white",
+    "see_cost": 1
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "sky_island_subedge",
+    "name": "sky island",
+    "sym": "#",
+    "color": "white",
+    "see_cost": 1
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "sky_island_subcorner",
+    "name": "sky island",
+    "sym": "#",
+    "color": "white",
+    "see_cost": 1
   },
   {
     "type": "mapgen",
@@ -32,7 +71,7 @@
         "                        ",
         "                        ",
         "                        ",
-        "           S            ",
+        "                        ",
         "                        ",
         "           YXZ          ",
         "                        ",
@@ -46,8 +85,7 @@
         "V": "t_concrete",
         "X": "t_grass",
         "Y": "t_grass",
-        "Z": "t_grass",
-        "S": "t_skyisland_spawnpoint"
+        "Z": "t_grass"
       },
       "furniture": {
         "X": "f_skyisland_warp_obelisk",
@@ -56,11 +94,7 @@
       "items": {
         "Z": [ { "item": "skyisland_trash_heap", "chance": 100 } ],
         "Y": [ { "item": "skyisland_starterkit_items", "chance": 100 } ]
-      },
-      "place_item": [
-        { "item": "skyisland_warp_remote", "x": 11, "y": 19, "amount": 1 },
-        { "item": "skyisland_return_remote", "x": 13, "y": 19, "amount": 1 }
-      ]
+      }
     }
   },
   {
