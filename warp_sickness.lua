@@ -1,62 +1,62 @@
 -- Sky Islands BN Port - Warp Sickness System
--- Handles warp sickness progression and effects
+-- Handles warp sickness progression using JSON effects
 
 local warp_sickness = {}
 
 -- Warp sickness timing
-local WARP_SICKNESS_INTERVAL = TimeDuration.from_minutes(5)
+local WARP_SICKNESS_INTERVAL = TimeDuration.from_minutes(15)  -- Normal difficulty
+local GRACE_PERIOD_PULSES = 8  -- 8 pulses × 15 min = 2 hours before sickness starts
+local MAX_WARP_SICKNESS_INTENSITY = 6
 
--- Warp sickness progression stages
-local SICKNESS_STAGES = {
-  { threshold = 1, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 7 pulses.", intensity = 6 },
-  { threshold = 2, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 6 pulses.", intensity = 6 },
-  { threshold = 3, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 5 pulses.", intensity = 6 },
-  { threshold = 4, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 4 pulses.", intensity = 6 },
-  { threshold = 5, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 3 pulses.", intensity = 6 },
-  { threshold = 6, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 2 pulses.", intensity = 6 },
-  { threshold = 7, message = "Your body shivers slightly as a warp pulse passes through it. Warp sickness won't set in for another 1 pulse.", intensity = 6 },
-  { threshold = 8, message = "Goosebumps cover your skin as a warp pulse passes through you. You're only one warp pulse from your deadline.", intensity = 6 },
-  { threshold = 9, message = "A warp pulse passing through you twists your blood inside your veins and your eyes pulse in pain. You've overstayed your welcome and need to get home.", intensity = 5 },
-  { threshold = 10, message = "A warp pulse shudders through your head like a localized earthquake and your extremities surge with pain like they're peeling open. You need to get home as soon as possible.", intensity = 4 },
-  { threshold = 11, message = "Another warp pulse rocks through you and your organs wrench themselves over. Existence is fracturing. You need to get home immediately.", intensity = 3 },
-  { threshold = 12, message = "A sickening wet sound rips through you as another warp pulse hits. You can feel your whole body trying to pull itself apart, and if you wait any longer, it just might. If you want to live, you need to get home NOW!", intensity = 2 },
-  { threshold = 13, message = "As the warp pulse hits, you realize there are no words to describe how much trouble you're in. Your body is crumbling to wet paste and your blood is twisting into a viny tangle. All you know is pain.\nYou're not just dying, you're dying horribly.\nIf escape is already near you may survive against all odds, but oblivion is only moments away.", intensity = 1 }
-}
+-- Effect IDs
+local EFFECT_WARP_SICKNESS = EffectTypeId.new("skyisland_warpsickness")
+local EFFECT_DISINTEGRATION = EffectTypeId.new("skyisland_warpdisintegration")
 
--- Warp sickness timer tick
+-- Warp sickness timer tick - pulse counter and intensity management
 function warp_sickness.tick(storage)
   if not storage.is_away_from_home then
     return true  -- Keep hook active
   end
 
-  -- Increment counter
-  storage.sickness_counter = (storage.sickness_counter or 0) + 1
+  local player = gapi.get_avatar()
+  if not player then
+    return true
+  end
 
-  gdebug.log_info(string.format("Warp sickness tick: %d", storage.sickness_counter))
+  -- Increment pulse counter
+  storage.warp_pulse_count = (storage.warp_pulse_count or 0) + 1
+  local pulse = storage.warp_pulse_count
 
-  -- Find the appropriate stage message for this pulse count
-  for i = #SICKNESS_STAGES, 1, -1 do
-    local stage = SICKNESS_STAGES[i]
-    if storage.sickness_counter == stage.threshold then
-      gapi.add_msg(stage.message)
+  gdebug.log_info(string.format("Warp pulse %d", pulse))
 
-      -- Apply warp sickness effect (if we have such an effect defined)
-      -- For PoC, just show messages
+  -- Grace period: first 8 pulses (2 hours) have no effect
+  if pulse <= GRACE_PERIOD_PULSES then
+    local remaining = GRACE_PERIOD_PULSES - pulse + 1
+    gapi.add_msg(string.format("Warp pulse. You feel fine. Safe for %d more pulses.", remaining))
+    return true
+  end
 
-      -- At max stage, deal damage
-      if storage.sickness_counter > 12 then
-        local player = gapi.get_avatar()
-        if player then
-          -- Deal minor disintegration damage
-          player:mod_pain(5)
-          gapi.add_msg("Your body is coming apart!")
-        end
-      end
-      break
+  -- Apply or update warp sickness effect
+  player:add_effect(EFFECT_WARP_SICKNESS, TimeDuration.from_hours(999), 1)
+  gdebug.log_info(string.format("Warp sickness re-applied"))
+
+  local current_intensity = player:get_effect_int(EFFECT_WARP_SICKNESS)
+  -- Apply disintegration at critical intensity
+  if current_intensity == MAX_WARP_SICKNESS_INTENSITY then
+    if not player:has_effect(EFFECT_DISINTEGRATION) then
+      player:add_effect(EFFECT_DISINTEGRATION, TimeDuration.from_hours(999))
+      gapi.add_msg("You're being unmade!")
     end
   end
 
   return true  -- Keep running
+end
+
+-- Start warp sickness - initialize pulse counter
+function warp_sickness.start(storage)
+  -- Reset pulse counter for new expedition
+  storage.warp_pulse_count = 0
+  gdebug.log_info("Warp sickness: initialized with grace period")
 end
 
 -- Start warp sickness timer
@@ -64,6 +64,20 @@ function warp_sickness.start_timer(storage)
   gapi.add_on_every_x_hook(WARP_SICKNESS_INTERVAL, function()
     return warp_sickness.tick(storage)
   end)
+end
+
+-- Stop warp sickness - remove all effects
+function warp_sickness.stop()
+  local player = gapi.get_avatar()
+  if not player then
+    return
+  end
+
+  -- Remove effects
+  player:remove_effect(EFFECT_WARP_SICKNESS)
+  player:remove_effect(EFFECT_DISINTEGRATION)
+
+  gdebug.log_info("Warp sickness stopped and cleared")
 end
 
 -- Resurrection sickness tick - forcibly stabilize the player

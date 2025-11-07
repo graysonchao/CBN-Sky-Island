@@ -14,7 +14,7 @@ local heart = require("heart")
 -- These will be overwritten by saved data on load
 storage.home_location = storage.home_location or nil
 storage.is_away_from_home = storage.is_away_from_home or false
-storage.sickness_counter = storage.sickness_counter or 0
+storage.warp_pulse_count = storage.warp_pulse_count or 0
 storage.raids_total = storage.raids_total or 0
 storage.raids_won = storage.raids_won or 0
 storage.raids_lost = storage.raids_lost or 0
@@ -34,17 +34,12 @@ mod.use_heart_menu = function(who, item, pos)
   return heart.use_heart(who, item, pos, storage)
 end
 
--- Register iuse functions
-game.iuse_functions["SKYISLAND_WARP_OBELISK"] = mod.use_warp_obelisk
-game.iuse_functions["SKYISLAND_RETURN_OBELISK"] = mod.use_return_obelisk
-game.iuse_functions["SKYISLAND_HEART_MENU"] = mod.use_heart_menu
-
 -- Game started hook - initialize for new games only
 mod.on_game_started = function()
   -- Reset to defaults for new game
   storage.home_location = nil
   storage.is_away_from_home = false
-  storage.sickness_counter = 0
+  storage.warp_pulse_count = 0
   storage.raids_total = 0
   storage.raids_won = 0
   storage.raids_lost = 0
@@ -57,7 +52,7 @@ end
 mod.on_game_load = function()
   gdebug.log_info("Sky Islands: Game loaded")
   gdebug.log_info(string.format("  Away from home: %s", tostring(storage.is_away_from_home)))
-  gdebug.log_info(string.format("  Sickness counter: %d", storage.sickness_counter or 0))
+  gdebug.log_info(string.format("  Warp pulse count: %d", storage.warp_pulse_count or 0))
 
   -- If we were away, restart the sickness timer
   if storage.is_away_from_home then
@@ -69,8 +64,8 @@ end
 -- Game save hook
 mod.on_game_save = function()
   gdebug.log_info("Sky Islands: Game saving")
-  gdebug.log_info(string.format("  Saving state: Away=%s, Sickness=%d",
-    tostring(storage.is_away_from_home), storage.sickness_counter or 0))
+  gdebug.log_info(string.format("  Saving state: Away=%s, Pulses=%d",
+    tostring(storage.is_away_from_home), storage.warp_pulse_count or 0))
 end
 
 -- Character death hook (early) - clear effects and heal before broken limbs lock in

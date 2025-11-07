@@ -95,7 +95,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
 
     -- Set away status
     storage.is_away_from_home = true
-    storage.sickness_counter = 0
+    storage.warp_pulse_count = 0
     storage.raids_total = (storage.raids_total or 0) + 1
 
     -- Create missions
@@ -103,7 +103,9 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     missions.create_slaughter_mission()
     missions.create_treasure_mission(dest_omt)
 
-    -- Start sickness timer
+    -- Start warp sickness (apply initial effects)
+    warp_sickness.start(storage)
+    -- Start sickness timer (progressive worsening)
     warp_sickness.start_timer(storage)
 
     gapi.add_msg("You arrive at the raid location!")
@@ -128,9 +130,19 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions)
     return 0
   end
 
-  -- Confirmation dialog
+  -- Confirmation dialog - show current warp sickness intensity
+  local player = gapi.get_avatar()
+  local sickness_display = "None"
+  if player then
+    local effect_id = EffectTypeId.new("skyisland_warpsickness")
+    if player:has_effect(effect_id) then
+      local intensity = player:get_effect_int(effect_id)
+      sickness_display = string.format("%d/6 (lower is worse!)", intensity)
+    end
+  end
+
   local confirm_ui = UiList.new()
-  confirm_ui:title(string.format("Return home? Sickness: %d/12", storage.sickness_counter))
+  confirm_ui:title(string.format("Return home? Warp sickness: %s", sickness_display))
   confirm_ui:add(1, locale.gettext("Yes, return home"))
   confirm_ui:add(2, locale.gettext("No, stay"))
   local confirm = confirm_ui:query()
@@ -158,14 +170,17 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions)
     -- Short raid: 50 tokens, Medium: 125 tokens, Long: 200 tokens
     -- TODO: When raid duration selection is implemented, calculate based on raid length
     local material_tokens = MATERIAL_TOKEN_REWARDS.short
-    gapi.spawn_item_at(player:get_location(), "skyisland_material_token", material_tokens)
+    player:add_item_with_id(ItypeId.new("skyisland_material_token"), material_tokens)
     gapi.add_msg(string.format("You've returned home safely! Earned %d material tokens.", material_tokens))
 
     -- Clear away status and increment wins
     storage.is_away_from_home = false
-    storage.sickness_counter = 0
+    storage.warp_pulse_count = 0
     local old_raids_won = storage.raids_won or 0
     storage.raids_won = old_raids_won + 1
+
+    -- Stop warp sickness (remove all effects)
+    warp_sickness.stop()
 
     -- Check for progress gate rank-ups (automatic at 10 and 20 wins)
     if old_raids_won < 10 and storage.raids_won >= 10 then
@@ -223,8 +238,11 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
 
   -- Mark raid as failed
   storage.is_away_from_home = false
-  storage.sickness_counter = 0
+  storage.warp_pulse_count = 0
   storage.raids_lost = (storage.raids_lost or 0) + 1
+
+  -- Stop warp sickness (remove all effects before applying resurrection sickness)
+  warp_sickness.stop()
 
   -- Apply resurrection sickness
   warp_sickness.apply_resurrection_sickness()
