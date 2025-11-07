@@ -12,6 +12,10 @@ game.iuse_functions["SKYISLAND_RETURN_OBELISK"] = function(...)
   return mod.use_return_obelisk(...)
 end
 
+game.iuse_functions["SKYISLAND_HEART_MENU"] = function(...)
+  return mod.use_heart_menu(...)
+end
+
 -- Register hooks
 table.insert(game.hooks.on_game_started, function(...)
   return mod.on_game_started(...)

@@ -26,7 +26,7 @@ end
 
 -- Use return obelisk - return home
 mod.use_return_obelisk = function(who, item, pos)
-  return teleport.use_return_obelisk(who, item, pos, storage, missions)
+  return teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sickness)
 end
 
 -- Use Heart of the Island - show interactive menu

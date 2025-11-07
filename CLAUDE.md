@@ -738,30 +738,110 @@ end)
 
 ## Development Roadmap
 
-### Phase 1: Research & PoC
+### Phase 1: Research & PoC ✅ COMPLETE
 - [x] Answer critical questions (ALL ANSWERED - see Research Findings above)
 - [x] Research complete - ALL systems are portable!
-- [ ] Create minimal teleport system
-- [ ] Implement basic sickness timer
-- [ ] Test state persistence across save/load
+- [x] Create minimal teleport system
+- [x] Implement basic sickness timer
+- [x] Test state persistence across save/load
 
-### Phase 2: Core Systems
-- [ ] Full teleportation flow
-- [ ] Mission generation system
-- [ ] Warp sickness progression
-- [ ] Return home mechanics
+### Phase 2: Core Systems ✅ COMPLETE
+- [x] Full teleportation flow
+- [x] Mission generation system (3 mission types)
+- [x] Warp sickness progression (13 stages, 5-minute intervals)
+- [x] Return home mechanics
+- [x] Death/resurrection system
 
-### Phase 3: Advanced Features
-- [ ] Difficulty customization
-- [ ] Death/resurrection system
-- [ ] Healing system
-- [ ] Progression tracking
+### Phase 3: Progression & Resources ✅ COMPLETE
+- [x] Infinity nodes (tree, stone, ore)
+- [x] Material token economy (50 tokens per raid)
+- [x] Resource conversion recipes (28 recipes validated for BN)
+- [x] Heart of the Island interactive menu
+- [x] Progress gates (automatic rank-ups at 10 and 20 raids)
+- [x] Rank-up challenges (Proof of Determination/Mastery)
 
-### Phase 4: Content & Polish
-- [ ] All location types
-- [ ] All mission types
-- [ ] Island upgrades
+### Phase 4: Content & Polish - TODO
+- [ ] Raid duration selection (short/medium/long)
+- [ ] Difficulty customization system
+- [ ] Additional mission types
+- [ ] Island structure/mapgen
+- [ ] Vortex tokens (room teleport mechanic)
+- [ ] Warped hauler bag and other warp items
 - [ ] Balance and testing
+
+---
+
+## Implementation Progress (Current Session)
+
+### Completed Features
+
+**1. Core Game Loop** (fully functional):
+- Warp obelisk → expedition → 3 missions → return obelisk → rewards
+- Material tokens: 50 per successful return
+- Warp sickness: 13 stages, starts at minute 30, lethal at minute 55+
+- Death protection: respawn at home with penalties
+
+**2. Modular Lua Architecture**:
+- `preload.lua` - iuse registration + hooks
+- `main.lua` - integration layer (92 lines)
+- `missions.lua` - mission system (248 lines)
+- `warp_sickness.lua` - sickness progression (121 lines)
+- `teleport.lua` - warp/return logic (224 lines)
+- `heart.lua` - Heart menu system (236 lines)
+
+**3. Infinity Node System**:
+- 3 furniture types (deployable, movable)
+- 28 material conversion recipes (all validated against BN vanilla)
+- Resource categories: wood (5), metal (10), stone/earth (8)
+- 3 crafting recipes for the nodes themselves
+
+**4. Heart of the Island**:
+- Interactive menu with Services/Information/Rank-Up Challenges
+- Free healing until rank 1, then costs 4 warp shards
+- Expedition statistics display
+- Game mechanics explanations
+
+**5. Progress System**:
+- Automatic rank-ups: Novice (0-9), Adept (10-19), Master (20+)
+- Rank-up challenges with tool quality requirements
+- Stats tracking: total/won/lost raids, success rate
+
+### BN Compatibility Fixes
+
+**Items Removed from CDDA Version** (don't exist in BN):
+- `wooden_post_short`, `wooden_post` - no equivalent in BN
+- `nuts_bolts` - BN doesn't have this item
+- `rock_large` - only `rock` exists in BN
+
+**Recipe Components Needing Replacement** (user will fix):
+- `twig`, `leaves` → need BN alternatives for infinity tree recipe
+- `rock_flaking`, `rock_large` → replace with `rock` for infinity stone
+- `nuts_bolts`, `pipe_fittings` → replace with scrap/metal for infinity ore
+
+**Validated BN Resources** (reference in `/tmp/bn_valid_resources.json`):
+- Wood: 2x4, log, stick_long, wood_beam, wood_panel
+- Metal: frame, hdframe, nail, pipe, scrap, scrap_copper, sheet_metal, steel_chunk, steel_lump, wire
+- Stone/Earth: adobe_brick, brick, clay_lump, material_cement, material_limestone, material_sand, material_soil, rock
+
+### Known Issues
+
+1. **Recipe components need fixing** (user handling):
+   - skyisland_folded_infinitree: uses `twig`, `leaves`
+   - skyisland_folded_infinitystone: uses `rock_flaking`, `rock_large`
+   - skyisland_folded_infinityore: uses `nuts_bolts`, `pipe_fittings`
+
+2. **Not yet implemented**:
+   - Raid duration selection
+   - Difficulty settings
+   - Vortex tokens / room teleport
+   - Warped items (hauler bag, animal carrier, etc.)
+   - Island mapgen/structure
+
+### File Locations
+
+**Mod Directory**: `/Users/gchao/Library/Application Support/Cataclysm-BN/mods/CBN-Sky-Island`
+**BN Source**: `/Users/gchao/code/Cataclysm-BN`
+**CDDA Original**: `/Users/gchao/code/CDDA-Sky-Islands`
 
 ---
 

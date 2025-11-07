@@ -82,14 +82,14 @@
       "terrain": {
         " ": "t_grass",
         ".": "t_concrete",
-        "V": "t_concrete",
+        "V": "t_grass",
         "X": "t_grass",
         "Y": "t_grass",
         "Z": "t_grass"
       },
       "furniture": {
         "X": "f_skyisland_warp_obelisk",
-        "V": "f_skyisland_return_obelisk"
+        "V": "f_skyisland_heart"
       },
       "items": {
         "Z": [ { "item": "skyisland_trash_heap", "chance": 100 } ],

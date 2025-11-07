@@ -119,7 +119,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
 end
 
 -- Use return obelisk - return home
-function teleport.use_return_obelisk(who, item, pos, storage, missions)
+function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sickness)
   if not storage.is_away_from_home then
     gapi.add_msg("You are already home!")
     return 0
@@ -130,19 +130,8 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions)
     return 0
   end
 
-  -- Confirmation dialog - show current warp sickness intensity
-  local player = gapi.get_avatar()
-  local sickness_display = "None"
-  if player then
-    local effect_id = EffectTypeId.new("skyisland_warpsickness")
-    if player:has_effect(effect_id) then
-      local intensity = player:get_effect_int(effect_id)
-      sickness_display = string.format("%d/6 (lower is worse!)", intensity)
-    end
-  end
-
   local confirm_ui = UiList.new()
-  confirm_ui:title(string.format("Return home? Warp sickness: %s", sickness_display))
+  confirm_ui:title("Return home?")
   confirm_ui:add(1, locale.gettext("Yes, return home"))
   confirm_ui:add(2, locale.gettext("No, stay"))
   local confirm = confirm_ui:query()

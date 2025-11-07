@@ -8,5 +8,10 @@
     "type": "item_action",
     "id": "SKYISLAND_RETURN_OBELISK",
     "name": { "str": "Return home" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_HEART_MENU",
+    "name": { "str": "Access Heart of the Island" }
   }
 ]

@@ -34,7 +34,8 @@ local function heal_player(player, rank, storage)
   end
 
   -- Full heal
-  player:set_all_parts_hp_cur(player:get_part_hp_max("torso"))
+  -- player
+  player:set_all_parts_hp_to_max()
   player:clear_effects()
   gapi.add_msg("You feel refreshed and restored!")
 

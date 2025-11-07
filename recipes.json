@@ -2,7 +2,6 @@
   {
     "result": "log",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -11,14 +10,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 6 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitree",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          6
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "2x4",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -27,15 +41,30 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitree",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
     "result_mult": 2,
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "stick_long",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -44,14 +73,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitree",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "wood_panel",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -60,47 +104,30 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 5 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitree",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          5
+        ]
+      ]
+    ],
     "result_mult": 2,
-    "flags": [ "BLIND_EASY" ]
-  },
-  {
-    "result": "wooden_post_short",
-    "type": "recipe",
-    "activity_level": "NO_EXERCISE",
-    "category": "CC_OTHER",
-    "subcategory": "CSC_OTHER_MATERIALS",
-    "id_suffix": "from_tokens",
-    "skill_used": "survival",
-    "difficulty": 0,
-    "time": "1 s",
-    "autolearn": true,
-    "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
-  },
-  {
-    "result": "wooden_post",
-    "type": "recipe",
-    "activity_level": "NO_EXERCISE",
-    "category": "CC_OTHER",
-    "subcategory": "CSC_OTHER_MATERIALS",
-    "id_suffix": "from_tokens",
-    "skill_used": "survival",
-    "difficulty": 0,
-    "time": "1 s",
-    "autolearn": true,
-    "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 2 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "wood_beam",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -109,30 +136,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitree", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 10 ] ] ],
-    "flags": [ "BLIND_EASY" ]
-  },
-  {
-    "result": "nuts_bolts",
-    "type": "recipe",
-    "activity_level": "NO_EXERCISE",
-    "category": "CC_OTHER",
-    "subcategory": "CSC_OTHER_MATERIALS",
-    "id_suffix": "from_tokens",
-    "skill_used": "survival",
-    "difficulty": 0,
-    "time": "1 s",
-    "autolearn": true,
-    "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 20 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitree",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          10
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "scrap_copper",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -141,14 +167,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 6 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          6
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "pipe",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -157,14 +198,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 3 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          3
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "nail",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -173,14 +229,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 5 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          5
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "wire",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -189,14 +260,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "adobe_brick",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -205,14 +291,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "brick",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -221,14 +322,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "material_cement",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -237,14 +353,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 3 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          3
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "material_sand",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -253,15 +384,30 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
     "result_mult": 5,
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "clay_lump",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -270,14 +416,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "material_soil",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -286,15 +447,30 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
     "result_mult": 5,
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "material_limestone",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -303,30 +479,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 5 ] ] ],
-    "flags": [ "BLIND_EASY" ]
-  },
-  {
-    "result": "rock_large",
-    "type": "recipe",
-    "activity_level": "NO_EXERCISE",
-    "category": "CC_OTHER",
-    "subcategory": "CSC_OTHER_MATERIALS",
-    "id_suffix": "from_tokens",
-    "skill_used": "survival",
-    "difficulty": 0,
-    "time": "1 s",
-    "autolearn": true,
-    "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 5 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          5
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "rock",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -335,14 +510,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinitystone", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 2 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinitystone",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          2
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "scrap",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -351,15 +541,30 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
     "result_mult": 5,
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "steel_chunk",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -368,14 +573,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 1 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          1
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "steel_lump",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -384,14 +604,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 4 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          4
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "sheet_metal",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -400,14 +635,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 20 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          20
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "frame",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -416,14 +666,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 100 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          100
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "hdframe",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "id_suffix": "from_tokens",
@@ -432,14 +697,29 @@
     "time": "1 s",
     "autolearn": true,
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_infinityore", -1 ] ] ],
-    "components": [ [ [ "skyisland_material_token", 250 ] ] ],
-    "flags": [ "BLIND_EASY" ]
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_infinityore",
+          -1
+        ]
+      ]
+    ],
+    "components": [
+      [
+        [
+          "skyisland_material_token",
+          250
+        ]
+      ]
+    ],
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "skyisland_folded_infinitree",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "skill_used": "survival",
@@ -450,16 +730,17 @@
     "components": [
       [ [ "skyisland_warp_shard", 3 ] ],
       [ [ "2x4", 2 ] ],
-      [ [ "stick_long", 1 ], [ "stick", 2 ], [ "twig", 6 ] ],
-      [ [ "leaves", 8 ] ],
+      [ [ "stick_long", 1 ], [ "stick", 2 ] ],
+      [ [ "ash", 100 ] ],
       [ [ "splinter", 4 ] ]
     ],
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "skyisland_folded_infinitystone",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "skill_used": "survival",
@@ -471,15 +752,16 @@
       [ [ "skyisland_warp_shard", 3 ] ],
       [ [ "rock", 10 ] ],
       [ [ "clay_lump", 5 ], [ "material_sand", 20 ] ],
-      [ [ "rock_flaking", 4 ], [ "rock_large", 1 ] ],
+      [ [ "sharp_rock", 4 ] ],
       [ [ "material_soil", 2 ] ]
     ],
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "skyisland_folded_infinityore",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "skill_used": "survival",
@@ -491,55 +773,101 @@
       [ [ "skyisland_warp_shard", 3 ] ],
       [ [ "scrap", 20 ], [ "steel_chunk", 4 ], [ "steel_lump", 1 ] ],
       [ [ "pipe", 2 ], [ "wire", 6 ] ],
-      [ [ "nuts_bolts", 4 ], [ "pipe_fittings", 4 ], [ "sheet_metal_small", 10 ] ],
+      [ [ "sheet_metal_small", 10 ] ],
       [ [ "nail", 40 ] ]
     ],
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "skyisland_proof_determination",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "skill_used": "survival",
     "difficulty": 3,
     "time": "15 m",
-    "autolearn": false,
+    "autolearn": true,
     "book_learn": [],
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_heart",
+          -1
+        ]
+      ]
+    ],
     "qualities": [
-      { "id": "HAMMER", "level": 2 },
-      { "id": "SAW_W", "level": 2 },
-      { "id": "WRENCH", "level": 2 }
+      {
+        "id": "HAMMER",
+        "level": 2
+      },
+      {
+        "id": "SAW_W",
+        "level": 2
+      },
+      {
+        "id": "WRENCH",
+        "level": 2
+      }
     ],
     "components": [
-      [ [ "skyisland_warp_shard", 2 ] ]
+      [
+        [
+          "skyisland_warp_shard",
+          2
+        ]
+      ]
     ],
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   },
   {
     "result": "skyisland_proof_mastery",
     "type": "recipe",
-    "activity_level": "NO_EXERCISE",
     "category": "CC_OTHER",
     "subcategory": "CSC_OTHER_MATERIALS",
     "skill_used": "survival",
     "difficulty": 5,
     "time": "15 m",
-    "autolearn": false,
+    "autolearn": true,
     "book_learn": [],
     "reversible": false,
-    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "tools": [
+      [
+        [
+          "skyisland_fakeitem_heart",
+          -1
+        ]
+      ]
+    ],
     "qualities": [
-      { "id": "BUTCHER", "level": 16 },
-      { "id": "CUT_FINE", "level": 2 },
-      { "id": "PRY", "level": 2 }
+      {
+        "id": "BUTCHER",
+        "level": 16
+      },
+      {
+        "id": "CUT_FINE",
+        "level": 2
+      },
+      {
+        "id": "PRY",
+        "level": 2
+      }
     ],
     "components": [
-      [ [ "skyisland_warp_shard", 4 ] ]
+      [
+        [
+          "skyisland_warp_shard",
+          4
+        ]
+      ]
     ],
-    "flags": [ "BLIND_EASY" ]
+    "flags": [
+      "BLIND_EASY"
+    ]
   }
 ]
