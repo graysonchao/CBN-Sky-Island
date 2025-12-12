@@ -3,6 +3,87 @@
 
 local teleport = {}
 
+-- Red room bounds relative to obelisk position
+-- The interior of the room is 3 tiles in one axis and 2 in the other from the obelisk
+-- Since the room can rotate, we use 3 for both axes to be safe
+local RED_ROOM_RANGE = 3  -- tiles in each direction
+
+-- Helper: Store items from the red room in temporary storage (survives map changes)
+-- Returns the number of items stored
+local function store_red_room_items(obelisk_pos)
+  local game_map = gapi.get_map()
+  local items_stored = 0
+
+  gdebug.log_info(string.format("Scanning red room around obelisk at (%d, %d, %d)",
+    obelisk_pos.x, obelisk_pos.y, obelisk_pos.z))
+
+  -- Scan area inside the red room (not including walls)
+  for dx = -RED_ROOM_RANGE, RED_ROOM_RANGE do
+    for dy = -RED_ROOM_RANGE, RED_ROOM_RANGE do
+      local check_pos = Tripoint.new(
+        obelisk_pos.x + dx,
+        obelisk_pos.y + dy,
+        obelisk_pos.z
+      )
+
+      -- Check if there are items at this position
+      if game_map:has_items_at(check_pos) then
+        local items_stack = game_map:get_items_at(check_pos)
+
+        -- Collect all items at this position into a list first
+        -- (can't modify while iterating)
+        local items_to_store = {}
+        for _, it in pairs(items_stack:as_item_stack()) do
+          table.insert(items_to_store, it)
+        end
+
+        -- Now store each item (removes from map, puts in temporary storage)
+        for _, it in ipairs(items_to_store) do
+          local index = game_map:store_item(check_pos, it)
+          if index >= 0 then
+            items_stored = items_stored + 1
+          end
+        end
+      end
+    end
+  end
+
+  if items_stored > 0 then
+    gdebug.log_info(string.format("Total: %d items stored from red room", items_stored))
+  else
+    gdebug.log_info("No items found in red room")
+  end
+
+  return items_stored
+end
+
+-- Helper: Retrieve stored items and place them at home position
+local function retrieve_stored_items_at_home(home_pos)
+  local game_map = gapi.get_map()
+  local stored_count = game_map:get_stored_item_count()
+  local items_retrieved = 0
+
+  gdebug.log_info(string.format("Retrieving %d stored items at home (%d, %d, %d)",
+    stored_count, home_pos.x, home_pos.y, home_pos.z))
+
+  -- Retrieve each stored item (indices 0 to stored_count-1)
+  for i = 0, stored_count - 1 do
+    if game_map:retrieve_stored_item(i, home_pos) then
+      items_retrieved = items_retrieved + 1
+    end
+  end
+
+  -- Clear the storage
+  game_map:clear_stored_items()
+
+  if items_retrieved > 0 then
+    gapi.add_msg(string.format("%d items from the red room were teleported home with you!", items_retrieved))
+    gdebug.log_info(string.format("Retrieved %d items at home", items_retrieved))
+  end
+
+  return items_retrieved
+end
+
 -- Material token rewards per raid type
 local MATERIAL_TOKEN_REWARDS = {
   short = 50,   -- Currently the only option
@@ -149,6 +230,10 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
   local confirm = confirm_ui:query()
 
   if confirm == 1 then
+    -- Store items from the red room in temporary storage BEFORE teleporting
+    -- This removes them from the map and holds them in C++ storage that survives map changes
+    local items_stored = store_red_room_items(pos)
+
     -- Convert stored abs_ms coordinates to OMT for teleportation
     local home_abs_ms = Tripoint.new(
       storage.home_location.x,
@@ -159,6 +244,13 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
 
     -- Offset 1 tile north (negative Y in map coordinates)
     teleport_to_omt(home_omt, Tripoint.new(0, -1, 0))
+
+    -- Retrieve stored items and place them at home
+    if items_stored > 0 then
+      local player = gapi.get_avatar()
+      local player_pos = player:get_pos_ms()
+      retrieve_stored_items_at_home(player_pos)
+    end
 
     -- Complete missions when returning home
     local player = gapi.get_avatar()
@@ -214,10 +306,14 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   end
 
   gdebug.log_info("Sky Islands: Resurrecting at home")
-  gapi.add_msg("Using emergency warp to return home...")
 
   local player = gapi.get_avatar()
   if not player then return end
+
+  -- DROP ALL ITEMS before teleporting - this is the death penalty!
+  -- Items are dropped at the death location (lost forever)
+  player:drop_all_items()
+  gapi.add_msg("Your belongings scatter as reality tears you away...")
 
   -- Build home position from stored abs_ms coordinates
   local home_abs_ms = Tripoint.new(
@@ -248,7 +344,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   -- Apply resurrection sickness
   warp_sickness.apply_resurrection_sickness()
 
-  gapi.add_msg("You respawn at home, badly wounded!")
+  gapi.add_msg("You respawn at home, naked and wounded!")
   gdebug.log_info(string.format("Resurrected at home abs_ms: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
 end
 
