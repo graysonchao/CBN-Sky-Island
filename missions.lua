@@ -51,37 +51,49 @@ local function give_mission_reward(player, mission_name, count)
   end
 end
 
--- Create extraction mission
+-- Create extraction mission(s)
+-- With multiple_exits upgrade, spawns 2 exit portals
 function missions.create_extraction_mission(center_omt, storage)
   local player = gapi.get_avatar()
   if not player then return end
 
-  -- Pick exit location using new distance range (5-30 OMTs)
-  local distance = gapi.rng(MIN_MISSION_DISTANCE, MAX_MISSION_DISTANCE)
-  local angle = gapi.rng(0, 359) * (math.pi / 180)
-  local dx = math.floor(distance * math.cos(angle))
-  local dy = math.floor(distance * math.sin(angle))
+  local multiple_exits = storage.multiple_exits_unlocked or 0
+  local num_exits = multiple_exits >= 1 and 2 or 1
 
-  local exit_omt = Tripoint.new(
-    center_omt.x + dx,
-    center_omt.y + dy,
-    center_omt.z
-  )
+  for i = 1, num_exits do
+    -- Pick exit location using new distance range (5-30 OMTs)
+    local distance = gapi.rng(MIN_MISSION_DISTANCE, MAX_MISSION_DISTANCE)
+    local angle = gapi.rng(0, 359) * (math.pi / 180)
+    local dx = math.floor(distance * math.cos(angle))
+    local dy = math.floor(distance * math.sin(angle))
 
-  -- Store exit location for tracking
-  storage.exit_location = { x = exit_omt.x, y = exit_omt.y, z = exit_omt.z }
+    local exit_omt = Tripoint.new(
+      center_omt.x + dx,
+      center_omt.y + dy,
+      center_omt.z
+    )
 
-  -- Create and assign mission using BN's mission API
-  local player_id = player:getID()
-  local mission_type = MissionTypeIdRaw.new("MISSION_REACH_EXTRACT")
+    -- Store first exit location for tracking
+    if i == 1 then
+      storage.exit_location = { x = exit_omt.x, y = exit_omt.y, z = exit_omt.z }
+    end
 
-  local new_mission = Mission.reserve_new(mission_type, player_id)
-  if new_mission then
-    new_mission:assign(player)
-    gapi.add_msg("Mission: Reach the exit portal!")
-    gdebug.log_info(string.format("Created extraction mission at: %d, %d, %d (distance: %d OMT)", exit_omt.x, exit_omt.y, exit_omt.z, distance))
-  else
-    gdebug.log_error("Failed to create extraction mission!")
+    -- Create and assign mission using BN's mission API
+    local player_id = player:getID()
+    local mission_type = MissionTypeIdRaw.new("MISSION_REACH_EXTRACT")
+
+    local new_mission = Mission.reserve_new(mission_type, player_id)
+    if new_mission then
+      new_mission:assign(player)
+      if i == 1 then
+        gapi.add_msg("Mission: Reach the exit portal!")
+      else
+        gapi.add_msg("A second exit portal has also been detected!")
+      end
+      gdebug.log_info(string.format("Created extraction mission %d at: %d, %d, %d (distance: %d OMT)", i, exit_omt.x, exit_omt.y, exit_omt.z, distance))
+    else
+      gdebug.log_error(string.format("Failed to create extraction mission %d!", i))
+    end
   end
 end
 

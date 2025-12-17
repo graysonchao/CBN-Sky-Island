@@ -1,0 +1,12 @@
+[
+  {
+    "type": "recipe_category",
+    "id": "CC_SKYISLAND",
+    "recipe_subcategories": [
+      "CSC_ALL",
+      "CSC_SKYISLAND_MATERIALS",
+      "CSC_SKYISLAND_UPGRADES",
+      "CSC_SKYISLAND_PROOFS"
+    ]
+  }
+]

@@ -9,6 +9,7 @@ local missions = require("missions")
 local warp_sickness = require("warp_sickness")
 local teleport = require("teleport")
 local heart = require("heart")
+local upgrades = require("upgrades")
 
 -- Initialize storage defaults (only for new games)
 -- These will be overwritten by saved data on load
@@ -32,6 +33,39 @@ end
 -- Use Heart of the Island - show interactive menu
 mod.use_heart_menu = function(who, item, pos)
   return heart.use_heart(who, item, pos, storage)
+end
+
+-- Upgrade item activations
+mod.use_upgrade_stability1 = function(who, item, pos)
+  return upgrades.use_stability1(who, item, pos, storage)
+end
+
+mod.use_upgrade_stability2 = function(who, item, pos)
+  return upgrades.use_stability2(who, item, pos, storage)
+end
+
+mod.use_upgrade_stability3 = function(who, item, pos)
+  return upgrades.use_stability3(who, item, pos, storage)
+end
+
+mod.use_upgrade_scouting1 = function(who, item, pos)
+  return upgrades.use_scouting1(who, item, pos, storage)
+end
+
+mod.use_upgrade_scouting2 = function(who, item, pos)
+  return upgrades.use_scouting2(who, item, pos, storage)
+end
+
+mod.use_upgrade_exits1 = function(who, item, pos)
+  return upgrades.use_exits1(who, item, pos, storage)
+end
+
+mod.use_upgrade_raidlength1 = function(who, item, pos)
+  return upgrades.use_raidlength1(who, item, pos, storage)
+end
+
+mod.use_upgrade_raidlength2 = function(who, item, pos)
+  return upgrades.use_raidlength2(who, item, pos, storage)
 end
 
 -- Game started hook - initialize for new games only

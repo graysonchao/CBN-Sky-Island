@@ -84,11 +84,53 @@ local function retrieve_stored_items_at_home(home_pos)
   return items_retrieved
 end
 
--- Material token rewards per raid type
-local MATERIAL_TOKEN_REWARDS = {
-  short = 50,   -- Currently the only option
-  medium = 125, -- TODO: Implement when raid duration selection is added
-  long = 200,   -- TODO: Implement when raid duration selection is added
+-- Raid configuration
+-- Distances are in OMT (overmap terrain tiles). One overmap is 180x180 OMT.
+-- Timing: Base pulse interval is 15 minutes. Multiplier extends this.
+-- DDA timing: 8 pulses grace, then sickness stages 9-12, disintegration at 12+
+-- Short (1x): 15 min pulses = 2 hour grace, 3 hour disintegration
+-- Medium (2x): 30 min pulses = 4 hour grace, 6 hour disintegration
+-- Long (3x): 45 min pulses = 6 hour grace, 9 hour disintegration
+local RAID_CONFIG = {
+  short = {
+    name = "Quick Expedition",
+    description = "Normal time limit (2 hours grace). Exits will be close together.",
+    pulse_multiplier = 1,
+    material_tokens = 50,
+    token_cost = 0,  -- Free - no softlock risk
+    -- Landing spot distance
+    min_distance = 200,
+    max_distance = 1200,
+    -- Mission/exit distances (from landing spot)
+    mission_min = 5,
+    mission_max = 30,
+    exit_min = 5,
+    exit_max = 35
+  },
+  medium = {
+    name = "Large Expedition",
+    description = "Double time limit (4 hours grace). Exits scattered over wider area.",
+    pulse_multiplier = 2,
+    material_tokens = 125,
+    min_distance = 200,
+    max_distance = 1200,
+    mission_min = 20,
+    mission_max = 60,
+    exit_min = 30,
+    exit_max = 90
+  },
+  long = {
+    name = "Extended Expedition",
+    description = "Triple time limit (6 hours grace). Exits very far away.",
+    pulse_multiplier = 3,
+    material_tokens = 200,
+    min_distance = 200,
+    max_distance = 1200,
+    mission_min = 30,
+    mission_max = 80,
+    exit_min = 50,
+    exit_max = 160
+  }
 }
 
 -- Helper: Get player position in OMT coordinates
@@ -147,44 +189,116 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     return 0
   end
 
+  -- Check what raid lengths are unlocked
+  local longer_raids = storage.longer_raids_unlocked or 0
+
   -- Show raid type menu
   local ui = UiList.new()
   ui:title(locale.gettext("Select Expedition Type"))
-  ui:add(1, locale.gettext("Quick Raid (Test)"))
-  ui:add(2, locale.gettext("Cancel"))
+
+  local menu_index = 1
+  local raid_options = {}
+
+  -- Short raids always available
+  ui:add(menu_index, locale.gettext(string.format("%s (reward: %d tokens)", RAID_CONFIG.short.name, RAID_CONFIG.short.material_tokens)))
+  raid_options[menu_index] = "short"
+  menu_index = menu_index + 1
+
+  -- Medium raids require upgrade
+  if longer_raids >= 1 then
+    ui:add(menu_index, locale.gettext(string.format("%s (reward: %d tokens)", RAID_CONFIG.medium.name, RAID_CONFIG.medium.material_tokens)))
+    raid_options[menu_index] = "medium"
+    menu_index = menu_index + 1
+  end
+
+  -- Long raids require further upgrade
+  if longer_raids >= 2 then
+    ui:add(menu_index, locale.gettext(string.format("%s (reward: %d tokens)", RAID_CONFIG.long.name, RAID_CONFIG.long.material_tokens)))
+    raid_options[menu_index] = "long"
+    menu_index = menu_index + 1
+  end
+
+  ui:add(menu_index, locale.gettext("Cancel"))
 
   local choice = ui:query()
+  local selected_raid = raid_options[choice]
 
-  if choice == 1 then
-    -- Start quick raid
-    gapi.add_msg("Initiating warp sequence...")
+  if selected_raid then
+    local config = RAID_CONFIG[selected_raid]
+
+    -- Store raid type for token rewards on return
+    storage.current_raid_type = selected_raid
+    storage.current_raid_pulse_multiplier = config.pulse_multiplier
+
+    gapi.add_msg(string.format("Initiating %s...", config.name))
     gapi.add_msg("Searching for suitable raid location...")
 
-    -- Build search parameters for suitable terrain 200-1200 OMT away
+    -- Build search parameters for suitable terrain
+    -- Search for common land terrain types at ground level (z=0)
     local params = OmtFindParams.new()
-    -- Use helper methods to add terrain types to search for
-    params:add_type("house", OtMatchType.CONTAINS)
-    params:add_type("forest", OtMatchType.CONTAINS)
-    params:add_type("field", OtMatchType.CONTAINS)
-    params:set_search_range(200, 1200)  -- Search between 200-1200 OMT from home
+    -- Use EXACT matches for reliable terrain types that always exist
+    params:add_type("field", OtMatchType.EXACT)
+    params:add_type("forest", OtMatchType.EXACT)
+    params:add_type("forest_thick", OtMatchType.EXACT)
+    -- Set search range
+    params:set_search_range(config.min_distance, config.max_distance)
+    -- Search at ground level (z=0), not the sky island's z-level
+    params:set_search_layers(0, 0)
 
-    -- Find a random location matching parameters (only searches existing overmaps)
-    -- find_random_existing returns a single tripoint or nil
-    local dest_omt = overmapbuffer.find_random(home_omt, params)
+    -- Use ground-level origin for searching (sky islands are at z > 0)
+    local search_origin = Tripoint.new(home_omt.x, home_omt.y, 0)
+
+    gdebug.log_info(string.format("Searching for terrain in range %d-%d from (%d, %d, %d)",
+      config.min_distance, config.max_distance, search_origin.x, search_origin.y, search_origin.z))
+
+    -- Debug: Try find_all to see how many results we get
+    local all_results = overmapbuffer.find_all(search_origin, params)
+    gdebug.log_info(string.format("find_all returned %d results", #all_results))
+
+    -- Find a random location matching parameters
+    local dest_omt = overmapbuffer.find_random(search_origin, params)
 
     if dest_omt then
       gdebug.log_info(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
     else
-      -- Fallback: pick a random point if search failed
-      local distance = gapi.rng(200, 1200)
-      local angle = gapi.rng(0, 359) * (math.pi / 180)
-      local start_x = home_omt.x + math.floor(distance * math.cos(angle))
-      local start_y = home_omt.y + math.floor(distance * math.sin(angle))
-      dest_omt = Tripoint.new(start_x, start_y, 0)
-      gdebug.log_info("No suitable terrain found, using random fallback location")
+      -- Fallback: widen the search range significantly
+      gdebug.log_info("Primary search failed, trying wider range...")
+      local fallback_params = OmtFindParams.new()
+      fallback_params:add_type("field", OtMatchType.EXACT)
+      fallback_params:add_type("forest", OtMatchType.EXACT)
+      fallback_params:set_search_range(10, 2000)  -- Much wider range
+      fallback_params:set_search_layers(0, 0)
+
+      local fallback_results = overmapbuffer.find_all(search_origin, fallback_params)
+      gdebug.log_info(string.format("Fallback find_all returned %d results", #fallback_results))
+
+      dest_omt = overmapbuffer.find_random(search_origin, fallback_params)
+
+      if dest_omt then
+        gdebug.log_info(string.format("Fallback found terrain at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
+      else
+        -- Absolute last resort - this shouldn't happen but just in case
+        gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
+        gdebug.log_info("ERROR: All terrain searches failed!")
+        return 0
+      end
     end
 
     teleport_to_omt(dest_omt)
+
+    -- Reveal overmap if scouting is unlocked
+    local scouting_level = storage.scouting_unlocked or 0
+    if scouting_level > 0 then
+      local reveal_radius = scouting_level == 1 and 1 or 2  -- 3x3 or 5x5
+      for dx = -reveal_radius, reveal_radius do
+        for dy = -reveal_radius, reveal_radius do
+          local reveal_pos = Tripoint.new(dest_omt.x + dx, dest_omt.y + dy, dest_omt.z)
+          overmapbuffer.set_seen(reveal_pos, true)
+        end
+      end
+      local area_size = (reveal_radius * 2 + 1)
+      gapi.add_msg(string.format("Your scouting reveals a %dx%d area around the landing zone.", area_size, area_size))
+    end
 
     -- Set away status
     storage.is_away_from_home = true
@@ -258,11 +372,11 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
       missions.complete_or_fail_missions(player, storage)
     end
 
-    -- Award material tokens for successful return
-    -- Formula from CDDA: lengthofthisraid * 75 + 50
-    -- Short raid: 50 tokens, Medium: 125 tokens, Long: 200 tokens
-    -- TODO: When raid duration selection is implemented, calculate based on raid length
-    local material_tokens = MATERIAL_TOKEN_REWARDS.short
+    -- Award material tokens for successful return based on raid type
+    local raid_type = storage.current_raid_type or "short"
+    local config = RAID_CONFIG[raid_type]
+    local material_tokens = config and config.material_tokens or 50
+
     player:add_item_with_id(ItypeId.new("skyisland_material_token"), material_tokens)
     gapi.add_msg(string.format("You've returned home safely! Earned %d material tokens.", material_tokens))
 

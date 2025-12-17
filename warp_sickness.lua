@@ -4,8 +4,8 @@
 local warp_sickness = {}
 
 -- Warp sickness timing
-local WARP_SICKNESS_INTERVAL = TimeDuration.from_minutes(15)  -- Normal difficulty
-local GRACE_PERIOD_PULSES = 8  -- 8 pulses × 15 min = 2 hours before sickness starts
+local BASE_WARP_SICKNESS_INTERVAL = TimeDuration.from_minutes(15)  -- Normal difficulty
+local BASE_GRACE_PERIOD_PULSES = 8  -- 8 pulses × 15 min = 2 hours before sickness starts
 local MAX_WARP_SICKNESS_INTENSITY = 6
 
 -- Effect IDs
@@ -27,11 +27,16 @@ function warp_sickness.tick(storage)
   storage.warp_pulse_count = (storage.warp_pulse_count or 0) + 1
   local pulse = storage.warp_pulse_count
 
-  gdebug.log_info(string.format("Warp pulse %d", pulse))
+  -- Calculate grace period based on stability upgrades
+  -- In DDA: base is 8 pulses, each stability upgrade adds +1 pulse
+  local stability_bonus = storage.stability_unlocked or 0  -- +1 pulse per stability level
+  local grace_period = BASE_GRACE_PERIOD_PULSES + stability_bonus
 
-  -- Grace period: first 8 pulses (2 hours) have no effect
-  if pulse <= GRACE_PERIOD_PULSES then
-    local remaining = GRACE_PERIOD_PULSES - pulse + 1
+  gdebug.log_info(string.format("Warp pulse %d (grace period: %d)", pulse, grace_period))
+
+  -- Grace period: pulses during grace have no effect
+  if pulse <= grace_period then
+    local remaining = grace_period - pulse + 1
     gapi.add_msg(string.format("Warp pulse. You feel fine. Safe for %d more pulses.", remaining))
     return true
   end
@@ -61,7 +66,11 @@ end
 
 -- Start warp sickness timer
 function warp_sickness.start_timer(storage)
-  gapi.add_on_every_x_hook(WARP_SICKNESS_INTERVAL, function()
+  -- Pulse interval is multiplied by raid type (1x short, 2x medium, 3x long)
+  local pulse_multiplier = storage.current_raid_pulse_multiplier or 1
+  local interval = TimeDuration.from_minutes(15 * pulse_multiplier)
+  gdebug.log_info(string.format("Warp sickness timer started: %d minute intervals", 15 * pulse_multiplier))
+  gapi.add_on_every_x_hook(interval, function()
     return warp_sickness.tick(storage)
   end)
 end
@@ -76,6 +85,10 @@ function warp_sickness.stop()
   -- Remove effects
   player:remove_effect(EFFECT_WARP_SICKNESS)
   player:remove_effect(EFFECT_DISINTEGRATION)
+
+  -- Also remove resurrection sickness if present (stops the tick hook)
+  local res_sick_effect = EffectTypeId.new("skyisland_resurrection_sickness")
+  player:remove_effect(res_sick_effect)
 
   gdebug.log_info("Warp sickness stopped and cleared")
 end

@@ -10,6 +10,35 @@ local RANK_THRESHOLDS = {
   { min = 20, max = 999, name = "Master" }
 }
 
+-- Construction costs
+local CONSTRUCTION_COSTS = {
+  basement = 50,
+  bigroom1 = 75,
+  bigroom2 = 100,
+  bigroom3 = 150,
+  bigroom4 = 200
+}
+
+-- Upgrade info (for display purposes - actual unlocking is via crafting)
+local UPGRADE_INFO = {
+  stability = {
+    { level = 1, name = "Stability I", effect = "+2 bonus grace pulses", item = "Warped Tincture" },
+    { level = 2, name = "Stability II", effect = "+4 total bonus grace pulses", item = "Warped Elixir" },
+    { level = 3, name = "Stability III", effect = "+6 total bonus grace pulses (MAX)", item = "Warped Panacea" }
+  },
+  scouting = {
+    { level = 1, name = "Scouting I", effect = "Reveal 3x3 area on landing", item = "Scouting Lens" },
+    { level = 2, name = "Scouting II", effect = "Reveal 5x5 area on landing (MAX)", item = "Scouting Scope" }
+  },
+  exits = {
+    { level = 1, name = "Multiple Exits", effect = "2 return obelisks per expedition", item = "Escape Charm" }
+  },
+  raidlength = {
+    { level = 1, name = "Large Expeditions", effect = "2x grace period, 125 token reward", item = "Warped Hourglass" },
+    { level = 2, name = "Extended Expeditions", effect = "3x grace period, 200 token reward (MAX)", item = "Warped Sundial" }
+  }
+}
+
 -- Helper: Count items by ID in player inventory
 local function count_items(player, item_id)
   local total = 0
@@ -93,20 +122,23 @@ local function show_main_menu(player, storage)
   local ui = UiList.new()
   ui:title(locale.gettext("Heart of the Island"))
   ui:add(1, locale.gettext("Construction"))
-  ui:add(2, locale.gettext("Services"))
-  ui:add(3, locale.gettext("Information"))
-  ui:add(4, locale.gettext("Rank-Up Challenges"))
-  ui:add(5, locale.gettext("Close"))
+  ui:add(2, locale.gettext("Upgrades"))
+  ui:add(3, locale.gettext("Services"))
+  ui:add(4, locale.gettext("Information"))
+  ui:add(5, locale.gettext("Rank-Up Challenges"))
+  ui:add(6, locale.gettext("Close"))
 
   local choice = ui:query()
 
   if choice == 1 then
     return "construction"
   elseif choice == 2 then
-    return "services"
+    return "upgrades"
   elseif choice == 3 then
-    return "information"
+    return "services"
   elseif choice == 4 then
+    return "information"
+  elseif choice == 5 then
     return "rankup"
   else
     return "close"
@@ -153,6 +185,128 @@ local function show_services_menu(player, storage)
     return "services"
   else
     return "main"
+  end
+end
+
+-- Helper: Get next available upgrade for a category
+local function get_next_upgrade(category, current_level)
+  local upgrades_list = UPGRADE_INFO[category]
+  if not upgrades_list then return nil end
+
+  for _, upgrade in ipairs(upgrades_list) do
+    if upgrade.level == current_level + 1 then
+      return upgrade
+    end
+  end
+  return nil  -- All unlocked
+end
+
+-- Upgrades menu - info display only, actual unlocking via crafting
+local function show_upgrades_menu(player, storage)
+  local stability = storage.stability_unlocked or 0
+  local scouting = storage.scouting_unlocked or 0
+  local exits = storage.multiple_exits_unlocked or 0
+  local raidlength = storage.longer_raids_unlocked or 0
+
+  local ui = UiList.new()
+  ui:title(locale.gettext("Upgrades (Craft items near Heart to unlock)"))
+
+  local menu_index = 1
+
+  -- Stability status
+  local stab_next = get_next_upgrade("stability", stability)
+  if stab_next then
+    ui:add(menu_index, locale.gettext(string.format("Stability: Level %d - Next: %s (craft %s)", stability, stab_next.name, stab_next.item)))
+  else
+    ui:add(menu_index, locale.gettext(string.format("Stability: MAX (+%d pulses)", stability * 2)))
+  end
+  menu_index = menu_index + 1
+
+  -- Scouting status
+  local scout_next = get_next_upgrade("scouting", scouting)
+  if scout_next then
+    ui:add(menu_index, locale.gettext(string.format("Scouting: Level %d - Next: %s (craft %s)", scouting, scout_next.name, scout_next.item)))
+  else
+    ui:add(menu_index, locale.gettext("Scouting: MAX (5x5 reveal)"))
+  end
+  menu_index = menu_index + 1
+
+  -- Multiple Exits status
+  local exit_next = get_next_upgrade("exits", exits)
+  if exit_next then
+    ui:add(menu_index, locale.gettext(string.format("Exits: Not unlocked - craft %s", exit_next.item)))
+  else
+    ui:add(menu_index, locale.gettext("Exits: Unlocked (2 per expedition)"))
+  end
+  menu_index = menu_index + 1
+
+  -- Raid Length status
+  local raid_next = get_next_upgrade("raidlength", raidlength)
+  if raid_next then
+    ui:add(menu_index, locale.gettext(string.format("Expedition Length: Level %d - Next: %s (craft %s)", raidlength, raid_next.name, raid_next.item)))
+  else
+    ui:add(menu_index, locale.gettext("Expedition Length: MAX (Extended available)"))
+  end
+  menu_index = menu_index + 1
+
+  ui:add(menu_index, locale.gettext("How do upgrades work?"))
+  menu_index = menu_index + 1
+
+  ui:add(menu_index, locale.gettext("Back"))
+
+  local choice = ui:query()
+
+  if choice == menu_index - 1 then
+    -- "How do upgrades work?"
+    gapi.add_msg(
+      "=== How Upgrades Work ===\n" ..
+      "To unlock upgrades, you must CRAFT special artifacts near the Heart of the Island.\n\n" ..
+      "1. Gather the required items during expeditions\n" ..
+      "2. Return home safely with your loot\n" ..
+      "3. Open the crafting menu (& key) near the Heart\n" ..
+      "4. Craft the upgrade artifact (e.g., 'Warped Tincture')\n" ..
+      "5. Activate the crafted item to unlock the upgrade\n\n" ..
+      "Each upgrade requires different scavenged items. Check the crafting menu for requirements."
+    )
+    return "upgrades"
+  elseif choice == menu_index then
+    return "main"
+  else
+    -- Clicking on an upgrade status shows details
+    local details = nil
+    if choice == 1 then
+      local next_up = get_next_upgrade("stability", stability)
+      if next_up then
+        details = string.format("%s: %s\nCraft: %s", next_up.name, next_up.effect, next_up.item)
+      else
+        details = "Stability is at maximum level (+6 bonus grace pulses)."
+      end
+    elseif choice == 2 then
+      local next_up = get_next_upgrade("scouting", scouting)
+      if next_up then
+        details = string.format("%s: %s\nCraft: %s", next_up.name, next_up.effect, next_up.item)
+      else
+        details = "Scouting is at maximum level (5x5 area revealed on landing)."
+      end
+    elseif choice == 3 then
+      local next_up = get_next_upgrade("exits", exits)
+      if next_up then
+        details = string.format("%s: %s\nCraft: %s", next_up.name, next_up.effect, next_up.item)
+      else
+        details = "Multiple Exits is unlocked (2 return obelisks per expedition)."
+      end
+    elseif choice == 4 then
+      local next_up = get_next_upgrade("raidlength", raidlength)
+      if next_up then
+        details = string.format("%s: %s\nCraft: %s", next_up.name, next_up.effect, next_up.item)
+      else
+        details = "Expedition Length is at maximum (Extended Expeditions available)."
+      end
+    end
+    if details then
+      gapi.add_msg(details)
+    end
+    return "upgrades"
   end
 end
 
@@ -261,15 +415,6 @@ local function show_information_menu(player, storage)
     return "main"
   end
 end
-
--- Construction costs
-local CONSTRUCTION_COSTS = {
-  basement = 50,
-  bigroom1 = 75,
-  bigroom2 = 100,
-  bigroom3 = 150,
-  bigroom4 = 200
-}
 
 -- Helper: Run a construction mission
 local function run_construction_mission(player, mission_id)
@@ -448,6 +593,8 @@ function heart.use_heart(who, item, pos, storage)
       current_menu = show_main_menu(player, storage)
     elseif current_menu == "construction" then
       current_menu = show_construction_menu(player, storage)
+    elseif current_menu == "upgrades" then
+      current_menu = show_upgrades_menu(player, storage)
     elseif current_menu == "services" then
       current_menu = show_services_menu(player, storage)
     elseif current_menu == "information" then

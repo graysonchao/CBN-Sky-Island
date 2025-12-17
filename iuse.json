@@ -13,5 +13,45 @@
     "type": "item_action",
     "id": "SKYISLAND_HEART_MENU",
     "name": { "str": "Access Heart of the Island" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_STABILITY1",
+    "name": { "str": "Unlock Stability I" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_STABILITY2",
+    "name": { "str": "Unlock Stability II" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_STABILITY3",
+    "name": { "str": "Unlock Stability III" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_SCOUTING1",
+    "name": { "str": "Unlock Scouting I" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_SCOUTING2",
+    "name": { "str": "Unlock Scouting II" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_EXITS1",
+    "name": { "str": "Unlock Multiple Exits" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_RAIDLENGTH1",
+    "name": { "str": "Unlock Large Expeditions" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_RAIDLENGTH2",
+    "name": { "str": "Unlock Extended Expeditions" }
   }
 ]

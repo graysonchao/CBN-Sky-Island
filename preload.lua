@@ -16,6 +16,39 @@ game.iuse_functions["SKYISLAND_HEART_MENU"] = function(...)
   return mod.use_heart_menu(...)
 end
 
+-- Upgrade item activations
+game.iuse_functions["SKYISLAND_UPGRADE_STABILITY1"] = function(...)
+  return mod.use_upgrade_stability1(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_STABILITY2"] = function(...)
+  return mod.use_upgrade_stability2(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_STABILITY3"] = function(...)
+  return mod.use_upgrade_stability3(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_SCOUTING1"] = function(...)
+  return mod.use_upgrade_scouting1(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_SCOUTING2"] = function(...)
+  return mod.use_upgrade_scouting2(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_EXITS1"] = function(...)
+  return mod.use_upgrade_exits1(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_RAIDLENGTH1"] = function(...)
+  return mod.use_upgrade_raidlength1(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_RAIDLENGTH2"] = function(...)
+  return mod.use_upgrade_raidlength2(...)
+end
+
 -- Register hooks
 table.insert(game.hooks.on_game_started, function(...)
   return mod.on_game_started(...)
