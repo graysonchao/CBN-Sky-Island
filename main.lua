@@ -68,6 +68,56 @@ mod.use_upgrade_raidlength2 = function(who, item, pos)
   return upgrades.use_raidlength2(who, item, pos, storage)
 end
 
+-- Utility item activations
+mod.use_quickheal = function(who, item, pos)
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  -- Only works on the island (not away from home)
+  if storage.is_away_from_home then
+    gapi.add_msg("The quickheal pill only works on your sanctuary island.")
+    return 0
+  end
+
+  -- Heal all body parts to max
+  player:healall(999)
+  gapi.add_msg("A warm sensation washes over you as your wounds heal.")
+  return 1  -- Consume the item
+end
+
+mod.use_earthbound_pill = function(who, item, pos)
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  -- Only works during expedition
+  if not storage.is_away_from_home then
+    gapi.add_msg("You're not on an expedition. Save this for when you need more time earthside.")
+    return 0
+  end
+
+  -- Reduce pulse count by 4 (extend time)
+  storage.warp_pulse_count = math.max(0, (storage.warp_pulse_count or 0) - 4)
+  gapi.add_msg("The pill dissolves on your tongue. You feel the warp's grip on you loosen. (+4 pulses of time)")
+  gdebug.log_info(string.format("Earthbound pill used. Pulse count now: %d", storage.warp_pulse_count))
+  return 1  -- Consume the item
+end
+
+mod.use_skyward_beacon = function(who, item, pos)
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  -- Only works during expedition
+  if not storage.is_away_from_home then
+    gapi.add_msg("You're already home. The beacon has no effect here.")
+    return 0
+  end
+
+  -- Return home with all items
+  gapi.add_msg("The beacon flares with brilliant light. You feel yourself being pulled skyward...")
+  teleport.return_home_success(storage, missions, warp_sickness)
+  return 1  -- Consume the item
+end
+
 -- Game started hook - initialize for new games only
 mod.on_game_started = function()
   -- Reset to defaults for new game

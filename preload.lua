@@ -49,6 +49,19 @@ game.iuse_functions["SKYISLAND_UPGRADE_RAIDLENGTH2"] = function(...)
   return mod.use_upgrade_raidlength2(...)
 end
 
+-- Utility item activations
+game.iuse_functions["SKYISLAND_QUICKHEAL"] = function(...)
+  return mod.use_quickheal(...)
+end
+
+game.iuse_functions["SKYISLAND_EARTHBOUND_PILL"] = function(...)
+  return mod.use_earthbound_pill(...)
+end
+
+game.iuse_functions["SKYISLAND_SKYWARD_BEACON"] = function(...)
+  return mod.use_skyward_beacon(...)
+end
+
 -- Register hooks
 table.insert(game.hooks.on_game_started, function(...)
   return mod.on_game_started(...)

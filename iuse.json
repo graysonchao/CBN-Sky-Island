@@ -53,5 +53,20 @@
     "type": "item_action",
     "id": "SKYISLAND_UPGRADE_RAIDLENGTH2",
     "name": { "str": "Unlock Extended Expeditions" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_QUICKHEAL",
+    "name": { "str": "Heal all wounds" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_EARTHBOUND_PILL",
+    "name": { "str": "Extend expedition time" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_SKYWARD_BEACON",
+    "name": { "str": "Return to the sky" }
   }
 ]

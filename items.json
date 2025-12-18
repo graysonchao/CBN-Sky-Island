@@ -448,5 +448,62 @@
     "symbol": "V",
     "color": "yellow",
     "use_action": "SKYISLAND_UPGRADE_RAIDLENGTH2"
+  },
+  {
+    "id": "skyisland_quickheal",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "name": { "str": "quickheal pill" },
+    "description": "This pseudomagical pill will heal all your damaged parts, but only if consumed while on your sanctuary island. No reason to bring this into the field.",
+    "weight": "15 g",
+    "volume": "5 ml",
+    "looks_like": "aspirin",
+    "material": [ "powder" ],
+    "symbol": "!",
+    "flags": [ "ALLOWS_REMOTE_USE" ],
+    "color": "red",
+    "use_action": "SKYISLAND_QUICKHEAL"
+  },
+  {
+    "id": "skyisland_earthbound_pill",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "name": { "str": "earthbound pill" },
+    "description": "This pseudomagical pill extends the amount of time you can stay earthside by 4 pulses, or about 50% of a normal trip. They're precious, but should help buy time for a difficult extract.",
+    "weight": "15 g",
+    "volume": "5 ml",
+    "looks_like": "aspirin",
+    "material": [ "powder" ],
+    "symbol": "!",
+    "flags": [ "TRADER_AVOID" ],
+    "color": "cyan",
+    "use_action": "SKYISLAND_EARTHBOUND_PILL"
+  },
+  {
+    "id": "skyisland_homeward_mote",
+    "type": "TOOL",
+    "name": { "str": "homeward mote" },
+    "description": "Though visibly little more than a glowing dustbunny, this strange ethereal mote of warp essence reveals, on closer inspection, something more. A tiny, twisting, half-visible thread of shimmering bluish-purple trails away into the sky and far out of sight, unimpeded by any obstacles.\n\nTaking this rare and valuable artifact with you on an expedition is essentially buying life insurance. If you die with this mote in your inventory, you will instead be restored to full health and brought home WITH all items and equipment carried. But this effect will only last for a single expedition. Even if you extract safely, any and all motes carried on your person when you return home will be DESTROYED.",
+    "weight": "15 g",
+    "volume": "5 ml",
+    "looks_like": "spiral_stone",
+    "material": [ "alien_resin" ],
+    "symbol": "!",
+    "flags": [ "TRADER_AVOID", "UNBREAKABLE" ],
+    "color": "magenta"
+  },
+  {
+    "id": "skyisland_skyward_beacon",
+    "type": "TOOL",
+    "name": { "str": "skyward beacon" },
+    "description": "This smooth purplish sphere seems like it wants to rise right out of your hand. If you activate it, you will return directly to the island with everything you are carrying.",
+    "weight": "5 g",
+    "volume": "5 ml",
+    "looks_like": "spiral_stone",
+    "material": [ "alien_resin" ],
+    "symbol": ".",
+    "flags": [ "TRADER_AVOID", "UNBREAKABLE" ],
+    "color": "magenta",
+    "use_action": "SKYISLAND_SKYWARD_BEACON"
   }
 ]

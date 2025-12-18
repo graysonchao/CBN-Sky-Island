@@ -413,6 +413,66 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
   end
 end
 
+-- Return home successfully (used by return obelisk and skyward beacon)
+-- Does NOT prompt for confirmation - caller should handle that
+function teleport.return_home_success(storage, missions, warp_sickness)
+  if not storage.home_location then
+    gapi.add_msg("ERROR: Home location not set!")
+    return
+  end
+
+  -- Convert stored abs_ms coordinates to OMT for teleportation
+  local home_abs_ms = Tripoint.new(
+    storage.home_location.x,
+    storage.home_location.y,
+    storage.home_location.z
+  )
+  local home_omt = coords.ms_to_omt(home_abs_ms)
+
+  -- Offset 1 tile north (negative Y in map coordinates)
+  teleport_to_omt(home_omt, Tripoint.new(0, -1, 0))
+
+  -- Complete missions when returning home
+  local player = gapi.get_avatar()
+  if player then
+    missions.complete_or_fail_missions(player, storage)
+  end
+
+  -- Award material tokens for successful return based on raid type
+  local raid_type = storage.current_raid_type or "short"
+  local config = RAID_CONFIG[raid_type]
+  local material_tokens = config and config.material_tokens or 50
+
+  player:add_item_with_id(ItypeId.new("skyisland_material_token"), material_tokens)
+  gapi.add_msg(string.format("You've returned home safely! Earned %d material tokens.", material_tokens))
+
+  -- Clear away status and increment wins
+  storage.is_away_from_home = false
+  storage.warp_pulse_count = 0
+  local old_raids_won = storage.raids_won or 0
+  storage.raids_won = old_raids_won + 1
+
+  -- Stop warp sickness (remove all effects)
+  warp_sickness.stop()
+
+  -- Check for progress gate rank-ups (automatic at 10 and 20 wins)
+  if old_raids_won < 10 and storage.raids_won >= 10 then
+    gapi.add_msg("=== RANK UP ===")
+    gapi.add_msg("You have survived 10 expeditions and achieved Adept rank!")
+    gapi.add_msg("New features and recipes may now be available.")
+  elseif old_raids_won < 20 and storage.raids_won >= 20 then
+    gapi.add_msg("=== RANK UP ===")
+    gapi.add_msg("You have survived 20 expeditions and achieved Master rank!")
+    gapi.add_msg("New features and recipes may now be available.")
+  end
+
+  gapi.add_msg(string.format(
+    "Stats: %d/%d raids completed successfully",
+    storage.raids_won,
+    storage.raids_total
+  ))
+end
+
 -- Resurrection handler - teleport player home after death
 function teleport.resurrect_at_home(storage, missions, warp_sickness)
   if not storage.home_location then
