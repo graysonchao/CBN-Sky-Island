@@ -68,6 +68,18 @@ mod.use_upgrade_raidlength2 = function(who, item, pos)
   return upgrades.use_raidlength2(who, item, pos, storage)
 end
 
+mod.use_upgrade_basements = function(who, item, pos)
+  return upgrades.use_basements(who, item, pos, storage)
+end
+
+mod.use_upgrade_roofs = function(who, item, pos)
+  return upgrades.use_roofs(who, item, pos, storage)
+end
+
+mod.use_upgrade_labs = function(who, item, pos)
+  return upgrades.use_labs(who, item, pos, storage)
+end
+
 -- Utility item activations
 mod.use_quickheal = function(who, item, pos)
   local player = gapi.get_avatar()

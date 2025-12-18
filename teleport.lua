@@ -133,6 +133,46 @@ local RAID_CONFIG = {
   }
 }
 
+-- Starting location configuration
+local LOCATION_CONFIG = {
+  field = {
+    name = "Field",
+    description = "Arrive in a barren field. Usually wilderness, but could be an empty lot in town.",
+    terrain_type = "field",
+    match_type = OtMatchType.EXACT,
+    z_level = 0,
+    unlock_key = nil,  -- Always available
+    catalyst_item = nil
+  },
+  basement = {
+    name = "Basement",
+    description = "Arrive inside an underground basement. Usually suburbia.",
+    terrain_type = "basement",
+    match_type = OtMatchType.CONTAINS,
+    z_level = -1,
+    unlock_key = "basements_unlocked",
+    catalyst_item = nil
+  },
+  roof = {
+    name = "Rooftop",
+    description = "Arrive on a building roof. Usually houses, one story up.",
+    terrain_type = "roof",
+    match_type = OtMatchType.CONTAINS,
+    z_level = 1,
+    unlock_key = "roofs_unlocked",
+    catalyst_item = nil
+  },
+  labs = {
+    name = "Science Lab",
+    description = "Arrive in a subterranean science lab. DANGEROUS! Costs 1 Labs Catalyst. You will be sealed inside - bring an exit strategy!",
+    terrain_type = "lab",
+    match_type = OtMatchType.CONTAINS,
+    z_level = -2,
+    unlock_key = "labs_unlocked",
+    catalyst_item = "skyisland_labs_catalyst"
+  }
+}
+
 -- Helper: Get player position in OMT coordinates
 local function get_player_omt()
   local player = gapi.get_avatar()
@@ -223,106 +263,178 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   local choice = ui:query()
   local selected_raid = raid_options[choice]
 
-  if selected_raid then
-    local config = RAID_CONFIG[selected_raid]
-
-    -- Store raid type for token rewards on return
-    storage.current_raid_type = selected_raid
-    storage.current_raid_pulse_multiplier = config.pulse_multiplier
-
-    gapi.add_msg(string.format("Initiating %s...", config.name))
-    gapi.add_msg("Searching for suitable raid location...")
-
-    -- Build search parameters for suitable terrain
-    -- Search for common land terrain types at ground level (z=0)
-    local params = OmtFindParams.new()
-    -- Use EXACT matches for reliable terrain types that always exist
-    params:add_type("field", OtMatchType.EXACT)
-    params:add_type("forest", OtMatchType.EXACT)
-    params:add_type("forest_thick", OtMatchType.EXACT)
-    -- Set search range
-    params:set_search_range(config.min_distance, config.max_distance)
-    -- Search at ground level (z=0), not the sky island's z-level
-    params:set_search_layers(0, 0)
-
-    -- Use ground-level origin for searching (sky islands are at z > 0)
-    local search_origin = Tripoint.new(home_omt.x, home_omt.y, 0)
-
-    gdebug.log_info(string.format("Searching for terrain in range %d-%d from (%d, %d, %d)",
-      config.min_distance, config.max_distance, search_origin.x, search_origin.y, search_origin.z))
-
-    -- Debug: Try find_all to see how many results we get
-    local all_results = overmapbuffer.find_all(search_origin, params)
-    gdebug.log_info(string.format("find_all returned %d results", #all_results))
-
-    -- Find a random location matching parameters
-    local dest_omt = overmapbuffer.find_random(search_origin, params)
-
-    if dest_omt then
-      gdebug.log_info(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
-    else
-      -- Fallback: widen the search range significantly
-      gdebug.log_info("Primary search failed, trying wider range...")
-      local fallback_params = OmtFindParams.new()
-      fallback_params:add_type("field", OtMatchType.EXACT)
-      fallback_params:add_type("forest", OtMatchType.EXACT)
-      fallback_params:set_search_range(10, 2000)  -- Much wider range
-      fallback_params:set_search_layers(0, 0)
-
-      local fallback_results = overmapbuffer.find_all(search_origin, fallback_params)
-      gdebug.log_info(string.format("Fallback find_all returned %d results", #fallback_results))
-
-      dest_omt = overmapbuffer.find_random(search_origin, fallback_params)
-
-      if dest_omt then
-        gdebug.log_info(string.format("Fallback found terrain at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
-      else
-        -- Absolute last resort - this shouldn't happen but just in case
-        gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
-        gdebug.log_info("ERROR: All terrain searches failed!")
-        return 0
-      end
-    end
-
-    teleport_to_omt(dest_omt)
-
-    -- Reveal overmap if scouting is unlocked
-    local scouting_level = storage.scouting_unlocked or 0
-    if scouting_level > 0 then
-      local reveal_radius = scouting_level == 1 and 1 or 2  -- 3x3 or 5x5
-      for dx = -reveal_radius, reveal_radius do
-        for dy = -reveal_radius, reveal_radius do
-          local reveal_pos = Tripoint.new(dest_omt.x + dx, dest_omt.y + dy, dest_omt.z)
-          overmapbuffer.set_seen(reveal_pos, true)
-        end
-      end
-      local area_size = (reveal_radius * 2 + 1)
-      gapi.add_msg(string.format("Your scouting reveals a %dx%d area around the landing zone.", area_size, area_size))
-    end
-
-    -- Set away status
-    storage.is_away_from_home = true
-    storage.warp_pulse_count = 0
-    storage.raids_total = (storage.raids_total or 0) + 1
-
-    -- Create missions
-    missions.create_extraction_mission(dest_omt, storage)
-    missions.create_slaughter_mission()
-    missions.create_treasure_mission(dest_omt)
-
-    -- Start warp sickness (apply initial effects)
-    warp_sickness.start(storage)
-    -- Start sickness timer (progressive worsening)
-    warp_sickness.start_timer(storage)
-
-    gapi.add_msg("You arrive at the raid location!")
-    gapi.add_msg("Find the red room exit portal to return home before warp sickness kills you.")
-
-    return 1
-  else
+  if not selected_raid then
     gapi.add_msg("Warp cancelled.")
     return 0
   end
+
+  local config = RAID_CONFIG[selected_raid]
+
+  -- Store raid type for token rewards on return
+  storage.current_raid_type = selected_raid
+  storage.current_raid_pulse_multiplier = config.pulse_multiplier
+
+  -- Show location type menu
+  local loc_ui = UiList.new()
+  loc_ui:title(locale.gettext("Select Starting Location"))
+
+  local loc_index = 1
+  local loc_options = {}
+  local loc_order = { "field", "basement", "roof", "labs" }
+
+  for _, loc_key in ipairs(loc_order) do
+    local loc_config = LOCATION_CONFIG[loc_key]
+    local is_unlocked = true
+    local has_catalyst = true
+    local suffix = ""
+
+    -- Check if location type is unlocked
+    if loc_config.unlock_key then
+      is_unlocked = storage[loc_config.unlock_key] or false
+    end
+
+    -- Check if catalyst is available (for labs)
+    if loc_config.catalyst_item and is_unlocked then
+      has_catalyst = who:has_item_with_id(ItypeId.new(loc_config.catalyst_item))
+      if not has_catalyst then
+        suffix = " [No Catalyst]"
+      end
+    end
+
+    if is_unlocked then
+      local display_name = loc_config.name
+      if loc_config.catalyst_item then
+        display_name = display_name .. " (requires catalyst)"
+      end
+      loc_ui:add(loc_index, locale.gettext(display_name .. suffix))
+      if has_catalyst then
+        loc_options[loc_index] = loc_key
+      else
+        loc_options[loc_index] = nil  -- Can't select without catalyst
+      end
+      loc_index = loc_index + 1
+    end
+  end
+
+  loc_ui:add(loc_index, locale.gettext("Cancel"))
+
+  local loc_choice = loc_ui:query()
+  local selected_location = loc_options[loc_choice]
+
+  if not selected_location then
+    gapi.add_msg("Warp cancelled.")
+    return 0
+  end
+
+  local loc_config = LOCATION_CONFIG[selected_location]
+
+  -- Consume catalyst if required
+  if loc_config.catalyst_item then
+    local catalyst_id = ItypeId.new(loc_config.catalyst_item)
+    who:remove_items_with_id(catalyst_id, 1)
+    gapi.add_msg("The Labs Catalyst crumbles to dust as dimensional barriers part...")
+  end
+
+  gapi.add_msg(string.format("Initiating %s to %s...", config.name, loc_config.name))
+  gapi.add_msg("Searching for suitable location...")
+
+  -- Build search parameters based on location type
+  local params = OmtFindParams.new()
+  params:add_type(loc_config.terrain_type, loc_config.match_type)
+
+  -- For field, also add forest as fallback options
+  if selected_location == "field" then
+    params:add_type("forest", OtMatchType.EXACT)
+    params:add_type("forest_thick", OtMatchType.EXACT)
+  end
+
+  -- Set search range
+  params:set_search_range(config.min_distance, config.max_distance)
+  -- Search at the appropriate z-level
+  params:set_search_layers(loc_config.z_level, loc_config.z_level)
+
+  -- Use ground-level origin for searching (sky islands are at z > 0)
+  local search_origin = Tripoint.new(home_omt.x, home_omt.y, loc_config.z_level)
+
+  gdebug.log_info(string.format("Searching for %s terrain in range %d-%d at z=%d from (%d, %d, %d)",
+    loc_config.terrain_type, config.min_distance, config.max_distance, loc_config.z_level,
+    search_origin.x, search_origin.y, search_origin.z))
+
+  -- Debug: Try find_all to see how many results we get
+  local all_results = overmapbuffer.find_all(search_origin, params)
+  gdebug.log_info(string.format("find_all returned %d results", #all_results))
+
+  -- Find a random location matching parameters
+  local dest_omt = overmapbuffer.find_random(search_origin, params)
+
+  if dest_omt then
+    gdebug.log_info(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
+  else
+    -- Fallback: widen the search range significantly
+    gdebug.log_info("Primary search failed, trying wider range...")
+    local fallback_params = OmtFindParams.new()
+    fallback_params:add_type(loc_config.terrain_type, loc_config.match_type)
+    if selected_location == "field" then
+      fallback_params:add_type("forest", OtMatchType.EXACT)
+    end
+    fallback_params:set_search_range(10, 2000)  -- Much wider range
+    fallback_params:set_search_layers(loc_config.z_level, loc_config.z_level)
+
+    local fallback_results = overmapbuffer.find_all(search_origin, fallback_params)
+    gdebug.log_info(string.format("Fallback find_all returned %d results", #fallback_results))
+
+    dest_omt = overmapbuffer.find_random(search_origin, fallback_params)
+
+    if dest_omt then
+      gdebug.log_info(string.format("Fallback found terrain at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
+    else
+      -- Absolute last resort - this shouldn't happen but just in case
+      gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
+      gdebug.log_info("ERROR: All terrain searches failed!")
+      -- Refund catalyst if we consumed one
+      if loc_config.catalyst_item then
+        who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
+        gapi.add_msg("Your Labs Catalyst is returned.")
+      end
+      return 0
+    end
+  end
+
+  teleport_to_omt(dest_omt)
+
+  -- Reveal overmap if scouting is unlocked
+  local scouting_level = storage.scouting_unlocked or 0
+  if scouting_level > 0 then
+    local reveal_radius = scouting_level == 1 and 1 or 2  -- 3x3 or 5x5
+    for dx = -reveal_radius, reveal_radius do
+      for dy = -reveal_radius, reveal_radius do
+        local reveal_pos = Tripoint.new(dest_omt.x + dx, dest_omt.y + dy, dest_omt.z)
+        overmapbuffer.set_seen(reveal_pos, true)
+      end
+    end
+    local area_size = (reveal_radius * 2 + 1)
+    gapi.add_msg(string.format("Your scouting reveals a %dx%d area around the landing zone.", area_size, area_size))
+  end
+
+  -- Set away status
+  storage.is_away_from_home = true
+  storage.warp_pulse_count = 0
+  storage.raids_total = (storage.raids_total or 0) + 1
+
+  -- Create missions
+  missions.create_extraction_mission(dest_omt, storage)
+  missions.create_slaughter_mission()
+  missions.create_treasure_mission(dest_omt)
+
+  -- Start warp sickness (apply initial effects)
+  warp_sickness.start(storage)
+  -- Start sickness timer (progressive worsening)
+  warp_sickness.start_timer(storage)
+
+  gapi.add_msg(string.format("You arrive at the %s!", loc_config.name:lower()))
+  gapi.add_msg("Find the red room exit portal to return home before warp sickness kills you.")
+
+  return 1
 end
 
 -- Use return obelisk - return home

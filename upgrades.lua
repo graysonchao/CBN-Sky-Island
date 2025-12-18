@@ -55,6 +55,24 @@ local UPGRADE_DEFS = {
     required = 1,
     new_level = 2,
     message = "Extended Expeditions are now available. You will have triple the grace period for maximum exploration time."
+  },
+  basements = {
+    field = "basements_unlocked",
+    required = nil,  -- No prerequisite, just a boolean unlock
+    new_level = true,
+    message = "Basement starts are now available at the warp obelisk. You can choose to begin expeditions in underground basements."
+  },
+  roofs = {
+    field = "roofs_unlocked",
+    required = nil,
+    new_level = true,
+    message = "Rooftop starts are now available at the warp obelisk. You can choose to begin expeditions on building rooftops."
+  },
+  labs = {
+    field = "labs_unlocked",
+    required = nil,
+    new_level = true,
+    message = "Lab starts are now available at the warp obelisk. You can choose to begin expeditions in underground science labs. Be warned: you will need a Labs Catalyst each time, and you will start sealed inside!"
   }
 }
 
@@ -80,7 +98,22 @@ local function activate_upgrade(who, item, pos, storage, upgrade_key)
     return 0
   end
 
-  -- Check current level
+  -- Handle boolean upgrades (no prerequisite, just on/off)
+  if def.required == nil then
+    local current_value = storage[def.field]
+    if current_value then
+      gapi.add_msg("You have already unlocked this upgrade.")
+      return 0
+    end
+    -- Apply the boolean upgrade
+    storage[def.field] = true
+    gapi.add_msg("=== UPGRADE UNLOCKED ===")
+    gapi.add_msg(def.message)
+    gdebug.log_info(string.format("Upgrade %s activated: %s = true", upgrade_key, def.field))
+    return 1
+  end
+
+  -- Handle leveled upgrades (original logic)
   local current_level = storage[def.field] or 0
   if current_level ~= def.required then
     if current_level >= def.new_level then
@@ -132,6 +165,18 @@ end
 
 function upgrades.use_raidlength2(who, item, pos, storage)
   return activate_upgrade(who, item, pos, storage, "raidlength2")
+end
+
+function upgrades.use_basements(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "basements")
+end
+
+function upgrades.use_roofs(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "roofs")
+end
+
+function upgrades.use_labs(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "labs")
 end
 
 return upgrades

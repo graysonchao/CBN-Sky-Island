@@ -56,6 +56,21 @@
   },
   {
     "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_BASEMENTS",
+    "name": { "str": "Unlock Basement Starts" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_ROOFS",
+    "name": { "str": "Unlock Rooftop Starts" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_LABS",
+    "name": { "str": "Unlock Lab Starts" }
+  },
+  {
+    "type": "item_action",
     "id": "SKYISLAND_QUICKHEAL",
     "name": { "str": "Heal all wounds" }
   },

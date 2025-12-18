@@ -458,6 +458,45 @@
     "use_action": "SKYISLAND_UPGRADE_RAIDLENGTH2"
   },
   {
+    "id": "skyisland_upgradekey_basements",
+    "type": "TOOL",
+    "category": "spare_parts",
+    "name": { "str": "Basement Locator" },
+    "description": "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Basement Starts: Begin expeditions in underground basements.",
+    "volume": "250 ml",
+    "weight": "150 g",
+    "material": [ "stone" ],
+    "symbol": "V",
+    "color": "brown",
+    "use_action": "SKYISLAND_UPGRADE_BASEMENTS"
+  },
+  {
+    "id": "skyisland_upgradekey_roofs",
+    "type": "TOOL",
+    "category": "spare_parts",
+    "name": { "str": "Rooftop Locator" },
+    "description": "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Rooftop Starts: Begin expeditions on building rooftops.",
+    "volume": "250 ml",
+    "weight": "150 g",
+    "material": [ "stone" ],
+    "symbol": "V",
+    "color": "cyan",
+    "use_action": "SKYISLAND_UPGRADE_ROOFS"
+  },
+  {
+    "id": "skyisland_upgradekey_labs",
+    "type": "TOOL",
+    "category": "spare_parts",
+    "name": { "str": "Laboratory Locator" },
+    "description": "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Lab Starts: Begin expeditions in underground science labs. Requires a Labs Catalyst each time.",
+    "volume": "250 ml",
+    "weight": "150 g",
+    "material": [ "stone" ],
+    "symbol": "V",
+    "color": "light_green",
+    "use_action": "SKYISLAND_UPGRADE_LABS"
+  },
+  {
     "id": "skyisland_quickheal",
     "type": "COMESTIBLE",
     "comestible_type": "MED",

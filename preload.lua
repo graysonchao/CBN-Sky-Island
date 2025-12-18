@@ -49,6 +49,18 @@ game.iuse_functions["SKYISLAND_UPGRADE_RAIDLENGTH2"] = function(...)
   return mod.use_upgrade_raidlength2(...)
 end
 
+game.iuse_functions["SKYISLAND_UPGRADE_BASEMENTS"] = function(...)
+  return mod.use_upgrade_basements(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_ROOFS"] = function(...)
+  return mod.use_upgrade_roofs(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_LABS"] = function(...)
+  return mod.use_upgrade_labs(...)
+end
+
 -- Utility item activations
 game.iuse_functions["SKYISLAND_QUICKHEAL"] = function(...)
   return mod.use_quickheal(...)
