@@ -1040,12 +1040,13 @@
     "autolearn": true,
     "reversible": false,
     "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Basement items: plushies, board games, cards - things found in home basements",
     "components": [
       [ [ "skyisland_warp_shard", 1 ] ],
-      [ [ "plushie_body_pillow_maki", 2 ], [ "plushie_bunny", 4 ], [ "plushie_bear", 4 ] ],
-      [ [ "chess", 1 ], [ "checkers", 1 ] ],
-      [ [ "cards_pokemon", 1 ], [ "cards_yugioh", 1 ], [ "deck_of_cards", 2 ] ],
-      [ [ "dice_cup", 1 ], [ "dice", 4 ] ]
+      [ [ "bodypillow", 2 ], [ "teddy", 4 ], [ "shark_plush", 4 ] ],
+      [ [ "chess", 1 ], [ "checkers", 1 ], [ "monopoly", 1 ] ],
+      [ [ "cards_magic", 1 ], [ "deck_of_cards", 2 ] ],
+      [ [ "catan", 1 ], [ "dnd", 1 ], [ "battleship", 1 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
   },
@@ -1060,13 +1061,14 @@
     "autolearn": true,
     "reversible": false,
     "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Rooftop items: scopes, bird-related items, climbing gear",
     "components": [
       [ [ "skyisland_warp_shard", 1 ] ],
       [ [ "survivor_scope", 1 ], [ "rifle_scope", 1 ], [ "binoculars", 1 ] ],
       [ [ "feather", 40 ], [ "down_feather", 40 ] ],
-      [ [ "egg_bird_unfert", 6 ], [ "egg_bird", 6 ] ],
-      [ [ "stepladder", 1 ], [ "makeshift_ladder", 1 ] ],
-      [ [ "folding_chair", 1 ], [ "chair_folding", 1 ] ]
+      [ [ "egg_bird_unfert", 6 ], [ "egg_bird", 6 ], [ "egg_chicken", 12 ] ],
+      [ [ "stepladder", 1 ] ],
+      [ [ "chair_folding", 1 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
   },
@@ -1081,12 +1083,13 @@
     "autolearn": true,
     "reversible": false,
     "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Lab items: science ID, plutonium, cutting tools, mutagens - dangerous lab equipment",
     "components": [
       [ [ "skyisland_warp_shard", 2 ] ],
       [ [ "id_science", 1 ] ],
-      [ [ "plut_cell", 3 ], [ "plut_cell_full", 2 ] ],
+      [ [ "plut_cell", 3 ] ],
       [ [ "oxy_torch", 1 ] ],
-      [ [ "mutagen", 2 ], [ "mutagen_any", 2, "LIST" ] ],
+      [ [ "mutagen", 2 ], [ "iv_mutagen", 1 ] ],
       [ [ "jackhammer", 1 ], [ "elec_jackhammer", 1 ], [ "pickaxe", 1 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
@@ -1102,10 +1105,11 @@
     "autolearn": true,
     "reversible": false,
     "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Consumable catalyst for lab expeditions - science card + welding fuel",
     "components": [
       [ [ "skyisland_warp_shard", 1 ] ],
       [ [ "id_science", 1 ] ],
-      [ [ "oxyacetylene", 60 ], [ "welding_wire_steel", 30 ] ]
+      [ [ "oxyacetylene", 60 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
   }
