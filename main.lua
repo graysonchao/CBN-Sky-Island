@@ -165,30 +165,60 @@ mod.on_game_save = function()
 end
 
 -- Character death hook (early) - clear effects and heal before broken limbs lock in
-mod.on_char_death = function()
-  gdebug.log_info("Sky Islands: on_char_death fired")
-
-  if storage.home_location then
-    local player = gapi.get_avatar()
-    if not player then return end
-
-    -- Clear all effects (including broken limb effects) EARLY
-    player:clear_effects()
-    -- Heal everything to prevent broken limbs from locking in
-    player:set_all_parts_hp_cur(10)
-
-    gdebug.log_info("Sky Islands: Cleared effects and healed in on_char_death")
-  end
-end
+-- mod.on_char_death = function()
+--   gdebug.log_info("Sky Islands: on_char_death fired")
+-- 
+--   if storage.home_location then
+--     local player = gapi.get_avatar()
+--     if not player then return end
+-- 
+--     -- Clear all effects (including broken limb effects) EARLY
+--     player:clear_effects()
+--     -- Heal everything to prevent broken limbs from locking in
+--     player:set_all_parts_hp_cur(10)
+-- 
+--     gdebug.log_info("Sky Islands: Cleared effects and healed in on_char_death")
+--   end
+-- end
 
 -- Character death hook (late) - actual resurrection and teleportation
 mod.on_character_death = function()
   gdebug.log_info("Sky Islands: on_character_death fired")
   gdebug.log_info(string.format("  home_location: %s", tostring(storage.home_location)))
 
-  if storage.home_location then
+  if not storage.home_location then
+    return  -- No home set, can't resurrect
+  end
+
+  local player = gapi.get_avatar()
+  if not player then return end
+
+  -- Check for homeward mote (life insurance)
+  local mote_id = ItypeId.new("skyisland_homeward_mote")
+  local has_mote = player:has_item_with_id(mote_id)
+
+  if has_mote then
+    -- Homeward mote saves you! Keep all items, consume mote
+    gdebug.log_info("Sky Islands: Homeward mote activated!")
+    player:remove_items_with_id(mote_id, 1)
+    gapi.add_msg("The homeward mote flares brilliantly, yanking you from death's grasp!")
+    gapi.add_msg("You arrive home alive, with all your belongings intact.")
+
+    -- Teleport home WITH items (use the success path)
+    teleport.return_home_success(storage, missions, warp_sickness)
+
+    -- But don't count as a normal win - it's a mote save
+    -- (raids_won was already incremented by return_home_success, so decrement)
+    storage.raids_won = (storage.raids_won or 1) - 1
+  else
+    -- Normal death - lose items
     teleport.resurrect_at_home(storage, missions, warp_sickness)
   end
+
+  -- Heal after resurrection
+  player:clear_effects()
+  player:set_all_parts_hp_cur(100)
+  player:set_all_parts_hp_cur(10)
 end
 
 gdebug.log_info("Sky Islands PoC main.lua loaded")

@@ -273,6 +273,11 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   -- Store raid type for token rewards on return
   storage.current_raid_type = selected_raid
   storage.current_raid_pulse_multiplier = config.pulse_multiplier
+  -- Store distance values for mission spawning
+  storage.current_mission_min = config.mission_min
+  storage.current_mission_max = config.mission_max
+  storage.current_exit_min = config.exit_min
+  storage.current_exit_max = config.exit_max
 
   -- Show location type menu
   local loc_ui = UiList.new()
@@ -424,7 +429,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   -- Create missions
   missions.create_extraction_mission(dest_omt, storage)
   missions.create_slaughter_mission()
-  missions.create_treasure_mission(dest_omt)
+  missions.create_treasure_mission(dest_omt, storage)
 
   -- Start warp sickness (apply initial effects)
   warp_sickness.start(storage)

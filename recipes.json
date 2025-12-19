@@ -1112,5 +1112,56 @@
       [ [ "oxyacetylene", 60 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_skyward_beacon",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Emergency warp home - consumed on use",
+    "components": [
+      [ [ "skyisland_warp_shard", 10 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_homeward_mote",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Life insurance - saves you from death and warps you home with items",
+    "components": [
+      [ [ "skyisland_warp_shard", 20 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_warp_carrier",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_GEAR",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Capture and bring animals home",
+    "components": [
+      [ [ "skyisland_warp_shard", 12 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
   }
 ]

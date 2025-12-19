@@ -1,6 +1,6 @@
 [
   {
-    "id": "MISSION_REACH_EXTRACT",
+    "id": "MISSION_REACH_EXTRACT_SHORT",
     "type": "mission_definition",
     "name": { "str": "RAID: Reach the exit portal!" },
     "goal": "MGOAL_GO_TO",
@@ -9,7 +9,51 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 35, "min_distance": 5 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_MEDIUM",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 90, "min_distance": 30 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_LONG",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 160, "min_distance": 50 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -109,7 +153,7 @@
     "monster_kill_goal": 5,
   },
   {
-    "id": "MISSION_BONUS_TREASURE",
+    "id": "MISSION_BONUS_TREASURE_SHORT",
     "type": "mission_definition",
     "name": { "str": "RAID: Find the warp shards!" },
     "goal": "MGOAL_GO_TO",
@@ -118,7 +162,51 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 30, "min_distance": 5 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_treasuregoal" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_BONUS_TREASURE_MEDIUM",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Find the warp shards!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "A very small cluster of warp energy has left shards behind at this location. All you need to do is find and retrieve them. There may be threats nearby, but unlike most tasks, no special guards are on-site. A minimal reward, but little risk.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 60, "min_distance": 20 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_treasuregoal" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_BONUS_TREASURE_LONG",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Find the warp shards!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "A very small cluster of warp energy has left shards behind at this location. All you need to do is find and retrieve them. There may be threats nearby, but unlike most tasks, no special guards are on-site. A minimal reward, but little risk.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 80, "min_distance": 30 },
       "update_mapgen": {
         "place_nested": [
           {

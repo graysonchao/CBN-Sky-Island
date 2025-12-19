@@ -3,10 +3,6 @@
 
 local missions = {}
 
--- Mission spawn distance (in OMT tiles)
-local MIN_MISSION_DISTANCE = 5
-local MAX_MISSION_DISTANCE = 30
-
 -- Mission reward table (mission_name -> shard count)
 -- HACK: We're using mission names instead of mission type IDs because BN's Lua bindings
 -- don't expose mission_type.id. The mission_type class exists in Lua but its 'id' field
@@ -51,6 +47,18 @@ local function give_mission_reward(player, mission_name, count)
   end
 end
 
+-- Get mission type ID suffix based on raid type
+local function get_raid_suffix(storage)
+  local raid_type = storage.current_raid_type or "short"
+  if raid_type == "medium" then
+    return "_MEDIUM"
+  elseif raid_type == "long" then
+    return "_LONG"
+  else
+    return "_SHORT"
+  end
+end
+
 -- Create extraction mission(s)
 -- With multiple_exits upgrade, spawns 2 exit portals
 function missions.create_extraction_mission(center_omt, storage)
@@ -60,27 +68,15 @@ function missions.create_extraction_mission(center_omt, storage)
   local multiple_exits = storage.multiple_exits_unlocked or 0
   local num_exits = multiple_exits >= 1 and 2 or 1
 
+  -- Select mission type based on raid length
+  local suffix = get_raid_suffix(storage)
+  local mission_type_id = "MISSION_REACH_EXTRACT" .. suffix
+  gdebug.log_info(string.format("Creating extraction mission: %s (raid type: %s)",
+    mission_type_id, storage.current_raid_type or "unknown"))
+
   for i = 1, num_exits do
-    -- Pick exit location using new distance range (5-30 OMTs)
-    local distance = gapi.rng(MIN_MISSION_DISTANCE, MAX_MISSION_DISTANCE)
-    local angle = gapi.rng(0, 359) * (math.pi / 180)
-    local dx = math.floor(distance * math.cos(angle))
-    local dy = math.floor(distance * math.sin(angle))
-
-    local exit_omt = Tripoint.new(
-      center_omt.x + dx,
-      center_omt.y + dy,
-      center_omt.z
-    )
-
-    -- Store first exit location for tracking
-    if i == 1 then
-      storage.exit_location = { x = exit_omt.x, y = exit_omt.y, z = exit_omt.z }
-    end
-
-    -- Create and assign mission using BN's mission API
     local player_id = player:getID()
-    local mission_type = MissionTypeIdRaw.new("MISSION_REACH_EXTRACT")
+    local mission_type = MissionTypeIdRaw.new(mission_type_id)
 
     local new_mission = Mission.reserve_new(mission_type, player_id)
     if new_mission then
@@ -90,7 +86,14 @@ function missions.create_extraction_mission(center_omt, storage)
       else
         gapi.add_msg("A second exit portal has also been detected!")
       end
-      gdebug.log_info(string.format("Created extraction mission %d at: %d, %d, %d (distance: %d OMT)", i, exit_omt.x, exit_omt.y, exit_omt.z, distance))
+      -- Get actual target location from mission
+      local target = new_mission:get_target_point()
+      gdebug.log_info(string.format("Created extraction mission %d at: %d, %d, %d", i, target.x, target.y, target.z))
+
+      -- Store first exit location for tracking
+      if i == 1 then
+        storage.exit_location = { x = target.x, y = target.y, z = target.z }
+      end
     else
       gdebug.log_error(string.format("Failed to create extraction mission %d!", i))
     end
@@ -98,30 +101,25 @@ function missions.create_extraction_mission(center_omt, storage)
 end
 
 -- Create treasure mission
-function missions.create_treasure_mission(center_omt)
+function missions.create_treasure_mission(center_omt, storage)
   local player = gapi.get_avatar()
   if not player then return end
 
-  -- Pick treasure location using new distance range (5-30 OMTs)
-  local distance = gapi.rng(MIN_MISSION_DISTANCE, MAX_MISSION_DISTANCE)
-  local angle = gapi.rng(0, 359) * (math.pi / 180)
-  local dx = math.floor(distance * math.cos(angle))
-  local dy = math.floor(distance * math.sin(angle))
-
-  local treasure_omt = Tripoint.new(
-    center_omt.x + dx,
-    center_omt.y + dy,
-    center_omt.z
-  )
+  -- Select mission type based on raid length
+  local suffix = get_raid_suffix(storage)
+  local mission_type_id = "MISSION_BONUS_TREASURE" .. suffix
+  gdebug.log_info(string.format("Creating treasure mission: %s (raid type: %s)",
+    mission_type_id, storage.current_raid_type or "unknown"))
 
   local player_id = player:getID()
-  local mission_type = MissionTypeIdRaw.new("MISSION_BONUS_TREASURE")
+  local mission_type = MissionTypeIdRaw.new(mission_type_id)
 
   local new_mission = Mission.reserve_new(mission_type, player_id)
   if new_mission then
     new_mission:assign(player)
     gapi.add_msg("Bonus Mission: Find the warp shards!")
-    gdebug.log_info(string.format("Created treasure mission at: %d, %d, %d (distance: %d OMT)", treasure_omt.x, treasure_omt.y, treasure_omt.z, distance))
+    local target = new_mission:get_target_point()
+    gdebug.log_info(string.format("Created treasure mission at: %d, %d, %d", target.x, target.y, target.z))
   else
     gdebug.log_error("Failed to create treasure mission!")
   end
