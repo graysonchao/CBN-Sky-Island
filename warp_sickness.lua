@@ -15,7 +15,7 @@ local EFFECT_DISINTEGRATION = EffectTypeId.new("skyisland_warpdisintegration")
 -- Warp sickness timer tick - pulse counter and intensity management
 function warp_sickness.tick(storage)
   if not storage.is_away_from_home then
-    return true  -- Keep hook active
+    return false  -- Stop hook when home - prevents stacking hooks on multiple expeditions
   end
 
   local player = gapi.get_avatar()
@@ -42,10 +42,12 @@ function warp_sickness.tick(storage)
   end
 
   -- Apply or update warp sickness effect
-  player:add_effect(EFFECT_WARP_SICKNESS, TimeDuration.from_hours(999), 1)
-  gdebug.log_info(string.format("Warp sickness re-applied"))
-
+  -- Don't pass intensity parameter - let int_add_val handle stacking
+  -- First application starts at intensity 1, subsequent applications add 1
+  player:add_effect(EFFECT_WARP_SICKNESS, TimeDuration.from_hours(999))
   local current_intensity = player:get_effect_int(EFFECT_WARP_SICKNESS)
+  gdebug.log_info(string.format("Warp sickness applied/updated, intensity now: %d", current_intensity))
+
   -- Apply disintegration at critical intensity
   if current_intensity == MAX_WARP_SICKNESS_INTENSITY then
     if not player:has_effect(EFFECT_DISINTEGRATION) then
