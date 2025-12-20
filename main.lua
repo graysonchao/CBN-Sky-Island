@@ -130,6 +130,75 @@ mod.use_skyward_beacon = function(who, item, pos)
   return 1  -- Consume the item
 end
 
+-- Warp status crystal - show detailed expedition status
+mod.use_warp_crystal = function(who, item, pos)
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  -- Get warp status info
+  local status_info = warp_sickness.get_status_info(storage)
+
+  -- Create status display menu
+  local menu = UiList.new()
+  menu:title("Warp Status Crystal")
+  menu:desc_enabled(true)
+
+  if not storage.is_away_from_home then
+    menu:text("You are HOME SAFE on your sanctuary island.\n\nThe warp has no hold on you here.")
+    menu:add(0, "Close")
+  else
+    -- Build status text
+    local pulse_multiplier = storage.current_raid_pulse_multiplier or 1
+    local interval_minutes = 15 * pulse_multiplier
+    local raid_type = storage.current_raid_type or "short"
+    local raid_name = raid_type:sub(1,1):upper() .. raid_type:sub(2)
+
+    local status_text = string.format(
+      "Current Expedition: %s\n" ..
+      "Pulse Interval: %d minutes\n" ..
+      "Current Pulse: %d\n" ..
+      "Grace Period: %d pulses\n\n",
+      raid_name,
+      interval_minutes,
+      status_info.current_pulse,
+      status_info.grace_period
+    )
+
+    if status_info.in_grace_period then
+      status_text = status_text .. string.format(
+        "STATUS: STABLE\n" ..
+        "Safe pulses remaining: %d\n" ..
+        "Time until sickness begins: ~%d minutes",
+        status_info.pulses_remaining,
+        status_info.pulses_remaining * interval_minutes
+      )
+    else
+      status_text = status_text .. string.format(
+        "STATUS: %s (Intensity %d/%d)\n" ..
+        "Pulses until disintegration: %d",
+        status_info.status_name,
+        status_info.current_intensity,
+        6,
+        status_info.pulses_to_disintegration
+      )
+    end
+
+    menu:text(status_text)
+
+    -- Add entries showing what happens at each stage
+    menu:add_w_desc(1, "Stage 1: Warp Stability", "Grace period. No effects. You feel fine.")
+    menu:add_w_desc(2, "Stage 2: Warp Sickness", "Intensity 1. -2 to all stats. Mild discomfort.")
+    menu:add_w_desc(3, "Stage 3: Warp Nausea", "Intensity 2. -4 to all stats. Growing pain.")
+    menu:add_w_desc(4, "Stage 4: Warp Debilitation", "Intensity 3. -6 to all stats. Severely impaired.")
+    menu:add_w_desc(5, "Stage 5: Warp Necrosis", "Intensity 4. -8 to all stats. Body failing.")
+    menu:add_w_desc(6, "Stage 6: Warp Disintegration!", "Intensity 5+. -10+ to stats. Constant damage. DEATH IMMINENT.")
+    menu:add(0, "Close")
+  end
+
+  menu:query()
+  return 0  -- Don't consume
+end
+
 -- Game started hook - initialize for new games only
 mod.on_game_started = function()
   -- Reset to defaults for new game
@@ -195,30 +264,33 @@ mod.on_character_death = function()
 
   -- Check for homeward mote (life insurance)
   local mote_id = ItypeId.new("skyisland_homeward_mote")
-  local has_mote = player:has_item_with_id(mote_id)
+  local has_mote = player:has_item_with_id(mote_id, false)
 
   if has_mote then
     -- Homeward mote saves you! Keep all items, consume mote
     gdebug.log_info("Sky Islands: Homeward mote activated!")
-    player:remove_items_with_id(mote_id, 1)
+    local mote_item = player:get_item_with_id(mote_id, false)
+    if mote_item then
+      player:remove_item(mote_item)
+    end
     gapi.add_msg("The homeward mote flares brilliantly, yanking you from death's grasp!")
     gapi.add_msg("You arrive home alive, with all your belongings intact.")
 
     -- Teleport home WITH items (use the success path)
     teleport.return_home_success(storage, missions, warp_sickness)
 
-    -- But don't count as a normal win - it's a mote save
-    -- (raids_won was already incremented by return_home_success, so decrement)
+    -- Mote save doesn't count as win or loss - undo the win increment from return_home_success
     storage.raids_won = (storage.raids_won or 1) - 1
-  else
-    -- Normal death - lose items
-    teleport.resurrect_at_home(storage, missions, warp_sickness)
-  end
 
-  -- Heal after resurrection
-  player:clear_effects()
-  player:set_all_parts_hp_cur(100)
-  player:set_all_parts_hp_cur(10)
+    -- Full heal for mote saves
+    player:clear_effects()
+    player:healall(999)
+  else
+    -- Normal death - lose items, get resurrected at low HP
+    teleport.resurrect_at_home(storage, missions, warp_sickness)
+
+    -- resurrect_at_home already handles effects clearing and low HP via warp_sickness.apply_resurrection_sickness
+  end
 end
 
 gdebug.log_info("Sky Islands PoC main.lua loaded")

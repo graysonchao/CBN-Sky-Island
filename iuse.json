@@ -83,5 +83,10 @@
     "type": "item_action",
     "id": "SKYISLAND_SKYWARD_BEACON",
     "name": { "str": "Return to the sky" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_WARP_CRYSTAL",
+    "name": { "str": "Check warp status" }
   }
 ]

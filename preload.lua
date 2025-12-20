@@ -74,6 +74,10 @@ game.iuse_functions["SKYISLAND_SKYWARD_BEACON"] = function(...)
   return mod.use_skyward_beacon(...)
 end
 
+game.iuse_functions["SKYISLAND_WARP_CRYSTAL"] = function(...)
+  return mod.use_warp_crystal(...)
+end
+
 -- Register hooks
 table.insert(game.hooks.on_game_started, function(...)
   return mod.on_game_started(...)
@@ -87,9 +91,9 @@ table.insert(game.hooks.on_game_save, function(...)
   return mod.on_game_save(...)
 end)
 
-table.insert(game.hooks.on_char_death, function(...)
-  return mod.on_char_death(...)
-end)
+-- table.insert(game.hooks.on_char_death, function(...)
+--   return mod.on_char_death(...)
+-- end)
 
 table.insert(game.hooks.on_character_death, function(...)
   return mod.on_character_death(...)

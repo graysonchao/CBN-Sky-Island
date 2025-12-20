@@ -552,5 +552,19 @@
     "flags": [ "TRADER_AVOID", "UNBREAKABLE" ],
     "color": "magenta",
     "use_action": "SKYISLAND_SKYWARD_BEACON"
+  },
+  {
+    "id": "skyisland_warp_crystal",
+    "type": "TOOL",
+    "name": { "str": "warp status crystal" },
+    "description": "A small crystalline orb that pulses with a faint inner light. When activated, it displays detailed information about your current warp status, including pulse count, time remaining, and the effects that will occur at each stage of warp sickness.",
+    "weight": "50 g",
+    "volume": "50 ml",
+    "looks_like": "spiral_stone",
+    "material": [ "alien_resin" ],
+    "symbol": "o",
+    "flags": [ "TRADER_AVOID", "UNBREAKABLE" ],
+    "color": "light_cyan",
+    "use_action": "SKYISLAND_WARP_CRYSTAL"
   }
 ]
