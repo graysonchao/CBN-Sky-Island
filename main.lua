@@ -199,6 +199,83 @@ mod.use_warp_crystal = function(who, item, pos)
   return 0  -- Don't consume
 end
 
+-- Animal teleporter - warp friendly creatures directly to island
+mod.use_animal_teleporter = function(who, item, pos)
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  -- Check if home location is set
+  if not storage.home_location then
+    gapi.add_msg("You need to set your home location first by using the warp obelisk.")
+    return 0
+  end
+
+  -- Prompt player to choose adjacent tile
+  local target_pos = gapi.choose_adjacent("Select a creature to warp home:")
+  if not target_pos then
+    gapi.add_msg("Cancelled.")
+    return 0
+  end
+
+  -- Check for monster at target position
+  local monster = gapi.get_monster_at(target_pos)
+  if not monster then
+    gapi.add_msg("There's no creature there.")
+    return 0
+  end
+
+  -- Capture check (matches vanilla pet carrier behavior):
+  -- Friendly monsters are captured automatically
+  -- Non-friendly monsters have a chance to resist based on HP%
+  if monster.friendly <= 0 then
+    -- hp_percentage returns 0-100, chance = hp% / 10
+    -- one_in(chance) means 1/chance probability of success
+    -- So a 100% HP monster has 1/10 chance, 10% HP has 1/1 (guaranteed)
+    local hp_percent = monster:hp_percentage()
+    local chance = math.max(1, math.floor(hp_percent / 10))
+    local roll = gapi.rng(1, chance)
+
+    if roll ~= 1 then
+      local monster_name = monster:get_name()
+      gapi.add_msg(string.format("The %s avoids your attempt to warp it!", monster_name))
+      return 0
+    end
+  end
+
+  -- Get monster info before removing it
+  local monster_type = monster:get_type()
+  local monster_hp = monster:get_hp()
+  local monster_name = monster:get_name()
+
+  -- Initialize storage for warped animals if needed
+  if not storage.warped_animals then
+    storage.warped_animals = {}
+  end
+
+  -- Store the animal data
+  table.insert(storage.warped_animals, {
+    type_id = tostring(monster_type),
+    hp = monster_hp,
+    name = monster_name
+  })
+
+  -- Move the monster far away to remove it from the reality bubble
+  -- It should despawn once outside the active area
+  -- Use a moderate offset (500 tiles) and clamp magnitude to under 50k
+  local monster_pos = monster:get_pos_ms()
+  local dest_x = math.min(50000, math.max(-50000, monster_pos.x + 500))
+  local dest_y = math.min(50000, math.max(-50000, monster_pos.y + 500))
+  local far_away = Tripoint.new(dest_x, dest_y, monster_pos.z)
+  monster:spawn(far_away)
+
+  gapi.add_msg(string.format("The %s vanishes in a shimmer of light, warped to your island!", monster_name))
+  gapi.add_msg(string.format("Animals queued for arrival: %d", #storage.warped_animals))
+  gdebug.log_info(string.format("Warped animal: %s (HP: %d) - total queued: %d",
+    tostring(monster_type), monster_hp, #storage.warped_animals))
+
+  return 1  -- Consume the teleporter
+end
+
 -- Game started hook - initialize for new games only
 mod.on_game_started = function()
   -- Reset to defaults for new game

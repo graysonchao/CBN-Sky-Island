@@ -207,6 +207,51 @@ local function teleport_to_omt(omt, offset_tiles)
   gapi.add_msg("You feel reality shift around you...")
 end
 
+-- Spawn warped animals at home location
+-- Called when player successfully returns home
+function teleport.spawn_warped_animals(storage)
+  if not storage.warped_animals or #storage.warped_animals == 0 then
+    return 0
+  end
+
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  local player_pos = player:get_pos_ms()
+  local spawned_count = 0
+
+  for _, animal_data in ipairs(storage.warped_animals) do
+    -- Create the monster type ID
+    local mtype_id = MtypeId.new(animal_data.type_id)
+
+    -- Spawn the monster near the player (within 2 tiles)
+    local spawned_monster = gapi.place_monster_around(mtype_id, player_pos, 2)
+
+    if spawned_monster then
+      -- Set the HP to what it was when captured
+      spawned_monster:set_hp(animal_data.hp)
+      -- Make it friendly again
+      spawned_monster:make_friendly()
+
+      spawned_count = spawned_count + 1
+      gdebug.log_info(string.format("Spawned warped animal: %s with HP %d",
+        animal_data.type_id, animal_data.hp))
+    else
+      gdebug.log_info(string.format("Failed to spawn warped animal: %s", animal_data.type_id))
+    end
+  end
+
+  -- Clear the warped animals list
+  storage.warped_animals = {}
+
+  if spawned_count > 0 then
+    gapi.add_msg(string.format("%d warped animal%s arrived at your island!",
+      spawned_count, spawned_count > 1 and "s" or ""))
+  end
+
+  return spawned_count
+end
+
 -- Use warp obelisk - start expedition
 function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickness)
   if storage.is_away_from_home then
@@ -506,6 +551,9 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
     -- Stop warp sickness (remove all effects)
     warp_sickness.stop()
 
+    -- Spawn any warped animals
+    teleport.spawn_warped_animals(storage)
+
     -- Check for progress gate rank-ups (automatic at 10 and 20 wins)
     if old_raids_won < 10 and storage.raids_won >= 10 then
       gapi.add_msg("=== RANK UP ===")
@@ -572,6 +620,9 @@ function teleport.return_home_success(storage, missions, warp_sickness)
   -- Stop warp sickness (remove all effects)
   warp_sickness.stop()
 
+  -- Spawn any warped animals
+  teleport.spawn_warped_animals(storage)
+
   -- Check for progress gate rank-ups (automatic at 10 and 20 wins)
   if old_raids_won < 10 and storage.raids_won >= 10 then
     gapi.add_msg("=== RANK UP ===")
@@ -605,6 +656,14 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   -- Items are dropped at the death location (lost forever)
   player:drop_all_items()
   gapi.add_msg("Your belongings scatter as reality tears you away...")
+
+  -- Clear any warped animals - they're lost on death
+  if storage.warped_animals and #storage.warped_animals > 0 then
+    local lost_count = #storage.warped_animals
+    storage.warped_animals = {}
+    gapi.add_msg(string.format("%d warped animal%s lost in the void...",
+      lost_count, lost_count > 1 and "s were" or " was"))
+  end
 
   -- Build home position from stored abs_ms coordinates
   local home_abs_ms = Tripoint.new(

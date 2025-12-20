@@ -78,6 +78,10 @@ game.iuse_functions["SKYISLAND_WARP_CRYSTAL"] = function(...)
   return mod.use_warp_crystal(...)
 end
 
+game.iuse_functions["SKYISLAND_ANIMAL_TELEPORTER"] = function(...)
+  return mod.use_animal_teleporter(...)
+end
+
 -- Register hooks
 table.insert(game.hooks.on_game_started, function(...)
   return mod.on_game_started(...)

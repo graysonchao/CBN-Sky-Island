@@ -566,5 +566,19 @@
     "flags": [ "TRADER_AVOID", "UNBREAKABLE" ],
     "color": "light_cyan",
     "use_action": "SKYISLAND_WARP_CRYSTAL"
+  },
+  {
+    "id": "skyisland_animal_teleporter",
+    "type": "TOOL",
+    "name": { "str": "warped animal teleporter" },
+    "description": "A hand-sized device with a shimmering portal at its core. Unlike a normal pet carrier, this device doesn't store the animal inside - it warps them directly to your sanctuary island, bypassing any weight limitations. Activate near a friendly creature to send it home. The creature will appear at your island when you return from your expedition.",
+    "weight": "500 g",
+    "volume": "1 L",
+    "material": [ "alien_resin" ],
+    "symbol": "#",
+    "color": "magenta",
+    "flags": [ "TRADER_AVOID", "UNBREAKABLE" ],
+    "looks_like": "pet_carrier",
+    "use_action": "SKYISLAND_ANIMAL_TELEPORTER"
   }
 ]

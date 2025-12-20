@@ -88,5 +88,10 @@
     "type": "item_action",
     "id": "SKYISLAND_WARP_CRYSTAL",
     "name": { "str": "Check warp status" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_ANIMAL_TELEPORTER",
+    "name": { "str": "Warp creature home" }
   }
 ]
