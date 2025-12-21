@@ -88,6 +88,18 @@ mod.use_upgrade_labs = function(who, item, pos)
   return upgrades.use_labs(who, item, pos, storage)
 end
 
+mod.use_upgrade_landing_waterwalk = function(who, item, pos)
+  return upgrades.use_landing_waterwalk(who, item, pos, storage)
+end
+
+mod.use_upgrade_scouting_clairvoyance1 = function(who, item, pos)
+  return upgrades.use_scouting_clairvoyance1(who, item, pos, storage)
+end
+
+mod.use_upgrade_scouting_clairvoyance2 = function(who, item, pos)
+  return upgrades.use_scouting_clairvoyance2(who, item, pos, storage)
+end
+
 -- Utility item activations
 mod.use_quickheal = function(who, item, pos)
   local player = gapi.get_avatar()
@@ -191,6 +203,20 @@ mod.use_warp_focus = function(who, item, pos)
   gapi.add_msg("The focus flares with brilliant light. You feel yourself being pulled skyward...")
   teleport.return_home_success(storage, missions, warp_sickness)
   return 0  -- Don't consume the focus
+end
+
+-- Waterwalking Stone - grants temporary waterwalking effect
+mod.use_waterwalking_stone = function(who, item, pos)
+  local player = gapi.get_avatar()
+  if not player then return 0 end
+
+  -- Apply waterwalking effect for 3 minutes
+  local effect_id = EffectTypeId.new("skyisland_waterwalking")
+  local duration = TimeDuration.from_minutes(3)
+  player:add_effect(effect_id, duration)
+
+  gapi.add_msg("The stone dissolves in your hand as you feel yourself become lighter than water!")
+  return 1  -- Consume the item
 end
 
 -- Skyward Beacon - consumable emergency return (works in all modes except extraction-only)

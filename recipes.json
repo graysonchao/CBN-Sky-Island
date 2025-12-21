@@ -1095,6 +1095,66 @@
     "flags": [ "BLIND_EASY" ]
   },
   {
+    "result": "skyisland_upgradekey_landing_waterwalk",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_UPGRADES",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "15 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Aquatic items: diving gear, fish, water containers",
+    "components": [
+      [ [ "skyisland_warp_shard", 2 ] ],
+      [ [ "dive_bag", 1 ], [ "rebreather", 1 ] ],
+      [ [ "fish", 10 ], [ "fish_pickled", 10 ] ],
+      [ [ "water_clean", 20 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_upgradekey_scouting_clairvoyance1",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_UPGRADES",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "15 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Psychic and death items: notes, corpse parts, candles",
+    "components": [
+      [ [ "skyisland_warp_shard", 2 ] ],
+      [ [ "novel_drama", 2 ], [ "novel_mystery", 1 ], [ "deck_of_cards", 2 ] ],
+      [ [ "bone_human", 5 ], [ "cured_pelt", 2 ], [ "etched_skull", 1 ] ],
+      [ [ "candle", 10 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_upgradekey_scouting_clairvoyance2",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_UPGRADES",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "15 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Observer items: camera, optics, detection tools",
+    "components": [
+      [ [ "skyisland_warp_shard", 3 ] ],
+      [ [ "camera_pro", 1 ], [ "camera", 1 ], [ "cell_phone", 1 ] ],
+      [ [ "binoculars", 1 ], [ "survivor_scope", 1 ] ],
+      [ [ "geiger_off", 1 ], [ "electrohack", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
     "result": "skyisland_labs_catalyst",
     "type": "recipe",
     "category": "CC_SKYISLAND",
@@ -1208,6 +1268,95 @@
     "//": "Warp animals directly to island, bypassing weight limits",
     "components": [
       [ [ "skyisland_warp_shard", 20 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_healing_salve",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Mid-raid healing item",
+    "components": [
+      [ [ "skyisland_warp_shard", 1 ] ],
+      [ [ "bandages", 1 ], [ "rag", 2 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_waterwalking_stone",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Walk on water for 3 minutes",
+    "components": [
+      [ [ "skyisland_warp_shard", 3 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_wood_floor_tokens",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Transform floor to wooden planks",
+    "components": [
+      [ [ "skyisland_warp_shard", 1 ] ],
+      [ [ "2x4", 25 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_flagstone_floor_tokens",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Transform floor to flagstones",
+    "components": [
+      [ [ "skyisland_warp_shard", 1 ] ],
+      [ [ "rock", 25 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_sand_floor_tokens",
+    "type": "recipe",
+    "category": "CC_SKYISLAND",
+    "subcategory": "CSC_SKYISLAND_ITEMS",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "1 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "Transform floor to sand",
+    "components": [
+      [ [ "skyisland_warp_shard", 1 ] ],
+      [ [ "material_sand", 100 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
   }

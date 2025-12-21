@@ -98,5 +98,25 @@
     "type": "item_action",
     "id": "SKYISLAND_WARP_FOCUS",
     "name": { "str": "Cast Warp Home" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_WATERWALKING_STONE",
+    "name": { "str": "Walk on water" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_LANDING_WATERWALK",
+    "name": { "str": "Unlock Landing Water-Walking" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_SCOUTING_CLAIRVOYANCE1",
+    "name": { "str": "Unlock Scouting Clairvoyance I" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_SCOUTING_CLAIRVOYANCE2",
+    "name": { "str": "Unlock Scouting Clairvoyance II" }
   }
 ]

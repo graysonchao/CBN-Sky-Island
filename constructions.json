@@ -1,0 +1,53 @@
+[
+  {
+    "type": "construction_group",
+    "id": "skyisland_floor_to_wood",
+    "name": "Warp floor into wood floor"
+  },
+  {
+    "type": "construction_group",
+    "id": "skyisland_floor_to_flagstone",
+    "name": "Warp floor into worked stone floor"
+  },
+  {
+    "type": "construction_group",
+    "id": "skyisland_floor_to_sand",
+    "name": "Warp floor into fine sand"
+  },
+  {
+    "type": "construction",
+    "id": "skyisland_floor_to_wood_floor",
+    "group": "skyisland_floor_to_wood",
+    "category": "OTHER",
+    "required_skills": [ [ "survival", 0 ] ],
+    "time": "5 s",
+    "components": [ [ [ "skyisland_wood_floor_tokens", 1 ] ] ],
+    "pre_flags": [ "FLAT" ],
+    "post_flags": [ "keep_items" ],
+    "post_terrain": "t_floor"
+  },
+  {
+    "type": "construction",
+    "id": "skyisland_floor_to_flagstone_floor",
+    "group": "skyisland_floor_to_flagstone",
+    "category": "OTHER",
+    "required_skills": [ [ "survival", 0 ] ],
+    "time": "5 s",
+    "components": [ [ [ "skyisland_flagstone_floor_tokens", 1 ] ] ],
+    "pre_flags": [ "FLAT" ],
+    "post_flags": [ "keep_items" ],
+    "post_terrain": "t_rock_floor"
+  },
+  {
+    "type": "construction",
+    "id": "skyisland_floor_to_sand_floor",
+    "group": "skyisland_floor_to_sand",
+    "category": "OTHER",
+    "required_skills": [ [ "survival", 0 ] ],
+    "time": "5 s",
+    "components": [ [ [ "skyisland_sand_floor_tokens", 1 ] ] ],
+    "pre_flags": [ "FLAT" ],
+    "post_flags": [ "keep_items" ],
+    "post_terrain": "t_sand"
+  }
+]

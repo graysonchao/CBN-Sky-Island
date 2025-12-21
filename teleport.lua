@@ -212,6 +212,40 @@ local function teleport_to_omt(omt, offset_tiles)
   gapi.add_msg("You feel reality shift around you...")
 end
 
+-- Helper: Apply warpcloak landing protection effects
+-- Base effect: 60 seconds of invisibility + feather fall
+-- Conditional bonuses based on upgrades
+local function apply_landing_protection(storage)
+  local player = gapi.get_avatar()
+  if not player then return end
+
+  -- Base warpcloak duration: 60 seconds
+  local cloak_duration = TimeDuration.from_seconds(60)
+
+  -- Apply base warpcloak (invisibility + feather fall)
+  local warpcloak_id = EffectTypeId.new("skyisland_warpcloak")
+  player:add_effect(warpcloak_id, cloak_duration)
+  gdebug.log_info("Applied warpcloak landing protection (60s)")
+
+  -- Check for landing upgrades and apply bonus effects
+
+  -- Landing waterwalking bonus
+  if storage.landing_waterwalk_unlocked then
+    local waterwalk_id = EffectTypeId.new("skyisland_waterwalking_landing")
+    player:add_effect(waterwalk_id, cloak_duration)
+    gdebug.log_info("Applied landing waterwalking bonus")
+  end
+
+  -- Scouting clairvoyance bonus (based on upgrade level)
+  local clairvoyance_time = storage.scouting_clairvoyance_time or 0
+  if clairvoyance_time > 0 then
+    local clairvoyance_id = EffectTypeId.new("skyisland_clairvoyance")
+    local clairvoyance_duration = TimeDuration.from_seconds(clairvoyance_time)
+    player:add_effect(clairvoyance_id, clairvoyance_duration)
+    gdebug.log_info(string.format("Applied scouting clairvoyance (%ds)", clairvoyance_time))
+  end
+end
+
 -- Spawn warped animals at home location
 -- Called when player successfully returns home
 -- Note: Uses delayed spawn to ensure map is fully loaded after teleport
@@ -484,6 +518,9 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   end
 
   teleport_to_omt(dest_omt)
+
+  -- Apply warpcloak landing protection (invisibility + feather fall + bonuses)
+  apply_landing_protection(storage)
 
   -- Reveal overmap if scouting is unlocked
   local scouting_level = storage.scouting_unlocked or 0

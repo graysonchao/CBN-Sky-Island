@@ -61,6 +61,18 @@ game.iuse_functions["SKYISLAND_UPGRADE_LABS"] = function(...)
   return mod.use_upgrade_labs(...)
 end
 
+game.iuse_functions["SKYISLAND_UPGRADE_LANDING_WATERWALK"] = function(...)
+  return mod.use_upgrade_landing_waterwalk(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_SCOUTING_CLAIRVOYANCE1"] = function(...)
+  return mod.use_upgrade_scouting_clairvoyance1(...)
+end
+
+game.iuse_functions["SKYISLAND_UPGRADE_SCOUTING_CLAIRVOYANCE2"] = function(...)
+  return mod.use_upgrade_scouting_clairvoyance2(...)
+end
+
 -- Utility item activations
 game.iuse_functions["SKYISLAND_QUICKHEAL"] = function(...)
   return mod.use_quickheal(...)
@@ -84,6 +96,10 @@ end
 
 game.iuse_functions["SKYISLAND_WARP_FOCUS"] = function(...)
   return mod.use_warp_focus(...)
+end
+
+game.iuse_functions["SKYISLAND_WATERWALKING_STONE"] = function(...)
+  return mod.use_waterwalking_stone(...)
 end
 
 -- Register hooks

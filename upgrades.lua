@@ -73,6 +73,26 @@ local UPGRADE_DEFS = {
     required = nil,
     new_level = true,
     message = "Lab starts are now available at the warp obelisk. You can choose to begin expeditions in underground science labs. Be warned: you will need a Labs Catalyst each time, and you will start sealed inside!"
+  },
+  -- Landing bonus upgrades (applied during warpcloak on landing)
+  landing_waterwalk = {
+    field = "landing_waterwalk_unlocked",
+    required = nil,
+    new_level = true,
+    message = "Landing Water-Walking unlocked. When you arrive at an expedition site, you will be able to walk on water for the duration of your warpcloak."
+  },
+  -- Scouting clairvoyance (see everything near you on landing)
+  scouting_clairvoyance1 = {
+    field = "scouting_clairvoyance_time",
+    required = 0,
+    new_level = 20,
+    message = "Scouting Clairvoyance I unlocked. You will see everything near you for 20 seconds when beginning an expedition."
+  },
+  scouting_clairvoyance2 = {
+    field = "scouting_clairvoyance_time",
+    required = 20,
+    new_level = 60,
+    message = "Scouting Clairvoyance II unlocked. You will see everything near you for 60 seconds when beginning an expedition."
   }
 }
 
@@ -177,6 +197,18 @@ end
 
 function upgrades.use_labs(who, item, pos, storage)
   return activate_upgrade(who, item, pos, storage, "labs")
+end
+
+function upgrades.use_landing_waterwalk(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "landing_waterwalk")
+end
+
+function upgrades.use_scouting_clairvoyance1(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "scouting_clairvoyance1")
+end
+
+function upgrades.use_scouting_clairvoyance2(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "scouting_clairvoyance2")
 end
 
 return upgrades

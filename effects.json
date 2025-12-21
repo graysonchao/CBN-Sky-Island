@@ -59,5 +59,51 @@
       "hurt_chance": [ 1 ],
       "hurt_tick": [ 20 ]
     }
+  },
+  {
+    "id": "skyisland_waterwalking",
+    "type": "effect_type",
+    "name": [ "Waterwalking" ],
+    "desc": [ "You can walk on the surface of water as if it were solid ground." ],
+    "apply_message": "You feel lighter than water!",
+    "remove_message": "The waterwalking effect fades.",
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "3 m",
+    "flags": [ "YOUCANSWIM" ]
+  },
+  {
+    "id": "skyisland_warpcloak",
+    "type": "effect_type",
+    "name": [ "Warp Cloak" ],
+    "desc": [ "You are invisible and incorporeal for a brief time. Now's your chance to get to cover. You also won't take fall damage." ],
+    "apply_message": "Warp energy envelops you!",
+    "remove_message": "You fully materialize. You're not invisible anymore!",
+    "decay_messages": [ [ "Your warpcloak is about to fade away.", "bad" ] ],
+    "rating": "good",
+    "max_intensity": 1,
+    "max_duration": "1 m",
+    "flags": [ "EFFECT_INVISIBLE", "EFFECT_FEATHER_FALL" ]
+  },
+  {
+    "id": "skyisland_clairvoyance",
+    "type": "effect_type",
+    "name": [ "Warped Omniscience" ],
+    "desc": [ "Nothing escapes your sight." ],
+    "apply_message": "Your vision expands until you see everything.",
+    "remove_message": "Your sight returns to normal.",
+    "rating": "good",
+    "max_intensity": 1,
+    "flags": [ "EFFECT_SUPER_CLAIRVOYANCE" ]
+  },
+  {
+    "id": "skyisland_waterwalking_landing",
+    "//": "Hidden message-less version for warpcloak landing bonus",
+    "type": "effect_type",
+    "name": [ "" ],
+    "desc": [ "" ],
+    "rating": "good",
+    "max_intensity": 1,
+    "flags": [ "YOUCANSWIM" ]
   }
 ]
