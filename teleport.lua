@@ -546,8 +546,8 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     search_origin.x, search_origin.y, search_origin.z))
 
   -- Debug: Try find_all to see how many results we get
-  local all_results = overmapbuffer.find_all(search_origin, params)
-  gdebug.log_info(string.format("find_all returned %d results", #all_results))
+  -- local all_results = overmapbuffer.find_all(search_origin, params)
+  -- gdebug.log_info(string.format("find_all returned %d results", #all_results))
 
   -- Find a random location matching parameters
   local dest_omt = overmapbuffer.find_random(search_origin, params)
