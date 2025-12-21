@@ -189,15 +189,76 @@ local function get_player_omt()
   return omt
 end
 
+-- Helper: Check if a position is passable (terrain movecost > 0)
+local function is_passable(game_map, pos)
+  local ter_id = game_map:get_ter_at(pos)
+  if not ter_id then return false end
+
+  local ter_data = ter_id:obj()
+  if not ter_data then return false end
+
+  local movecost = ter_data:get_movecost()
+  if movecost <= 0 then return false end
+
+  -- Also check furniture
+  local furn_id = game_map:get_furn_at(pos)
+  if furn_id then
+    local furn_data = furn_id:obj()
+    if furn_data then
+      local furn_movecost = furn_data:get_movecost()
+      -- Furniture movecost of -1 means impassable
+      if furn_movecost < 0 then return false end
+    end
+  end
+
+  return true
+end
+
+-- Helper: Find a passable position near the player after teleport
+local function find_safe_position(player)
+  local game_map = gapi.get_map()
+  local current_pos = player:get_pos_ms()
+
+  -- If current position is passable, no need to move
+  if is_passable(game_map, current_pos) then
+    return nil
+  end
+
+  gdebug.log_info("Player landed in impassable terrain, searching for safe position...")
+
+  -- Search in expanding squares around current position
+  for radius = 1, 10 do
+    for dx = -radius, radius do
+      for dy = -radius, radius do
+        -- Only check the edge of the square (optimization)
+        if math.abs(dx) == radius or math.abs(dy) == radius then
+          local check_pos = Tripoint.new(
+            current_pos.x + dx,
+            current_pos.y + dy,
+            current_pos.z
+          )
+          if is_passable(game_map, check_pos) then
+            gdebug.log_info(string.format("Found safe position at offset (%d, %d)", dx, dy))
+            return check_pos
+          end
+        end
+      end
+    end
+  end
+
+  gdebug.log_info("WARNING: Could not find safe position within radius 10!")
+  return nil
+end
+
 -- Helper: Teleport player to OMT coordinates with offset
 local function teleport_to_omt(omt, offset_tiles)
   gdebug.log_info(string.format("Teleporting to OMT: %s, %s, %s", omt.x, omt.y, omt.z))
   gapi.place_player_overmap_at(omt)
 
-  -- If offset specified, move player after teleport
-  if offset_tiles then
-    local player = gapi.get_avatar()
-    if player then
+  local player = gapi.get_avatar()
+  if player then
+    -- If offset specified, move player after teleport
+    if offset_tiles then
       local current_pos = player:get_pos_ms()
       local new_pos = Tripoint.new(
         current_pos.x + offset_tiles.x,
@@ -206,6 +267,13 @@ local function teleport_to_omt(omt, offset_tiles)
       )
       player:set_pos_ms(new_pos)
       gdebug.log_info(string.format("Applied offset: %d, %d, %d", offset_tiles.x, offset_tiles.y, offset_tiles.z))
+    end
+
+    -- Find safe position if landed in wall
+    local safe_pos = find_safe_position(player)
+    if safe_pos then
+      player:set_pos_ms(safe_pos)
+      gdebug.log_info("Moved player to safe position")
     end
   end
 
@@ -517,6 +585,14 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     end
   end
 
+  -- Two-stage teleport to prevent map revelation from z=10
+  -- First teleport: Move to target z-level at home x,y (prevents long-range visibility from sky island)
+  -- Second teleport: Move to actual destination
+  local intermediate_omt = Tripoint.new(home_omt.x, home_omt.y, dest_omt.z)
+  gdebug.log_info(string.format("Intermediate teleport to z=%d to prevent map revelation", dest_omt.z))
+  gapi.place_player_overmap_at(intermediate_omt)
+
+  -- Now teleport to actual destination
   teleport_to_omt(dest_omt)
 
   -- Apply warpcloak landing protection (invisibility + feather fall + bonuses)

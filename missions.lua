@@ -134,7 +134,7 @@ function missions.create_slaughter_mission()
   -- !!! TEMPORARY DEBUG: FORCE KILL_MONSTERS MISSION FOR TESTING             !!!
   -- !!! REMOVE THIS BEFORE PRODUCTION - SEARCH FOR "TEMPORARY DEBUG"         !!!
   -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  local DEBUG_FORCE_KILL_MONSTERS = true
+  local DEBUG_FORCE_KILL_MONSTERS = false
 
   if DEBUG_FORCE_KILL_MONSTERS then
     gdebug.log_info("!!! TEMPORARY DEBUG: Forcing MISSION_BONUS_KILL_LIGHT for testing !!!")

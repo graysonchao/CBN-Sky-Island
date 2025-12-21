@@ -9,7 +9,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 35, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 35, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -31,7 +31,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 90, "min_distance": 30 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 90, "min_distance": 30, "z": 0 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -53,7 +53,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 160, "min_distance": 50 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 160, "min_distance": 50, "z": 0 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -162,7 +162,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 30, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 30, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -184,7 +184,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 60, "min_distance": 20 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 60, "min_distance": 20, "z": 0 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -206,7 +206,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 80, "min_distance": 30 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 80, "min_distance": 30, "z": 0 },
       "update_mapgen": {
         "place_nested": [
           {
@@ -228,7 +228,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked", "repeat": [ 4, 8 ] }
@@ -246,7 +246,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked", "repeat": [ 8, 24 ] }
@@ -264,7 +264,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie", "x": [ 1, 22 ], "y": [ 1, 22 ], "name": "Marked", "target": true, "repeat": [ 0, 4 ] },
@@ -283,7 +283,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie", "x": [ 1, 22 ], "y": [ 1, 22 ], "name": "Marked", "target": true, "repeat": [ 0, 6 ] },
@@ -302,7 +302,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie", "x": [ 1, 22 ], "y": [ 1, 22 ], "name": "Marked", "target": true, "repeat": [ 0, 4 ] },
@@ -322,7 +322,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie_tough", "x": [ 1, 22 ], "y": [ 1, 22 ], "name": "Marked", "target": true, "repeat": [ 0, 2 ] },
@@ -342,7 +342,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie_master", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked" }
@@ -360,7 +360,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie_master", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked", "pack_size": [ 2, 5 ] }
@@ -378,7 +378,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie_master", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked" },
@@ -397,7 +397,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_zombie_master", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked" },
@@ -416,7 +416,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_mi_go", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked", "repeat": [ 2, 5 ] }
@@ -434,7 +434,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "start": {
-      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5 },
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 3, "random": true, "search_range": 20, "min_distance": 5, "z": 0 },
       "update_mapgen": {
         "place_monster": [
           { "monster": "mon_mi_go", "x": [ 1, 22 ], "y": [ 1, 22 ], "target": true, "name": "Marked", "repeat": [ 0, 2 ] },
