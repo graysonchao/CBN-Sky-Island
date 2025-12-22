@@ -66,6 +66,138 @@
     }
   },
   {
+    "id": "MISSION_REACH_EXTRACT_SHORT_SCOUT1",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 1, "random": true, "search_range": 35, "min_distance": 5, "z": 0 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_SHORT_SCOUT2",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 2, "random": true, "search_range": 35, "min_distance": 5, "z": 0 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_MEDIUM_SCOUT1",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 1, "random": true, "search_range": 90, "min_distance": 30, "z": 0 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_MEDIUM_SCOUT2",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 2, "random": true, "search_range": 90, "min_distance": 30, "z": 0 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_LONG_SCOUT1",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 1, "random": true, "search_range": 160, "min_distance": 50, "z": 0 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "MISSION_REACH_EXTRACT_LONG_SCOUT2",
+    "type": "mission_definition",
+    "name": { "str": "RAID: Reach the exit portal!" },
+    "goal": "MGOAL_GO_TO",
+    "description": "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece.",
+    "difficulty": 0,
+    "value": 0,
+    "origins": [ "ORIGIN_GAME_START" ],
+    "start": {
+      "assign_mission_target": { "om_terrain": "field", "reveal_radius": 2, "random": true, "search_range": 160, "min_distance": 50, "z": 0 },
+      "update_mapgen": {
+        "place_nested": [
+          {
+            "chunks": [ "mx_exitroom" ],
+            "x": [ 0, 13 ],
+            "y": [ 0, 13 ]
+          }
+        ]
+      }
+    }
+  },
+  {
     "id": "MISSION_SLAUGHTER_ZOMBIES_10",
     "type": "mission_definition",
     "name": { "str": "RAID: Kill 10 Zombies" },

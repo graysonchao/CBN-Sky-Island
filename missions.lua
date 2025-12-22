@@ -59,6 +59,18 @@ local function get_raid_suffix(storage)
   end
 end
 
+-- Get scouting suffix based on scouting level
+local function get_scout_suffix(storage)
+  local scouting_level = storage.scouting_unlocked or 0
+  if scouting_level >= 2 then
+    return "_SCOUT2"
+  elseif scouting_level >= 1 then
+    return "_SCOUT1"
+  else
+    return ""
+  end
+end
+
 -- Create extraction mission(s)
 -- With multiple_exits upgrade, spawns 2 exit portals
 function missions.create_extraction_mission(center_omt, storage)
@@ -68,11 +80,12 @@ function missions.create_extraction_mission(center_omt, storage)
   local multiple_exits = storage.multiple_exits_unlocked or 0
   local num_exits = multiple_exits >= 1 and 2 or 1
 
-  -- Select mission type based on raid length
-  local suffix = get_raid_suffix(storage)
-  local mission_type_id = "MISSION_REACH_EXTRACT" .. suffix
-  gdebug.log_info(string.format("Creating extraction mission: %s (raid type: %s)",
-    mission_type_id, storage.current_raid_type or "unknown"))
+  -- Select mission type based on raid length and scouting level
+  local raid_suffix = get_raid_suffix(storage)
+  local scout_suffix = get_scout_suffix(storage)
+  local mission_type_id = "MISSION_REACH_EXTRACT" .. raid_suffix .. scout_suffix
+  gdebug.log_info(string.format("Creating extraction mission: %s (raid type: %s, scouting: %d)",
+    mission_type_id, storage.current_raid_type or "unknown", storage.scouting_unlocked or 0))
 
   for i = 1, num_exits do
     local player_id = player:getID()
