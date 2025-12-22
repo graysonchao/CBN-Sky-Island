@@ -484,14 +484,27 @@ end
 --   end
 -- end
 
--- Character death hook (late) - actual resurrection and teleportation
--- Receives params table with: char (dying character), killer (who killed them)
+-- Character death hook - resurrection and teleportation
+-- Two call sites trigger this hook:
+--   1. avatar::is_dead_state() - calls WITHOUT params (player about to die)
+--   2. character::die() - calls WITH params.char set (any character dying)
+-- We handle case 1 (nil params.char) and case 2 only if params.char is the player.
 mod.on_character_death = function(params)
   local dying_char = params and params.char
   local player = gapi.get_avatar()
 
-  -- Only handle player death, not NPCs
-  if not dying_char or not player or dying_char ~= player then
+  gdebug.log_info("Sky Islands: on_character_death hook called")
+  gdebug.log_info(string.format("  dying_char: %s, player: %s", tostring(dying_char), tostring(player)))
+
+  if not player then
+    gdebug.log_info("  -> Skipping: player is nil")
+    return
+  end
+
+  -- If dying_char is set (from character::die()), check if it's the player
+  -- If dying_char is nil (from avatar::is_dead_state()), it's the player
+  if dying_char ~= nil and dying_char ~= player then
+    gdebug.log_info("  -> Skipping: dying character is not the player (NPC death)")
     return
   end
 
@@ -499,8 +512,16 @@ mod.on_character_death = function(params)
   gdebug.log_info(string.format("  home_location: %s", tostring(storage.home_location)))
 
   if not storage.home_location then
-    return  -- No home set, can't resurrect
+    gdebug.log_info("  -> No home_location set, cannot resurrect")
+    return false  -- No home set, can't resurrect - let normal death happen
   end
+
+  -- CRITICAL: Heal the player IMMEDIATELY to prevent is_dead_state() from returning true
+  -- The game will call is_dead_state() again right after this hook returns, and we need
+  -- the player to no longer be in a dead state to prevent the death confirmation prompt.
+  player:set_all_parts_hp_to_max()
+  player:clear_effects()
+  gdebug.log_info("  -> Immediately healed player to prevent death state")
 
   -- Check for homeward mote (life insurance)
   local mote_id = ItypeId.new("skyisland_homeward_mote")
@@ -521,16 +542,15 @@ mod.on_character_death = function(params)
 
     -- Mote save doesn't count as win or loss - undo the win increment from return_home_success
     storage.raids_won = (storage.raids_won or 1) - 1
-
-    -- Full heal for mote saves
-    player:clear_effects()
-    player:healall(999)
   else
     -- Normal death - lose items, get resurrected at low HP
     teleport.resurrect_at_home(storage, missions, warp_sickness)
 
-    -- resurrect_at_home already handles effects clearing and low HP via warp_sickness.apply_resurrection_sickness
+    -- resurrect_at_home applies resurrection sickness which sets HP to 10
   end
+
+  gdebug.log_info("Sky Islands: Death handled, returning true to prevent normal death")
+  return true  -- Tell the game we handled the death
 end
 
 gdebug.log_info("Sky Islands PoC main.lua loaded")

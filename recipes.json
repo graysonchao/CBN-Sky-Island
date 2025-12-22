@@ -1287,7 +1287,12 @@
     "reversible": false,
     "tools": [
         [ [ "skyisland_fakeitem_heart", -1 ] ],
-        [ [ "glock_19", -1 ] ]
+        [
+          [ "glock_17", -1 ],
+          [ "glock_19", -1 ],
+          [ "m1911", -1 ],
+          [ "sig_p230", -1 ]
+        ]
     ],
     "//": "DDA: bat + warp shards + medical + 9mm ammo",
     "components": [

@@ -173,6 +173,8 @@ local function activate_upgrade(who, item, pos, storage, upgrade_key)
     gapi.add_msg("=== UPGRADE UNLOCKED ===")
     gapi.add_msg(def.message)
     gdebug.log_info(string.format("Upgrade %s activated: %s = true", upgrade_key, def.field))
+    -- Explicitly remove the item since return value may not work
+    player:remove_item(item)
     return 1
   end
 
@@ -193,7 +195,8 @@ local function activate_upgrade(who, item, pos, storage, upgrade_key)
   gapi.add_msg(def.message)
   gdebug.log_info(string.format("Upgrade %s activated: %s = %d", upgrade_key, def.field, def.new_level))
 
-  -- Consume the item (return 1 to consume)
+  -- Explicitly remove the item since return value may not work
+  player:remove_item(item)
   return 1
 end
 
