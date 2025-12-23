@@ -2,6 +2,7 @@
 -- Mission creation, completion, and rewards
 
 local missions = {}
+local util = require("util")
 
 -- Mission reward table (mission_name -> shard count)
 -- HACK: We're using mission names instead of mission type IDs because BN's Lua bindings
@@ -43,7 +44,7 @@ local function give_mission_reward(player, mission_name, count)
     local shard_id = ItypeId.new("skyisland_warp_shard")
     player:add_item_with_id(shard_id, count)
     gapi.add_msg(string.format("You completed a mission and were rewarded with %d warp shard%s.", count, count > 1 and "s" or ""))
-    gdebug.log_info(string.format("Awarded %d warp shards for mission %s", count, mission_name))
+    util.debug_log(string.format("Awarded %d warp shards for mission %s", count, mission_name))
   end
 end
 
@@ -84,7 +85,7 @@ function missions.create_extraction_mission(center_omt, storage)
   local raid_suffix = get_raid_suffix(storage)
   local scout_suffix = get_scout_suffix(storage)
   local mission_type_id = "MISSION_REACH_EXTRACT" .. raid_suffix .. scout_suffix
-  gdebug.log_info(string.format("Creating extraction mission: %s (raid type: %s, scouting: %d)",
+  util.debug_log(string.format("Creating extraction mission: %s (raid type: %s, scouting: %d)",
     mission_type_id, storage.current_raid_type or "unknown", storage.scouting_unlocked or 0))
 
   for i = 1, num_exits do
@@ -101,7 +102,7 @@ function missions.create_extraction_mission(center_omt, storage)
       end
       -- Get actual target location from mission
       local target = new_mission:get_target_point()
-      gdebug.log_info(string.format("Created extraction mission %d at: %d, %d, %d", i, target.x, target.y, target.z))
+      util.debug_log(string.format("Created extraction mission %d at: %d, %d, %d", i, target.x, target.y, target.z))
 
       -- Store first exit location for tracking
       if i == 1 then
@@ -174,7 +175,7 @@ function missions.create_bonus_mission(center_omt, storage)
     return
   end
 
-  gdebug.log_info(string.format("Creating bonus mission: %s", selected.id))
+  util.debug_log(string.format("Creating bonus mission: %s", selected.id))
 
   local player_id = player:getID()
   local mission_type = MissionTypeIdRaw.new(selected.id)
@@ -185,7 +186,7 @@ function missions.create_bonus_mission(center_omt, storage)
     gapi.add_msg(string.format("Bonus Mission: %s!", selected.name))
     if selected.has_target then
       local target = new_mission:get_target_point()
-      gdebug.log_info(string.format("Created bonus mission at: %d, %d, %d", target.x, target.y, target.z))
+      util.debug_log(string.format("Created bonus mission at: %d, %d, %d", target.x, target.y, target.z))
     end
   else
     gdebug.log_error(string.format("Failed to create bonus mission: %s", selected.id))
@@ -234,7 +235,7 @@ function missions.create_slaughter_mission(center_omt, storage)
     return
   end
 
-  gdebug.log_info(string.format("Creating slaughter mission: %s", selected.id))
+  util.debug_log(string.format("Creating slaughter mission: %s", selected.id))
 
   local player_id = player:getID()
   local mission_type = MissionTypeIdRaw.new(selected.id)
@@ -243,7 +244,7 @@ function missions.create_slaughter_mission(center_omt, storage)
   if new_mission then
     new_mission:assign(player)
     gapi.add_msg(string.format("Slaughter Mission: %s!", selected.name))
-    gdebug.log_info(string.format("Created slaughter mission: %s", selected.id))
+    util.debug_log(string.format("Created slaughter mission: %s", selected.id))
   else
     gdebug.log_error(string.format("Failed to create slaughter mission: %s", selected.id))
   end
@@ -263,7 +264,7 @@ function missions.complete_or_fail_missions(player, storage)
         if mission_name == "RAID: Reach the exit portal!" or mission_name == "RAID: Find the warp shards!" then
           -- GO_TO missions: Always complete (survival = success)
           mission:wrap_up()
-          gdebug.log_info(string.format("Completed mission: %s (GO_TO mission)", mission_name))
+          util.debug_log(string.format("Completed mission: %s (GO_TO mission)", mission_name))
           gapi.add_msg(string.format("Mission completed: %s", mission_name))
         else
           -- KILL missions: Check if goal was actually met
@@ -277,11 +278,11 @@ function missions.complete_or_fail_missions(player, storage)
             end
 
             mission:wrap_up()
-            gdebug.log_info(string.format("Completed mission: %s", mission_name))
+            util.debug_log(string.format("Completed mission: %s", mission_name))
             gapi.add_msg(string.format("Mission completed: %s", mission_name))
           else
             mission:fail()
-            gdebug.log_info(string.format("Failed mission: %s", mission_name))
+            util.debug_log(string.format("Failed mission: %s", mission_name))
             gapi.add_msg(string.format("Mission failed: %s", mission_name))
           end
         end
@@ -299,7 +300,7 @@ function missions.fail_all_raid_missions(player)
       -- Only fail raid missions (prefixed with "RAID: ")
       if mission_name:sub(1, 6) == "RAID: " then
         mission:fail()
-        gdebug.log_info(string.format("Failed raid mission on death: %s", mission_name))
+        util.debug_log(string.format("Failed raid mission on death: %s", mission_name))
       end
     end
   end

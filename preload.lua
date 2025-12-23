@@ -2,6 +2,7 @@
 -- preload.lua - Hook and iuse registration
 
 local mod = game.mod_runtime[game.current_mod]
+local util = require("util")
 
 -- Register item use functions
 game.iuse_functions["SKYISLAND_WARP_OBELISK"] = function(...)
@@ -151,4 +152,4 @@ table.insert(game.hooks.on_character_death, function(...)
   return mod.on_character_death(...)
 end)
 
-gdebug.log_info("Sky Islands PoC preload complete")
+util.debug_log("Sky Islands PoC preload complete")

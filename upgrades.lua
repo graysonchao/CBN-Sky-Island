@@ -2,6 +2,7 @@
 -- Handles upgrade item activation and storage tracking
 
 local upgrades = {}
+local util = require("util")
 
 -- Upgrade definitions
 -- Maps upgrade key to: storage_field, required_level (current level must equal this), new_level, success_message
@@ -179,7 +180,7 @@ local function activate_upgrade(who, item, pos, storage, upgrade_key)
     storage[def.field] = true
     gapi.add_msg("=== UPGRADE UNLOCKED ===")
     gapi.add_msg(def.message)
-    gdebug.log_info(string.format("Upgrade %s activated: %s = true", upgrade_key, def.field))
+    util.debug_log(string.format("Upgrade %s activated: %s = true", upgrade_key, def.field))
     return 1
   end
 
@@ -198,7 +199,7 @@ local function activate_upgrade(who, item, pos, storage, upgrade_key)
   storage[def.field] = def.new_level
   gapi.add_msg("=== UPGRADE UNLOCKED ===")
   gapi.add_msg(def.message)
-  gdebug.log_info(string.format("Upgrade %s activated: %s = %d", upgrade_key, def.field, def.new_level))
+  util.debug_log(string.format("Upgrade %s activated: %s = %d", upgrade_key, def.field, def.new_level))
   return 1
 end
 

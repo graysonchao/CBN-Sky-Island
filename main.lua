@@ -10,6 +10,7 @@ local warp_sickness = require("warp_sickness")
 local teleport = require("teleport")
 local heart = require("heart")
 local upgrades = require("upgrades")
+local util = require("util")
 
 -- Initialize storage defaults (only for new games)
 -- These will be overwritten by saved data on load
@@ -162,7 +163,7 @@ mod.use_earthbound_pill = function(who, item, pos)
   -- Reduce pulse count by 4 (extend time)
   storage.warp_pulse_count = math.max(0, (storage.warp_pulse_count or 0) - 4)
   gapi.add_msg("The pill dissolves on your tongue. You feel the warp's grip on you loosen. (+4 pulses of time)")
-  gdebug.log_info(string.format("Earthbound pill used. Pulse count now: %d", storage.warp_pulse_count))
+  util.debug_log(string.format("Earthbound pill used. Pulse count now: %d", storage.warp_pulse_count))
   return 1  -- Consume the item
 end
 
@@ -412,7 +413,7 @@ mod.use_animal_teleporter = function(who, item, pos)
 
   gapi.add_msg(string.format("The %s vanishes in a shimmer of light, warped to your island!", monster_name))
   gapi.add_msg(string.format("Animals queued for arrival: %d", #storage.warped_animals))
-  gdebug.log_info(string.format("Warped animal: %s (HP: %d) - total queued: %d",
+  util.debug_log(string.format("Warped animal: %s (HP: %d) - total queued: %d",
     tostring(monster_type), monster_hp, #storage.warped_animals))
 
   return 1  -- Consume the teleporter
@@ -432,15 +433,15 @@ mod.on_game_started = function()
   -- Register the global warp sickness hook (runs every minute, checks conditions)
   warp_sickness.register_global_hook(storage)
 
-  gdebug.log_info("Sky Islands: New game started")
+  util.debug_log("Sky Islands: New game started")
   gapi.add_msg("Sky Islands PoC loaded! Use warp remote to start.")
 end
 
 -- Game load hook - restore state (storage auto-loaded)
 mod.on_game_load = function()
-  gdebug.log_info("Sky Islands: Game loaded")
-  gdebug.log_info(string.format("  Away from home: %s", tostring(storage.is_away_from_home)))
-  gdebug.log_info(string.format("  Warp pulse count: %d", storage.warp_pulse_count or 0))
+  util.debug_log("Sky Islands: Game loaded")
+  util.debug_log(string.format("  Away from home: %s", tostring(storage.is_away_from_home)))
+  util.debug_log(string.format("  Warp pulse count: %d", storage.warp_pulse_count or 0))
 
   -- Register the global warp sickness hook (runs every minute, checks conditions)
   warp_sickness.register_global_hook(storage)
@@ -452,14 +453,14 @@ end
 
 -- Game save hook
 mod.on_game_save = function()
-  gdebug.log_info("Sky Islands: Game saving")
-  gdebug.log_info(string.format("  Saving state: Away=%s, Pulses=%d",
+  util.debug_log("Sky Islands: Game saving")
+  util.debug_log(string.format("  Saving state: Away=%s, Pulses=%d",
     tostring(storage.is_away_from_home), storage.warp_pulse_count or 0))
 end
 
 -- Character death hook (early) - clear effects and heal before broken limbs lock in
 -- mod.on_char_death = function()
---   gdebug.log_info("Sky Islands: on_char_death fired")
+--   util.debug_log("Sky Islands: on_char_death fired")
 -- 
 --   if storage.home_location then
 --     local player = gapi.get_avatar()
@@ -470,7 +471,7 @@ end
 --     -- Heal everything to prevent broken limbs from locking in
 --     player:set_all_parts_hp_cur(10)
 -- 
---     gdebug.log_info("Sky Islands: Cleared effects and healed in on_char_death")
+--     util.debug_log("Sky Islands: Cleared effects and healed in on_char_death")
 --   end
 -- end
 
@@ -483,26 +484,26 @@ mod.on_character_death = function(params)
   local dying_char = params and params.char
   local player = gapi.get_avatar()
 
-  gdebug.log_info("Sky Islands: on_character_death hook called")
-  gdebug.log_info(string.format("  dying_char: %s, player: %s", tostring(dying_char), tostring(player)))
+  util.debug_log("Sky Islands: on_character_death hook called")
+  util.debug_log(string.format("  dying_char: %s, player: %s", tostring(dying_char), tostring(player)))
 
   if not player then
-    gdebug.log_info("  -> Skipping: player is nil")
+    util.debug_log("  -> Skipping: player is nil")
     return
   end
 
   -- If dying_char is set (from character::die()), check if it's the player
   -- If dying_char is nil (from avatar::is_dead_state()), it's the player
   if dying_char ~= nil and dying_char ~= player then
-    gdebug.log_info("  -> Skipping: dying character is not the player (NPC death)")
+    util.debug_log("  -> Skipping: dying character is not the player (NPC death)")
     return
   end
 
-  gdebug.log_info("Sky Islands: on_character_death fired for player")
-  gdebug.log_info(string.format("  home_location: %s", tostring(storage.home_location)))
+  util.debug_log("Sky Islands: on_character_death fired for player")
+  util.debug_log(string.format("  home_location: %s", tostring(storage.home_location)))
 
   if not storage.home_location then
-    gdebug.log_info("  -> No home_location set, cannot resurrect")
+    util.debug_log("  -> No home_location set, cannot resurrect")
     return false  -- No home set, can't resurrect - let normal death happen
   end
 
@@ -511,7 +512,7 @@ mod.on_character_death = function(params)
   -- the player to no longer be in a dead state to prevent the death confirmation prompt.
   player:set_all_parts_hp_to_max()
   player:clear_effects()
-  gdebug.log_info("  -> Immediately healed player to prevent death state")
+  util.debug_log("  -> Immediately healed player to prevent death state")
 
   -- Check for homeward mote (life insurance)
   local mote_id = ItypeId.new("skyisland_homeward_mote")
@@ -519,7 +520,7 @@ mod.on_character_death = function(params)
 
   if has_mote then
     -- Homeward mote saves you! Keep all items, consume mote
-    gdebug.log_info("Sky Islands: Homeward mote activated!")
+    util.debug_log("Sky Islands: Homeward mote activated!")
     local mote_item = player:get_item_with_id(mote_id, false)
     if mote_item then
       player:remove_item(mote_item)
@@ -539,8 +540,8 @@ mod.on_character_death = function(params)
     -- resurrect_at_home applies resurrection sickness which sets HP to 10
   end
 
-  gdebug.log_info("Sky Islands: Death handled, returning true to prevent normal death")
+  util.debug_log("Sky Islands: Death handled, returning true to prevent normal death")
   return true  -- Tell the game we handled the death
 end
 
-gdebug.log_info("Sky Islands PoC main.lua loaded")
+util.debug_log("Sky Islands PoC main.lua loaded")

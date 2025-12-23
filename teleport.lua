@@ -2,6 +2,7 @@
 -- Handles warp obelisk, return obelisk, and teleportation logic
 
 local teleport = {}
+local util = require("util")
 
 -- Temporary storage for red room items during teleportation
 -- Items are detached from map, held here, then placed at home
@@ -29,7 +30,7 @@ local function store_red_room_items(obelisk_pos)
   -- Clear any previous storage
   red_room_item_storage = {}
 
-  gdebug.log_info(string.format("Scanning red room around obelisk at (%d, %d, %d)",
+  util.debug_log(string.format("Scanning red room around obelisk at (%d, %d, %d)",
     obelisk_pos.x, obelisk_pos.y, obelisk_pos.z))
 
   -- Scan area inside the red room (not including walls)
@@ -61,9 +62,9 @@ local function store_red_room_items(obelisk_pos)
   end
 
   if items_stored > 0 then
-    gdebug.log_info(string.format("Total: %d items stored from red room", items_stored))
+    util.debug_log(string.format("Total: %d items stored from red room", items_stored))
   else
-    gdebug.log_info("No items found in red room")
+    util.debug_log("No items found in red room")
   end
 
   return items_stored
@@ -75,7 +76,7 @@ local function retrieve_stored_items_at_home(home_pos)
   local stored_count = #red_room_item_storage
   local items_retrieved = 0
 
-  gdebug.log_info(string.format("Retrieving %d stored items at home (%d, %d, %d)",
+  util.debug_log(string.format("Retrieving %d stored items at home (%d, %d, %d)",
     stored_count, home_pos.x, home_pos.y, home_pos.z))
 
   -- Place each stored item on the map at home position
@@ -91,7 +92,7 @@ local function retrieve_stored_items_at_home(home_pos)
 
   if items_retrieved > 0 then
     gapi.add_msg(string.format("%d items from the red room were teleported home with you!", items_retrieved))
-    gdebug.log_info(string.format("Retrieved %d items at home", items_retrieved))
+    util.debug_log(string.format("Retrieved %d items at home", items_retrieved))
   end
 
   return items_retrieved
@@ -232,7 +233,7 @@ local function find_safe_position(player)
     return nil
   end
 
-  gdebug.log_info("Player landed in impassable terrain, searching for safe position...")
+  util.debug_log("Player landed in impassable terrain, searching for safe position...")
 
   -- Search in expanding squares around current position
   for radius = 1, 10 do
@@ -246,7 +247,7 @@ local function find_safe_position(player)
             current_pos.z
           )
           if is_passable(game_map, check_pos) then
-            gdebug.log_info(string.format("Found safe position at offset (%d, %d)", dx, dy))
+            util.debug_log(string.format("Found safe position at offset (%d, %d)", dx, dy))
             return check_pos
           end
         end
@@ -254,13 +255,13 @@ local function find_safe_position(player)
     end
   end
 
-  gdebug.log_info("WARNING: Could not find safe position within radius 10!")
+  util.debug_log("WARNING: Could not find safe position within radius 10!")
   return nil
 end
 
 -- Helper: Teleport player to OMT coordinates with offset
 local function teleport_to_omt(omt, offset_tiles)
-  gdebug.log_info(string.format("Teleporting to OMT: %s, %s, %s", omt.x, omt.y, omt.z))
+  util.debug_log(string.format("Teleporting to OMT: %s, %s, %s", omt.x, omt.y, omt.z))
   gapi.place_player_overmap_at(omt)
 
   local player = gapi.get_avatar()
@@ -274,14 +275,14 @@ local function teleport_to_omt(omt, offset_tiles)
         current_pos.z + offset_tiles.z
       )
       player:set_pos_ms(new_pos)
-      gdebug.log_info(string.format("Applied offset: %d, %d, %d", offset_tiles.x, offset_tiles.y, offset_tiles.z))
+      util.debug_log(string.format("Applied offset: %d, %d, %d", offset_tiles.x, offset_tiles.y, offset_tiles.z))
     end
 
     -- Find safe position if landed in wall
     local safe_pos = find_safe_position(player)
     if safe_pos then
       player:set_pos_ms(safe_pos)
-      gdebug.log_info("Moved player to safe position")
+      util.debug_log("Moved player to safe position")
     end
   end
 
@@ -301,7 +302,7 @@ local function apply_landing_protection(storage)
   -- Apply base warpcloak (invisibility + feather fall)
   local warpcloak_id = EffectTypeId.new("skyisland_warpcloak")
   player:add_effect(warpcloak_id, cloak_duration)
-  gdebug.log_info("Applied warpcloak landing protection (60s)")
+  util.debug_log("Applied warpcloak landing protection (60s)")
 
   -- Check for landing upgrades and apply bonus effects
 
@@ -311,7 +312,7 @@ local function apply_landing_protection(storage)
     local clairvoyance_id = EffectTypeId.new("skyisland_clairvoyance")
     local clairvoyance_duration = TimeDuration.from_seconds(clairvoyance_time)
     player:add_effect(clairvoyance_id, clairvoyance_duration)
-    gdebug.log_info(string.format("Applied scouting clairvoyance (%ds)", clairvoyance_time))
+    util.debug_log(string.format("Applied scouting clairvoyance (%ds)", clairvoyance_time))
   end
 
   -- Landing flight bonus (real flight via mutation)
@@ -319,7 +320,7 @@ local function apply_landing_protection(storage)
     local flight_trait = MutationBranchId.new("SKYISLAND_WARP_FLIGHT")
     player:set_mutation(flight_trait)
     gapi.add_msg("Warp energy lifts you into the air!")
-    gdebug.log_info("Applied landing flight mutation (60s)")
+    util.debug_log("Applied landing flight mutation (60s)")
 
     -- Schedule removal of flight mutation after 60 seconds
     gapi.add_on_every_x_hook(cloak_duration, function()
@@ -327,7 +328,7 @@ local function apply_landing_protection(storage)
       if p then
         p:unset_mutation(flight_trait)
         gapi.add_msg("Your feet touch the ground as the warp flight fades.")
-        gdebug.log_info("Removed landing flight mutation")
+        util.debug_log("Removed landing flight mutation")
       end
       return false  -- One-shot: stop after first execution
     end)
@@ -349,7 +350,7 @@ function teleport.spawn_warped_animals(storage)
   end
   storage.warped_animals = {}
 
-  gdebug.log_info(string.format("Queuing %d animals for delayed spawn", #animals_to_spawn))
+  util.debug_log(string.format("Queuing %d animals for delayed spawn", #animals_to_spawn))
 
   -- Delay spawn by 1 second to let map fully load after teleport
   gapi.add_on_every_x_hook(TimeDuration.from_seconds(1), function()
@@ -359,7 +360,7 @@ function teleport.spawn_warped_animals(storage)
     local player_pos = player:get_pos_ms()
     local spawned_count = 0
 
-    gdebug.log_info(string.format("Delayed spawn executing at (%d,%d,%d)",
+    util.debug_log(string.format("Delayed spawn executing at (%d,%d,%d)",
       player_pos.x, player_pos.y, player_pos.z))
 
     for _, animal_data in ipairs(animals_to_spawn) do
@@ -383,9 +384,9 @@ function teleport.spawn_warped_animals(storage)
         spawned_monster:make_friendly()
 
         spawned_count = spawned_count + 1
-        gdebug.log_info(string.format("Spawned: %s with HP %d", type_str, animal_data.hp))
+        util.debug_log(string.format("Spawned: %s with HP %d", type_str, animal_data.hp))
       else
-        gdebug.log_info(string.format("FAILED to spawn: %s", type_str))
+        util.debug_log(string.format("FAILED to spawn: %s", type_str))
       end
     end
 
@@ -412,7 +413,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     local player_pos_ms = who:get_pos_ms()
     local home_abs_ms = gapi.get_map():get_abs_ms(player_pos_ms)
     storage.home_location = { x = home_abs_ms.x, y = home_abs_ms.y, z = home_abs_ms.z }
-    gdebug.log_info(string.format("Home location set to: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
+    util.debug_log(string.format("Home location set to: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
   end
 
   -- Also get OMT for teleportation
@@ -561,22 +562,22 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   -- Use ground-level origin for searching (sky islands are at z > 0)
   local search_origin = Tripoint.new(home_omt.x, home_omt.y, loc_config.z_level)
 
-  gdebug.log_info(string.format("Searching for %s terrain in range %d-%d at z=%d from (%d, %d, %d)",
+  util.debug_log(string.format("Searching for %s terrain in range %d-%d at z=%d from (%d, %d, %d)",
     loc_config.terrain_type, config.min_distance, config.max_distance, loc_config.z_level,
     search_origin.x, search_origin.y, search_origin.z))
 
   -- Debug: Try find_all to see how many results we get
   -- local all_results = overmapbuffer.find_all(search_origin, params)
-  -- gdebug.log_info(string.format("find_all returned %d results", #all_results))
+  -- util.debug_log(string.format("find_all returned %d results", #all_results))
 
   -- Find a random location matching parameters
   local dest_omt = overmapbuffer.find_random(search_origin, params)
 
   if dest_omt then
-    gdebug.log_info(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
+    util.debug_log(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
   else
     -- Fallback: widen the search range significantly
-    gdebug.log_info("Primary search failed, trying wider range...")
+    util.debug_log("Primary search failed, trying wider range...")
     local fallback_params = OmtFindParams.new()
     fallback_params:add_type(loc_config.terrain_type, loc_config.match_type)
     if selected_location == "field" then
@@ -586,16 +587,16 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     fallback_params:set_search_layers(loc_config.z_level, loc_config.z_level)
 
     local fallback_results = overmapbuffer.find_all(search_origin, fallback_params)
-    gdebug.log_info(string.format("Fallback find_all returned %d results", #fallback_results))
+    util.debug_log(string.format("Fallback find_all returned %d results", #fallback_results))
 
     dest_omt = overmapbuffer.find_random(search_origin, fallback_params)
 
     if dest_omt then
-      gdebug.log_info(string.format("Fallback found terrain at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
+      util.debug_log(string.format("Fallback found terrain at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
     else
       -- Absolute last resort - this shouldn't happen but just in case
       gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
-      gdebug.log_info("ERROR: All terrain searches failed!")
+      util.debug_log("ERROR: All terrain searches failed!")
       -- Refund catalyst if we consumed one
       if loc_config.catalyst_item then
         who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
@@ -609,7 +610,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   -- First teleport: Move to target z-level at home x,y (prevents long-range visibility from sky island)
   -- Second teleport: Move to actual destination
   local intermediate_omt = Tripoint.new(home_omt.x, home_omt.y, dest_omt.z)
-  gdebug.log_info(string.format("Intermediate teleport to z=%d to prevent map revelation", dest_omt.z))
+  util.debug_log(string.format("Intermediate teleport to z=%d to prevent map revelation", dest_omt.z))
   gapi.place_player_overmap_at(intermediate_omt)
 
   -- Now teleport to actual destination
@@ -865,7 +866,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
     return  -- No home to resurrect at
   end
 
-  gdebug.log_info("Sky Islands: Resurrecting at home")
+  util.debug_log("Sky Islands: Resurrecting at home")
 
   local player = gapi.get_avatar()
   if not player then return end
@@ -918,14 +919,14 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   warp_sickness.apply_resurrection_sickness()
 
   gapi.add_msg("You respawn at home, naked and wounded!")
-  gdebug.log_info(string.format("Resurrected at home abs_ms: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
-  gdebug.log_info(string.format("local pos: %d, %d, %d", local_pos.x, local_pos.y, local_pos.z))
+  util.debug_log(string.format("Resurrected at home abs_ms: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
+  util.debug_log(string.format("local pos: %d, %d, %d", local_pos.x, local_pos.y, local_pos.z))
 
   -- Restore preserved items
   local player_pos = player:get_pos_ms()
   for item, count in pairs(items_preserved_on_death) do
     if count > 0 then
-  gdebug.log_info(local_pos)
+  util.debug_log(local_pos)
       local item_id = ItypeId.new(item)
       local items = gapi.create_item(item_id, count)
       gapi.get_map():add_item(player_pos, items)

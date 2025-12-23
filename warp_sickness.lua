@@ -3,6 +3,7 @@
 -- Uses a SINGLE always-running hook that checks conditions each minute
 
 local warp_sickness = {}
+local util = require("util")
 
 -- Warp sickness timing
 -- Base interval is modified by difficulty setting (casual=30, normal=15, hard=10, impossible=5)
@@ -86,7 +87,7 @@ local tick_in_progress = false
 -- Process a warp pulse (called when accumulated time reaches threshold)
 local function process_warp_pulse(storage)
   if tick_in_progress then
-    gdebug.log_info("Warp pulse already in progress, skipping")
+    util.debug_log("Warp pulse already in progress, skipping")
     return
   end
   tick_in_progress = true
@@ -108,7 +109,7 @@ local function process_warp_pulse(storage)
   local base_interval = get_base_pulse_interval(storage)
   local interval_minutes = base_interval * pulse_multiplier
 
-  gdebug.log_info(string.format("Warp pulse %d (grace period: %d)", pulse, grace_period))
+  util.debug_log(string.format("Warp pulse %d (grace period: %d)", pulse, grace_period))
 
   -- Grace period: pulses during grace have no effect
   if pulse <= grace_period then
@@ -154,7 +155,7 @@ local function process_warp_pulse(storage)
   local status_name = STATUS_NAMES[current_intensity] or "CRITICAL"
   local pulses_to_doom = MAX_WARP_SICKNESS_INTENSITY - current_intensity
 
-  gdebug.log_info(string.format("Warp sickness applied/updated, intensity now: %d", current_intensity))
+  util.debug_log(string.format("Warp sickness applied/updated, intensity now: %d", current_intensity))
 
   -- Apply disintegration at critical intensity
   if current_intensity >= MAX_WARP_SICKNESS_INTENSITY then
@@ -217,12 +218,12 @@ local global_hook_registered = false
 -- This should be called ONCE during mod initialization
 function warp_sickness.register_global_hook(storage)
   if global_hook_registered then
-    gdebug.log_info("Warp sickness global hook already registered, skipping")
+    util.debug_log("Warp sickness global hook already registered, skipping")
     return
   end
   global_hook_registered = true
 
-  gdebug.log_info("Registering warp sickness global hook (1 minute interval)")
+  util.debug_log("Registering warp sickness global hook (1 minute interval)")
 
   gapi.add_on_every_x_hook(TimeDuration.from_minutes(1), function()
     -- Always run, always return true to keep running
@@ -243,7 +244,7 @@ function warp_sickness.register_global_hook(storage)
 
     -- Check if we've accumulated enough for a pulse
     if storage.warp_pulse_accumulated >= pulse_threshold then
-      gdebug.log_info(string.format("Warp pulse triggered: accumulated %d >= threshold %d",
+      util.debug_log(string.format("Warp pulse triggered: accumulated %d >= threshold %d",
         storage.warp_pulse_accumulated, pulse_threshold))
       storage.warp_pulse_accumulated = 0
       process_warp_pulse(storage)
@@ -257,7 +258,7 @@ end
 function warp_sickness.start(storage)
   storage.warp_pulse_count = 0
   storage.warp_pulse_accumulated = 0
-  gdebug.log_info("Warp sickness: initialized for new expedition")
+  util.debug_log("Warp sickness: initialized for new expedition")
 end
 
 -- Stop warp sickness - remove all effects and reset counters
@@ -282,7 +283,7 @@ function warp_sickness.stop(storage)
   local res_sick_effect = EffectTypeId.new("skyisland_resurrection_sickness")
   player:remove_effect(res_sick_effect)
 
-  gdebug.log_info("Warp sickness stopped and cleared")
+  util.debug_log("Warp sickness stopped and cleared")
 end
 
 -- Resurrection sickness tick - forcibly stabilize the player
