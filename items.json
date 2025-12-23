@@ -690,6 +690,22 @@
     "flags": [ "DESTROY_ON_DECHARGE" ]
   },
   {
+    "id": "skyisland_upgradekey_landing_flight",
+    "type": "TOOL",
+    "category": "spare_parts",
+    "name": { "str": "Inverted Gravity Bubble" },
+    "description": "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Landing Flight: While under the warpcloak effect on landing, you gain the power of flight for 60 seconds.",
+    "volume": "250 ml",
+    "weight": "150 g",
+    "material": [ "stone" ],
+    "symbol": "V",
+    "color": "cyan",
+    "initial_charges": 1,
+    "charges_per_use": 1,
+    "use_action": "SKYISLAND_UPGRADE_LANDING_FLIGHT",
+    "flags": [ "DESTROY_ON_DECHARGE" ]
+  },
+  {
     "id": "skyisland_quickheal",
     "type": "COMESTIBLE",
     "comestible_type": "MED",

@@ -101,6 +101,10 @@ game.iuse_functions["SKYISLAND_UPGRADE_SLAUGHTER"] = function(...)
   return mod.use_upgrade_slaughter(...)
 end
 
+game.iuse_functions["SKYISLAND_UPGRADE_LANDING_FLIGHT"] = function(...)
+  return mod.use_upgrade_landing_flight(...)
+end
+
 -- Utility item activations
 game.iuse_functions["SKYISLAND_QUICKHEAL"] = function(...)
   return mod.use_quickheal(...)

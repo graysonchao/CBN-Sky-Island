@@ -148,5 +148,10 @@
     "type": "item_action",
     "id": "SKYISLAND_UPGRADE_SLAUGHTER",
     "name": { "str": "Unlock Slaughter Missions" }
+  },
+  {
+    "type": "item_action",
+    "id": "SKYISLAND_UPGRADE_LANDING_FLIGHT",
+    "name": { "str": "Unlock Landing Flight" }
   }
 ]

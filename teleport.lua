@@ -305,6 +305,25 @@ local function apply_landing_protection(storage)
     player:add_effect(clairvoyance_id, clairvoyance_duration)
     gdebug.log_info(string.format("Applied scouting clairvoyance (%ds)", clairvoyance_time))
   end
+
+  -- Landing flight bonus (real flight via mutation)
+  if storage.landing_flight_unlocked then
+    local flight_trait = MutationBranchId.new("SKYISLAND_WARP_FLIGHT")
+    player:set_mutation(flight_trait)
+    gapi.add_msg("Warp energy lifts you into the air!")
+    gdebug.log_info("Applied landing flight mutation (60s)")
+
+    -- Schedule removal of flight mutation after 60 seconds
+    gapi.add_on_every_x_hook(cloak_duration, function()
+      local p = gapi.get_avatar()
+      if p then
+        p:unset_mutation(flight_trait)
+        gapi.add_msg("Your feet touch the ground as the warp flight fades.")
+        gdebug.log_info("Removed landing flight mutation")
+      end
+      return false  -- One-shot: stop after first execution
+    end)
+  end
 end
 
 -- Spawn warped animals at home location

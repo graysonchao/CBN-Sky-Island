@@ -136,6 +136,13 @@ local UPGRADE_DEFS = {
     required = nil,
     new_level = true,
     message = "Slaughter Missions unlocked. You will now receive a slaughter mission during each expedition, rewarding warp shards for killing specific types of enemies."
+  },
+  -- Landing bonuses (active during warpcloak effect on arrival)
+  landing_flight = {
+    field = "landing_flight_unlocked",
+    required = nil,
+    new_level = true,
+    message = "Landing Flight unlocked. While under the warpcloak effect on landing, you gain the power of flight for 60 seconds."
   }
 }
 
@@ -278,6 +285,10 @@ end
 
 function upgrades.use_slaughter(who, item, pos, storage)
   return activate_upgrade(who, item, pos, storage, "slaughter")
+end
+
+function upgrades.use_landing_flight(who, item, pos, storage)
+  return activate_upgrade(who, item, pos, storage, "landing_flight")
 end
 
 return upgrades

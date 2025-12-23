@@ -1532,5 +1532,26 @@
       [ [ "material_sand", 100 ] ]
     ],
     "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "skyisland_upgradekey_landing_flight",
+    "type": "recipe",
+    "category": "CC_WARP",
+    "subcategory": "CSC_WARP_UPGRADES",
+    "skill_used": "survival",
+    "difficulty": 0,
+    "time": "15 m",
+    "autolearn": true,
+    "reversible": false,
+    "tools": [ [ [ "skyisland_fakeitem_heart", -1 ] ] ],
+    "//": "DDA: hydrogen sacs, bird mutagen, feathers, meth - adapted for BN",
+    "components": [
+      [ [ "skyisland_warp_shard", 16 ] ],
+      [ [ "feather", 100 ], [ "down_feather", 100 ] ],
+      [ [ "iv_mutagen_bird", 2 ], [ "mutagen_bird", 4 ] ],
+      [ [ "jetpack", 1 ], [ "jumppack", 1 ], [ "bio_flight", 1 ] ],
+      [ [ "adderall", 20 ], [ "meth", 10 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
   }
 ]

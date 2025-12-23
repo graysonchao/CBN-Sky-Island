@@ -219,7 +219,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "monster_species": "ZOMBIE",
-    "monster_kill_goal": 50,
+    "monster_kill_goal": 50
   },
   {
     "id": "MISSION_SLAUGHTER_ZOMBIES_100",
@@ -243,7 +243,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "monster_species": "MIGO",
-    "monster_kill_goal": 1,
+    "monster_kill_goal": 1
   },
   {
     "id": "MISSION_SLAUGHTER_NETHER",
@@ -282,7 +282,7 @@
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
     "monster_species": "MAMMAL",
-    "monster_kill_goal": 5,
+    "monster_kill_goal": 5
   },
   {
     "id": "MISSION_BONUS_TREASURE_SHORT",

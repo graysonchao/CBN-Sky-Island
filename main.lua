@@ -128,6 +128,10 @@ mod.use_upgrade_slaughter = function(who, item, pos)
   return upgrades.use_slaughter(who, item, pos, storage)
 end
 
+mod.use_upgrade_landing_flight = function(who, item, pos)
+  return upgrades.use_landing_flight(who, item, pos, storage)
+end
+
 -- Utility item activations
 mod.use_quickheal = function(who, item, pos)
   local player = gapi.get_avatar()
