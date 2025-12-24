@@ -198,8 +198,20 @@ local function get_player_omt()
   return omt
 end
 
--- Helper: Check if a position is passable (terrain movecost > 0)
-local function is_passable(game_map, pos)
+-- Filter: Require ROOF flag (for rooftop spawns)
+local function roof_filter(game_map, pos)
+  local ter_id = game_map:get_ter_at(pos)
+  if not ter_id then return false end
+  local ter_data = ter_id:obj()
+  if not ter_data then return false end
+  local has_roof = ter_data:has_flag("ROOF")
+  -- util.debug_log(string.format("roof_filter: has_roof=%s", tostring(has_roof)))
+  return has_roof
+end
+
+-- Helper: Check if a position is safe to spawn
+-- additional_filter is an optional func(game_map, pos) for spawn-type-specific checks
+local function is_safe_spawn(game_map, pos, additional_filter)
   local ter_id = game_map:get_ter_at(pos)
   if not ter_id then return false end
 
@@ -208,6 +220,13 @@ local function is_passable(game_map, pos)
 
   local movecost = ter_data:get_movecost()
   if movecost <= 0 then return false end
+
+  for _, unsafe_flag in pairs({ "DEEP_WATER", "NO_FLOOR" }) do
+    if ter_data:has_flag(unsafe_flag) then return false end
+  end
+
+  -- local ter_id_str = tostring(ter_id)
+  -- util.debug_log(string.format("is_safe_spawn check: ter='%s' movecost=%d", ter_id_str, movecost))
 
   -- Also check furniture
   local furn_id = game_map:get_furn_at(pos)
@@ -220,20 +239,30 @@ local function is_passable(game_map, pos)
     end
   end
 
+  -- Apply additional filter if provided
+  if additional_filter and not additional_filter(game_map, pos) then
+    return false
+  end
+
   return true
 end
 
--- Helper: Find a passable position near the player after teleport
-local function find_safe_position(player)
+-- Helper: Find a safe position near the player after teleport
+-- additional_filter is an optional func(game_map, pos) for spawn-type-specific checks
+local function find_safe_position(player, additional_filter)
   local game_map = gapi.get_map()
   local current_pos = player:get_pos_ms()
 
-  -- If current position is passable, no need to move
-  if is_passable(game_map, current_pos) then
+  util.debug_log(string.format("find_safe_position: checking at pos (%d, %d, %d)",
+    current_pos.x, current_pos.y, current_pos.z))
+
+  -- If current position is safe, no need to move
+  if is_safe_spawn(game_map, current_pos, additional_filter) then
+    util.debug_log("Current position is safe, no move needed")
     return nil
   end
 
-  util.debug_log("Player landed in impassable terrain, searching for safe position...")
+  util.debug_log("Player landed in unsafe terrain, searching for safe position...")
 
   -- Search in expanding squares around current position
   for radius = 1, 10 do
@@ -246,7 +275,7 @@ local function find_safe_position(player)
             current_pos.y + dy,
             current_pos.z
           )
-          if is_passable(game_map, check_pos) then
+          if is_safe_spawn(game_map, check_pos, additional_filter) then
             util.debug_log(string.format("Found safe position at offset (%d, %d)", dx, dy))
             return check_pos
           end
@@ -260,12 +289,19 @@ local function find_safe_position(player)
 end
 
 -- Helper: Teleport player to OMT coordinates with offset
-local function teleport_to_omt(omt, offset_tiles)
-  util.debug_log(string.format("Teleporting to OMT: %s, %s, %s", omt.x, omt.y, omt.z))
-  gapi.place_player_overmap_at(omt)
-
+-- spawn_filter is an optional func(game_map, pos) for spawn-type-specific safety checks
+local function teleport_to_omt(omt, offset_tiles, spawn_filter)
   local player = gapi.get_avatar()
+
   if player then
+    -- we need noclip so that we can avoid falling before we find a safe position
+    player:set_mutation(MutationBranchId.new("DEBUG_NOCLIP"))
+    util.debug_log(string.format("Teleporting to OMT: %s, %s, %s", omt.x, omt.y, omt.z))
+    gapi.place_player_overmap_at(omt)
+    -- DEBUG: Show actual position after teleport
+    local actual_pos = player:get_pos_ms()
+    util.debug_log(string.format("After teleport: pos.z=%d (requested omt.z=%d)", actual_pos.z, omt.z))
+
     -- If offset specified, move player after teleport
     if offset_tiles then
       local current_pos = player:get_pos_ms()
@@ -278,12 +314,13 @@ local function teleport_to_omt(omt, offset_tiles)
       util.debug_log(string.format("Applied offset: %d, %d, %d", offset_tiles.x, offset_tiles.y, offset_tiles.z))
     end
 
-    -- Find safe position if landed in wall
-    local safe_pos = find_safe_position(player)
+    -- Find safe position if landed in wall or unsafe terrain
+    local safe_pos = find_safe_position(player, spawn_filter)
     if safe_pos then
       player:set_pos_ms(safe_pos)
       util.debug_log("Moved player to safe position")
     end
+    player:unset_mutation(MutationBranchId.new("DEBUG_NOCLIP"))
   end
 
   gapi.add_msg("You feel reality shift around you...")
@@ -575,6 +612,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
 
   if dest_omt then
     util.debug_log(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
+    util.debug_log(string.format("Found %s at z=%d (searched z=%d)", loc_config.terrain_type, dest_omt.z, loc_config.z_level))
   else
     -- Fallback: widen the search range significantly
     util.debug_log("Primary search failed, trying wider range...")
@@ -607,14 +645,20 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   end
 
   -- Two-stage teleport to prevent map revelation from z=10
-  -- First teleport: Move to target z-level at home x,y (prevents long-range visibility from sky island)
+  -- First teleport: Move to z=0 at home x,y (ground level should exist below sky island)
   -- Second teleport: Move to actual destination
-  local intermediate_omt = Tripoint.new(home_omt.x, home_omt.y, dest_omt.z)
-  util.debug_log(string.format("Intermediate teleport to z=%d to prevent map revelation", dest_omt.z))
+  local intermediate_omt = Tripoint.new(home_omt.x, home_omt.y, 0)
+  util.debug_log("Intermediate teleport to z=0 to prevent map revelation")
   gapi.place_player_overmap_at(intermediate_omt)
 
+  -- Determine spawn filter based on location type
+  local spawn_filter = nil
+  if selected_location == "roof" then
+    spawn_filter = roof_filter
+  end
+
   -- Now teleport to actual destination
-  teleport_to_omt(dest_omt)
+  teleport_to_omt(dest_omt, nil, spawn_filter)
 
   -- Apply warpcloak landing protection (invisibility + feather fall + bonuses)
   apply_landing_protection(storage)
@@ -926,7 +970,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   local player_pos = player:get_pos_ms()
   for item, count in pairs(items_preserved_on_death) do
     if count > 0 then
-  util.debug_log(local_pos)
+      util.debug_log(local_pos)
       local item_id = ItypeId.new(item)
       local items = gapi.create_item(item_id, count)
       gapi.get_map():add_item(player_pos, items)
