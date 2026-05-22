@@ -495,17 +495,14 @@ local function run_construction_mission(player, mission_id)
   end
 end
 
--- Hardcoded coordinates for sky island core terrain changes
--- These are based on the sky_island_core mapgen layout and avoid
--- using mapgen updates on the surface (which can fail with vehicles)
+-- Offset constants
+-- Takes the xy OMT the player is in
+-- Offsets it by xyz
+-- To get the coord
 local ISLAND_COORDS = {
-  stairs_down = { x = 60, y = 69, z = 10 },
-  skylight = { x = 60, y = 56, z = 10 }
+  stairs_down = TripointOmtMs.new( 12, 21, 10),
+  skylight = TripointOmtMs.new(12, 8, 10)
 }
-
-local function to_tripoint(coord)
-	return Tripoint.new(coord.x, coord.y, coord.z)
-end
 
 -- Helper: Set terrain at a specific local coordinate
 -- Uses absolute world coordinates based on player's current overmap tile
@@ -525,12 +522,15 @@ local function set_terrain_at_local_pos(coord, terrain_id)
   local ter_int = ter_str:int_id()
 
   -- Create the tripoint at the specified local coordinates
-  local pos = to_tripoint(coord)
+  local player = gapi.get_avatar()
+  local player_bub_ms_pos = player:get_pos_ms()
+  local player_bub_omt_pos = map:bub_to_abs(player_bub_ms_pos):to_omt():xy()
+  local pos = player_bub_omt_pos:project_combine(coord)
 
   -- Set the terrain
-  local current_ter = map:get_ter_at(pos)
-  gapi.add_msg(locale.gettext("current ter at %s is %s"), pos, current_ter)
-  local success = map:set_ter_at(pos, ter_int)
+  local current_ter = map:get_ter_at(map:abs_to_bub(pos))
+  gapi.add_msg(locale.gettext("current ter at %s is %s"), map:abs_to_bub(pos), current_ter)
+  local success = map:set_ter_at(map:abs_to_bub(pos), ter_int)
   if not success then
     gapi.add_msg(locale.gettext("WARNING: Failed to set terrain at position"))
   end
