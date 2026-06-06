@@ -670,7 +670,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   local params = OmtFindParams.new()
   params:add_type(loc_config.terrain_type, loc_config.match_type)
 
-  -- For field, also add forest as fallback options
+  -- For field starts, also allow common wilderness terrain types.
   if selected_location == "field" then
     params:add_type("forest", OtMatchType.EXACT)
     params:add_type("forest_thick", OtMatchType.EXACT)
@@ -678,6 +678,8 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
 
   -- Set search range
   params:set_search_range(config.min_distance, config.max_distance)
+  -- Bound Lua overmap searches so the UI does not appear to hang while finding every match in range.
+  params.max_results = 32
   -- Search at the appropriate z-level
   params:set_search_layers(loc_config.z_level, loc_config.z_level)
 
@@ -699,34 +701,14 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     util.debug_log(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
     util.debug_log(string.format("Found %s at z=%d (searched z=%d)", loc_config.terrain_type, dest_omt.z, loc_config.z_level))
   else
-    -- Fallback: widen the search range significantly
-    util.debug_log("Primary search failed, trying wider range...")
-    local fallback_params = OmtFindParams.new()
-    fallback_params:add_type(loc_config.terrain_type, loc_config.match_type)
-    if selected_location == "field" then
-      fallback_params:add_type("forest", OtMatchType.EXACT)
+    gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
+    util.debug_log("ERROR: Terrain search failed!")
+    -- Refund catalyst if we consumed one
+    if loc_config.catalyst_item then
+      who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
+      gapi.add_msg("Your Labs Catalyst is returned.")
     end
-    fallback_params:set_search_range(10, 2000)  -- Much wider range
-    fallback_params:set_search_layers(loc_config.z_level, loc_config.z_level)
-
-    local fallback_results = overmapbuffer.find_all(search_origin, fallback_params)
-    util.debug_log(string.format("Fallback find_all returned %d results", #fallback_results))
-
-    dest_omt = overmapbuffer.find_random(search_origin, fallback_params)
-
-    if dest_omt then
-      util.debug_log(string.format("Fallback found terrain at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
-    else
-      -- Absolute last resort - this shouldn't happen but just in case
-      gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
-      util.debug_log("ERROR: All terrain searches failed!")
-      -- Refund catalyst if we consumed one
-      if loc_config.catalyst_item then
-        who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
-        gapi.add_msg("Your Labs Catalyst is returned.")
-      end
-      return 0
-    end
+    return 0
   end
 
   -- Two-stage teleport to prevent map revelation from z=10
