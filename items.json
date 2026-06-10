@@ -25,7 +25,7 @@
     "type": "AMMO",
     "id": "skyisland_warp_shard",
     "category": "other",
-    "name": { "str": "warp shard", "str_pl": "warp shards" },
+    "name": { "str": "warp shard" },
     "description": "A small quantity of airy-thin material that resembles flaked obsidian. It glints with a purplish shimmer that seems to stretch beyond itself and into the air. These shards are the currency of your sanctuary island and can be exchanged for valuable upgrades.",
     "weight": "1 g",
     "volume": "1 ml",
@@ -94,7 +94,7 @@
     "type": "AMMO",
     "id": "skyisland_material_token",
     "category": "other",
-    "name": { "str": "material token", "str_pl": "material tokens" },
+    "name": { "str": "material token" },
     "description": "A very tiny disc-shaped blue wafer. It seems to shift in your grasp, feeling one moment like a grain of sand, then a sharp metal fragment, then a wooden splinter. These miniature tokens are rewarded for surviving a raid, and can be crafted on your island for a large supply of common resources by using infinity nodes as a catalyst.",
     "weight": "1 g",
     "volume": "1 ml",
@@ -139,7 +139,7 @@
   {
     "type": "ARMOR",
     "id": "skyisland_warphaulbag",
-    "name": { "str": "warped hauler's harness", "str_pl": "warped hauler's harnesses" },
+    "name": { "str": "warped hauler's harness" },
     "copy-from": "skyisland_warpbag_base",
     "description": "A looped pair of shimmering blue-black straps that can be worn over the shoulders like a harness. They can snugly fit a single item of nearly any size in comfort, and any burdens carried here feel twice as light. Ideal for squeezing one more bulky item home through the exit when your hands are already full, or even some container packed full of other items! Just beware you don't break your back doing it."
   },
@@ -147,7 +147,7 @@
     "id": "skyisland_grassbag",
     "type": "AMMO",
     "category": "other",
-    "name": { "str": "warped grass seeds", "str_pl": "warped grass seeds" },
+    "name": { "str_sp": "warped grass seeds" },
     "description": "While these are certainly imbued with warp, they don't seem to have any supernatural powers beyond just growing quickly. A nice option if you want to re-plant grass on your island, for decoration's sake.",
     "weight": "5 g",
     "volume": "5 ml",
@@ -164,7 +164,7 @@
     "id": "skyisland_vortex_token",
     "type": "AMMO",
     "category": "other",
-    "name": { "str": "vortex token", "str_pl": "vortex tokens" },
+    "name": { "str": "vortex token" },
     "description": "This irregular purplish lump seems to slowly pull in air even while you hold it in your hand. If you have one with you when you activate the return obelisk and the obelisk is correctly configured, it will drag the entire contents of the room with you back up to your island.",
     "weight": "5 g",
     "volume": "5 ml",
@@ -194,7 +194,7 @@
   },
   {
     "id": "skyisland_autodoc_inert",
-    "name": { "str": "Autodoc copyplate (inert)", "str_pl": "Autodoc copyplates (inert)" },
+    "name": { "str": "Autodoc copyplate (inert)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the advanced tech found within a modern Autodoc, and can be used to create a working copy at your sanctuary. However, it is inert in its current state and must first be imprinted on a working Autodoc. To do so, find an Autodoc during an expedition and activate this item while standing next to it.",
     "type": "TOOL",
     "symbol": ")",
@@ -207,7 +207,7 @@
   },
   {
     "id": "skyisland_autodoc_active",
-    "name": { "str": "Autodoc copyplate (activated)", "str_pl": "Autodoc copyplates (activated)" },
+    "name": { "str": "Autodoc copyplate (activated)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the advanced tech found within a modern Autodoc, and can be used to create a working copy at your sanctuary. It has been successfully activated and can be used as the catalyst to create a new Autodoc at a location of your choosing using the construction menu. Requires an adjacent Autodoc Couch to function.",
     "type": "GENERIC",
     "symbol": ")",
@@ -219,7 +219,7 @@
   },
   {
     "id": "skyisland_autodoc_couch_inert",
-    "name": { "str": "Autodoc Couch copyplate (inert)", "str_pl": "Autodoc Couch copyplates (inert)" },
+    "name": { "str": "Autodoc Couch copyplate (inert)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the patient interface couch used with an Autodoc. It is inert and must first be imprinted on a working Autodoc Couch. Find one during an expedition and activate this item while standing next to it.",
     "type": "TOOL",
     "symbol": ")",
@@ -232,7 +232,7 @@
   },
   {
     "id": "skyisland_autodoc_couch_active",
-    "name": { "str": "Autodoc Couch copyplate (activated)", "str_pl": "Autodoc Couch copyplates (activated)" },
+    "name": { "str": "Autodoc Couch copyplate (activated)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the patient interface couch used with an Autodoc. It has been activated and can be used to create a new Autodoc Couch via the construction menu. Must be placed adjacent to an Autodoc to function.",
     "type": "GENERIC",
     "symbol": ")",
@@ -244,7 +244,7 @@
   },
   {
     "id": "skyisland_nanofab_body_inert",
-    "name": { "str": "Nanofabricator copyplate (inert)", "str_pl": "Nanofabricator copyplates (inert)" },
+    "name": { "str": "Nanofabricator copyplate (inert)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the main unit of a Nanofabricator. It is inert and must first be imprinted on a working Nanofabricator body. Find one during an expedition and activate this item while standing next to it.",
     "type": "TOOL",
     "symbol": ")",
@@ -257,7 +257,7 @@
   },
   {
     "id": "skyisland_nanofab_body_active",
-    "name": { "str": "Nanofabricator copyplate (activated)", "str_pl": "Nanofabricator copyplates (activated)" },
+    "name": { "str": "Nanofabricator copyplate (activated)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the main unit of a Nanofabricator. It has been activated and can be used to create a new Nanofabricator body via the construction menu. Must be placed adjacent to a Nanofabricator Control Panel to function.",
     "type": "GENERIC",
     "symbol": ")",
@@ -269,7 +269,7 @@
   },
   {
     "id": "skyisland_nanofab_panel_inert",
-    "name": { "str": "Nanofabricator Control Panel copyplate (inert)", "str_pl": "Nanofabricator Control Panel copyplates (inert)" },
+    "name": { "str": "Nanofabricator Control Panel copyplate (inert)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the control panel of a Nanofabricator. It is inert and must first be imprinted on a working Nanofabricator control panel. Find one during an expedition and activate this item while standing next to it.",
     "type": "TOOL",
     "symbol": ")",
@@ -282,7 +282,7 @@
   },
   {
     "id": "skyisland_nanofab_panel_active",
-    "name": { "str": "Nanofabricator Control Panel copyplate (activated)", "str_pl": "Nanofabricator Control Panel copyplates (activated)" },
+    "name": { "str": "Nanofabricator Control Panel copyplate (activated)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the control panel of a Nanofabricator. It has been activated and can be used to create a new Nanofabricator control panel via the construction menu. Must be placed adjacent to a Nanofabricator body to function.",
     "type": "GENERIC",
     "symbol": ")",
@@ -294,7 +294,7 @@
   },
   {
     "id": "skyisland_cvd_body_inert",
-    "name": { "str": "CVD Machine copyplate (inert)", "str_pl": "CVD Machine copyplates (inert)" },
+    "name": { "str": "CVD Machine copyplate (inert)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the main unit of a CVD Machine. It is inert and must first be imprinted on a working CVD Machine body. Find one during an expedition and activate this item while standing next to it.",
     "type": "TOOL",
     "symbol": ")",
@@ -307,7 +307,7 @@
   },
   {
     "id": "skyisland_cvd_body_active",
-    "name": { "str": "CVD Machine copyplate (activated)", "str_pl": "CVD Machine copyplates (activated)" },
+    "name": { "str": "CVD Machine copyplate (activated)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the main unit of a CVD Machine. It has been activated and can be used to create a new CVD Machine body via the construction menu. Must be placed adjacent to a CVD Control Panel to function.",
     "type": "GENERIC",
     "symbol": ")",
@@ -319,7 +319,7 @@
   },
   {
     "id": "skyisland_cvd_panel_inert",
-    "name": { "str": "CVD Control Panel copyplate (inert)", "str_pl": "CVD Control Panel copyplates (inert)" },
+    "name": { "str": "CVD Control Panel copyplate (inert)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the control panel of a CVD Machine. It is inert and must first be imprinted on a working CVD control panel. Find one during an expedition and activate this item while standing next to it.",
     "type": "TOOL",
     "symbol": ")",
@@ -332,7 +332,7 @@
   },
   {
     "id": "skyisland_cvd_panel_active",
-    "name": { "str": "CVD Control Panel copyplate (activated)", "str_pl": "CVD Control Panel copyplates (activated)" },
+    "name": { "str": "CVD Control Panel copyplate (activated)" },
     "description": "This strange obsidian-colored plate is capable of mimicking the control panel of a CVD Machine. It has been activated and can be used to create a new CVD control panel via the construction menu. Must be placed adjacent to a CVD Machine body to function.",
     "type": "GENERIC",
     "symbol": ")",
