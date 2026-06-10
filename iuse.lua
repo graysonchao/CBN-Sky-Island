@@ -11,7 +11,7 @@ local function has_adjacent_furniture(player, furniture_id)
   -- Check all 8 adjacent tiles + current tile
   for dx = -1, 1 do
     for dy = -1, 1 do
-      local check_pos = Tripoint.new(player_pos.x + dx, player_pos.y + dy, player_pos.z)
+      local check_pos = TripointBubMs.new(player_pos.x + dx, player_pos.y + dy, player_pos.z)
       local furn = map:get_furn_at(check_pos)
       if furn == furniture_id:int_id() then
         return true
@@ -29,7 +29,7 @@ local function has_adjacent_terrain(player, terrain_id)
   -- Check all 8 adjacent tiles + current tile
   for dx = -1, 1 do
     for dy = -1, 1 do
-      local check_pos = Tripoint.new(player_pos.x + dx, player_pos.y + dy, player_pos.z)
+      local check_pos = TripointBubMs.new(player_pos.x + dx, player_pos.y + dy, player_pos.z)
       local ter = map:get_ter_at(check_pos)
       if ter == terrain_id:int_id() then
         return true

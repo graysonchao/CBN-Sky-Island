@@ -207,7 +207,7 @@ mod.use_warp_focus = function(who, item, pos)
     for dx = -10, 10 do
       for dy = -10, 10 do
         if not has_nearby_enemy then
-          local check_pos = Tripoint.new(player_pos.x + dx, player_pos.y + dy, player_pos.z)
+          local check_pos = TripointBubMs.new(player_pos.x + dx, player_pos.y + dy, player_pos.z)
           local monster = gapi.get_monster_at(check_pos)
           if monster and monster.friendly <= 0 then
             has_nearby_enemy = true
@@ -417,7 +417,7 @@ mod.use_animal_teleporter = function(who, item, pos)
   local monster_pos = monster:get_pos_ms()
   local dest_x = math.min(50000, math.max(-50000, monster_pos.x + 500))
   local dest_y = math.min(50000, math.max(-50000, monster_pos.y + 500))
-  local far_away = Tripoint.new(dest_x, dest_y, monster_pos.z)
+  local far_away = TripointBubMs.new(dest_x, dest_y, monster_pos.z)
   monster:spawn(far_away)
 
   gapi.add_msg(string.format(locale.gettext("The %s vanishes in a shimmer of light, warped to your island!"), monster_name))
