@@ -16,8 +16,6 @@ local RED_ROOM_RANGE = 3  -- tiles in each direction
 
 local DEATH_DROP_VAR = "skyisland_death_drop"
 local DEATH_ROLE_VAR = "skyisland_death_role"
-local death_drop_items
-local death_drop_had_weapon = false
 local PRESERVED_DEATH_ITEMS = {
   skyisland_warp_shard = true,
   skyisland_material_token = true,
@@ -1350,7 +1348,7 @@ local function death_drop_role(item)
   return item:get_var_str(DEATH_ROLE_VAR, "")
 end
 
-local function is_preserved_death_root(item)
+local function root_contains_preserved_token(item)
   local type_id = item:get_type():str()
   if PRESERVED_DEATH_ITEMS[type_id] then return true end
   if type(item.has_item_with_id) == "function" then
@@ -1361,9 +1359,42 @@ local function is_preserved_death_root(item)
   return false
 end
 
+-- Extract only preserved token charges from a dropped root.  Containers are
+-- temporarily inventory-owned so Character:use_charges can recursively remove
+-- token contents; the now-unrelated container is returned to the source map.
+local function extract_preserved_tokens(player, game_map, source, root)
+  local added_root = player:add_item(root)
+  if not added_root then return false end
+  local root_type = added_root:get_type():str()
+
+  local extracted_any = false
+  for preserved_id in pairs(PRESERVED_DEATH_ITEMS) do
+    local extracted = player:use_charges(ItypeId.new(preserved_id), 999999)
+    for _, token in ipairs(extracted) do
+      local added_token = player:add_item(token)
+      extracted_any = extracted_any or added_token ~= nil
+    end
+  end
+
+  if not extracted_any then
+    -- The engine API must expose recursive charge extraction for these ammo
+    -- tokens; leave the root untouched rather than silently deleting it.
+    return false
+  end
+
+  if not PRESERVED_DEATH_ITEMS[root_type] then
+    local container = player:remove_item(added_root)
+    if container then
+      container:set_var_str(DEATH_DROP_VAR, "1")
+      game_map:add_item(source, container)
+    end
+  end
+  return true
+end
+
 -- Drop every inventory/worn/wielded root through the engine binding. Marked
--- roots are recoverable if travel fails; preserved tokens are detached back to
--- inventory from the source map, including tokens nested in containers.
+-- roots are recoverable if travel fails; only token charges are returned to
+-- inventory, never an entire unrelated container.
 local function stage_death_drop(storage, player)
   local death_pos = player:get_pos_ms()
   local game_map = gapi.get_map()
@@ -1382,7 +1413,18 @@ local function stage_death_drop(storage, player)
       item:set_var_str(DEATH_ROLE_VAR, "worn")
     end
   end
-  local had_weapon = type(player.has_weapon) == "function" and player:has_weapon()
+  for _, item in ipairs(player:all_items(false)) do
+    if type(player.is_wielding) == "function" and player:is_wielding(item) then
+      item:set_var_str(DEATH_ROLE_VAR, "wielded")
+    end
+  end
+  if type(player.get_worn_items) == "function" then
+    for _, item in ipairs(player:get_worn_items()) do
+      if type(player.is_wielding) == "function" and player:is_wielding(item) then
+        item:set_var_str(DEATH_ROLE_VAR, "wielded")
+      end
+    end
+  end
   player:drop_all_items()
 
   local dropped = {}
@@ -1393,26 +1435,20 @@ local function stage_death_drop(storage, player)
     end
   end
 
-  local recovered_tokens = 0
-  local retained = {}
+  local extracted_roots = 0
   for _, item in ipairs(dropped) do
     item:set_var_str(DEATH_DROP_VAR, "1")
-    if is_preserved_death_root(item) then
+    if root_contains_preserved_token(item) then
       local detached = game_map:detach_item_at(death_pos, item)
-      if detached then
-        detached:set_var_str(DEATH_DROP_VAR, "")
-        detached:set_var_str(DEATH_ROLE_VAR, "")
-        player:add_item(detached)
-        recovered_tokens = recovered_tokens + 1
+      if detached and extract_preserved_tokens(player, game_map, death_pos, detached) then
+        extracted_roots = extracted_roots + 1
+      elseif detached then
+        detached:set_var_str(DEATH_DROP_VAR, "1")
+        game_map:add_item(death_pos, detached)
       end
-    else
-      table.insert(retained, item)
     end
   end
-
-  death_drop_had_weapon = had_weapon
-  death_drop_items = retained
-  return #retained + recovered_tokens
+  return #dropped + extracted_roots
 end
 
 -- Recover staged death belongings if destination travel fails. The map owns
@@ -1422,13 +1458,11 @@ local function recover_death_drop(storage, player)
   if not location then return 0 end
   local game_map = gapi.get_map()
   local source = TripointBubMs.new(location.x, location.y, location.z)
-  local candidates = death_drop_items or {}
-  if #candidates == 0 then
-    local stack = game_map:get_items_at(source)
-    if stack then
-      for _, item in ipairs(stack:items()) do
-        if death_drop_marker(item) ~= "" then table.insert(candidates, item) end
-      end
+  local candidates = {}
+  local stack = game_map:get_items_at(source)
+  if stack then
+    for _, item in ipairs(stack:items()) do
+      if death_drop_marker(item) ~= "" then table.insert(candidates, item) end
     end
   end
 
@@ -1439,29 +1473,18 @@ local function recover_death_drop(storage, player)
       local role = death_drop_role(detached)
       detached:set_var_str(DEATH_DROP_VAR, "")
       detached:set_var_str(DEATH_ROLE_VAR, "")
-      player:add_item(detached)
-      recovered = recovered + 1
-      if role == "worn" and type(player.wear) == "function" then
-        for _, restored in ipairs(player:all_items(false)) do
-          if restored == detached or restored:get_type():str() == detached:get_type():str() then
-            player:wear(restored, false)
-            break
-          end
+      local added = player:add_item(detached)
+      if added then
+        recovered = recovered + 1
+        if role == "worn" and type(player.wear) == "function" then
+          player:wear(added, false)
+        elseif role == "wielded" and type(player.wield) == "function" then
+          player:wield(added)
         end
       end
     end
   end
 
-  if death_drop_had_weapon and type(player.can_wield) == "function" then
-    for _, item in ipairs(player:all_items(false)) do
-      if player:can_wield(item) then
-        player:wield(item)
-        break
-      end
-    end
-  end
-  death_drop_items = nil
-  death_drop_had_weapon = false
   storage.death_drop_location = nil
   return recovered
 end
@@ -1522,8 +1545,6 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   util.debug_log(string.format("local pos: %d, %d, %d", local_pos.x, local_pos.y, local_pos.z))
 
   storage.death_drop_location = nil
-  death_drop_items = nil
-  death_drop_had_weapon = false
   teleport.cleanup_raid_dimension(storage)
   return true
 end

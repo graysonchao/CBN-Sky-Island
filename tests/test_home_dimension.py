@@ -63,6 +63,7 @@ local player = {
   end,
   add_item = function(self, item)
     self.inventory[item.id] = item
+    return item
   end,
   add_item_with_id = function(self, id, count)
     local item = self.inventory[id]
@@ -73,13 +74,29 @@ local player = {
   clear_effects = function() end,
   set_all_parts_hp_to_max = function() end,
   get_worn_items = function(self) return self.worn_items or {} end,
+  is_wielding = function(self, item) return self.wielded == item end,
   has_weapon = function(self) return self.wielded ~= nil end,
   can_wield = function(_, item) return item.id == "weapon" end,
   wield = function(self, item) self.wielded = item; self.inventory[item.id] = nil; return true end,
   wear = function(self, item) table.insert(self.worn_items, item); self.inventory[item.id] = nil; return true end,
+  use_charges = function(self, id)
+    local result = {}
+    local direct = self.inventory[id]
+    if direct then self.inventory[id] = nil; table.insert(result, direct) end
+    for _, item in pairs(self.inventory) do
+      if item.contains and item.contains[id] then
+        item.contains[id] = nil
+        table.insert(result, fresh_item(id))
+      end
+    end
+    return result
+  end,
   all_items = function(self)
     local items = {}
     for _, item in pairs(self.inventory) do table.insert(items, item) end
+    -- The fixture exposes the currently wielded root so is_wielding can mark
+    -- its role before the engine drop_all_items operation.
+    if self.wielded then table.insert(items, self.wielded) end
     return items
   end,
   drop_all_items = function(self)
@@ -962,8 +979,12 @@ assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
 assert(state.drop_dimension == "sky_island_raid_000001")
 assert(state.drop_position ~= nil and state.drop_position.x == 12)
 assert(#state.created_items == 0)
-assert(player.inventory.token_pouch == token_pouch)
+assert(player.inventory.skyisland_warp_shard ~= nil)
+assert(player.inventory.token_pouch == nil)
 assert(player.inventory.normal_loot == nil)
+local pouch_at_source = false
+for _, item in ipairs(state.map_items) do if item.id == "token_pouch" then pouch_at_source = true end end
+assert(pouch_at_source)
 assert(not storage.is_away_from_home and storage.raids_lost == 1)
 ''')
 
