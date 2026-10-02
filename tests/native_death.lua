@@ -22,8 +22,21 @@ function checks.setup()
   local player = gapi.get_avatar()
   local state = storage()
   assert(not state.is_away_from_home)
-  snapshot.home = { x=player:abs_pos().x, y=player:abs_pos().y, z=player:abs_pos().z }
-  snapshot.dimension = gapi.get_current_dimension_id()
+  assert(gapi.get_current_dimension_id() == state.home_dimension_id)
+  local home = TripointAbsMs.new(state.home_location.x, state.home_location.y, state.home_location.z)
+  gapi.place_player_overmap_at(home:to_omt())
+  gapi.place_player_local_at(gapi.get_map():abs_to_bub(home))
+  player:clear_effects()
+  player:set_all_parts_hp_to_max()
+  player:set_pain(0)
+  player:drop_all_items()
+  snapshot.home = { x=home.x, y=home.y, z=home.z }
+  snapshot.dimension = state.home_dimension_id
+  snapshot.home_vortex, snapshot.home_shards = 0, 0
+  for _, item in ipairs(gapi.get_map():get_items_at(player:get_pos_ms()):items()) do
+    if item:get_type():str() == token_id then snapshot.home_vortex = snapshot.home_vortex + item.charges end
+    if item:get_type():str() == shard_id then snapshot.home_shards = snapshot.home_shards + item.charges end
+  end
   snapshot.lost = state.raids_lost
   snapshot.won = state.raids_won
   snapshot.vortex = tokens(player, token_id) + 1000011
@@ -57,15 +70,38 @@ function checks.setup()
   end
   print("PASS native death fixture: equipped roots, two-level tokens, preexisting ground")
 end
-function checks.failed()
+function checks.failed(placement_failure)
+  local player = gapi.get_avatar()
+  local current = storage()
+  assert(current.is_away_from_home and current.home_dimension_id == "")
+  local source = player:abs_pos()
+  snapshot.source = { x=source.x, y=source.y, z=source.z }
+  snapshot.home = current.home_location
+  snapshot.dimension = current.home_dimension_id
+  snapshot.lost, snapshot.won = current.raids_lost, current.raids_won
+  snapshot.vortex, snapshot.shards = tokens(player, token_id), tokens(player, shard_id)
+  snapshot.home_vortex, snapshot.home_shards = 0, 0
+  local home = TripointAbsMs.new(snapshot.home.x, snapshot.home.y, snapshot.home.z)
+  gapi.place_player_overmap_at(home:to_omt())
+  for _, item in ipairs(gapi.get_map():get_items_at(gapi.get_map():abs_to_bub(home)):items()) do
+    if item:get_type():str() == token_id then snapshot.home_vortex = snapshot.home_vortex + item.charges end
+    if item:get_type():str() == shard_id then snapshot.home_shards = snapshot.home_shards + item.charges end
+  end
+  gapi.place_player_overmap_at(source:to_omt())
+  gapi.place_player_local_at(gapi.get_map():abs_to_bub(source))
   local original = gapi
-  gapi = setmetatable({ place_player_dimension_at=function() return false end }, { __index=original })
+  local state = storage()
+  local home_dimension = state.home_dimension_id
+  state.home_dimension_id = "native_failure_target"
+  local calls = 0
+  gapi = setmetatable({ place_player_dimension_at=function() calls=calls+1; return false end }, { __index=original })
   local ok, result = pcall(function()
     return require("teleport").resurrect_at_home(storage(), require("missions"), require("warp_sickness"))
   end)
   gapi = original
+  state.home_dimension_id = home_dimension
   assert(ok, result)
-  assert(not result)
+  assert(calls == (placement_failure and 0 or 1) and not result)
   local player = gapi.get_avatar()
   assert(storage().is_away_from_home and storage().raids_lost == snapshot.lost)
   assert(player:is_wielding(assert(tagged(player, "native_weapon", "original"))))
@@ -79,7 +115,21 @@ function checks.failed()
   assert(tokens(player, shard_id) == snapshot.shards)
   print("PASS native failed death travel: exact equipment, token totals, ground untouched")
 end
+function checks.map_failed()
+  local original = gapi
+  gapi = setmetatable({ get_map=function()
+    local real = original.get_map()
+    return setmetatable({ add_item=function(_, _, item) return item end }, {
+      __index=function(_, key) return function(_, ...) return real[key](real, ...) end end,
+    })
+  end }, { __index=original })
+  local ok, result = pcall(function() checks.failed(true) end)
+  gapi = original
+  assert(ok, result)
+  print("PASS native rejected source placement: equipped roots restored before travel")
+end
 function checks.arm()
+  snapshot.armed = true
   package.loaded.teleport = nil
   gdebug.reload_lua_code()
   gapi.get_avatar():set_all_parts_hp_cur(0)
@@ -89,6 +139,7 @@ function checks.verify()
   local player = gapi.get_avatar()
   local state = storage()
   local home = player:abs_pos()
+  assert(snapshot.armed and player:get_part_hp_cur(BodyPartTypeId.new("torso"):int_id()) == 10)
   assert(not state.is_away_from_home and state.raids_lost == snapshot.lost + 1)
   assert(state.raids_won == snapshot.won)
   assert(gapi.get_current_dimension_id() == snapshot.dimension)
@@ -102,7 +153,7 @@ function checks.verify()
     if item:get_type():str() == token_id then vortex = vortex + item.charges end
     if item:get_type():str() == shard_id then shards = shards + item.charges end
   end
-  assert(vortex == snapshot.vortex and shards == snapshot.shards)
+  assert(vortex == snapshot.vortex + snapshot.home_vortex and shards == snapshot.shards + snapshot.home_shards)
   local source = TripointAbsMs.new(snapshot.source.x, snapshot.source.y, snapshot.source.z)
   gapi.place_player_overmap_at(source:to_omt())
   local local_source = gapi.get_map():abs_to_bub(source)

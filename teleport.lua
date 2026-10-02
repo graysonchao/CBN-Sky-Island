@@ -1344,10 +1344,21 @@ local function death_drop_marker(item)
   return item:get_var_str(DEATH_DROP_VAR, "")
 end
 
-local death_transfer_serial = 0
-local function next_death_transfer_marker()
-  death_transfer_serial = death_transfer_serial + 1
-  return tostring(death_transfer_serial)
+local function next_death_serial(storage)
+  storage.death_drop_serial = (storage.death_drop_serial or 0) + 1
+  return storage.death_drop_serial
+end
+
+local function next_death_transfer_marker(storage)
+  storage.death_transfer_serial = (storage.death_transfer_serial or 0) + 1
+  return "death:transfer:" .. tostring(storage.death_transfer_serial)
+end
+
+local function clear_death_markers(item)
+  if not item or type(item.set_var_str) ~= "function" then return end
+  item:set_var_str(DEATH_TRANSFER_VAR, "")
+  item:set_var_str(DEATH_DROP_VAR, "")
+  item:set_var_str(DEATH_ROLE_VAR, "")
 end
 
 local function find_inventory_item(player, marker)
@@ -1362,24 +1373,17 @@ local function death_drop_role(item)
   return item:get_var_str(DEATH_ROLE_VAR, "")
 end
 
-local function root_contains_preserved_token(item)
-  local type_id = item:get_type():str()
-  if PRESERVED_DEATH_ITEMS[type_id] then return true end
-  if type(item.has_item_with_id) == "function" then
-    for preserved_id in pairs(PRESERVED_DEATH_ITEMS) do
-      if item:has_item_with_id(ItypeId.new(preserved_id), false) then return true end
-    end
-  end
-  return false
-end
-
--- Extract only preserved token charges from a dropped root.  Containers are
--- temporarily inventory-owned so Character:use_charges can recursively remove
--- token contents; the now-unrelated container is returned to the source map.
-local function extract_preserved_tokens(player, game_map, source, root)
-  local marker = next_death_transfer_marker()
+-- Extract only preserved token charges from one dropped root.  The root is
+-- temporarily inventory-owned so Character:use_charges can recurse through
+-- nested contents.  It is returned to the source map unless it is itself a
+-- preserved token.  Extracted charge items have all three transaction
+-- markers cleared before re-adding because add_item transfers ownership and
+-- returns no Item handle.
+local function extract_preserved_tokens(storage, player, game_map, source, root,
+                                       active_marker)
+  local marker = next_death_transfer_marker(storage)
   root:set_var_str(DEATH_TRANSFER_VAR, marker)
-  player:add_item(root) -- Binding is void; reacquire through serialized marker.
+  player:add_item(root)
   local added_root = find_inventory_item(player, marker)
   if not added_root then return false end
   local root_type = added_root:get_type():str()
@@ -1391,47 +1395,46 @@ local function extract_preserved_tokens(player, game_map, source, root)
       local extracted = player:use_charges(ItypeId.new(preserved_id), 999999)
       if #extracted == 0 then break end
       for _, token in ipairs(extracted) do
-        table.insert(drained_tokens, token)
+        -- use_charges exposes borrowed Item handles owned by its result list,
+        -- not Detached items accepted by add_item. Recreate preserved charges
+        -- through the same factory used by the original resurrection handler.
+        table.insert(drained_tokens, gapi.create_item(ItypeId.new(preserved_id), token.charges))
         extracted_any = true
       end
     end
   end
 
-  if not extracted_any then
+  -- A zero-charge preserved root is still a held item.  Do not discard it just
+  -- because use_charges quite correctly returned no detached charges.
+  if not extracted_any and PRESERVED_DEATH_ITEMS[root_type] then
     local unchanged = find_inventory_item(player, marker)
-    if unchanged then
-      local detached = player:remove_item(unchanged)
-      if detached then
-        detached:set_var_str(DEATH_DROP_VAR, "1")
-        detached:set_var_str(DEATH_TRANSFER_VAR, "")
-        local failed = game_map:add_item(source, detached)
-        if failed then
-          failed:set_var_str(DEATH_DROP_VAR, "1")
-          player:add_item(failed)
-        end
-      end
-    end
-    return false
+    if unchanged then clear_death_markers(unchanged) end
+    return true
   end
 
   -- Re-add only after every source charge has been drained; adding during the
   -- loop would make use_charges find the same token again forever.
   for _, token in ipairs(drained_tokens) do
+    clear_death_markers(token)
     player:add_item(token)
   end
 
-  if not PRESERVED_DEATH_ITEMS[root_type] then
-    local container = find_inventory_item(player, marker)
-    if container then
-      local detached = player:remove_item(container)
-      if detached then
-        detached:set_var_str(DEATH_DROP_VAR, "1")
-        detached:set_var_str(DEATH_TRANSFER_VAR, "")
-        local failed = game_map:add_item(source, detached)
-        if failed then
-          failed:set_var_str(DEATH_DROP_VAR, "1")
-          player:add_item(failed)
-        end
+  local container = find_inventory_item(player, marker)
+  if container and PRESERVED_DEATH_ITEMS[root_type] then
+    -- A zero-charge protected root can remain after nested charges were
+    -- extracted.  It stays with the player, but never keeps stale markers.
+    clear_death_markers(container)
+  elseif container then
+    local detached = player:remove_item(container)
+    if detached then
+      -- Keep only the active transaction marker on a failed map transfer so
+      -- recovery cannot select an old corpse or a prior transaction.
+      detached:set_var_str(DEATH_DROP_VAR, active_marker)
+      detached:set_var_str(DEATH_TRANSFER_VAR, "")
+      local failed = game_map:add_item(source, detached)
+      if failed then
+        player:add_item(failed)
+        return false
       end
     end
   end
@@ -1444,29 +1447,34 @@ end
 local function stage_death_drop(storage, player)
   local death_pos = player:get_pos_ms()
   local game_map = gapi.get_map()
+  local serial = next_death_serial(storage)
+  local active_marker = "death:" .. tostring(serial)
+  storage.death_drop_marker = active_marker
   storage.death_drop_location = { x = death_pos.x, y = death_pos.y, z = death_pos.z }
-  local existing = {}
-  local existing_stack = game_map:get_items_at(death_pos)
-  if existing_stack then
-    for _, item in ipairs(existing_stack:items()) do existing[item] = true end
-  end
 
+  -- Mark the held roots before the engine detaches them.  Map stacks are
+  -- exposed as fresh userdata snapshots, so pointer/table identity cannot
+  -- distinguish these roots from pre-existing ground items after the drop.
   for _, item in ipairs(player:all_items(false)) do
+    item:set_var_str(DEATH_DROP_VAR, active_marker)
     item:set_var_str(DEATH_ROLE_VAR, "inventory")
   end
   if type(player.get_worn_items) == "function" then
     for _, item in ipairs(player:get_worn_items()) do
+      item:set_var_str(DEATH_DROP_VAR, active_marker)
       item:set_var_str(DEATH_ROLE_VAR, "worn")
     end
   end
   for _, item in ipairs(player:all_items(false)) do
     if type(player.is_wielding) == "function" and player:is_wielding(item) then
+      item:set_var_str(DEATH_DROP_VAR, active_marker)
       item:set_var_str(DEATH_ROLE_VAR, "wielded")
     end
   end
   if type(player.get_worn_items) == "function" then
     for _, item in ipairs(player:get_worn_items()) do
       if type(player.is_wielding) == "function" and player:is_wielding(item) then
+        item:set_var_str(DEATH_DROP_VAR, active_marker)
         item:set_var_str(DEATH_ROLE_VAR, "wielded")
       end
     end
@@ -1477,21 +1485,20 @@ local function stage_death_drop(storage, player)
   local after_stack = game_map:get_items_at(death_pos)
   if after_stack then
     for _, item in ipairs(after_stack:items()) do
-      if not existing[item] then table.insert(dropped, item) end
+      if death_drop_marker(item) == active_marker then table.insert(dropped, item) end
     end
   end
 
-  local extracted_roots = 0
+  local placed = true
   for _, item in ipairs(dropped) do
-    item:set_var_str(DEATH_DROP_VAR, "1")
-    if root_contains_preserved_token(item) then
-      local detached = game_map:detach_item_at(death_pos, item)
-      if detached and extract_preserved_tokens(player, game_map, death_pos, detached) then
-        extracted_roots = extracted_roots + 1
-      end
+    local detached = game_map:detach_item_at(death_pos, item)
+    if detached then
+      local returned = extract_preserved_tokens(storage, player, game_map, death_pos, detached,
+                                                active_marker)
+      placed = returned and placed
     end
   end
-  return #dropped + extracted_roots
+  return placed
 end
 
 -- Recover staged death belongings if destination travel fails. The map owns
@@ -1499,13 +1506,21 @@ end
 local function recover_death_drop(storage, player)
   local location = storage.death_drop_location
   if not location then return 0 end
+  local active_marker = storage.death_drop_marker
+  if type(active_marker) ~= "string" or not active_marker:match("^death:%d+$") then
+    -- A legacy location may still accompany the old marker value "1", but it
+    -- is not a recoverable current transaction.
+    storage.death_drop_location = nil
+    storage.death_drop_marker = nil
+    return 0
+  end
   local game_map = gapi.get_map()
   local source = TripointBubMs.new(location.x, location.y, location.z)
   local candidates = {}
   local stack = game_map:get_items_at(source)
   if stack then
     for _, item in ipairs(stack:items()) do
-      if death_drop_marker(item) ~= "" then table.insert(candidates, item) end
+      if death_drop_marker(item) == active_marker then table.insert(candidates, item) end
     end
   end
 
@@ -1514,13 +1529,13 @@ local function recover_death_drop(storage, player)
     local detached = game_map:detach_item_at(source, item)
     if detached then
       local role = death_drop_role(detached)
-      local marker = next_death_transfer_marker()
-      detached:set_var_str(DEATH_DROP_VAR, "")
+      local marker = next_death_transfer_marker(storage)
+      clear_death_markers(detached)
       detached:set_var_str(DEATH_TRANSFER_VAR, marker)
       player:add_item(detached) -- Binding is void; reacquire a fresh Item handle.
       local added = find_inventory_item(player, marker)
       if added then
-        added:set_var_str(DEATH_TRANSFER_VAR, "")
+        clear_death_markers(added)
         recovered = recovered + 1
         if role == "worn" and type(player.wear) == "function" then
           player:wear(added, false)
@@ -1531,7 +1546,19 @@ local function recover_death_drop(storage, player)
     end
   end
 
+  -- A rejected source placement keeps its root inventory-owned. Restore its
+  -- equipped role too, rather than carrying death-exempt belongings home.
+  for _, item in ipairs(player:all_items(false)) do
+    if death_drop_marker(item) == active_marker then
+      local role = death_drop_role(item)
+      clear_death_markers(item)
+      recovered = recovered + 1
+      if role == "worn" then player:wear(item, false)
+      elseif role == "wielded" then player:wield(item) end
+    end
+  end
   storage.death_drop_location = nil
+  storage.death_drop_marker = nil
   return recovered
 end
 
@@ -1547,7 +1574,10 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
 
   -- Stage the death penalty at the current source position before travel.
   -- Preserved token items remain in the player's inventory exactly once.
-  stage_death_drop(storage, player)
+  if not stage_death_drop(storage, player) then
+    recover_death_drop(storage, player)
+    return false
+  end
   gapi.add_msg(locale.gettext("Your belongings scatter as reality tears you away..."))
 
   -- If the engine rejects the destination, recover staged belongings and keep
@@ -1591,6 +1621,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   util.debug_log(string.format("local pos: %d, %d, %d", local_pos.x, local_pos.y, local_pos.z))
 
   storage.death_drop_location = nil
+  storage.death_drop_marker = nil
   teleport.cleanup_raid_dimension(storage)
   return true
 end
