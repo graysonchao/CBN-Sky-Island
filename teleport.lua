@@ -4,9 +4,10 @@
 local teleport = {}
 local util = require("util")
 
--- Temporary storage for red room items during teleportation.
--- Keep the source position with each detached item so a failed dimension
--- transition can put it back exactly where it came from.
+-- Red-room contents are staged in the player's inventory, not in a Lua-only
+-- detached_ptr.  The marker and source coordinates are serialized with the
+-- item, so an engine autosave/reload cannot destroy a failed transfer.
+local ROOM_TRANSFER_VAR = "skyisland_room_transfer"
 local red_room_item_storage = {}
 
 -- Red room bounds relative to obelisk position
@@ -22,19 +23,45 @@ local items_preserved_on_death = {
   skyisland_vortex_token = 0,
 }
 
--- Helper: Store items from the red room in temporary storage (survives map changes)
--- Returns the number of items stored
+local function item_transfer_marker(item)
+  if not item or type(item.get_var_str) ~= "function" then return "" end
+  return item:get_var_str(ROOM_TRANSFER_VAR, "")
+end
+
+local function marker_position(marker)
+  local x, y, z = marker:match("^(%-?%d+),(%-?%d+),(%-?%d+)$")
+  if not x then return nil end
+  return { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
+end
+
+local function staged_items(player)
+  local result = {}
+  if not player or type(player.all_items) ~= "function" then return result end
+  for _, item in ipairs(player:all_items(false)) do
+    local marker = item_transfer_marker(item)
+    if marker ~= "" and marker_position(marker) then
+      table.insert(result, { item = item, marker = marker, position = marker_position(marker) })
+    end
+  end
+  return result
+end
+
+local function has_staged_room_items()
+  return #staged_items(gapi.get_avatar()) > 0
+end
+
+-- Detach each item only long enough to transfer ownership to the character's
+-- inventory.  Character inventory is engine-serialized and therefore durable
+-- across the autosave/reload boundary.
 local function store_red_room_items(obelisk_pos)
   local game_map = gapi.get_map()
+  local player = gapi.get_avatar()
   local items_stored = 0
-
-  -- Clear any previous storage
   red_room_item_storage = {}
 
   util.debug_log(string.format("Scanning red room around obelisk at (%d, %d, %d)",
     obelisk_pos.x, obelisk_pos.y, obelisk_pos.z))
 
-  -- Scan area inside the red room (not including walls)
   for dx = -RED_ROOM_RANGE, RED_ROOM_RANGE do
     for dy = -RED_ROOM_RANGE, RED_ROOM_RANGE do
       local check_pos = TripointBubMs.new(
@@ -42,22 +69,17 @@ local function store_red_room_items(obelisk_pos)
         obelisk_pos.y + dy,
         obelisk_pos.z
       )
-
-      -- Check if there are items at this position
       if game_map:has_items_at(check_pos) then
         local items_stack = game_map:get_items_at(check_pos)
-
-        -- Get frozen copy of items for safe iteration while modifying
-        local items_to_store = items_stack:items()
-
-        -- Detach each item from map and store in Lua table
-        for _, it in ipairs(items_to_store) do
+        for _, it in ipairs(items_stack:items()) do
           local detached = game_map:detach_item_at(check_pos, it)
           if detached then
-            table.insert(red_room_item_storage, {
-              item = detached,
-              position = { x = check_pos.x, y = check_pos.y, z = check_pos.z },
-            })
+            local marker = string.format("%d,%d,%d", check_pos.x, check_pos.y, check_pos.z)
+            detached:set_var_str(ROOM_TRANSFER_VAR, marker)
+            player:add_item(detached)
+            table.insert(red_room_item_storage, { marker = marker, position = {
+              x = check_pos.x, y = check_pos.y, z = check_pos.z,
+            } })
             items_stored = items_stored + 1
           end
         end
@@ -65,83 +87,92 @@ local function store_red_room_items(obelisk_pos)
     end
   end
 
-  if items_stored > 0 then
-    util.debug_log(string.format("Total: %d items stored from red room", items_stored))
-  else
-    util.debug_log("No items found in red room")
-  end
-
+  util.debug_log(string.format("Staged %d room items in serialized inventory", items_stored))
   return items_stored
 end
 
--- Put staged room items back into their source map after a failed transition.
-local function restore_stored_items_at_source()
-  if #red_room_item_storage == 0 then return 0 end
+-- Move a staged item while clearing its marker only after ownership leaves
+-- the inventory.  On failure, restore the marker before returning it to the
+-- durable inventory owner.
+local function place_transfer_item(game_map, position, detached)
+  local marker = item_transfer_marker(detached)
+  detached:set_var_str(ROOM_TRANSFER_VAR, "")
+  local failed = game_map:add_item(position, detached)
+  if failed then failed:set_var_str(ROOM_TRANSFER_VAR, marker) end
+  return failed
+end
 
+-- Put staged room items back into their source map after a failed transition.
+-- Marked inventory items remain durable even if this operation is interrupted.
+local function restore_stored_items_at_source()
+  local player = gapi.get_avatar()
   local game_map = gapi.get_map()
   local restored = 0
-  local remaining = {}
-  for _, entry in ipairs(red_room_item_storage) do
-    local source = TripointBubMs.new(entry.position.x, entry.position.y, entry.position.z)
-    local failed = game_map:add_item(source, entry.item)
-    if failed then
-      table.insert(remaining, { item = failed, position = entry.position })
-    else
-      restored = restored + 1
+  for _, entry in ipairs(staged_items(player)) do
+    local detached = player:remove_item(entry.item)
+    if detached then
+      local source = TripointBubMs.new(entry.position.x, entry.position.y, entry.position.z)
+      local failed = place_transfer_item(game_map, source, detached)
+      if failed then player:add_item(failed) else restored = restored + 1 end
     end
   end
-  red_room_item_storage = remaining
+  red_room_item_storage = {}
   util.debug_log(string.format("Restored %d staged room items after failed travel", restored))
   return restored
 end
 
--- Helper: Retrieve stored items and place them at home position.  The binding
--- returns a detached item on failure; retain it instead of silently destroying it.
+-- Retrieve serialized room items at home.  Failed placement returns ownership
+-- to the character inventory, where it survives a save/reload for retry.
 local function retrieve_stored_items_at_home(home_pos)
+  local player = gapi.get_avatar()
   local game_map = gapi.get_map()
-  local stored_count = #red_room_item_storage
+  local entries = staged_items(player)
   local items_retrieved = 0
-  local remaining = {}
 
-  util.debug_log(string.format("Retrieving %d stored items at home (%d, %d, %d)",
-    stored_count, home_pos.x, home_pos.y, home_pos.z))
+  util.debug_log(string.format("Retrieving %d staged room items at home (%d, %d, %d)",
+    #entries, home_pos.x, home_pos.y, home_pos.z))
 
-  for _, entry in ipairs(red_room_item_storage) do
-    local failed = game_map:add_item(home_pos, entry.item)
-    if failed then
-      -- A pocket landing tile can be occupied by furniture.  Try nearby
-      -- tiles before retaining the detached pointer for a later retry.
-      for radius = 1, 3 do
-        if not failed then break end
-        for dx = -radius, radius do
-          for dy = -radius, radius do
-            if math.abs(dx) == radius or math.abs(dy) == radius then
-              local fallback = TripointBubMs.new(home_pos.x + dx, home_pos.y + dy, home_pos.z)
-              failed = game_map:add_item(fallback, failed)
-              if not failed then break end
-            end
-          end
+  for _, entry in ipairs(entries) do
+    local detached = player:remove_item(entry.item)
+    if detached then
+      local failed = place_transfer_item(game_map, home_pos, detached)
+      if failed then
+        for radius = 1, 3 do
           if not failed then break end
+          for dx = -radius, radius do
+            for dy = -radius, radius do
+              if math.abs(dx) == radius or math.abs(dy) == radius then
+                failed = place_transfer_item(
+                  game_map, TripointBubMs.new(home_pos.x + dx, home_pos.y + dy, home_pos.z), failed )
+                if not failed then break end
+              end
+            end
+            if not failed then break end
+          end
         end
       end
-    end
-    if failed then
-      table.insert(remaining, { item = failed, position = entry.position })
-    else
-      items_retrieved = items_retrieved + 1
+      if failed then player:add_item(failed) else items_retrieved = items_retrieved + 1 end
     end
   end
-  red_room_item_storage = remaining
+  red_room_item_storage = {}
 
   if items_retrieved > 0 then
     gapi.add_msg(string.format(locale.gettext("%d items from the red room were teleported home with you!"), items_retrieved))
-    util.debug_log(string.format("Retrieved %d items at home", items_retrieved))
   end
-
-  if #red_room_item_storage > 0 then
-    gapi.add_msg(locale.gettext("Some room items could not be placed yet; the expedition dimension will be retained for retry."))
+  if has_staged_room_items() then
+    gapi.add_msg(locale.gettext("Some room items could not be placed yet; they remain safely in your inventory for retry."))
   end
   return items_retrieved
+end
+
+function teleport.retry_staged_room_items(storage)
+  if storage.is_away_from_home or not has_staged_room_items() then return not has_staged_room_items() end
+  retrieve_stored_items_at_home(gapi.get_avatar():get_pos_ms())
+  if not has_staged_room_items() then
+    teleport.cleanup_raid_dimension(storage)
+    return true
+  end
+  return false
 end
 
 -- Raid configuration
@@ -831,8 +862,9 @@ function teleport.spawn_warped_animals(storage)
     end
     local player = gapi.get_avatar()
     if not player then
-      warped_spawn_scheduled = false
-      return false
+      -- Keep the periodic callback alive until the avatar/map is available;
+      -- the serialized queue remains the durable fallback across reload.
+      return true
     end
 
     local player_pos = player:get_pos_ms()
@@ -1188,11 +1220,11 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
       gapi.add_msg(locale.gettext("The Vortex Token crumbles as it pulls the room's contents into the warp!"))
     end
 
-    -- Retrieve stored items and place them at home
-    if items_stored > 0 then
+    -- Retrieve serialized room items at home, including items staged before a
+    -- save/reload where the local count is no longer available.
+    if items_stored > 0 or has_staged_room_items() then
       local player = gapi.get_avatar()
-      local player_pos = player:get_pos_ms()
-      retrieve_stored_items_at_home(player_pos)
+      retrieve_stored_items_at_home(player:get_pos_ms())
     end
 
     -- Complete missions when returning home
@@ -1241,7 +1273,7 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
       storage.raids_total
     ))
 
-    if #red_room_item_storage == 0 then
+    if not has_staged_room_items() then
       teleport.cleanup_raid_dimension(storage)
     end
     return 1

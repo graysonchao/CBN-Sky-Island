@@ -36,11 +36,14 @@ end }
 local state
 local function fresh_item(id, charges)
   return {
-    id = id, charges = charges or 1,
+    id = id, charges = charges or 1, vars = {},
     is_stackable = function(self) return self.charges > 1 end,
     mod_charges = function(self, amount) self.charges = self.charges + amount end,
+    get_var_str = function(self, key, default) return self.vars[key] or default end,
+    set_var_str = function(self, key, value) self.vars[key] = value end,
   }
 end
+local avatar_available = true
 local player = {
   pos = { x=12, y=12, z=10 }, inventory = {},
   get_pos_ms = function(self) return self.pos end,
@@ -51,9 +54,12 @@ local player = {
   get_item_with_id = function(self, id) return self.inventory[id] end,
   remove_item = function(self, item)
     for id, candidate in pairs(self.inventory) do
-      if candidate == item then self.inventory[id] = nil end
+      if candidate == item then self.inventory[id] = nil; state.removed_items = state.removed_items + 1; return candidate end
     end
-    state.removed_items = state.removed_items + 1
+    return nil
+  end,
+  add_item = function(self, item)
+    self.inventory[item.id] = item
   end,
   add_item_with_id = function(self, id, count)
     local item = self.inventory[id]
@@ -63,7 +69,11 @@ local player = {
   healall = function() end,
   clear_effects = function() end,
   set_all_parts_hp_to_max = function() end,
-  all_items = function() return {} end,
+  all_items = function(self)
+    local items = {}
+    for _, item in pairs(self.inventory) do table.insert(items, item) end
+    return items
+  end,
 }
 local terrain = { obj = function()
   return { get_movecost = function() return 2 end, has_flag = function() return false end }
@@ -108,7 +118,7 @@ overmapbuffer = {
 }
 gapi = {
   get_current_dimension_id = function() return current_dim end,
-  get_avatar = function() return player end,
+  get_avatar = function() if avatar_available then return player end end,
   get_map = function() return map end,
   add_msg = function() end,
   rng = function(minimum) return minimum end,
@@ -127,6 +137,7 @@ gapi = {
     return cleanup_result
   end,
   get_monster_at = function() return nil end,
+  place_monster_around = function() return { set_hp=function() end, make_friendly=function() end } end,
   create_item = function() return {} end,
 }
 local missions = {
@@ -154,7 +165,7 @@ function setup_case()
   player.pos = { x=12, y=12, z=10 }; player.inventory = {}
   choice_queue = {}; random_results = { { x=100, y=100, z=0 } }
   random_calls = 0; closest_result = nil; dimension_calls = {}; cleanup_calls = 0
-  seen_calls = 0; callbacks = {}; current_dim = "sky_island_home"
+  seen_calls = 0; callbacks = {}; current_dim = "sky_island_home"; avatar_available = true
   entered = true; home_return_fail = false; dimension_fail = false; cleanup_result = true
 end
 teleport = require("teleport")
@@ -510,7 +521,11 @@ UiList = {
     }
   end,
 }
-local staged_item = { id = "room_loot" }
+local staged_item = {
+  id = "room_loot", vars = {},
+  get_var_str = function(self, key, default) return self.vars[key] or default end,
+  set_var_str = function(self, key, value) self.vars[key] = value end,
+}
 local restored_item
 local remove_calls = 0
 local entered = false
@@ -520,10 +535,12 @@ local map = {
   detach_item_at = function() return staged_item end,
   add_item = function(_, _, item) restored_item = item return nil end,
 }
-local player = {
+local player = { inventory = {},
   has_item_with_id = function(_, id) return id == "skyisland_vortex_token" end,
   get_item_with_id = function() return { is_stackable = function() return false end } end,
-  remove_item = function() remove_calls = remove_calls + 1 end,
+  add_item = function(self, item) self.inventory.room_loot = item end,
+  all_items = function(self) local result = {}; for _, item in pairs(self.inventory) do table.insert(result, item) end; return result end,
+  remove_item = function(self, item) remove_calls = remove_calls + 1; self.inventory.room_loot = nil; return item end,
 }
 gapi = {
   get_map = function() return map end,
@@ -543,7 +560,8 @@ local storage = {
 }
 assert(teleport.use_return_obelisk(player, nil, { x=0, y=0, z=0 }, storage, {}, { stop = function() end }) == 0)
 assert(restored_item == staged_item)
-assert(remove_calls == 0)
+assert(staged_item:get_var_str("skyisland_room_transfer", "") == "")
+assert(remove_calls == 1)
 assert(storage.is_away_from_home)
 ''',
         )
@@ -769,7 +787,7 @@ assert(branch.mission_state.active == 3 and branch.inventory.tokens == 12 and br
         run_fixture(self, r'''
 setup_case()
 current_dim = "sky_island_raid_000001"
-local room_item = { id="room_loot" }
+local room_item = fresh_item("room_loot")
 local attempts = 0
 map.has_items_at = function(_, p) return p.x == 12 and p.y == 12 and p.z == 10 end
 map.get_items_at = function() return { items=function() return { room_item } end } end
@@ -786,6 +804,42 @@ choice_queue = { 1 }
 assert(teleport.use_return_obelisk(player, nil, { x=12,y=12,z=10 }, storage, missions, sickness) == 1)
 assert(attempts == 2 and not storage.is_away_from_home)
 assert(storage.current_raid_dimension_id == nil and player.inventory.skyisland_vortex_token == nil)
+''')
+
+    def test_failed_room_placement_survives_reload_and_retries(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"
+local room_item = fresh_item("room_loot")
+map.has_items_at = function(_, p) return p.x == 12 and p.y == 12 and p.z == 10 end
+map.get_items_at = function() return { items=function() return { room_item } end } end
+map.detach_item_at = function() return room_item end
+map.add_item = function(_, _, item) return item end
+local storage = fresh_storage(); storage.is_away_from_home=true
+storage.current_raid_dimension_id="sky_island_raid_000001"; storage.current_raid_type="short"
+player.inventory.skyisland_vortex_token = fresh_item("skyisland_vortex_token")
+choice_queue = { 1 }
+assert(teleport.use_return_obelisk(player, nil, { x=12,y=12,z=10 }, storage, missions, sickness) == 1)
+assert(not storage.is_away_from_home and storage.current_raid_dimension_id == "sky_island_raid_000001")
+-- The failed item is now an engine-owned, marker-bearing inventory item.
+package.loaded.teleport = nil
+local reloaded = require("teleport")
+map.add_item = function() return nil end
+assert(reloaded.retry_staged_room_items(storage))
+assert(storage.current_raid_dimension_id == nil)
+for _, item in ipairs(player:all_items(false)) do
+  assert(item:get_var_str("skyisland_room_transfer", "") == "")
+end
+''')
+
+    def test_warped_animal_callback_retries_when_avatar_unavailable(self):
+        run_fixture(self, r'''
+setup_case()
+local storage = fresh_storage(); storage.warped_animals = { { type_id="mon_cow", hp=40 } }
+avatar_available = false
+assert(teleport.spawn_warped_animals(storage) == 1)
+assert(callbacks[1]() == true and #storage.warped_animals == 1)
+avatar_available = true
+assert(callbacks[1]() == false and #storage.warped_animals == 0)
 ''')
 
     def test_cleanup_failure_is_retryable_after_return(self):

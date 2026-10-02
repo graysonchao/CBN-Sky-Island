@@ -511,6 +511,7 @@ mod.on_game_load = function()
   warp_sickness.register_global_hook(storage)
   teleport.migrate_legacy_storage(storage)
   teleport.restore_pending_animals(storage)
+  teleport.retry_staged_room_items(storage)
 
   if storage.is_away_from_home then
     gapi.add_msg(locale.gettext("Resuming expedition..."))
