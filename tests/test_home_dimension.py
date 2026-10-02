@@ -42,7 +42,7 @@ local function fresh_item(id, charges)
     get_var_str = function(self, key, default) return self.vars[key] or default end,
     set_var_str = function(self, key, value) self.vars[key] = value end,
     get_type = function(self) return { str=function() return self.id end } end,
-    has_item_with_id = function(self, id) return self.contains and self.contains[id] == true end,
+    has_item_with_id = function(self, id) return self.contains and self.contains[id] ~= nil and self.contains[id] ~= 0 end,
   }
 end
 local avatar_available = true
@@ -62,7 +62,12 @@ local player = {
     return nil
   end,
   add_item = function(self, item)
-    self.inventory[item.id] = item
+    local existing = self.inventory[item.id]
+    if existing and existing.charges and item.charges then
+      existing.charges = existing.charges + item.charges
+    else
+      self.inventory[item.id] = item
+    end
     -- Match catalua_bindings_creature.cpp: add_item is void; ownership moves
     -- and callers must reacquire an Item through all_items.
   end,
@@ -80,14 +85,28 @@ local player = {
   can_wield = function(_, item) return item.id == "weapon" end,
   wield = function(self, item) self.wielded = item; self.inventory[item.id] = nil; return true end,
   wear = function(self, item) table.insert(self.worn_items, item); self.inventory[item.id] = nil; return true end,
-  use_charges = function(self, id)
+  use_charges = function(self, id, quantity)
     local result = {}
+    local function take_from(item, available, setter)
+      local take = math.min(available, quantity)
+      local extracted = fresh_item(id, take)
+      if take == available then setter(0) else setter(available - take) end
+      table.insert(result, extracted)
+    end
     local direct = self.inventory[id]
-    if direct then self.inventory[id] = nil; table.insert(result, direct) end
+    if direct then
+      take_from(direct, direct.charges or 1, function(remaining)
+        if remaining == 0 then self.inventory[id] = nil else direct.charges = remaining end
+      end)
+    end
     for _, item in pairs(self.inventory) do
-      if item.contains and item.contains[id] then
-        item.contains[id] = nil
-        table.insert(result, fresh_item(id))
+      if #result > 0 and result[1].charges >= quantity then break end
+      local available = item.contains and item.contains[id]
+      if available then
+        if available == true then available = 1 end
+        take_from(item, available, function(remaining)
+          if remaining == 0 then item.contains[id] = nil else item.contains[id] = remaining end
+        end)
       end
     end
     return result
@@ -799,7 +818,7 @@ local normal = fresh_item("normal_loot"); player.inventory.normal_loot=normal
 local token = fresh_item("skyisland_warp_shard"); player.inventory.skyisland_warp_shard=token
 assert(teleport.resurrect_at_home(storage, missions, sickness) == false)
 assert(storage.is_away_from_home and storage.raids_lost == 0)
-assert(player.inventory.normal_loot == normal and player.inventory.skyisland_warp_shard == token)
+assert(player.inventory.normal_loot == normal and player.inventory.skyisland_warp_shard ~= nil)
 assert(storage.death_drop_location == nil and #dropped == 0)
 ''')
 
@@ -974,13 +993,13 @@ setup_case(); current_dim = "sky_island_raid_000001"
 local storage = fresh_storage(); storage.is_away_from_home = true
 storage.current_raid_dimension_id = "sky_island_raid_000001"; storage.raids_lost = 0
 player.inventory.normal_loot = fresh_item("normal_loot")
-local token_pouch = fresh_item("token_pouch"); token_pouch.contains = { skyisland_warp_shard=true }
+local token_pouch = fresh_item("token_pouch"); token_pouch.contains = { skyisland_warp_shard=2000000 }
 player.inventory.token_pouch = token_pouch
 assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
 assert(state.drop_dimension == "sky_island_raid_000001")
 assert(state.drop_position ~= nil and state.drop_position.x == 12)
 assert(#state.created_items == 0)
-assert(player.inventory.skyisland_warp_shard ~= nil)
+assert(player.inventory.skyisland_warp_shard ~= nil and player.inventory.skyisland_warp_shard.charges == 2000000)
 assert(player.inventory.token_pouch == nil)
 assert(player.inventory.normal_loot == nil)
 local pouch_at_source = false

@@ -1385,11 +1385,15 @@ local function extract_preserved_tokens(player, game_map, source, root)
   local root_type = added_root:get_type():str()
 
   local extracted_any = false
+  local drained_tokens = {}
   for preserved_id in pairs(PRESERVED_DEATH_ITEMS) do
-    local extracted = player:use_charges(ItypeId.new(preserved_id), 999999)
-    for _, token in ipairs(extracted) do
-      player:add_item(token) -- Detached token is consumed by the void binding.
-      extracted_any = true
+    while true do
+      local extracted = player:use_charges(ItypeId.new(preserved_id), 999999)
+      if #extracted == 0 then break end
+      for _, token in ipairs(extracted) do
+        table.insert(drained_tokens, token)
+        extracted_any = true
+      end
     end
   end
 
@@ -1408,6 +1412,12 @@ local function extract_preserved_tokens(player, game_map, source, root)
       end
     end
     return false
+  end
+
+  -- Re-add only after every source charge has been drained; adding during the
+  -- loop would make use_charges find the same token again forever.
+  for _, token in ipairs(drained_tokens) do
+    player:add_item(token)
   end
 
   if not PRESERVED_DEATH_ITEMS[root_type] then
