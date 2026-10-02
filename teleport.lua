@@ -1378,7 +1378,12 @@ local function extract_preserved_tokens(player, game_map, source, root)
 
   if not extracted_any then
     -- The engine API must expose recursive charge extraction for these ammo
-    -- tokens; leave the root untouched rather than silently deleting it.
+    -- tokens; return the unchanged root to the source rather than deleting it.
+    local unchanged = player:remove_item(added_root)
+    if unchanged then
+      unchanged:set_var_str(DEATH_DROP_VAR, "1")
+      game_map:add_item(source, unchanged)
+    end
     return false
   end
 
@@ -1442,9 +1447,6 @@ local function stage_death_drop(storage, player)
       local detached = game_map:detach_item_at(death_pos, item)
       if detached and extract_preserved_tokens(player, game_map, death_pos, detached) then
         extracted_roots = extracted_roots + 1
-      elseif detached then
-        detached:set_var_str(DEATH_DROP_VAR, "1")
-        game_map:add_item(death_pos, detached)
       end
     end
   end
