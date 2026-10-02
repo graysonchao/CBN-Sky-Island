@@ -4,8 +4,9 @@
 local teleport = {}
 local util = require("util")
 
--- Temporary storage for red room items during teleportation
--- Items are detached from map, held here, then placed at home
+-- Temporary storage for red room items during teleportation.
+-- Keep the source position with each detached item so a failed dimension
+-- transition can put it back exactly where it came from.
 local red_room_item_storage = {}
 
 -- Red room bounds relative to obelisk position
@@ -53,7 +54,10 @@ local function store_red_room_items(obelisk_pos)
         for _, it in ipairs(items_to_store) do
           local detached = game_map:detach_item_at(check_pos, it)
           if detached then
-            table.insert(red_room_item_storage, detached)
+            table.insert(red_room_item_storage, {
+              item = detached,
+              position = { x = check_pos.x, y = check_pos.y, z = check_pos.z },
+            })
             items_stored = items_stored + 1
           end
         end
@@ -70,31 +74,73 @@ local function store_red_room_items(obelisk_pos)
   return items_stored
 end
 
--- Helper: Retrieve stored items and place them at home position
+-- Put staged room items back into their source map after a failed transition.
+local function restore_stored_items_at_source()
+  if #red_room_item_storage == 0 then return 0 end
+
+  local game_map = gapi.get_map()
+  local restored = 0
+  local remaining = {}
+  for _, entry in ipairs(red_room_item_storage) do
+    local source = TripointBubMs.new(entry.position.x, entry.position.y, entry.position.z)
+    local failed = game_map:add_item(source, entry.item)
+    if failed then
+      table.insert(remaining, { item = failed, position = entry.position })
+    else
+      restored = restored + 1
+    end
+  end
+  red_room_item_storage = remaining
+  util.debug_log(string.format("Restored %d staged room items after failed travel", restored))
+  return restored
+end
+
+-- Helper: Retrieve stored items and place them at home position.  The binding
+-- returns a detached item on failure; retain it instead of silently destroying it.
 local function retrieve_stored_items_at_home(home_pos)
   local game_map = gapi.get_map()
   local stored_count = #red_room_item_storage
   local items_retrieved = 0
+  local remaining = {}
 
   util.debug_log(string.format("Retrieving %d stored items at home (%d, %d, %d)",
     stored_count, home_pos.x, home_pos.y, home_pos.z))
 
-  -- Place each stored item on the map at home position
-  for _, detached in ipairs(red_room_item_storage) do
-    local failed = game_map:add_item(home_pos, detached)
-    if not failed then
+  for _, entry in ipairs(red_room_item_storage) do
+    local failed = game_map:add_item(home_pos, entry.item)
+    if failed then
+      -- A pocket landing tile can be occupied by furniture.  Try nearby
+      -- tiles before retaining the detached pointer for a later retry.
+      for radius = 1, 3 do
+        if not failed then break end
+        for dx = -radius, radius do
+          for dy = -radius, radius do
+            if math.abs(dx) == radius or math.abs(dy) == radius then
+              local fallback = TripointBubMs.new(home_pos.x + dx, home_pos.y + dy, home_pos.z)
+              failed = game_map:add_item(fallback, failed)
+              if not failed then break end
+            end
+          end
+          if not failed then break end
+        end
+      end
+    end
+    if failed then
+      table.insert(remaining, { item = failed, position = entry.position })
+    else
       items_retrieved = items_retrieved + 1
     end
   end
-
-  -- Clear the storage (items now owned by map or GC'd if placement failed)
-  red_room_item_storage = {}
+  red_room_item_storage = remaining
 
   if items_retrieved > 0 then
     gapi.add_msg(string.format(locale.gettext("%d items from the red room were teleported home with you!"), items_retrieved))
     util.debug_log(string.format("Retrieved %d items at home", items_retrieved))
   end
 
+  if #red_room_item_storage > 0 then
+    gapi.add_msg(locale.gettext("Some room items could not be placed yet; the expedition dimension will be retained for retry."))
+  end
   return items_retrieved
 end
 
@@ -321,8 +367,19 @@ function teleport.ensure_home_dimension(storage)
     pregen_special_id = "Sky Island Pocket",
     pregen_special_omt = abs_omt_from_table(HOME_OMT),
   }
-  if storage.home_dimension_id == HOME_DIMENSION_ID and storage.home_omt then
-    -- Re-enter saved islands at their original coordinates without regenerating them.
+  if storage.home_dimension_id == HOME_DIMENSION_ID and storage.home_location then
+    -- Re-enter saved islands at the exact saved map-square position.  Using
+    -- only target_omt would silently snap branch-era saves to the OMT center.
+    options = {
+      dimension_id = HOME_DIMENSION_ID,
+      target_ms = TripointAbsMs.new(
+        storage.home_location.x,
+        storage.home_location.y,
+        storage.home_location.z
+      ),
+    }
+  elseif storage.home_dimension_id == HOME_DIMENSION_ID and storage.home_omt then
+    -- Older pocket saves may have the OMT but not the exact map-square point.
     options = {
       dimension_id = HOME_DIMENSION_ID,
       target_omt = abs_omt_from_table(storage.home_omt),
@@ -467,10 +524,40 @@ end
 
 local function return_to_home(storage)
   if dimension_travel_available() and storage.home_dimension_id ~= nil then
-    local entered = gapi.place_player_dimension_at({
+    -- The engine intentionally treats same-dimension travel as a no-op.  This
+    -- matters for a legacy away save whose current dimension is already the
+    -- overworld: explicitly place the avatar at the saved MS coordinate.
+    if get_current_dimension_id() == storage.home_dimension_id and storage.home_location then
+      local home_abs_ms = TripointAbsMs.new(
+        storage.home_location.x,
+        storage.home_location.y,
+        storage.home_location.z
+      )
+      -- Reload the local map around the saved overmap tile before applying
+      -- the exact MS offset; place_player_local_at alone cannot move across
+      -- an overworld reality bubble.
+      gapi.place_player_overmap_at(home_abs_ms:to_omt())
+      local local_pos = gapi.get_map():abs_to_bub(home_abs_ms)
+      gapi.place_player_local_at(local_pos)
+      gapi.add_msg(locale.gettext("You feel reality shift around you..."))
+      return true
+    end
+
+    local options = {
       dimension_id = storage.home_dimension_id,
-      target_omt = get_stored_home_omt(storage),
-    })
+    }
+    if storage.home_location then
+      -- Preserve the exact home MS coordinate for both pocket and legacy
+      -- overworld saves.  target_omt is only a fallback for old incomplete data.
+      options.target_ms = TripointAbsMs.new(
+        storage.home_location.x,
+        storage.home_location.y,
+        storage.home_location.z
+      )
+    else
+      options.target_omt = get_stored_home_omt(storage)
+    end
+    local entered = gapi.place_player_dimension_at(options)
 
     if not entered then
       gapi.add_msg(locale.gettext("ERROR: Could not return to the Sky Island home dimension."))
@@ -711,155 +798,79 @@ local function apply_landing_protection(storage)
   end
 end
 
--- Save friendly animals currently on the island before departing
--- Scans visible creatures and stores friendly monsters in storage.island_animals
+-- Sanctuary animals remain in the persistent home dimension while the player
+-- raids.  Do not serialize visible monsters and respawn copies on return: the
+-- old snapshot/restore path duplicated every friendly animal on each raid.
 local function save_island_animals(storage)
-  local player = gapi.get_avatar()
-  if not player then return end
-
-  storage.island_animals = {}
-
-  -- Use get_visible_creatures to find all creatures in range
-  local creatures = player:get_visible_creatures(60)
-  local saved_count = 0
-
-  for _, creature in ipairs(creatures) do
-    if creature:is_monster() then
-      local monster = creature:as_monster()
-      if monster and monster.friendly > 0 then
-        local type_id = monster:get_type():str()
-        local hp = monster:get_hp()
-        local name = monster:get_name()
-
-        table.insert(storage.island_animals, {
-          type_id = type_id,
-          hp = hp,
-          name = name
-        })
-        saved_count = saved_count + 1
-        util.debug_log(string.format("Saved island animal: %s (HP: %d)", type_id, hp))
-      end
-    end
-  end
-
-  if saved_count > 0 then
-    util.debug_log(string.format("Total island animals saved: %d", saved_count))
-  end
+  storage.island_animals = nil
 end
 
--- Restore friendly animals that were on the island before departure
--- Uses delayed spawn (same pattern as spawn_warped_animals)
 local function restore_island_animals(storage)
-  if not storage.island_animals or #storage.island_animals == 0 then
-    return 0
-  end
-
-  -- Copy the list and clear storage immediately
-  local animals_to_restore = {}
-  for _, animal in ipairs(storage.island_animals) do
-    table.insert(animals_to_restore, animal)
-  end
-  storage.island_animals = {}
-
-  util.debug_log(string.format("Queuing %d island animals for delayed restore", #animals_to_restore))
-
-  -- Delay spawn by 2 seconds to let map fully load after teleport
-  gapi.add_on_every_x_hook(TimeDuration.from_seconds(2), function()
-    local player = gapi.get_avatar()
-    if not player then return false end
-
-    local player_pos = player:get_pos_ms()
-    local restored_count = 0
-
-    for _, animal_data in ipairs(animals_to_restore) do
-      local mtype_id = MonsterTypeId.new(animal_data.type_id)
-      local spawned_monster = gapi.place_monster_around(mtype_id, player_pos, 5)
-
-      if spawned_monster then
-        spawned_monster:set_hp(animal_data.hp)
-        spawned_monster:make_friendly()
-        restored_count = restored_count + 1
-        util.debug_log(string.format("Restored island animal: %s with HP %d", animal_data.type_id, animal_data.hp))
-      else
-        util.debug_log(string.format("FAILED to restore island animal: %s", animal_data.type_id))
-      end
-    end
-
-    if restored_count > 0 then
-      gapi.add_msg(string.format(locale.gettext("%d island animal%s returned home safely!"),
-        restored_count, restored_count > 1 and "s" or ""))
-    end
-
-    return false  -- One-shot: stop after first execution
-  end)
-
-  return #animals_to_restore
+  -- Discard queues written by older versions.  Their source monsters were never
+  -- transferred out of the home map, so replaying them would duplicate them.
+  storage.island_animals = nil
+  return 0
 end
 
--- Spawn warped animals at home location
--- Called when player successfully returns home
--- Note: Uses delayed spawn to ensure map is fully loaded after teleport
+-- Spawn warped animals at home location.  As with island animals, retain
+-- failed entries so a transient map/load failure cannot duplicate or lose them.
+local warped_spawn_scheduled = false
 function teleport.spawn_warped_animals(storage)
   if not storage.warped_animals or #storage.warped_animals == 0 then
     return 0
   end
+  if warped_spawn_scheduled then return #storage.warped_animals end
 
-  -- Copy the list and clear storage immediately
-  local animals_to_spawn = {}
-  for _, animal in ipairs(storage.warped_animals) do
-    table.insert(animals_to_spawn, animal)
-  end
-  storage.warped_animals = {}
-
-  util.debug_log(string.format("Queuing %d animals for delayed spawn", #animals_to_spawn))
-
-  -- Delay spawn by 1 second to let map fully load after teleport
+  warped_spawn_scheduled = true
+  util.debug_log(string.format("Queuing %d animals for delayed spawn", #storage.warped_animals))
   gapi.add_on_every_x_hook(TimeDuration.from_seconds(1), function()
+    -- Never deliver captured animals into an active raid dimension.
+    if storage.is_away_from_home then
+      warped_spawn_scheduled = false
+      return false
+    end
     local player = gapi.get_avatar()
-    if not player then return false end
+    if not player then
+      warped_spawn_scheduled = false
+      return false
+    end
 
     local player_pos = player:get_pos_ms()
+    local remaining = {}
     local spawned_count = 0
-
-    util.debug_log(string.format("Delayed spawn executing at (%d,%d,%d)",
-      player_pos.x, player_pos.y, player_pos.z))
-
-    for _, animal_data in ipairs(animals_to_spawn) do
-      -- Handle old format "MonsterTypeId[mon_cow]" -> "mon_cow"
+    for _, animal_data in ipairs(storage.warped_animals or {}) do
       local type_str = animal_data.type_id
       local extracted = type_str:match("MonsterTypeId%[(.+)%]")
-      if extracted then
-        type_str = extracted
-      end
-
-      -- Spawn monster near player
-      local mtype_id = MonsterTypeId.new(type_str)
-
-      -- Try place_monster_around for flexible positioning
-      local spawned_monster = gapi.place_monster_around(mtype_id, player_pos, 3)
-
+      if extracted then type_str = extracted end
+      local spawned_monster = gapi.place_monster_around(MonsterTypeId.new(type_str), player_pos, 3)
       if spawned_monster then
-        -- Set the HP to what it was when captured
         spawned_monster:set_hp(animal_data.hp)
-        -- Make it friendly again
         spawned_monster:make_friendly()
-
         spawned_count = spawned_count + 1
         util.debug_log(string.format("Spawned: %s with HP %d", type_str, animal_data.hp))
       else
+        table.insert(remaining, animal_data)
         util.debug_log(string.format("FAILED to spawn: %s", type_str))
       end
     end
+    storage.warped_animals = remaining
+    warped_spawn_scheduled = false
 
     if spawned_count > 0 then
       gapi.add_msg(string.format(locale.gettext("%d warped animal%s arrived at your island!"),
         spawned_count, spawned_count > 1 and "s" or ""))
     end
-
-    return false  -- One-shot: stop after first execution
+    return false
   end)
+  return #storage.warped_animals
+end
 
-  return #animals_to_spawn  -- Return count of queued animals
+-- Re-arm delayed animal delivery after a save/reload that happened between
+-- travel and the one-shot callback.
+function teleport.restore_pending_animals(storage)
+  if storage.is_away_from_home then return end
+  restore_island_animals(storage)
+  teleport.spawn_warped_animals(storage)
 end
 
 -- Use warp obelisk - start expedition
@@ -933,15 +944,6 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   end
 
   local config = RAID_CONFIG[selected_raid]
-
-  -- Store raid type for token rewards on return
-  storage.current_raid_type = selected_raid
-  storage.current_raid_pulse_multiplier = config.pulse_multiplier
-  -- Store distance values for mission spawning
-  storage.current_mission_min = config.mission_min
-  storage.current_mission_max = config.mission_max
-  storage.current_exit_min = config.exit_min
-  storage.current_exit_max = config.exit_max
 
   -- Show location type menu
   local loc_ui = UiList.new()
@@ -1020,6 +1022,7 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     search_origin = enter_new_raid_dimension(storage, loc_config)
     if not search_origin then
       gapi.add_msg(locale.gettext("WARNING: Could not create a fresh expedition dimension. Aborting warp."))
+      restore_island_animals(storage)
       if loc_config.catalyst_item then
         who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
         gapi.add_msg(locale.gettext("Your Labs Catalyst is returned."))
@@ -1043,9 +1046,12 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   else
     gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
     util.debug_log("ERROR: Terrain search failed!")
-    if dimension_travel_available() and return_to_home(storage) then
-      teleport.cleanup_raid_dimension(storage)
+    local returned_home = not dimension_travel_available()
+    if dimension_travel_available() then
+      returned_home = return_to_home(storage)
+      if returned_home then teleport.cleanup_raid_dimension(storage) end
     end
+    if returned_home then restore_island_animals(storage) end
     -- Refund catalyst if we consumed one
     if loc_config.catalyst_item then
       who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
@@ -1069,6 +1075,15 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
 
   -- Now teleport to actual destination
   teleport_to_omt(dest_omt, nil, spawn_filter)
+
+  -- Store raid configuration only after all fallible destination work has
+  -- succeeded, so cancellation/failure cannot poison the next reward.
+  storage.current_raid_type = selected_raid
+  storage.current_raid_pulse_multiplier = config.pulse_multiplier
+  storage.current_mission_min = config.mission_min
+  storage.current_mission_max = config.mission_max
+  storage.current_exit_min = config.exit_min
+  storage.current_exit_max = config.exit_max
 
   -- Apply warpcloak landing protection (invisibility + feather fall + bonuses)
   apply_landing_protection(storage)
@@ -1139,26 +1154,18 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
     -- 0 = whole_room (always), 1 = whole_room_cost (needs vortex token), 2 = self_only (never)
     local return_behavior = storage.difficulty_return_behavior or 1
     local items_stored = 0
-    local used_vortex_token = false
+    local vortex_item
+    local vortex_id = ItypeId.new("skyisland_vortex_token")
 
     if return_behavior == 0 then
       -- Whole Room: Always teleport room contents
       items_stored = store_red_room_items(pos)
     elseif return_behavior == 1 then
-      -- Whole Room for Cost: Only if player has vortex token
-      local vortex_id = ItypeId.new("skyisland_vortex_token")
+      -- Whole Room for Cost.  Do not consume the token until the destination
+      -- transition succeeds; a failed travel must be fully retryable.
       if who:has_item_with_id(vortex_id, false) then
-        local vortex_item = who:get_item_with_id(vortex_id, false)
-        if vortex_item then
-          if vortex_item:is_stackable() and vortex_item.charges > 1 then
-            vortex_item:mod_charges(-1)
-          else
-            who:remove_item(vortex_item)
-          end
-        end
+        vortex_item = who:get_item_with_id(vortex_id, false)
         items_stored = store_red_room_items(pos)
-        used_vortex_token = true
-        gapi.add_msg(locale.gettext("The Vortex Token crumbles as it pulls the room's contents into the warp!"))
       else
         gapi.add_msg(locale.gettext("Without a Vortex Token, only items you carry will return with you."))
       end
@@ -1168,7 +1175,17 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
     end
 
     if not return_to_home(storage) then
+      restore_stored_items_at_source()
       return 0
+    end
+
+    if vortex_item then
+      if vortex_item:is_stackable() and vortex_item.charges > 1 then
+        vortex_item:mod_charges(-1)
+      else
+        who:remove_item(vortex_item)
+      end
+      gapi.add_msg(locale.gettext("The Vortex Token crumbles as it pulls the room's contents into the warp!"))
     end
 
     -- Retrieve stored items and place them at home
@@ -1224,7 +1241,9 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
       storage.raids_total
     ))
 
-    teleport.cleanup_raid_dimension(storage)
+    if #red_room_item_storage == 0 then
+      teleport.cleanup_raid_dimension(storage)
+    end
     return 1
   else
     gapi.add_msg(locale.gettext("Cancelled."))
@@ -1237,11 +1256,14 @@ end
 function teleport.return_home_success(storage, missions, warp_sickness)
   if not storage.home_location then
     gapi.add_msg(locale.gettext("ERROR: Home location not set!"))
-    return
+    return false
+  end
+  if not storage.is_away_from_home then
+    return false
   end
 
   if not return_to_home(storage) then
-    return
+    return false
   end
 
   -- Complete missions when returning home
@@ -1291,6 +1313,7 @@ function teleport.return_home_success(storage, missions, warp_sickness)
   ))
 
   teleport.cleanup_raid_dimension(storage)
+  return true
 end
 
 -- Helper: Count stackable items by ID
@@ -1312,13 +1335,22 @@ end
 -- Resurrection handler - teleport player home after death
 function teleport.resurrect_at_home(storage, missions, warp_sickness)
   if not storage.home_location then
-    return  -- No home to resurrect at
+    return false  -- No home to resurrect at
+  end
+  if not storage.is_away_from_home then
+    return false
   end
 
   util.debug_log("Sky Islands: Resurrecting at home")
 
   local player = gapi.get_avatar()
-  if not player then return end
+  if not player then return false end
+
+  -- Travel first.  If the engine rejects the destination, retain the player's
+  -- inventory and raid state so a later retry is safe.
+  if not return_to_home(storage) then
+    return false
+  end
 
   -- Check for token bag and preserve tokens before dropping items
   for item in pairs(items_preserved_on_death) do
@@ -1336,10 +1368,6 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
     storage.warped_animals = {}
     gapi.add_msg(string.format(locale.gettext("%d warped animal%s lost in the void..."),
       lost_count, lost_count > 1 and "s were" or " was"))
-  end
-
-  if not return_to_home(storage) then
-    return
   end
 
   local home_abs_ms = TripointAbsMs.new(
@@ -1380,6 +1408,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   end
 
   teleport.cleanup_raid_dimension(storage)
+  return true
 end
 
 return teleport
