@@ -851,12 +851,119 @@ player.inventory.normal_loot=fresh_item("normal_loot")
 player.inventory.skyisland_warp_shard=fresh_item("skyisland_warp_shard")
 assert(teleport.resurrect_at_home(legacy, missions, sickness) == true)
 assert(state.drop_dimension == "" and player.inventory.normal_loot == nil)
+assert(legacy.death_drop_marker == nil and legacy.death_drop_location == nil)
 assert(player.inventory.skyisland_warp_shard ~= nil)
 setup_case()
 local home = fresh_storage(); home.is_away_from_home=false
 local home_item=fresh_item("home_loot"); player.inventory.home_loot=home_item
 assert(teleport.resurrect_at_home(home, missions, sickness) == true)
 assert(player.inventory.home_loot == nil and home.raids_lost == 1)
+''')
+
+    def test_resurrection_transaction_marker_nested_charges_and_fresh_map_wrappers(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"; home_return_fail = true
+local old_corpse = fresh_item("old_corpse")
+old_corpse:set_var_str("skyisland_death_drop", "1")
+local ground = fresh_item("ground_loot")
+state.map_items = { ground, old_corpse }
+
+-- Each map-stack access returns new Item userdata wrappers.  The wrapper's
+-- raw object is only used by this fixture's detach operation; production code
+-- must use the durable transaction marker rather than wrapper identity.
+local function wrap(raw)
+  return {
+    _raw = raw,
+    get_var_str = function(_, key, default) return raw:get_var_str(key, default) end,
+    set_var_str = function(_, key, value) raw:set_var_str(key, value) end,
+    get_type = function() return raw:get_type() end,
+  }
+end
+map.get_items_at = function()
+  return { items=function()
+    local wrapped = {}
+    for _, raw in ipairs(state.map_items) do table.insert(wrapped, wrap(raw)) end
+    return wrapped
+  end }
+end
+map.detach_item_at = function(_, _, item)
+  local raw = item._raw or item
+  for index, candidate in ipairs(state.map_items) do
+    if candidate == raw then table.remove(state.map_items, index); return candidate end
+  end
+end
+map.add_item = function(_, _, item) table.insert(state.map_items, item); return nil end
+
+-- Model Character:use_charges recursively, including a second-level nested
+-- token.  The production binding performs this recursion; has_item_with_id
+-- does not, so death handling must not use that shallow predicate.
+player.use_charges = function(self, id, quantity)
+  local result = {}
+  local function take(node)
+    if quantity <= 0 or node.id ~= id then return end
+    local available = node.charges or 0
+    if available <= 0 then return end
+    local amount = math.min(available, quantity)
+    table.insert(result, fresh_item(id, amount))
+    quantity = quantity - amount
+    node.charges = available - amount
+    return node.charges == 0
+  end
+  local function visit_children(node)
+    local children = node.contents or {}
+    for index = #children, 1, -1 do
+      local child = children[index]
+      if child.id == id then
+        if take(child) then table.remove(children, index) end
+      else
+        visit_children(child)
+      end
+      if quantity <= 0 then return end
+    end
+  end
+  for key, root in pairs(self.inventory) do
+    if root.id == id then
+      if take(root) then self.inventory[key] = nil end
+    else
+      visit_children(root)
+    end
+    if quantity <= 0 then break end
+  end
+  return result
+end
+
+local nested_token = fresh_item("skyisland_warp_shard", 1000001)
+local middle = fresh_item("nested_middle"); middle.contents = { nested_token }
+local bag = fresh_item("nested_bag"); bag.contents = { middle }
+local shard = fresh_item("skyisland_warp_shard", 1000001)
+local material = fresh_item("skyisland_material_token", 1000001)
+local vortex = fresh_item("skyisland_vortex_token", 1000001)
+player.inventory.nested_bag = bag
+player.inventory.skyisland_warp_shard = shard
+player.inventory.skyisland_material_token = material
+player.inventory.skyisland_vortex_token = vortex
+local normal = fresh_item("normal_loot")
+player.inventory.normal_loot = normal
+local worn = fresh_item("worn_coat")
+local weapon = fresh_item("weapon")
+player.worn_items = { worn }; player.wielded = weapon
+
+local storage = fresh_storage(); storage.is_away_from_home = true
+storage.current_raid_dimension_id = "sky_island_raid_000001"
+assert(teleport.resurrect_at_home(storage, missions, sickness) == false)
+assert(storage.death_drop_marker == nil and storage.death_drop_location == nil)
+assert(player.inventory.normal_loot == normal)
+assert(player.worn_items[1] == worn and player.wielded == weapon)
+assert(player.inventory.skyisland_warp_shard.charges == 2000002)
+assert(player.inventory.skyisland_material_token.charges == 1000001)
+assert(player.inventory.skyisland_vortex_token.charges == 1000001)
+assert(#state.map_items == 2 and state.map_items[1] == ground and state.map_items[2] == old_corpse)
+assert(old_corpse:get_var_str("skyisland_death_drop", "") == "1")
+for _, item in ipairs(player:all_items(false)) do
+  assert(item:get_var_str("skyisland_death_transfer", "") == "")
+  assert(item:get_var_str("skyisland_death_drop", "") == "")
+  assert(item:get_var_str("skyisland_death_role", "") == "")
+end
 ''')
 
     def test_return_reward_once_and_failed_return_is_retryable(self):
@@ -987,6 +1094,27 @@ assert(teleport.cleanup_raid_dimension(storage))
 assert(storage.current_raid_dimension_id == nil)
 ''')
 
+    def test_failed_death_source_placement_restores_equipment_without_travel(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"
+local storage = fresh_storage(); storage.is_away_from_home = true; storage.raids_lost = 0
+local robe = fresh_item("robe")
+player.worn_items = { robe }
+local drop = player.drop_all_items
+local add = map.add_item
+player.drop_all_items = function(self)
+  map.add_item = add
+  drop(self)
+  map.add_item = function(_, _, item) return item end
+end
+assert(teleport.resurrect_at_home(storage, missions, sickness) == false)
+assert(current_dim == "sky_island_raid_000001")
+assert(storage.is_away_from_home and storage.raids_lost == 0)
+assert(#player.worn_items == 1 and player.worn_items[1].id == "robe")
+assert(player.inventory.robe == nil)
+assert(storage.death_drop_marker == nil and storage.death_drop_location == nil)
+''')
+
     def test_resurrection_drops_raid_belongings_at_source_and_preserves_tokens_once(self):
         run_fixture(self, r'''
 setup_case(); current_dim = "sky_island_raid_000001"
@@ -998,7 +1126,9 @@ player.inventory.token_pouch = token_pouch
 assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
 assert(state.drop_dimension == "sky_island_raid_000001")
 assert(state.drop_position ~= nil and state.drop_position.x == 12)
-assert(#state.created_items == 0)
+assert(#state.created_items > 0)
+for _, item in ipairs(state.created_items) do assert(item.id == "skyisland_warp_shard") end
+assert(token_pouch.contains.skyisland_warp_shard == nil)
 assert(player.inventory.skyisland_warp_shard ~= nil and player.inventory.skyisland_warp_shard.charges == 2000000)
 assert(player.inventory.token_pouch == nil)
 assert(player.inventory.normal_loot == nil)
