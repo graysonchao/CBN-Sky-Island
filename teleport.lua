@@ -1253,7 +1253,7 @@ end
 
 -- Return home successfully (used by return obelisk and skyward beacon)
 -- Does NOT prompt for confirmation - caller should handle that
-function teleport.return_home_success(storage, missions, warp_sickness)
+function teleport.return_home_success(storage, missions, warp_sickness, defer_cleanup)
   if not storage.home_location then
     gapi.add_msg(locale.gettext("ERROR: Home location not set!"))
     return false
@@ -1312,7 +1312,9 @@ function teleport.return_home_success(storage, missions, warp_sickness)
     storage.raids_total
   ))
 
-  teleport.cleanup_raid_dimension(storage)
+  if not defer_cleanup then
+    teleport.cleanup_raid_dimension(storage)
+  end
   return true
 end
 

@@ -9,6 +9,255 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 
 
+TELEPORT_FIXTURE = r'''
+package.loaded.util = { debug_log = function() end }
+locale = { gettext = function(text) return text end }
+OtMatchType = { EXACT = 1, CONTAINS = 2 }
+TripointAbsOmt = { new = function(x, y, z) return { x=x, y=y, z=z } end }
+TripointAbsMs = { new = function(x, y, z)
+  return { x=x, y=y, z=z, to_omt=function(self)
+    return TripointAbsOmt.new(math.floor(self.x / 24), math.floor(self.y / 24), self.z)
+  end }
+end }
+TripointBubMs = { new = function(x, y, z) return { x=x, y=y, z=z } end }
+TripointRelOmt = { new = function(x, y, z) return { x=x, y=y, z=z } end }
+MutationBranchId = { new = function(id) return id end }
+EffectTypeId = { new = function(id) return id end }
+ItypeId = { new = function(id) return id end }
+MonsterTypeId = { new = function(id) return id end }
+TimeDuration = { from_seconds = function(value) return value end }
+OmtFindParams = { new = function()
+  local p = { types = {}, max_results = nil }
+  function p:add_type(id, match) table.insert(self.types, { id=id, match=match }) end
+  function p:set_search_range(minimum, maximum) self.minimum, self.maximum = minimum, maximum end
+  function p:set_search_layers(minimum, maximum) self.z_min, self.z_max = minimum, maximum end
+  return p
+end }
+local state
+local function fresh_item(id, charges)
+  return {
+    id = id, charges = charges or 1,
+    is_stackable = function(self) return self.charges > 1 end,
+    mod_charges = function(self, amount) self.charges = self.charges + amount end,
+  }
+end
+local player = {
+  pos = { x=12, y=12, z=10 }, inventory = {},
+  get_pos_ms = function(self) return self.pos end,
+  set_pos_ms = function(self, pos) self.pos = pos end,
+  set_mutation = function() end, unset_mutation = function() end,
+  add_effect = function() end,
+  has_item_with_id = function(self, id) return self.inventory[id] ~= nil end,
+  get_item_with_id = function(self, id) return self.inventory[id] end,
+  remove_item = function(self, item)
+    for id, candidate in pairs(self.inventory) do
+      if candidate == item then self.inventory[id] = nil end
+    end
+    state.removed_items = state.removed_items + 1
+  end,
+  add_item_with_id = function(self, id, count)
+    local item = self.inventory[id]
+    if not item then item = fresh_item(id, 0); self.inventory[id] = item end
+    item.charges = item.charges + count
+  end,
+  healall = function() end,
+  clear_effects = function() end,
+  set_all_parts_hp_to_max = function() end,
+  all_items = function() return {} end,
+}
+local terrain = { obj = function()
+  return { get_movecost = function() return 2 end, has_flag = function() return false end }
+end }
+local map = {
+  bub_to_abs = function(_, pos) return TripointAbsMs.new(pos.x + 48, pos.y + 48, pos.z) end,
+  abs_to_bub = function(_, pos) return { x=pos.x, y=pos.y, z=pos.z } end,
+  get_ter_at = function() return terrain end,
+  get_furn_at = function() return nil end,
+  has_items_at = function() return false end,
+  add_item = function() return nil end,
+}
+local choice_queue
+local random_results
+local random_calls
+local closest_result
+local dimension_calls
+local cleanup_calls
+local seen_calls
+local callbacks
+local current_dim
+local entered = true
+local home_return_fail = false
+local dimension_fail = false
+local cleanup_result = true
+local function choice()
+  return table.remove(choice_queue, 1)
+end
+UiList = { new = function()
+  return { title=function() end, add=function() end, text=function() end,
+    desc_enabled=function() end, query=function() return choice() end }
+end }
+overmapbuffer = {
+  find_random = function(_, params)
+    random_calls = random_calls + 1
+    local result = table.remove(random_results, 1)
+    state.last_search = params
+    return result
+  end,
+  find_closest = function() return closest_result end,
+  set_seen = function() seen_calls = seen_calls + 1 end,
+}
+gapi = {
+  get_current_dimension_id = function() return current_dim end,
+  get_avatar = function() return player end,
+  get_map = function() return map end,
+  add_msg = function() end,
+  rng = function(minimum) return minimum end,
+  add_on_every_x_hook = function(_, callback) table.insert(callbacks, callback) end,
+  place_player_dimension_at = function(options)
+    table.insert(dimension_calls, options)
+    if options.dimension_id == "sky_island_home" and home_return_fail then return false end
+    if dimension_fail then return false end
+    if entered then current_dim = options.dimension_id end
+    return entered
+  end,
+  place_player_overmap_at = function() end,
+  place_player_local_at = function() end,
+  delete_dimension = function(id)
+    state.deleted = id
+    return cleanup_result
+  end,
+  get_monster_at = function() return nil end,
+  create_item = function() return {} end,
+}
+local missions = {
+  create_extraction_mission = function(dest, storage) storage.extraction_created = true end,
+  create_bonus_mission = function(_, storage) storage.bonus_created = (storage.bonus_created or 0) + 1 end,
+  create_slaughter_mission = function(_, storage) storage.slaughter_created = true end,
+  complete_or_fail_missions = function(_, storage) storage.missions_completed = true end,
+  fail_all_raid_missions = function(_, storage) storage.missions_failed = true end,
+}
+local sickness = {
+  start = function(storage) storage.sickness_started = true end,
+  stop = function(storage) storage.sickness_stopped = true end,
+  apply_resurrection_sickness = function() end,
+}
+local function fresh_storage()
+  return {
+    home_location = { x=60, y=60, z=10 }, home_omt = { x=2, y=2, z=10 },
+    home_dimension_id = "sky_island_home", skyisland_storage_version = 2,
+    is_away_from_home = false, raid_dimension_serial = 0,
+    raids_total = 0, raids_won = 0, raids_lost = 0,
+  }
+end
+function setup_case()
+  state = { removed_items = 0, deleted = nil, last_search = nil }
+  player.pos = { x=12, y=12, z=10 }; player.inventory = {}
+  choice_queue = {}; random_results = { { x=100, y=100, z=0 } }
+  random_calls = 0; closest_result = nil; dimension_calls = {}; cleanup_calls = 0
+  seen_calls = 0; callbacks = {}; current_dim = "sky_island_home"
+  entered = true; home_return_fail = false; dimension_fail = false; cleanup_result = true
+end
+teleport = require("teleport")
+function run_warp(storage, raid_choice, location_choice)
+  choice_queue = { raid_choice, location_choice }
+  return teleport.use_warp_obelisk(player, nil, { x=12, y=12, z=10 }, storage, missions, sickness)
+end
+'''
+
+
+def run_fixture(testcase, body):
+    result = subprocess.run(
+        ["luajit", "-"], cwd=ROOT, text=True, capture_output=True,
+        input=TELEPORT_FIXTURE + "\n" + body, check=True,
+    )
+    return result.stdout
+
+
+MAIN_CALLER_FIXTURE = r'''
+package.loaded.util = { debug_log = function() end }
+package.preload["missions"] = function() return {
+  complete_or_fail_missions = function() end,
+  fail_all_raid_missions = function() end,
+} end
+package.preload["warp_sickness"] = function() return {
+  stop = function() end, start = function() end,
+  register_global_hook = function() end,
+  get_status_info = function() return { current_pulse=0, grace_period=0 } end,
+  apply_resurrection_sickness = function() end,
+} end
+package.preload["heart"] = function() return {} end
+package.preload["upgrades"] = function() return {} end
+package.preload["iuse"] = function() return {} end
+package.preload["teleport"] = function()
+  return {
+    return_home_success = function(storage)
+      state.return_calls = state.return_calls + 1
+      if not state.return_ok then return false end
+      storage.is_away_from_home = false
+      storage.raids_won = (storage.raids_won or 0) + 1
+      return true
+    end,
+    resurrect_at_home = function(storage)
+      state.resurrection_calls = state.resurrection_calls + 1
+      return state.return_ok
+    end,
+    cleanup_raid_dimension = function(storage)
+      state.cleanup_calls = state.cleanup_calls + 1
+      state.cleanup_saw_shard = player.inventory.skyisland_warp_shard ~= nil
+      state.cleanup_saw_beacon = player.inventory.skyisland_skyward_beacon ~= nil
+      state.cleanup_saw_mote = player.inventory.skyisland_homeward_mote ~= nil
+      state.cleanup_saw_wins = storage.raids_won
+      storage.current_raid_dimension_id = nil
+      return true
+    end,
+  }
+end
+locale = { gettext = function(text) return text end }
+ItypeId = { new = function(id) return id end }
+TripointBubMs = { new = function(x, y, z) return { x=x, y=y, z=z } end }
+local function item(id) return { id=id, charges=1, is_stackable=function() return false end } end
+player = {
+  inventory = {},
+  get_pos_ms = function() return { x=1, y=1, z=0 } end,
+  has_item_with_id = function(self, id) return self.inventory[id] ~= nil end,
+  get_item_with_id = function(self, id) return self.inventory[id] end,
+  remove_item = function(self, value)
+    for id, candidate in pairs(self.inventory) do if candidate == value then self.inventory[id] = nil end end
+    state.removed = state.removed + 1
+  end,
+  set_all_parts_hp_to_max = function() end, clear_effects = function() end,
+}
+state = {}
+gapi = {
+  get_avatar = function() return player end,
+  get_monster_at = function() return nil end,
+  add_msg = function() end,
+}
+game = { current_mod="sky", mod_runtime={ sky={} }, mod_storage={ sky={} }, hooks={ on_game_started={}, on_game_load={}, on_game_save={}, on_character_death={} } }
+function setup_main_case()
+  state.return_ok = true; state.return_calls = 0; state.cleanup_calls = 0
+  state.removed = 0; state.resurrection_calls = 0
+  state.cleanup_saw_shard = nil; state.cleanup_saw_beacon = nil
+  state.cleanup_saw_mote = nil; state.cleanup_saw_wins = nil
+  player.inventory = {}
+  local storage = game.mod_storage.sky
+  storage.is_away_from_home = true; storage.home_location = { x=1, y=1, z=0 }
+  storage.current_raid_dimension_id = "sky_island_raid_000001"; storage.raids_won = 4
+  storage.difficulty_emergency_return = 1
+  return game.mod_runtime.sky, storage
+end
+local mod = require("main")
+'''
+
+
+def run_main_fixture(body):
+    result = subprocess.run(
+        ["luajit", "-"], cwd=ROOT, text=True, capture_output=True,
+        input=MAIN_CALLER_FIXTURE + "\n" + body, check=True,
+    )
+    return result.stdout
+
+
 class HomeDimensionTest(unittest.TestCase):
     def test_dimension_lifecycle_and_special_footprint(self):
         result = subprocess.run(
@@ -228,7 +477,11 @@ assert(#callbacks == 2)
 assert(callbacks[2]() == false)
 -- A failed delayed spawn remains persisted for a later save/reload retry.
 assert(#storage.warped_animals == 1)
-assert(teleport.spawn_warped_animals(storage) == 1)
+-- Simulate a save/reload: the persistent storage table survives while the
+-- module-local scheduling flag is recreated.
+package.loaded.teleport = nil
+local reloaded = require("teleport")
+assert(reloaded.spawn_warped_animals(storage) == 1)
 assert(#callbacks == 3)
 assert(callbacks[3]() == false)
 assert(#storage.warped_animals == 0)
@@ -294,6 +547,260 @@ assert(remove_calls == 0)
 assert(storage.is_away_from_home)
 ''',
         )
+
+    def test_warp_entry_short_field_creates_raid(self):
+        run_fixture(self, r'''
+setup_case()
+local storage = fresh_storage()
+assert(run_warp(storage, 1, 1) == 1)
+assert(storage.is_away_from_home and storage.raids_total == 1)
+assert(storage.current_raid_type == "short")
+assert(storage.current_raid_dimension_id == "sky_island_raid_000001")
+assert(dimension_calls[1].world_type == "default")
+assert(state.last_search.z_min == 0 and storage.extraction_created)
+''')
+
+    def test_warp_entry_medium_and_long_require_unlocks(self):
+        run_fixture(self, r'''
+setup_case()
+local medium = fresh_storage(); medium.longer_raids_unlocked = 1
+assert(run_warp(medium, 2, 1) == 1)
+assert(medium.current_raid_type == "medium" and medium.current_raid_pulse_multiplier == 2)
+setup_case()
+local long_raid = fresh_storage(); long_raid.longer_raids_unlocked = 2
+assert(run_warp(long_raid, 3, 1) == 1)
+assert(long_raid.current_raid_type == "long" and long_raid.current_raid_pulse_multiplier == 3)
+''')
+
+    def test_warp_entry_each_unlocked_location_and_labs_catalyst(self):
+        run_fixture(self, r'''
+local cases = {
+  { key="field", choice=1, z=0 },
+  { key="basement", choice=2, z=-1, unlock="basements_unlocked" },
+  { key="roof", choice=3, z=1, unlock="roofs_unlocked" },
+  { key="labs", choice=4, z=-2, unlock="labs_unlocked", catalyst=true },
+}
+for _, case in ipairs(cases) do
+  setup_case()
+  local storage = fresh_storage()
+  if case.unlock then storage[case.unlock] = true end
+  if case.key == "roof" or case.key == "labs" then storage.basements_unlocked = true end
+  if case.key == "labs" then storage.roofs_unlocked = true end
+  if case.catalyst then player.inventory.skyisland_labs_catalyst = fresh_item("skyisland_labs_catalyst") end
+  assert(run_warp(storage, 1, case.choice) == 1)
+  assert(storage.is_away_from_home and state.last_search.z_min == case.z)
+end
+''')
+
+    def test_warp_location_locked_and_missing_catalyst_cancel(self):
+        run_fixture(self, r'''
+setup_case()
+local locked = fresh_storage()
+-- Without unlocks, menu index 2 is Cancel, not Basement.
+assert(run_warp(locked, 1, 2) == 0)
+assert(#dimension_calls == 0 and not locked.is_away_from_home)
+setup_case()
+local missing = fresh_storage(); missing.labs_unlocked = true
+missing.basements_unlocked = true; missing.roofs_unlocked = true
+-- Labs has no selectable option when its catalyst is absent.
+assert(run_warp(missing, 1, 4) == 0)
+assert(#dimension_calls == 0 and not missing.is_away_from_home)
+''')
+
+    def test_warp_both_menus_cancel_without_state_mutation(self):
+        run_fixture(self, r'''
+setup_case()
+local raid_cancel = fresh_storage()
+assert(run_warp(raid_cancel, 2, 1) == 0)
+assert(#dimension_calls == 0 and raid_cancel.current_raid_type == nil)
+setup_case()
+local location_cancel = fresh_storage()
+assert(run_warp(location_cancel, 1, 2) == 0)
+assert(#dimension_calls == 0 and location_cancel.current_raid_type == nil)
+''')
+
+    def test_warp_failed_dimension_creation_refunds_labs_catalyst(self):
+        run_fixture(self, r'''
+setup_case()
+dimension_fail = true
+local storage = fresh_storage(); storage.labs_unlocked = true
+player.inventory.skyisland_labs_catalyst = fresh_item("skyisland_labs_catalyst")
+assert(run_warp(storage, 1, 4) == 0)
+assert(player.inventory.skyisland_labs_catalyst ~= nil)
+assert(storage.raid_dimension_serial == 0 and storage.current_raid_dimension_id == nil)
+''')
+
+    def test_warp_search_fallback_succeeds_and_abort_cleans(self):
+        run_fixture(self, r'''
+setup_case()
+random_results = {}; closest_result = { x=200, y=200, z=0 }
+local fallback = fresh_storage()
+assert(run_warp(fallback, 1, 1) == 1)
+assert(random_calls == 9 and fallback.is_away_from_home)
+setup_case()
+random_results = {}; closest_result = nil
+local abort = fresh_storage(); abort.labs_unlocked = true
+abort.basements_unlocked = true; abort.roofs_unlocked = true
+player.inventory.skyisland_labs_catalyst = fresh_item("skyisland_labs_catalyst")
+assert(run_warp(abort, 1, 4) == 0)
+assert(not abort.is_away_from_home and abort.current_raid_dimension_id == nil)
+assert(player.inventory.skyisland_labs_catalyst ~= nil)
+assert(state.deleted == "sky_island_raid_000001")
+''')
+
+    def test_warp_failed_search_and_failed_home_recovery_retains_raid(self):
+        run_fixture(self, r'''
+setup_case()
+random_results = {}; closest_result = nil; home_return_fail = true
+local storage = fresh_storage(); storage.labs_unlocked = true
+storage.basements_unlocked = true; storage.roofs_unlocked = true
+player.inventory.skyisland_labs_catalyst = fresh_item("skyisland_labs_catalyst")
+assert(run_warp(storage, 1, 4) == 0)
+assert(not storage.is_away_from_home)
+assert(storage.current_raid_dimension_id == "sky_island_raid_000001")
+assert(state.deleted == nil and player.inventory.skyisland_labs_catalyst ~= nil)
+''')
+
+    def test_two_successful_raids_allocate_unique_dimensions(self):
+        run_fixture(self, r'''
+setup_case()
+local storage = fresh_storage()
+assert(run_warp(storage, 1, 1) == 1)
+assert(storage.current_raid_dimension_id == "sky_island_raid_000001")
+assert(teleport.return_home_success(storage, missions, sickness) == true)
+assert(storage.current_raid_dimension_id == nil)
+random_results = { { x=100, y=100, z=0 } }
+assert(run_warp(storage, 1, 1) == 1)
+assert(storage.current_raid_dimension_id == "sky_island_raid_000002")
+''')
+
+    def test_emergency_callers_consume_before_cleanup_autosave(self):
+        run_main_fixture(r'''
+local mod, storage = setup_main_case()
+player.inventory.skyisland_warp_shard = item("skyisland_warp_shard")
+assert(mod.use_warp_focus(player, nil, nil) == 0)
+assert(state.return_calls == 1 and state.cleanup_calls == 1)
+assert(not state.cleanup_saw_shard and state.cleanup_saw_wins == 5)
+setup_main_case(); storage.difficulty_emergency_return = 2
+local beacon = item("skyisland_skyward_beacon"); player.inventory.skyisland_skyward_beacon = beacon
+assert(mod.use_skyward_beacon(player, beacon, nil) == 0)
+assert(state.cleanup_calls == 1 and not state.cleanup_saw_beacon)
+setup_main_case(); storage.difficulty_emergency_return = 2
+local mote = item("skyisland_homeward_mote"); player.inventory.skyisland_homeward_mote = mote
+assert(mod.on_character_death({}) == true)
+assert(state.cleanup_calls == 1 and not state.cleanup_saw_mote and state.cleanup_saw_wins == 4)
+''')
+
+    def test_emergency_callers_retain_items_when_return_fails(self):
+        run_main_fixture(r'''
+local mod, storage = setup_main_case()
+state.return_ok = false
+local shard = item("skyisland_warp_shard"); player.inventory.skyisland_warp_shard = shard
+assert(mod.use_warp_focus(player, nil, nil) == 0)
+assert(player.inventory.skyisland_warp_shard == shard and state.cleanup_calls == 0)
+setup_main_case(); state.return_ok = false; storage.difficulty_emergency_return = 2
+local beacon = item("skyisland_skyward_beacon"); player.inventory.skyisland_skyward_beacon = beacon
+assert(mod.use_skyward_beacon(player, beacon, nil) == 0)
+assert(player.inventory.skyisland_skyward_beacon == beacon and state.cleanup_calls == 0)
+setup_main_case(); state.return_ok = false; storage.difficulty_emergency_return = 2
+local mote = item("skyisland_homeward_mote"); player.inventory.skyisland_homeward_mote = mote
+assert(mod.on_character_death({}) == true)
+assert(player.inventory.skyisland_homeward_mote == mote and storage.raids_won == 4 and state.cleanup_calls == 0)
+setup_main_case(); state.return_ok = false
+assert(mod.on_character_death({}) == true and state.resurrection_calls == 1)
+''')
+
+    def test_return_reward_once_and_failed_return_is_retryable(self):
+        run_fixture(self, r'''
+setup_case()
+local storage = fresh_storage(); storage.is_away_from_home = true
+storage.current_raid_dimension_id = "sky_island_raid_000001"; storage.current_raid_type = "short"
+storage.raids_total = 1; player.inventory.skyisland_vortex_token = fresh_item("skyisland_vortex_token")
+choice_queue = { 1 }
+assert(teleport.use_return_obelisk(player, nil, { x=12, y=12, z=10 }, storage, missions, sickness) == 1)
+assert(storage.raids_won == 1 and not storage.is_away_from_home)
+assert(player.inventory.skyisland_material_token ~= nil and player.inventory.skyisland_material_token.charges == 50)
+assert(teleport.use_return_obelisk(player, nil, { x=12, y=12, z=10 }, storage, missions, sickness) == 0)
+assert(player.inventory.skyisland_material_token.charges == 50)
+setup_case(); entered = true; home_return_fail = true; current_dim = "sky_island_raid_000001"
+local failed = fresh_storage(); failed.is_away_from_home = true; failed.current_raid_dimension_id = "sky_island_raid_000001"
+failed.raids_total = 1; failed.current_raid_type = "short"
+choice_queue = { 1 }
+assert(teleport.use_return_obelisk(player, nil, { x=12, y=12, z=10 }, failed, missions, sickness) == 0)
+assert(failed.is_away_from_home and failed.raids_won == 0 and player.inventory.skyisland_material_token == nil)
+''')
+
+    def test_legacy_return_uses_exact_saved_home_ms(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"
+local storage = fresh_storage()
+storage.home_dimension_id = ""; storage.home_location = { x=-17, y=23, z=10 }
+storage.home_omt = { x=-1, y=0, z=10 }; storage.is_away_from_home = true
+assert(teleport.return_home_success(storage, missions, sickness) == true)
+assert(dimension_calls[1].dimension_id == "")
+assert(dimension_calls[1].target_ms.x == -17 and dimension_calls[1].target_ms.y == 23)
+''')
+
+    def test_legacy_and_branch_v2_migration_preserves_progress_inventory_missions(self):
+        run_fixture(self, r'''
+setup_case()
+local legacy = {
+  home_location = { x=-17, y=23, z=10 }, home_omt = { x=-1, y=0, z=10 },
+  is_away_from_home = true, islandrank=4, raids_total=17, raids_won=11,
+  raids_lost=6, missionswon=8, upgrades={ stability=3 }, inventory={ shards=9 },
+}
+teleport.migrate_legacy_storage(legacy)
+assert(legacy.home_dimension_id == "" and legacy.skyisland_storage_version == 2)
+assert(legacy.islandrank == 4 and legacy.raids_total == 17 and legacy.raids_won == 11)
+assert(legacy.missionswon == 8 and legacy.upgrades.stability == 3 and legacy.inventory.shards == 9)
+local branch = {
+  skyisland_storage_version=2, home_dimension_id="sky_island_home",
+  home_location={ x=61, y=62, z=10 }, home_omt={ x=2, y=2, z=10 },
+  is_away_from_home=true, islandrank=3, raids_total=21, raids_won=19,
+  mission_state={ active=3 }, inventory={ tokens=12 }, upgrades={ labs=true },
+}
+teleport.migrate_legacy_storage(branch)
+assert(branch.home_dimension_id == "sky_island_home" and branch.home_location.x == 61)
+assert(branch.islandrank == 3 and branch.raids_total == 21 and branch.raids_won == 19)
+assert(branch.mission_state.active == 3 and branch.inventory.tokens == 12 and branch.upgrades.labs)
+''')
+
+    def test_successful_return_retries_failed_map_add_without_loss(self):
+        run_fixture(self, r'''
+setup_case()
+current_dim = "sky_island_raid_000001"
+local room_item = { id="room_loot" }
+local attempts = 0
+map.has_items_at = function(_, p) return p.x == 12 and p.y == 12 and p.z == 10 end
+map.get_items_at = function() return { items=function() return { room_item } end } end
+map.detach_item_at = function() return room_item end
+map.add_item = function(_, _, item)
+  attempts = attempts + 1
+  if attempts == 1 then return item end
+  return nil
+end
+local storage = fresh_storage(); storage.is_away_from_home=true
+storage.current_raid_dimension_id="sky_island_raid_000001"; storage.current_raid_type="short"
+player.inventory.skyisland_vortex_token = fresh_item("skyisland_vortex_token")
+choice_queue = { 1 }
+assert(teleport.use_return_obelisk(player, nil, { x=12,y=12,z=10 }, storage, missions, sickness) == 1)
+assert(attempts == 2 and not storage.is_away_from_home)
+assert(storage.current_raid_dimension_id == nil and player.inventory.skyisland_vortex_token == nil)
+''')
+
+    def test_cleanup_failure_is_retryable_after_return(self):
+        run_fixture(self, r'''
+setup_case()
+cleanup_result = false
+local storage = fresh_storage(); storage.is_away_from_home = true
+storage.current_raid_dimension_id = "sky_island_raid_000001"; storage.current_raid_type = "short"
+choice_queue = { 1 }
+assert(teleport.use_return_obelisk(player, nil, { x=12, y=12, z=10 }, storage, missions, sickness) == 1)
+assert(not storage.is_away_from_home and storage.current_raid_dimension_id == "sky_island_raid_000001")
+cleanup_result = true
+assert(teleport.cleanup_raid_dimension(storage))
+assert(storage.current_raid_dimension_id == nil)
+''')
 
 
 if __name__ == "__main__":
