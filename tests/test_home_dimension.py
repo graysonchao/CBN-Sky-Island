@@ -41,9 +41,11 @@ local function fresh_item(id, charges)
     mod_charges = function(self, amount) self.charges = self.charges + amount end,
     get_var_str = function(self, key, default) return self.vars[key] or default end,
     set_var_str = function(self, key, value) self.vars[key] = value end,
+    get_type = function(self) return { str=function() return self.id end } end,
   }
 end
 local avatar_available = true
+local current_dim
 local player = {
   pos = { x=12, y=12, z=10 }, inventory = {},
   get_pos_ms = function(self) return self.pos end,
@@ -74,6 +76,11 @@ local player = {
     for _, item in pairs(self.inventory) do table.insert(items, item) end
     return items
   end,
+  drop_all_items = function(self)
+    state.drop_dimension = current_dim
+    state.drop_position = self.pos
+    self.inventory = {}
+  end,
 }
 local terrain = { obj = function()
   return { get_movecost = function() return 2 end, has_flag = function() return false end }
@@ -94,7 +101,6 @@ local dimension_calls
 local cleanup_calls
 local seen_calls
 local callbacks
-local current_dim
 local entered = true
 local home_return_fail = false
 local dimension_fail = false
@@ -138,14 +144,18 @@ gapi = {
   end,
   get_monster_at = function() return nil end,
   place_monster_around = function() return { set_hp=function() end, make_friendly=function() end } end,
-  create_item = function() return {} end,
+  create_item = function(id, count)
+    local created = fresh_item(id, count)
+    table.insert(state.created_items, { id=id, count=count })
+    return created
+  end,
 }
 local missions = {
   create_extraction_mission = function(dest, storage) storage.extraction_created = true end,
   create_bonus_mission = function(_, storage) storage.bonus_created = (storage.bonus_created or 0) + 1 end,
   create_slaughter_mission = function(_, storage) storage.slaughter_created = true end,
   complete_or_fail_missions = function(_, storage) storage.missions_completed = true end,
-  fail_all_raid_missions = function(_, storage) storage.missions_failed = true end,
+  fail_all_raid_missions = function(_, storage) if storage then storage.missions_failed = true end end,
 }
 local sickness = {
   start = function(storage) storage.sickness_started = true end,
@@ -161,7 +171,8 @@ local function fresh_storage()
   }
 end
 function setup_case()
-  state = { removed_items = 0, deleted = nil, last_search = nil }
+  state = { removed_items = 0, deleted = nil, last_search = nil,
+    drop_dimension = nil, drop_position = nil, created_items = {} }
   player.pos = { x=12, y=12, z=10 }; player.inventory = {}
   choice_queue = {}; random_results = { { x=100, y=100, z=0 } }
   random_calls = 0; closest_result = nil; dimension_calls = {}; cleanup_calls = 0
@@ -854,6 +865,21 @@ assert(not storage.is_away_from_home and storage.current_raid_dimension_id == "s
 cleanup_result = true
 assert(teleport.cleanup_raid_dimension(storage))
 assert(storage.current_raid_dimension_id == nil)
+''')
+
+    def test_resurrection_drops_raid_belongings_at_source_and_preserves_tokens_once(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"
+local storage = fresh_storage(); storage.is_away_from_home = true
+storage.current_raid_dimension_id = "sky_island_raid_000001"; storage.raids_lost = 0
+player.inventory.normal_loot = fresh_item("normal_loot")
+player.inventory.skyisland_warp_shard = fresh_item("skyisland_warp_shard")
+assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
+assert(state.drop_dimension == "sky_island_raid_000001")
+assert(state.drop_position ~= nil and state.drop_position.x == 12)
+assert(#state.created_items == 1 and state.created_items[1].id == "skyisland_warp_shard")
+assert(state.created_items[1].count == 1)
+assert(not storage.is_away_from_home and storage.raids_lost == 1)
 ''')
 
 
