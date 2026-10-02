@@ -91,7 +91,12 @@ local map = {
   get_ter_at = function() return terrain end,
   get_furn_at = function() return nil end,
   has_items_at = function() return false end,
-  add_item = function() return nil end,
+  add_item = function(_, pos, item)
+    if item and item.get_var_str and item:get_var_str("skyisland_death_drop", "") ~= "" then
+      state.drop_dimension = current_dim; state.drop_position = pos
+    end
+    return nil
+  end,
 }
 local choice_queue
 local random_results
@@ -739,6 +744,47 @@ setup_main_case(); state.return_ok = false
 assert(mod.on_character_death({}) == true and state.resurrection_calls == 1)
 ''')
 
+    def test_resurrection_failed_travel_recovers_inventory_and_counters(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"; home_return_fail = true
+local dropped = {}
+map.add_item = function(_, _, item)
+  if item and item.get_var_str and item:get_var_str("skyisland_death_drop", "") ~= "" then table.insert(dropped, item) end
+  return nil
+end
+map.get_items_at = function() return { items=function() return dropped end } end
+map.detach_item_at = function(_, _, item)
+  for index, candidate in ipairs(dropped) do
+    if candidate == item then table.remove(dropped, index); return candidate end
+  end
+end
+local storage = fresh_storage(); storage.is_away_from_home=true
+storage.current_raid_dimension_id="sky_island_raid_000001"; storage.raids_lost=0
+local normal = fresh_item("normal_loot"); player.inventory.normal_loot=normal
+local token = fresh_item("skyisland_warp_shard"); player.inventory.skyisland_warp_shard=token
+assert(teleport.resurrect_at_home(storage, missions, sickness) == false)
+assert(storage.is_away_from_home and storage.raids_lost == 0)
+assert(player.inventory.normal_loot == normal and player.inventory.skyisland_warp_shard == token)
+assert(storage.death_drop_location == nil and #dropped == 0)
+''')
+
+    def test_resurrection_legacy_same_world_and_home_death_baseline(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = ""
+local legacy = fresh_storage(); legacy.home_dimension_id=""; legacy.is_away_from_home=true
+legacy.current_raid_dimension_id="sky_island_raid_000001"
+player.inventory.normal_loot=fresh_item("normal_loot")
+player.inventory.skyisland_warp_shard=fresh_item("skyisland_warp_shard")
+assert(teleport.resurrect_at_home(legacy, missions, sickness) == true)
+assert(state.drop_dimension == "" and player.inventory.normal_loot == nil)
+assert(player.inventory.skyisland_warp_shard ~= nil)
+setup_case()
+local home = fresh_storage(); home.is_away_from_home=false
+local home_item=fresh_item("home_loot"); player.inventory.home_loot=home_item
+assert(teleport.resurrect_at_home(home, missions, sickness) == true)
+assert(player.inventory.home_loot == nil and home.raids_lost == 1)
+''')
+
     def test_return_reward_once_and_failed_return_is_retryable(self):
         run_fixture(self, r'''
 setup_case()
@@ -877,8 +923,9 @@ player.inventory.skyisland_warp_shard = fresh_item("skyisland_warp_shard")
 assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
 assert(state.drop_dimension == "sky_island_raid_000001")
 assert(state.drop_position ~= nil and state.drop_position.x == 12)
-assert(#state.created_items == 1 and state.created_items[1].id == "skyisland_warp_shard")
-assert(state.created_items[1].count == 1)
+assert(#state.created_items == 0)
+assert(player.inventory.skyisland_warp_shard ~= nil)
+assert(player.inventory.normal_loot == nil)
 assert(not storage.is_away_from_home and storage.raids_lost == 1)
 ''')
 

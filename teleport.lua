@@ -8,19 +8,17 @@ local util = require("util")
 -- detached_ptr.  The marker and source coordinates are serialized with the
 -- item, so an engine autosave/reload cannot destroy a failed transfer.
 local ROOM_TRANSFER_VAR = "skyisland_room_transfer"
-local red_room_item_storage = {}
 
 -- Red room bounds relative to obelisk position
 -- The interior of the room is 3 tiles in one axis and 2 in the other from the obelisk
 -- Since the room can rotate, we use 3 for both axes to be safe
 local RED_ROOM_RANGE = 3  -- tiles in each direction
 
--- These items don't disappear when you die. Table tracks how many
--- the player had when they died
-local items_preserved_on_death = {
-  skyisland_warp_shard = 0,
-  skyisland_material_token = 0,
-  skyisland_vortex_token = 0,
+local DEATH_DROP_VAR = "skyisland_death_drop"
+local PRESERVED_DEATH_ITEMS = {
+  skyisland_warp_shard = true,
+  skyisland_material_token = true,
+  skyisland_vortex_token = true,
 }
 
 local function item_transfer_marker(item)
@@ -57,8 +55,6 @@ local function store_red_room_items(obelisk_pos)
   local game_map = gapi.get_map()
   local player = gapi.get_avatar()
   local items_stored = 0
-  red_room_item_storage = {}
-
   util.debug_log(string.format("Scanning red room around obelisk at (%d, %d, %d)",
     obelisk_pos.x, obelisk_pos.y, obelisk_pos.z))
 
@@ -77,9 +73,6 @@ local function store_red_room_items(obelisk_pos)
             local marker = string.format("%d,%d,%d", check_pos.x, check_pos.y, check_pos.z)
             detached:set_var_str(ROOM_TRANSFER_VAR, marker)
             player:add_item(detached)
-            table.insert(red_room_item_storage, { marker = marker, position = {
-              x = check_pos.x, y = check_pos.y, z = check_pos.z,
-            } })
             items_stored = items_stored + 1
           end
         end
@@ -116,7 +109,6 @@ local function restore_stored_items_at_source()
       if failed then player:add_item(failed) else restored = restored + 1 end
     end
   end
-  red_room_item_storage = {}
   util.debug_log(string.format("Restored %d staged room items after failed travel", restored))
   return restored
 end
@@ -154,13 +146,8 @@ local function retrieve_stored_items_at_home(home_pos)
       if failed then player:add_item(failed) else items_retrieved = items_retrieved + 1 end
     end
   end
-  red_room_item_storage = {}
-
   if items_retrieved > 0 then
     gapi.add_msg(string.format(locale.gettext("%d items from the red room were teleported home with you!"), items_retrieved))
-  end
-  if has_staged_room_items() then
-    gapi.add_msg(locale.gettext("Some room items could not be placed yet; they remain safely in your inventory for retry."))
   end
   return items_retrieved
 end
@@ -1350,20 +1337,62 @@ function teleport.return_home_success(storage, missions, warp_sickness, defer_cl
   return true
 end
 
--- Helper: Count stackable items by ID
-local function count_item_charges(player, item_id)
-  local total = 0
-  local all_items = player:all_items(false)
-  for _, item in ipairs(all_items) do
-    if item:get_type():str() == item_id then
-      if item:is_stackable() then
-        total = total + item.charges
-      else
-        total = total + 1
+local function death_drop_marker(item)
+  if not item or type(item.get_var_str) ~= "function" then return "" end
+  return item:get_var_str(DEATH_DROP_VAR, "")
+end
+
+-- Drop non-preserved belongings at the death source while keeping ownership
+-- recoverable until the home transition succeeds.  Preserved tokens stay in
+-- inventory and are never duplicated into the home pile.
+local function stage_death_drop(storage, player)
+  local death_pos = player:get_pos_ms()
+  local game_map = gapi.get_map()
+  storage.death_drop_location = { x = death_pos.x, y = death_pos.y, z = death_pos.z }
+  local dropped = 0
+
+  for _, item in ipairs(player:all_items(false)) do
+    local type_id = item:get_type():str()
+    if not PRESERVED_DEATH_ITEMS[type_id] then
+      local detached = player:remove_item(item)
+      if detached then
+        detached:set_var_str(DEATH_DROP_VAR, "1")
+        local failed = game_map:add_item(death_pos, detached)
+        if failed then
+          failed:set_var_str(DEATH_DROP_VAR, "")
+          player:add_item(failed)
+        else
+          dropped = dropped + 1
+        end
       end
     end
   end
-  return total
+  return dropped
+end
+
+-- Recover staged death belongings if destination travel fails.  The map owns
+-- these items during the transition, so this remains safe across a save.
+local function recover_death_drop(storage, player)
+  local location = storage.death_drop_location
+  if not location then return 0 end
+  local game_map = gapi.get_map()
+  local source = TripointBubMs.new(location.x, location.y, location.z)
+  local recovered = 0
+  local items_stack = game_map:get_items_at(source)
+  if items_stack then
+    for _, item in ipairs(items_stack:items()) do
+      if death_drop_marker(item) ~= "" then
+        local detached = game_map:detach_item_at(source, item)
+        if detached then
+          detached:set_var_str(DEATH_DROP_VAR, "")
+          player:add_item(detached)
+          recovered = recovered + 1
+        end
+      end
+    end
+  end
+  storage.death_drop_location = nil
+  return recovered
 end
 
 -- Resurrection handler - teleport player home after death
@@ -1371,30 +1400,22 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   if not storage.home_location then
     return false  -- No home to resurrect at
   end
-  if not storage.is_away_from_home then
-    return false
-  end
-
   util.debug_log("Sky Islands: Resurrecting at home")
 
   local player = gapi.get_avatar()
   if not player then return false end
 
-  -- Travel first.  If the engine rejects the destination, retain the player's
-  -- inventory and raid state so a later retry is safe.
+  -- Stage the death penalty at the current source position before travel.
+  -- Preserved token items remain in the player's inventory exactly once.
+  stage_death_drop(storage, player)
+  gapi.add_msg(locale.gettext("Your belongings scatter as reality tears you away..."))
+
+  -- If the engine rejects the destination, recover staged belongings and keep
+  -- the raid/counter state untouched so a later retry is safe.
   if not return_to_home(storage) then
+    recover_death_drop(storage, player)
     return false
   end
-
-  -- Check for token bag and preserve tokens before dropping items
-  for item in pairs(items_preserved_on_death) do
-    items_preserved_on_death[item] = count_item_charges(player, item)
-  end
-
-  -- DROP ALL ITEMS before teleporting - this is the death penalty!
-  -- Items are dropped at the death location (lost forever)
-  player:drop_all_items()
-  gapi.add_msg(locale.gettext("Your belongings scatter as reality tears you away..."))
 
   -- Clear any warped animals - they're lost on death
   if storage.warped_animals and #storage.warped_animals > 0 then
@@ -1429,18 +1450,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   util.debug_log(string.format("Resurrected at home abs_ms: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
   util.debug_log(string.format("local pos: %d, %d, %d", local_pos.x, local_pos.y, local_pos.z))
 
-  -- Restore preserved items
-  local player_pos = player:get_pos_ms()
-  for item, count in pairs(items_preserved_on_death) do
-    if count > 0 then
-      util.debug_log(local_pos)
-      local item_id = ItypeId.new(item)
-      local items = gapi.create_item(item_id, count)
-      gapi.get_map():add_item(player_pos, items)
-    end
-    items_preserved_on_death[item] = 0
-  end
-
+  storage.death_drop_location = nil
   teleport.cleanup_raid_dimension(storage)
   return true
 end
