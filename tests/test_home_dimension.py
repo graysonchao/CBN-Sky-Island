@@ -42,6 +42,7 @@ local function fresh_item(id, charges)
     get_var_str = function(self, key, default) return self.vars[key] or default end,
     set_var_str = function(self, key, value) self.vars[key] = value end,
     get_type = function(self) return { str=function() return self.id end } end,
+    has_item_with_id = function(self, id) return self.contains and self.contains[id] == true end,
   }
 end
 local avatar_available = true
@@ -71,6 +72,11 @@ local player = {
   healall = function() end,
   clear_effects = function() end,
   set_all_parts_hp_to_max = function() end,
+  get_worn_items = function(self) return self.worn_items or {} end,
+  has_weapon = function(self) return self.wielded ~= nil end,
+  can_wield = function(_, item) return item.id == "weapon" end,
+  wield = function(self, item) self.wielded = item; self.inventory[item.id] = nil; return true end,
+  wear = function(self, item) table.insert(self.worn_items, item); self.inventory[item.id] = nil; return true end,
   all_items = function(self)
     local items = {}
     for _, item in pairs(self.inventory) do table.insert(items, item) end
@@ -79,7 +85,11 @@ local player = {
   drop_all_items = function(self)
     state.drop_dimension = current_dim
     state.drop_position = self.pos
-    self.inventory = {}
+    local map_here = gapi.get_map()
+    for _, item in pairs(self.inventory) do map_here:add_item(self.pos, item) end
+    for _, item in ipairs(self.worn_items or {}) do map_here:add_item(self.pos, item) end
+    if self.wielded then map_here:add_item(self.pos, self.wielded) end
+    self.inventory = {}; self.worn_items = {}; self.wielded = nil
   end,
 }
 local terrain = { obj = function()
@@ -90,11 +100,18 @@ local map = {
   abs_to_bub = function(_, pos) return { x=pos.x, y=pos.y, z=pos.z } end,
   get_ter_at = function() return terrain end,
   get_furn_at = function() return nil end,
-  has_items_at = function() return false end,
+  has_items_at = function() return #state.map_items > 0 end,
+  get_items_at = function() return { items=function() return state.map_items end } end,
+  detach_item_at = function(_, _, item)
+    for index, candidate in ipairs(state.map_items) do
+      if candidate == item then table.remove(state.map_items, index); return candidate end
+    end
+  end,
   add_item = function(_, pos, item)
     if item and item.get_var_str and item:get_var_str("skyisland_death_drop", "") ~= "" then
       state.drop_dimension = current_dim; state.drop_position = pos
     end
+    table.insert(state.map_items, item)
     return nil
   end,
 }
@@ -177,8 +194,8 @@ local function fresh_storage()
 end
 function setup_case()
   state = { removed_items = 0, deleted = nil, last_search = nil,
-    drop_dimension = nil, drop_position = nil, created_items = {} }
-  player.pos = { x=12, y=12, z=10 }; player.inventory = {}
+    drop_dimension = nil, drop_position = nil, created_items = {}, map_items = {} }
+  player.pos = { x=12, y=12, z=10 }; player.inventory = {}; player.worn_items = {}; player.wielded = nil
   choice_queue = {}; random_results = { { x=100, y=100, z=0 } }
   random_calls = 0; closest_result = nil; dimension_calls = {}; cleanup_calls = 0
   seen_calls = 0; callbacks = {}; current_dim = "sky_island_home"; avatar_available = true
@@ -749,7 +766,7 @@ assert(mod.on_character_death({}) == true and state.resurrection_calls == 1)
 setup_case(); current_dim = "sky_island_raid_000001"; home_return_fail = true
 local dropped = {}
 map.add_item = function(_, _, item)
-  if item and item.get_var_str and item:get_var_str("skyisland_death_drop", "") ~= "" then table.insert(dropped, item) end
+  table.insert(dropped, item)
   return nil
 end
 map.get_items_at = function() return { items=function() return dropped end } end
@@ -766,6 +783,26 @@ assert(teleport.resurrect_at_home(storage, missions, sickness) == false)
 assert(storage.is_away_from_home and storage.raids_lost == 0)
 assert(player.inventory.normal_loot == normal and player.inventory.skyisland_warp_shard == token)
 assert(storage.death_drop_location == nil and #dropped == 0)
+''')
+
+    def test_resurrection_failed_travel_restores_worn_and_wielded_roles(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"; home_return_fail = true
+local dropped = {}
+map.add_item = function(_, _, item) table.insert(dropped, item); return nil end
+map.get_items_at = function() return { items=function() return dropped end } end
+map.detach_item_at = function(_, _, item)
+  for index, candidate in ipairs(dropped) do
+    if candidate == item then table.remove(dropped, index); return candidate end
+  end
+end
+local worn = fresh_item("worn_coat"); local weapon = fresh_item("weapon")
+player.worn_items = { worn }; player.wielded = weapon
+local storage = fresh_storage(); storage.is_away_from_home=true
+storage.current_raid_dimension_id="sky_island_raid_000001"
+assert(teleport.resurrect_at_home(storage, missions, sickness) == false)
+assert(player.worn_items[1] == worn and player.wielded == weapon)
+assert(player.inventory.worn_coat == nil and player.inventory.weapon == nil)
 ''')
 
     def test_resurrection_legacy_same_world_and_home_death_baseline(self):
@@ -919,12 +956,13 @@ setup_case(); current_dim = "sky_island_raid_000001"
 local storage = fresh_storage(); storage.is_away_from_home = true
 storage.current_raid_dimension_id = "sky_island_raid_000001"; storage.raids_lost = 0
 player.inventory.normal_loot = fresh_item("normal_loot")
-player.inventory.skyisland_warp_shard = fresh_item("skyisland_warp_shard")
+local token_pouch = fresh_item("token_pouch"); token_pouch.contains = { skyisland_warp_shard=true }
+player.inventory.token_pouch = token_pouch
 assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
 assert(state.drop_dimension == "sky_island_raid_000001")
 assert(state.drop_position ~= nil and state.drop_position.x == 12)
 assert(#state.created_items == 0)
-assert(player.inventory.skyisland_warp_shard ~= nil)
+assert(player.inventory.token_pouch == token_pouch)
 assert(player.inventory.normal_loot == nil)
 assert(not storage.is_away_from_home and storage.raids_lost == 1)
 ''')
