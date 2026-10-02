@@ -63,7 +63,8 @@ local player = {
   end,
   add_item = function(self, item)
     self.inventory[item.id] = item
-    return item
+    -- Match catalua_bindings_creature.cpp: add_item is void; ownership moves
+    -- and callers must reacquire an Item through all_items.
   end,
   add_item_with_id = function(self, id, count)
     local item = self.inventory[id]

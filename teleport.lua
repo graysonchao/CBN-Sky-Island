@@ -16,6 +16,7 @@ local RED_ROOM_RANGE = 3  -- tiles in each direction
 
 local DEATH_DROP_VAR = "skyisland_death_drop"
 local DEATH_ROLE_VAR = "skyisland_death_role"
+local DEATH_TRANSFER_VAR = "skyisland_death_transfer"
 local PRESERVED_DEATH_ITEMS = {
   skyisland_warp_shard = true,
   skyisland_material_token = true,
@@ -1343,6 +1344,19 @@ local function death_drop_marker(item)
   return item:get_var_str(DEATH_DROP_VAR, "")
 end
 
+local death_transfer_serial = 0
+local function next_death_transfer_marker()
+  death_transfer_serial = death_transfer_serial + 1
+  return tostring(death_transfer_serial)
+end
+
+local function find_inventory_item(player, marker)
+  for _, item in ipairs(player:all_items(false)) do
+    if item:get_var_str(DEATH_TRANSFER_VAR, "") == marker then return item end
+  end
+  return nil
+end
+
 local function death_drop_role(item)
   if not item or type(item.get_var_str) ~= "function" then return "" end
   return item:get_var_str(DEATH_ROLE_VAR, "")
@@ -1363,7 +1377,10 @@ end
 -- temporarily inventory-owned so Character:use_charges can recursively remove
 -- token contents; the now-unrelated container is returned to the source map.
 local function extract_preserved_tokens(player, game_map, source, root)
-  local added_root = player:add_item(root)
+  local marker = next_death_transfer_marker()
+  root:set_var_str(DEATH_TRANSFER_VAR, marker)
+  player:add_item(root) -- Binding is void; reacquire through serialized marker.
+  local added_root = find_inventory_item(player, marker)
   if not added_root then return false end
   local root_type = added_root:get_type():str()
 
@@ -1371,27 +1388,41 @@ local function extract_preserved_tokens(player, game_map, source, root)
   for preserved_id in pairs(PRESERVED_DEATH_ITEMS) do
     local extracted = player:use_charges(ItypeId.new(preserved_id), 999999)
     for _, token in ipairs(extracted) do
-      local added_token = player:add_item(token)
-      extracted_any = extracted_any or added_token ~= nil
+      player:add_item(token) -- Detached token is consumed by the void binding.
+      extracted_any = true
     end
   end
 
   if not extracted_any then
-    -- The engine API must expose recursive charge extraction for these ammo
-    -- tokens; return the unchanged root to the source rather than deleting it.
-    local unchanged = player:remove_item(added_root)
+    local unchanged = find_inventory_item(player, marker)
     if unchanged then
-      unchanged:set_var_str(DEATH_DROP_VAR, "1")
-      game_map:add_item(source, unchanged)
+      local detached = player:remove_item(unchanged)
+      if detached then
+        detached:set_var_str(DEATH_DROP_VAR, "1")
+        detached:set_var_str(DEATH_TRANSFER_VAR, "")
+        local failed = game_map:add_item(source, detached)
+        if failed then
+          failed:set_var_str(DEATH_DROP_VAR, "1")
+          player:add_item(failed)
+        end
+      end
     end
     return false
   end
 
   if not PRESERVED_DEATH_ITEMS[root_type] then
-    local container = player:remove_item(added_root)
+    local container = find_inventory_item(player, marker)
     if container then
-      container:set_var_str(DEATH_DROP_VAR, "1")
-      game_map:add_item(source, container)
+      local detached = player:remove_item(container)
+      if detached then
+        detached:set_var_str(DEATH_DROP_VAR, "1")
+        detached:set_var_str(DEATH_TRANSFER_VAR, "")
+        local failed = game_map:add_item(source, detached)
+        if failed then
+          failed:set_var_str(DEATH_DROP_VAR, "1")
+          player:add_item(failed)
+        end
+      end
     end
   end
   return true
@@ -1473,10 +1504,13 @@ local function recover_death_drop(storage, player)
     local detached = game_map:detach_item_at(source, item)
     if detached then
       local role = death_drop_role(detached)
+      local marker = next_death_transfer_marker()
       detached:set_var_str(DEATH_DROP_VAR, "")
-      detached:set_var_str(DEATH_ROLE_VAR, "")
-      local added = player:add_item(detached)
+      detached:set_var_str(DEATH_TRANSFER_VAR, marker)
+      player:add_item(detached) -- Binding is void; reacquire a fresh Item handle.
+      local added = find_inventory_item(player, marker)
       if added then
+        added:set_var_str(DEATH_TRANSFER_VAR, "")
         recovered = recovered + 1
         if role == "worn" and type(player.wear) == "function" then
           player:wear(added, false)
