@@ -11,7 +11,7 @@
     "required_str": -1,
     "flags": [ "TRANSPARENT", "FLAMMABLE_HARD" ],
     "crafting_pseudo_item": "skyisland_fake_warp_obelisk",
-    "examine_action": "use_furn_fake_item"
+    "examine_action": "lua:SKYISLAND_WARP_OBELISK"
   },
   {
     "type": "furniture",
@@ -24,7 +24,7 @@
     "required_str": -1,
     "flags": [ "TRANSPARENT", "FLAMMABLE_HARD" ],
     "crafting_pseudo_item": "skyisland_fake_return_obelisk",
-    "examine_action": "use_furn_fake_item"
+    "examine_action": "lua:SKYISLAND_RETURN_OBELISK"
   },
   {
     "type": "furniture",

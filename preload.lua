@@ -13,6 +13,16 @@ game.iuse_functions["SKYISLAND_RETURN_OBELISK"] = {
   use = function(params) return mod.use_return_obelisk(params.user, params.item, params.pos) end
 }
 
+-- Furniture examine functions call Lua directly so dimension travel does not
+-- invalidate the temporary fake item used by use_furn_fake_item.
+game.examine_functions["SKYISLAND_WARP_OBELISK"] = function(params)
+  return mod.use_warp_obelisk(params.user, nil, params.pos)
+end
+
+game.examine_functions["SKYISLAND_RETURN_OBELISK"] = function(params)
+  return mod.use_return_obelisk(params.user, nil, params.pos)
+end
+
 game.iuse_functions["SKYISLAND_HEART_MENU"] = {
   use = function(params) return mod.use_heart_menu(params.user, params.item, params.pos) end
 }

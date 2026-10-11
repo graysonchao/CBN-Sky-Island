@@ -4,36 +4,62 @@
 local teleport = {}
 local util = require("util")
 
--- Temporary storage for red room items during teleportation
--- Items are detached from map, held here, then placed at home
-local red_room_item_storage = {}
+-- Red-room contents are staged in the player's inventory, not in a Lua-only
+-- detached_ptr.  The marker and source coordinates are serialized with the
+-- item, so an engine autosave/reload cannot destroy a failed transfer.
+local ROOM_TRANSFER_VAR = "skyisland_room_transfer"
 
 -- Red room bounds relative to obelisk position
 -- The interior of the room is 3 tiles in one axis and 2 in the other from the obelisk
 -- Since the room can rotate, we use 3 for both axes to be safe
 local RED_ROOM_RANGE = 3  -- tiles in each direction
 
--- These items don't disappear when you die. Table tracks how many
--- the player had when they died
-local items_preserved_on_death = {
-  skyisland_warp_shard = 0,
-  skyisland_material_token = 0,
-  skyisland_vortex_token = 0,
+local DEATH_DROP_VAR = "skyisland_death_drop"
+local DEATH_ROLE_VAR = "skyisland_death_role"
+local DEATH_TRANSFER_VAR = "skyisland_death_transfer"
+local PRESERVED_DEATH_ITEMS = {
+  skyisland_warp_shard = true,
+  skyisland_material_token = true,
+  skyisland_vortex_token = true,
 }
 
--- Helper: Store items from the red room in temporary storage (survives map changes)
--- Returns the number of items stored
+local function item_transfer_marker(item)
+  if not item or type(item.get_var_str) ~= "function" then return "" end
+  return item:get_var_str(ROOM_TRANSFER_VAR, "")
+end
+
+local function marker_position(marker)
+  local x, y, z = marker:match("^(%-?%d+),(%-?%d+),(%-?%d+)$")
+  if not x then return nil end
+  return { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
+end
+
+local function staged_items(player)
+  local result = {}
+  if not player or type(player.all_items) ~= "function" then return result end
+  for _, item in ipairs(player:all_items(false)) do
+    local marker = item_transfer_marker(item)
+    if marker ~= "" and marker_position(marker) then
+      table.insert(result, { item = item, marker = marker, position = marker_position(marker) })
+    end
+  end
+  return result
+end
+
+local function has_staged_room_items()
+  return #staged_items(gapi.get_avatar()) > 0
+end
+
+-- Detach each item only long enough to transfer ownership to the character's
+-- inventory.  Character inventory is engine-serialized and therefore durable
+-- across the autosave/reload boundary.
 local function store_red_room_items(obelisk_pos)
   local game_map = gapi.get_map()
+  local player = gapi.get_avatar()
   local items_stored = 0
-
-  -- Clear any previous storage
-  red_room_item_storage = {}
-
   util.debug_log(string.format("Scanning red room around obelisk at (%d, %d, %d)",
     obelisk_pos.x, obelisk_pos.y, obelisk_pos.z))
 
-  -- Scan area inside the red room (not including walls)
   for dx = -RED_ROOM_RANGE, RED_ROOM_RANGE do
     for dy = -RED_ROOM_RANGE, RED_ROOM_RANGE do
       local check_pos = TripointBubMs.new(
@@ -41,19 +67,14 @@ local function store_red_room_items(obelisk_pos)
         obelisk_pos.y + dy,
         obelisk_pos.z
       )
-
-      -- Check if there are items at this position
       if game_map:has_items_at(check_pos) then
         local items_stack = game_map:get_items_at(check_pos)
-
-        -- Get frozen copy of items for safe iteration while modifying
-        local items_to_store = items_stack:items()
-
-        -- Detach each item from map and store in Lua table
-        for _, it in ipairs(items_to_store) do
+        for _, it in ipairs(items_stack:items()) do
           local detached = game_map:detach_item_at(check_pos, it)
           if detached then
-            table.insert(red_room_item_storage, detached)
+            local marker = string.format("%d,%d,%d", check_pos.x, check_pos.y, check_pos.z)
+            detached:set_var_str(ROOM_TRANSFER_VAR, marker)
+            player:add_item(detached)
             items_stored = items_stored + 1
           end
         end
@@ -61,41 +82,86 @@ local function store_red_room_items(obelisk_pos)
     end
   end
 
-  if items_stored > 0 then
-    util.debug_log(string.format("Total: %d items stored from red room", items_stored))
-  else
-    util.debug_log("No items found in red room")
-  end
-
+  util.debug_log(string.format("Staged %d room items in serialized inventory", items_stored))
   return items_stored
 end
 
--- Helper: Retrieve stored items and place them at home position
-local function retrieve_stored_items_at_home(home_pos)
+-- Move a staged item while clearing its marker only after ownership leaves
+-- the inventory.  On failure, restore the marker before returning it to the
+-- durable inventory owner.
+local function place_transfer_item(game_map, position, detached)
+  local marker = item_transfer_marker(detached)
+  detached:set_var_str(ROOM_TRANSFER_VAR, "")
+  local failed = game_map:add_item(position, detached)
+  if failed then failed:set_var_str(ROOM_TRANSFER_VAR, marker) end
+  return failed
+end
+
+-- Put staged room items back into their source map after a failed transition.
+-- Marked inventory items remain durable even if this operation is interrupted.
+local function restore_stored_items_at_source()
+  local player = gapi.get_avatar()
   local game_map = gapi.get_map()
-  local stored_count = #red_room_item_storage
-  local items_retrieved = 0
-
-  util.debug_log(string.format("Retrieving %d stored items at home (%d, %d, %d)",
-    stored_count, home_pos.x, home_pos.y, home_pos.z))
-
-  -- Place each stored item on the map at home position
-  for _, detached in ipairs(red_room_item_storage) do
-    local failed = game_map:add_item(home_pos, detached)
-    if not failed then
-      items_retrieved = items_retrieved + 1
+  local restored = 0
+  for _, entry in ipairs(staged_items(player)) do
+    local detached = player:remove_item(entry.item)
+    if detached then
+      local source = TripointBubMs.new(entry.position.x, entry.position.y, entry.position.z)
+      local failed = place_transfer_item(game_map, source, detached)
+      if failed then player:add_item(failed) else restored = restored + 1 end
     end
   end
+  util.debug_log(string.format("Restored %d staged room items after failed travel", restored))
+  return restored
+end
 
-  -- Clear the storage (items now owned by map or GC'd if placement failed)
-  red_room_item_storage = {}
+-- Retrieve serialized room items at home.  Failed placement returns ownership
+-- to the character inventory, where it survives a save/reload for retry.
+local function retrieve_stored_items_at_home(home_pos)
+  local player = gapi.get_avatar()
+  local game_map = gapi.get_map()
+  local entries = staged_items(player)
+  local items_retrieved = 0
 
+  util.debug_log(string.format("Retrieving %d staged room items at home (%d, %d, %d)",
+    #entries, home_pos.x, home_pos.y, home_pos.z))
+
+  for _, entry in ipairs(entries) do
+    local detached = player:remove_item(entry.item)
+    if detached then
+      local failed = place_transfer_item(game_map, home_pos, detached)
+      if failed then
+        for radius = 1, 3 do
+          if not failed then break end
+          for dx = -radius, radius do
+            for dy = -radius, radius do
+              if math.abs(dx) == radius or math.abs(dy) == radius then
+                failed = place_transfer_item(
+                  game_map, TripointBubMs.new(home_pos.x + dx, home_pos.y + dy, home_pos.z), failed )
+                if not failed then break end
+              end
+            end
+            if not failed then break end
+          end
+        end
+      end
+      if failed then player:add_item(failed) else items_retrieved = items_retrieved + 1 end
+    end
+  end
   if items_retrieved > 0 then
     gapi.add_msg(string.format(locale.gettext("%d items from the red room were teleported home with you!"), items_retrieved))
-    util.debug_log(string.format("Retrieved %d items at home", items_retrieved))
   end
-
   return items_retrieved
+end
+
+function teleport.retry_staged_room_items(storage)
+  if storage.is_away_from_home or not has_staged_room_items() then return not has_staged_room_items() end
+  retrieve_stored_items_at_home(gapi.get_avatar():get_pos_ms())
+  if not has_staged_room_items() then
+    teleport.cleanup_raid_dimension(storage)
+    return true
+  end
+  return false
 end
 
 -- Raid configuration
@@ -186,6 +252,386 @@ local LOCATION_CONFIG = {
     catalyst_item = "skyisland_labs_catalyst"
   }
 }
+
+local STORAGE_VERSION = 2
+local HOME_DIMENSION_ID = "sky_island_home"
+-- Keep the complete special inside one overmap, with the surface open to the sky.
+local HOME_OMT = { x = 2, y = 2, z = 10 }
+local HOME_BOUNDS_MIN_OMT = { x = 0, y = 0, z = 9 }
+local HOME_BOUNDS_MAX_OMT = { x = 4, y = 4, z = 10 }
+local RAID_DIMENSION_PREFIX = "sky_island_raid_"
+local RAID_DIMENSION_STRIDE = 4096
+local DESTINATION_SEARCH_ATTEMPTS = 8
+local DESTINATION_SEARCH_SAMPLE_LIMIT = 64
+local DESTINATION_FALLBACK_SAMPLE_LIMIT = 192
+
+local teleport_to_omt
+
+---@class SkyIslandPosition
+---@field x integer
+---@field y integer
+---@field z integer
+
+---@class SkyIslandHomeStorage
+---@field home_location? SkyIslandPosition
+---@field home_omt? SkyIslandPosition
+---@field home_dimension_id? string
+---@field current_raid_dimension_id? string
+---@field raid_dimension_serial? integer
+---@field skyisland_storage_version? integer
+
+---@param pos SkyIslandPosition
+local function abs_omt_from_table(pos)
+  return TripointAbsOmt.new(pos.x, pos.y, pos.z)
+end
+
+local function dimension_travel_available()
+  return gapi and type(gapi.place_player_dimension_at) == "function"
+end
+
+local function get_current_dimension_id()
+  if gapi and type(gapi.get_current_dimension_id) == "function" then
+    return gapi.get_current_dimension_id()
+  end
+  return ""
+end
+
+---@param storage SkyIslandHomeStorage
+local function remember_player_home(storage)
+  local player = gapi.get_avatar()
+  if not player then return end
+
+  local player_pos_ms = player:get_pos_ms()
+  local home_abs_ms = gapi.get_map():bub_to_abs(player_pos_ms)
+  local home_omt = home_abs_ms:to_omt()
+
+  storage.home_location = { x = home_abs_ms.x, y = home_abs_ms.y, z = home_abs_ms.z }
+  storage.home_omt = { x = home_omt.x, y = home_omt.y, z = home_omt.z }
+  storage.home_dimension_id = get_current_dimension_id()
+
+  util.debug_log(string.format(
+    "Home location set to dim='%s' abs_ms=(%d,%d,%d) omt=(%d,%d,%d)",
+    storage.home_dimension_id,
+    home_abs_ms.x,
+    home_abs_ms.y,
+    home_abs_ms.z,
+    home_omt.x,
+    home_omt.y,
+    home_omt.z
+  ))
+end
+
+local function derive_home_omt_from_location(storage)
+  if storage.home_omt or not storage.home_location then
+    return
+  end
+
+  local home_abs_ms = TripointAbsMs.new(
+    storage.home_location.x,
+    storage.home_location.y,
+    storage.home_location.z
+  )
+  local home_omt = home_abs_ms:to_omt()
+  storage.home_omt = { x = home_omt.x, y = home_omt.y, z = home_omt.z }
+end
+
+function teleport.migrate_legacy_storage(storage)
+  if (storage.skyisland_storage_version or 0) >= STORAGE_VERSION then
+    return
+  end
+
+  storage.raid_dimension_serial = storage.raid_dimension_serial or 0
+  storage.current_raid_dimension_id = storage.current_raid_dimension_id or nil
+
+  if not storage.home_location and not storage.is_away_from_home then
+    remember_player_home(storage)
+  end
+
+  derive_home_omt_from_location(storage)
+
+  if storage.home_location and storage.home_dimension_id == nil then
+    -- Legacy saves kept the sanctuary in the overworld.  Preserve that home instead
+    -- of replacing the player's established island with a fresh pocket copy.
+    storage.home_dimension_id = ""
+  end
+
+  storage.skyisland_storage_version = STORAGE_VERSION
+  util.debug_log(string.format(
+    "Migrated Sky Island storage to v%d (home_dim='%s')",
+    STORAGE_VERSION,
+    tostring(storage.home_dimension_id)
+  ))
+end
+
+---@param storage SkyIslandHomeStorage
+function teleport.ensure_home_dimension(storage)
+  if not dimension_travel_available() then
+    return false
+  end
+
+  if get_current_dimension_id() == HOME_DIMENSION_ID then
+    if not storage.home_location then
+      remember_player_home(storage)
+    end
+    storage.home_dimension_id = HOME_DIMENSION_ID
+    storage.skyisland_storage_version = STORAGE_VERSION
+    return true
+  end
+
+  local options = {
+    dimension_id = HOME_DIMENSION_ID,
+    target_omt = abs_omt_from_table(HOME_OMT),
+    world_type = "pocket_dimension",
+    bounds_min_omt = abs_omt_from_table(HOME_BOUNDS_MIN_OMT),
+    bounds_max_omt = abs_omt_from_table(HOME_BOUNDS_MAX_OMT),
+    pregen_special_id = "Sky Island Pocket",
+    pregen_special_omt = abs_omt_from_table(HOME_OMT),
+  }
+  if storage.home_dimension_id == HOME_DIMENSION_ID and storage.home_location then
+    -- Re-enter saved islands at the exact saved map-square position.  Using
+    -- only target_omt would silently snap branch-era saves to the OMT center.
+    options = {
+      dimension_id = HOME_DIMENSION_ID,
+      target_ms = TripointAbsMs.new(
+        storage.home_location.x,
+        storage.home_location.y,
+        storage.home_location.z
+      ),
+    }
+  elseif storage.home_dimension_id == HOME_DIMENSION_ID and storage.home_omt then
+    -- Older pocket saves may have the OMT but not the exact map-square point.
+    options = {
+      dimension_id = HOME_DIMENSION_ID,
+      target_omt = abs_omt_from_table(storage.home_omt),
+    }
+  end
+  local entered = gapi.place_player_dimension_at(options)
+
+  if entered then
+    storage.home_dimension_id = HOME_DIMENSION_ID
+    remember_player_home(storage)
+    storage.skyisland_storage_version = STORAGE_VERSION
+    util.debug_log("Sky Island home moved into pocket dimension")
+    return true
+  end
+
+  gapi.add_msg(locale.gettext("ERROR: Could not enter the Sky Island pocket dimension."))
+  util.debug_log("ERROR: place_player_dimension_at failed for Sky Island home")
+  return false
+end
+
+local function add_location_search_types(params, selected_location, loc_config)
+  params:add_type(loc_config.terrain_type, loc_config.match_type)
+
+  if selected_location == "field" then
+    params:add_type("forest", OtMatchType.EXACT)
+    params:add_type("forest_thick", OtMatchType.EXACT)
+  end
+end
+
+local function build_location_search_params(selected_location, loc_config, min_distance, max_distance)
+  local params = OmtFindParams.new()
+  add_location_search_types(params, selected_location, loc_config)
+  params:set_search_range(min_distance, max_distance)
+  params:set_search_layers(loc_config.z_level, loc_config.z_level)
+  return params
+end
+
+local function find_raid_destination(search_origin, selected_location, loc_config, config)
+  local search_span = math.max(0, config.max_distance - config.min_distance)
+  local band_width = math.max(40, math.min(160, math.floor(search_span / 4)))
+  local max_band_start = math.max(config.min_distance, config.max_distance - band_width)
+
+  for attempt = 1, DESTINATION_SEARCH_ATTEMPTS do
+    local band_min = config.min_distance
+    if max_band_start > config.min_distance then
+      band_min = gapi.rng(config.min_distance, max_band_start)
+    end
+    local band_max = math.min(config.max_distance, band_min + band_width)
+    local params = build_location_search_params(selected_location, loc_config, band_min, band_max)
+    params.max_results = DESTINATION_SEARCH_SAMPLE_LIMIT
+    local dest_omt = overmapbuffer.find_random(search_origin, params)
+
+    if dest_omt then
+      util.debug_log(string.format(
+        "Found raid location on attempt %d in band %d-%d: (%d,%d,%d)",
+        attempt,
+        band_min,
+        band_max,
+        dest_omt.x,
+        dest_omt.y,
+        dest_omt.z
+      ))
+      return dest_omt
+    end
+  end
+
+  local fallback_params = build_location_search_params(
+    selected_location,
+    loc_config,
+    config.min_distance,
+    config.max_distance
+  )
+  fallback_params.max_results = DESTINATION_FALLBACK_SAMPLE_LIMIT
+  local fallback_dest = overmapbuffer.find_random(search_origin, fallback_params)
+  if fallback_dest then
+    util.debug_log(string.format("Fallback raid search found location at (%d,%d,%d)", fallback_dest.x, fallback_dest.y, fallback_dest.z))
+    return fallback_dest
+  end
+
+  local closest_params = build_location_search_params(
+    selected_location,
+    loc_config,
+    config.min_distance,
+    config.max_distance
+  )
+  local closest_dest = overmapbuffer.find_closest(search_origin, closest_params)
+  if closest_dest then
+    util.debug_log(string.format("Closest raid search found location at (%d,%d,%d)", closest_dest.x, closest_dest.y, closest_dest.z))
+    return closest_dest
+  end
+
+  return nil
+end
+
+local function make_raid_origin(storage, z_level)
+  local serial = storage.raid_dimension_serial or 1
+  local base = serial * RAID_DIMENSION_STRIDE
+  local y_sign = gapi.rng(0, 1) == 0 and -1 or 1
+  return TripointAbsOmt.new(
+    base + gapi.rng(-1024, 1024),
+    (base * y_sign) + gapi.rng(-1024, 1024),
+    z_level
+  )
+end
+
+local function enter_new_raid_dimension(storage, loc_config)
+  if not dimension_travel_available() then
+    return nil
+  end
+
+  storage.raid_dimension_serial = (storage.raid_dimension_serial or 0) + 1
+  local raid_dimension_id = string.format("%s%06d", RAID_DIMENSION_PREFIX, storage.raid_dimension_serial)
+  local raid_origin = make_raid_origin(storage, loc_config.z_level)
+
+  local entered = gapi.place_player_dimension_at({
+    dimension_id = raid_dimension_id,
+    target_omt = raid_origin,
+    world_type = "default",
+  })
+
+  if not entered then
+    storage.raid_dimension_serial = storage.raid_dimension_serial - 1
+    util.debug_log(string.format("ERROR: Could not enter raid dimension '%s'", raid_dimension_id))
+    return nil
+  end
+
+  storage.current_raid_dimension_id = raid_dimension_id
+  util.debug_log(string.format(
+    "Entered raid dimension '%s' at search origin (%d,%d,%d)",
+    raid_dimension_id,
+    raid_origin.x,
+    raid_origin.y,
+    raid_origin.z
+  ))
+  return raid_origin
+end
+
+local function get_stored_home_omt(storage)
+  local home_omt = storage.home_omt or HOME_OMT
+  return TripointAbsOmt.new(home_omt.x, home_omt.y, home_omt.z)
+end
+
+local function return_to_home(storage)
+  if dimension_travel_available() and storage.home_dimension_id ~= nil then
+    -- The engine intentionally treats same-dimension travel as a no-op.  This
+    -- matters for a legacy away save whose current dimension is already the
+    -- overworld: explicitly place the avatar at the saved MS coordinate.
+    if get_current_dimension_id() == storage.home_dimension_id and storage.home_location then
+      local home_abs_ms = TripointAbsMs.new(
+        storage.home_location.x,
+        storage.home_location.y,
+        storage.home_location.z
+      )
+      -- Reload the local map around the saved overmap tile before applying
+      -- the exact MS offset; place_player_local_at alone cannot move across
+      -- an overworld reality bubble.
+      gapi.place_player_overmap_at(home_abs_ms:to_omt())
+      local local_pos = gapi.get_map():abs_to_bub(home_abs_ms)
+      gapi.place_player_local_at(local_pos)
+      gapi.add_msg(locale.gettext("You feel reality shift around you..."))
+      return true
+    end
+
+    local options = {
+      dimension_id = storage.home_dimension_id,
+    }
+    if storage.home_location then
+      -- Preserve the exact home MS coordinate for both pocket and legacy
+      -- overworld saves.  target_omt is only a fallback for old incomplete data.
+      options.target_ms = TripointAbsMs.new(
+        storage.home_location.x,
+        storage.home_location.y,
+        storage.home_location.z
+      )
+    else
+      options.target_omt = get_stored_home_omt(storage)
+    end
+    local entered = gapi.place_player_dimension_at(options)
+
+    if not entered then
+      gapi.add_msg(locale.gettext("ERROR: Could not return to the Sky Island home dimension."))
+      util.debug_log(string.format(
+        "ERROR: place_player_dimension_at failed while returning home to '%s'",
+        tostring(storage.home_dimension_id)
+      ))
+      return false
+    end
+
+    gapi.add_msg(locale.gettext("You feel reality shift around you..."))
+    return true
+  end
+
+  if not storage.home_location then
+    return false
+  end
+
+  local home_abs_ms = TripointAbsMs.new(
+    storage.home_location.x,
+    storage.home_location.y,
+    storage.home_location.z
+  )
+  local home_omt = home_abs_ms:to_omt()
+  teleport_to_omt(home_omt, TripointRelOmt.new(0, -1, 0))
+  return true
+end
+
+---@param storage SkyIslandHomeStorage
+function teleport.cleanup_raid_dimension(storage)
+  local raid_dimension_id = storage.current_raid_dimension_id
+  if not raid_dimension_id then
+    return true
+  end
+
+  if not gapi or type(gapi.delete_dimension) ~= "function" then
+    return false
+  end
+
+  -- delete_dimension fully saves first, so clear the reference before invoking it.
+  storage.current_raid_dimension_id = nil
+  if gapi.delete_dimension(raid_dimension_id) then
+    util.debug_log(string.format("Deleted expedition dimension '%s'", raid_dimension_id))
+    return true
+  end
+
+  storage.current_raid_dimension_id = raid_dimension_id
+  gapi.add_msg(string.format(
+    locale.gettext("ERROR: Could not delete expedition dimension '%s'. It will be retried before the next expedition."),
+    raid_dimension_id
+  ))
+  util.debug_log(string.format("ERROR: Could not delete expedition dimension '%s'", raid_dimension_id))
+  return false
+end
 
 -- Helper: Get player position in OMT coordinates
 local function get_player_omt()
@@ -290,7 +736,7 @@ end
 
 -- Helper: Teleport player to OMT coordinates with offset
 -- spawn_filter is an optional func(game_map, pos) for spawn-type-specific safety checks
-local function teleport_to_omt(omt, offset_tiles, spawn_filter)
+teleport_to_omt = function(omt, offset_tiles, spawn_filter)
   local player = gapi.get_avatar()
 
   if player then
@@ -372,155 +818,80 @@ local function apply_landing_protection(storage)
   end
 end
 
--- Save friendly animals currently on the island before departing
--- Scans visible creatures and stores friendly monsters in storage.island_animals
+-- Sanctuary animals remain in the persistent home dimension while the player
+-- raids.  Do not serialize visible monsters and respawn copies on return: the
+-- old snapshot/restore path duplicated every friendly animal on each raid.
 local function save_island_animals(storage)
-  local player = gapi.get_avatar()
-  if not player then return end
-
-  storage.island_animals = {}
-
-  -- Use get_visible_creatures to find all creatures in range
-  local creatures = player:get_visible_creatures(60)
-  local saved_count = 0
-
-  for _, creature in ipairs(creatures) do
-    if creature:is_monster() then
-      local monster = creature:as_monster()
-      if monster and monster.friendly > 0 then
-        local type_id = monster:get_type():str()
-        local hp = monster:get_hp()
-        local name = monster:get_name()
-
-        table.insert(storage.island_animals, {
-          type_id = type_id,
-          hp = hp,
-          name = name
-        })
-        saved_count = saved_count + 1
-        util.debug_log(string.format("Saved island animal: %s (HP: %d)", type_id, hp))
-      end
-    end
-  end
-
-  if saved_count > 0 then
-    util.debug_log(string.format("Total island animals saved: %d", saved_count))
-  end
+  storage.island_animals = nil
 end
 
--- Restore friendly animals that were on the island before departure
--- Uses delayed spawn (same pattern as spawn_warped_animals)
 local function restore_island_animals(storage)
-  if not storage.island_animals or #storage.island_animals == 0 then
-    return 0
-  end
-
-  -- Copy the list and clear storage immediately
-  local animals_to_restore = {}
-  for _, animal in ipairs(storage.island_animals) do
-    table.insert(animals_to_restore, animal)
-  end
-  storage.island_animals = {}
-
-  util.debug_log(string.format("Queuing %d island animals for delayed restore", #animals_to_restore))
-
-  -- Delay spawn by 2 seconds to let map fully load after teleport
-  gapi.add_on_every_x_hook(TimeDuration.from_seconds(2), function()
-    local player = gapi.get_avatar()
-    if not player then return false end
-
-    local player_pos = player:get_pos_ms()
-    local restored_count = 0
-
-    for _, animal_data in ipairs(animals_to_restore) do
-      local mtype_id = MonsterTypeId.new(animal_data.type_id)
-      local spawned_monster = gapi.place_monster_around(mtype_id, player_pos, 5)
-
-      if spawned_monster then
-        spawned_monster:set_hp(animal_data.hp)
-        spawned_monster:make_friendly()
-        restored_count = restored_count + 1
-        util.debug_log(string.format("Restored island animal: %s with HP %d", animal_data.type_id, animal_data.hp))
-      else
-        util.debug_log(string.format("FAILED to restore island animal: %s", animal_data.type_id))
-      end
-    end
-
-    if restored_count > 0 then
-      gapi.add_msg(string.format(locale.gettext("%d island animal%s returned home safely!"),
-        restored_count, restored_count > 1 and "s" or ""))
-    end
-
-    return false  -- One-shot: stop after first execution
-  end)
-
-  return #animals_to_restore
+  -- Discard queues written by older versions.  Their source monsters were never
+  -- transferred out of the home map, so replaying them would duplicate them.
+  storage.island_animals = nil
+  return 0
 end
 
--- Spawn warped animals at home location
--- Called when player successfully returns home
--- Note: Uses delayed spawn to ensure map is fully loaded after teleport
+-- Spawn warped animals at home location.  As with island animals, retain
+-- failed entries so a transient map/load failure cannot duplicate or lose them.
+local warped_spawn_scheduled = false
 function teleport.spawn_warped_animals(storage)
   if not storage.warped_animals or #storage.warped_animals == 0 then
     return 0
   end
+  if warped_spawn_scheduled then return #storage.warped_animals end
 
-  -- Copy the list and clear storage immediately
-  local animals_to_spawn = {}
-  for _, animal in ipairs(storage.warped_animals) do
-    table.insert(animals_to_spawn, animal)
-  end
-  storage.warped_animals = {}
-
-  util.debug_log(string.format("Queuing %d animals for delayed spawn", #animals_to_spawn))
-
-  -- Delay spawn by 1 second to let map fully load after teleport
+  warped_spawn_scheduled = true
+  util.debug_log(string.format("Queuing %d animals for delayed spawn", #storage.warped_animals))
   gapi.add_on_every_x_hook(TimeDuration.from_seconds(1), function()
+    -- Never deliver captured animals into an active raid dimension.
+    if storage.is_away_from_home then
+      warped_spawn_scheduled = false
+      return false
+    end
     local player = gapi.get_avatar()
-    if not player then return false end
+    if not player then
+      -- Keep the periodic callback alive until the avatar/map is available;
+      -- the serialized queue remains the durable fallback across reload.
+      return true
+    end
 
     local player_pos = player:get_pos_ms()
+    local remaining = {}
     local spawned_count = 0
-
-    util.debug_log(string.format("Delayed spawn executing at (%d,%d,%d)",
-      player_pos.x, player_pos.y, player_pos.z))
-
-    for _, animal_data in ipairs(animals_to_spawn) do
-      -- Handle old format "MonsterTypeId[mon_cow]" -> "mon_cow"
+    for _, animal_data in ipairs(storage.warped_animals or {}) do
       local type_str = animal_data.type_id
       local extracted = type_str:match("MonsterTypeId%[(.+)%]")
-      if extracted then
-        type_str = extracted
-      end
-
-      -- Spawn monster near player
-      local mtype_id = MonsterTypeId.new(type_str)
-
-      -- Try place_monster_around for flexible positioning
-      local spawned_monster = gapi.place_monster_around(mtype_id, player_pos, 3)
-
+      if extracted then type_str = extracted end
+      local spawned_monster = gapi.place_monster_around(MonsterTypeId.new(type_str), player_pos, 3)
       if spawned_monster then
-        -- Set the HP to what it was when captured
         spawned_monster:set_hp(animal_data.hp)
-        -- Make it friendly again
         spawned_monster:make_friendly()
-
         spawned_count = spawned_count + 1
         util.debug_log(string.format("Spawned: %s with HP %d", type_str, animal_data.hp))
       else
+        table.insert(remaining, animal_data)
         util.debug_log(string.format("FAILED to spawn: %s", type_str))
       end
     end
+    storage.warped_animals = remaining
+    warped_spawn_scheduled = false
 
     if spawned_count > 0 then
       gapi.add_msg(string.format(locale.gettext("%d warped animal%s arrived at your island!"),
         spawned_count, spawned_count > 1 and "s" or ""))
     end
-
-    return false  -- One-shot: stop after first execution
+    return false
   end)
+  return #storage.warped_animals
+end
 
-  return #animals_to_spawn  -- Return count of queued animals
+-- Re-arm delayed animal delivery after a save/reload that happened between
+-- travel and the one-shot callback.
+function teleport.restore_pending_animals(storage)
+  if storage.is_away_from_home then return end
+  restore_island_animals(storage)
+  teleport.spawn_warped_animals(storage)
 end
 
 -- Use warp obelisk - start expedition
@@ -530,15 +901,24 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     return 0
   end
 
-  -- Store home location as absolute MS coordinates (for resurrection) - only once
-  if not storage.home_location then
-    local player_pos_ms = who:get_pos_ms()
-    local home_abs_ms = gapi.get_map():bub_to_abs(player_pos_ms)
-    storage.home_location = { x = home_abs_ms.x, y = home_abs_ms.y, z = home_abs_ms.z }
-    util.debug_log(string.format("Home location set to: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
+  teleport.migrate_legacy_storage(storage)
+
+  if dimension_travel_available() and not teleport.cleanup_raid_dimension(storage) then
+    return 0
   end
 
-  -- Also get OMT for teleportation
+  -- New saves keep the sanctuary in a bounded pocket dimension.  Legacy saves
+  -- keep their original overworld sanctuary so existing island changes survive.
+  if dimension_travel_available() and storage.home_dimension_id == HOME_DIMENSION_ID then
+    if not teleport.ensure_home_dimension(storage) then
+      return 0
+    end
+    who = gapi.get_avatar()
+  elseif not storage.home_location then
+    remember_player_home(storage)
+  end
+
+  -- Also get OMT for legacy same-dimension teleportation/search fallback.
   local home_omt = get_player_omt()
   if not home_omt then
     gapi.add_msg(locale.gettext("ERROR: Could not determine position!"))
@@ -585,15 +965,6 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   end
 
   local config = RAID_CONFIG[selected_raid]
-
-  -- Store raid type for token rewards on return
-  storage.current_raid_type = selected_raid
-  storage.current_raid_pulse_multiplier = config.pulse_multiplier
-  -- Store distance values for mission spawning
-  storage.current_mission_min = config.mission_min
-  storage.current_mission_max = config.mission_max
-  storage.current_exit_min = config.exit_min
-  storage.current_exit_max = config.exit_max
 
   -- Show location type menu
   local loc_ui = UiList.new()
@@ -664,38 +1035,31 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   end
 
   gapi.add_msg(string.format(locale.gettext("Initiating %s to %s..."), config.name, loc_config.name))
+  save_island_animals(storage)
   gapi.add_msg(locale.gettext("Searching for suitable location..."))
 
-  -- Build search parameters based on location type
-  local params = OmtFindParams.new()
-  params:add_type(loc_config.terrain_type, loc_config.match_type)
-
-  -- For field starts, also allow common wilderness terrain types.
-  if selected_location == "field" then
-    params:add_type("forest", OtMatchType.EXACT)
-    params:add_type("forest_thick", OtMatchType.EXACT)
+  local search_origin = nil
+  if dimension_travel_available() then
+    search_origin = enter_new_raid_dimension(storage, loc_config)
+    if not search_origin then
+      gapi.add_msg(locale.gettext("WARNING: Could not create a fresh expedition dimension. Aborting warp."))
+      restore_island_animals(storage)
+      if loc_config.catalyst_item then
+        who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
+        gapi.add_msg(locale.gettext("Your Labs Catalyst is returned."))
+      end
+      return 0
+    end
+  else
+    -- Use ground-level origin for legacy same-world searches (sky islands are at z > 0).
+    search_origin = TripointAbsOmt.new(home_omt.x, home_omt.y, loc_config.z_level)
   end
-
-  -- Set search range
-  params:set_search_range(config.min_distance, config.max_distance)
-  -- Bound Lua overmap searches so the UI does not appear to hang while finding every match in range.
-  params.max_results = 32
-  -- Search at the appropriate z-level
-  params:set_search_layers(loc_config.z_level, loc_config.z_level)
-
-  -- Use ground-level origin for searching (sky islands are at z > 0)
-  local search_origin = TripointAbsOmt.new(home_omt.x, home_omt.y, loc_config.z_level)
 
   util.debug_log(string.format("Searching for %s terrain in range %d-%d at z=%d from (%d, %d, %d)",
     loc_config.terrain_type, config.min_distance, config.max_distance, loc_config.z_level,
     search_origin.x, search_origin.y, search_origin.z))
 
-  -- Debug: Try find_all to see how many results we get
-  -- local all_results = overmapbuffer.find_all(search_origin, params)
-  -- util.debug_log(string.format("find_all returned %d results", #all_results))
-
-  -- Find a random location matching parameters
-  local dest_omt = overmapbuffer.find_random(search_origin, params)
+  local dest_omt = find_raid_destination(search_origin, selected_location, loc_config, config)
 
   if dest_omt then
     util.debug_log(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
@@ -703,6 +1067,12 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
   else
     gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
     util.debug_log("ERROR: Terrain search failed!")
+    local returned_home = not dimension_travel_available()
+    if dimension_travel_available() then
+      returned_home = return_to_home(storage)
+      if returned_home then teleport.cleanup_raid_dimension(storage) end
+    end
+    if returned_home then restore_island_animals(storage) end
     -- Refund catalyst if we consumed one
     if loc_config.catalyst_item then
       who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
@@ -711,12 +1081,12 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     return 0
   end
 
-  -- Two-stage teleport to prevent map revelation from z=10
-  -- First teleport: Move to z=0 at home x,y (ground level should exist below sky island)
-  -- Second teleport: Move to actual destination
-  local intermediate_omt = TripointAbsOmt.new(home_omt.x, home_omt.y, 0)
-  util.debug_log("Intermediate teleport to z=0 to prevent map revelation")
-  gapi.place_player_overmap_at(intermediate_omt)
+  -- Two-stage teleport to prevent map revelation from z=10 in legacy same-world mode.
+  if not dimension_travel_available() then
+    local intermediate_omt = TripointAbsOmt.new(home_omt.x, home_omt.y, 0)
+    util.debug_log("Intermediate teleport to z=0 to prevent map revelation")
+    gapi.place_player_overmap_at(intermediate_omt)
+  end
 
   -- Determine spawn filter based on location type
   local spawn_filter = nil
@@ -726,6 +1096,15 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
 
   -- Now teleport to actual destination
   teleport_to_omt(dest_omt, nil, spawn_filter)
+
+  -- Store raid configuration only after all fallible destination work has
+  -- succeeded, so cancellation/failure cannot poison the next reward.
+  storage.current_raid_type = selected_raid
+  storage.current_raid_pulse_multiplier = config.pulse_multiplier
+  storage.current_mission_min = config.mission_min
+  storage.current_mission_max = config.mission_max
+  storage.current_exit_min = config.exit_min
+  storage.current_exit_max = config.exit_max
 
   -- Apply warpcloak landing protection (invisibility + feather fall + bonuses)
   apply_landing_protection(storage)
@@ -743,9 +1122,6 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     local area_size = (reveal_radius * 2 + 1)
     gapi.add_msg(string.format(locale.gettext("Your scouting reveals a %dx%d area around the landing zone."), area_size, area_size))
   end
-
-  -- Save island animals before leaving
-  save_island_animals(storage)
 
   -- Set away status
   storage.is_away_from_home = true
@@ -799,26 +1175,18 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
     -- 0 = whole_room (always), 1 = whole_room_cost (needs vortex token), 2 = self_only (never)
     local return_behavior = storage.difficulty_return_behavior or 1
     local items_stored = 0
-    local used_vortex_token = false
+    local vortex_item
+    local vortex_id = ItypeId.new("skyisland_vortex_token")
 
     if return_behavior == 0 then
       -- Whole Room: Always teleport room contents
       items_stored = store_red_room_items(pos)
     elseif return_behavior == 1 then
-      -- Whole Room for Cost: Only if player has vortex token
-      local vortex_id = ItypeId.new("skyisland_vortex_token")
+      -- Whole Room for Cost.  Do not consume the token until the destination
+      -- transition succeeds; a failed travel must be fully retryable.
       if who:has_item_with_id(vortex_id, false) then
-        local vortex_item = who:get_item_with_id(vortex_id, false)
-        if vortex_item then
-          if vortex_item:is_stackable() and vortex_item.charges > 1 then
-            vortex_item:mod_charges(-1)
-          else
-            who:remove_item(vortex_item)
-          end
-        end
+        vortex_item = who:get_item_with_id(vortex_id, false)
         items_stored = store_red_room_items(pos)
-        used_vortex_token = true
-        gapi.add_msg(locale.gettext("The Vortex Token crumbles as it pulls the room's contents into the warp!"))
       else
         gapi.add_msg(locale.gettext("Without a Vortex Token, only items you carry will return with you."))
       end
@@ -827,22 +1195,25 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
       gapi.add_msg(locale.gettext("Only items you carry will return with you."))
     end
 
-    -- Convert stored abs_ms coordinates to OMT for teleportation
-    local home_abs_ms = TripointAbsMs.new(
-      storage.home_location.x,
-      storage.home_location.y,
-      storage.home_location.z
-    )
-    local home_omt = home_abs_ms:to_omt()
+    if not return_to_home(storage) then
+      restore_stored_items_at_source()
+      return 0
+    end
 
-    -- Offset 1 tile north (negative Y in map coordinates)
-    teleport_to_omt(home_omt, TripointRelOmt.new(0, -1, 0))
+    if vortex_item then
+      if vortex_item:is_stackable() and vortex_item.charges > 1 then
+        vortex_item:mod_charges(-1)
+      else
+        who:remove_item(vortex_item)
+      end
+      gapi.add_msg(locale.gettext("The Vortex Token crumbles as it pulls the room's contents into the warp!"))
+    end
 
-    -- Retrieve stored items and place them at home
-    if items_stored > 0 then
+    -- Retrieve serialized room items at home, including items staged before a
+    -- save/reload where the local count is no longer available.
+    if items_stored > 0 or has_staged_room_items() then
       local player = gapi.get_avatar()
-      local player_pos = player:get_pos_ms()
-      retrieve_stored_items_at_home(player_pos)
+      retrieve_stored_items_at_home(player:get_pos_ms())
     end
 
     -- Complete missions when returning home
@@ -891,6 +1262,9 @@ function teleport.use_return_obelisk(who, item, pos, storage, missions, warp_sic
       storage.raids_total
     ))
 
+    if not has_staged_room_items() then
+      teleport.cleanup_raid_dimension(storage)
+    end
     return 1
   else
     gapi.add_msg(locale.gettext("Cancelled."))
@@ -900,22 +1274,18 @@ end
 
 -- Return home successfully (used by return obelisk and skyward beacon)
 -- Does NOT prompt for confirmation - caller should handle that
-function teleport.return_home_success(storage, missions, warp_sickness)
+function teleport.return_home_success(storage, missions, warp_sickness, defer_cleanup)
   if not storage.home_location then
     gapi.add_msg(locale.gettext("ERROR: Home location not set!"))
-    return
+    return false
+  end
+  if not storage.is_away_from_home then
+    return false
   end
 
-  -- Convert stored abs_ms coordinates to OMT for teleportation
-  local home_abs_ms = TripointAbsMs.new(
-    storage.home_location.x,
-    storage.home_location.y,
-    storage.home_location.z
-  )
-  local home_omt = home_abs_ms:to_omt()
-
-  -- Offset 1 tile north (negative Y in map coordinates)
-  teleport_to_omt(home_omt, TripointRelOmt.new(0, -1, 0))
+  if not return_to_home(storage) then
+    return false
+  end
 
   -- Complete missions when returning home
   local player = gapi.get_avatar()
@@ -962,44 +1332,260 @@ function teleport.return_home_success(storage, missions, warp_sickness)
     storage.raids_won,
     storage.raids_total
   ))
+
+  if not defer_cleanup then
+    teleport.cleanup_raid_dimension(storage)
+  end
+  return true
 end
 
--- Helper: Count stackable items by ID
-local function count_item_charges(player, item_id)
-  local total = 0
-  local all_items = player:all_items(false)
-  for _, item in ipairs(all_items) do
-    if item:get_type():str() == item_id then
-      if item:is_stackable() then
-        total = total + item.charges
-      else
-        total = total + 1
+local function death_drop_marker(item)
+  if not item or type(item.get_var_str) ~= "function" then return "" end
+  return item:get_var_str(DEATH_DROP_VAR, "")
+end
+
+local function next_death_serial(storage)
+  storage.death_drop_serial = (storage.death_drop_serial or 0) + 1
+  return storage.death_drop_serial
+end
+
+local function next_death_transfer_marker(storage)
+  storage.death_transfer_serial = (storage.death_transfer_serial or 0) + 1
+  return "death:transfer:" .. tostring(storage.death_transfer_serial)
+end
+
+local function clear_death_markers(item)
+  if not item or type(item.set_var_str) ~= "function" then return end
+  item:set_var_str(DEATH_TRANSFER_VAR, "")
+  item:set_var_str(DEATH_DROP_VAR, "")
+  item:set_var_str(DEATH_ROLE_VAR, "")
+end
+
+local function find_inventory_item(player, marker)
+  for _, item in ipairs(player:all_items(false)) do
+    if item:get_var_str(DEATH_TRANSFER_VAR, "") == marker then return item end
+  end
+  return nil
+end
+
+local function death_drop_role(item)
+  if not item or type(item.get_var_str) ~= "function" then return "" end
+  return item:get_var_str(DEATH_ROLE_VAR, "")
+end
+
+-- Extract only preserved token charges from one dropped root.  The root is
+-- temporarily inventory-owned so Character:use_charges can recurse through
+-- nested contents.  It is returned to the source map unless it is itself a
+-- preserved token.  Extracted charge items have all three transaction
+-- markers cleared before re-adding because add_item transfers ownership and
+-- returns no Item handle.
+local function extract_preserved_tokens(storage, player, game_map, source, root,
+                                       active_marker)
+  local marker = next_death_transfer_marker(storage)
+  root:set_var_str(DEATH_TRANSFER_VAR, marker)
+  player:add_item(root)
+  local added_root = find_inventory_item(player, marker)
+  if not added_root then return false end
+  local root_type = added_root:get_type():str()
+
+  local extracted_any = false
+  local drained_tokens = {}
+  for preserved_id in pairs(PRESERVED_DEATH_ITEMS) do
+    while true do
+      local extracted = player:use_charges(ItypeId.new(preserved_id), 999999)
+      if #extracted == 0 then break end
+      for _, token in ipairs(extracted) do
+        -- use_charges exposes borrowed Item handles owned by its result list,
+        -- not Detached items accepted by add_item. Recreate preserved charges
+        -- through the same factory used by the original resurrection handler.
+        table.insert(drained_tokens, gapi.create_item(ItypeId.new(preserved_id), token.charges))
+        extracted_any = true
       end
     end
   end
-  return total
+
+  -- A zero-charge preserved root is still a held item.  Do not discard it just
+  -- because use_charges quite correctly returned no detached charges.
+  if not extracted_any and PRESERVED_DEATH_ITEMS[root_type] then
+    local unchanged = find_inventory_item(player, marker)
+    if unchanged then clear_death_markers(unchanged) end
+    return true
+  end
+
+  -- Re-add only after every source charge has been drained; adding during the
+  -- loop would make use_charges find the same token again forever.
+  for _, token in ipairs(drained_tokens) do
+    clear_death_markers(token)
+    player:add_item(token)
+  end
+
+  local container = find_inventory_item(player, marker)
+  if container and PRESERVED_DEATH_ITEMS[root_type] then
+    -- A zero-charge protected root can remain after nested charges were
+    -- extracted.  It stays with the player, but never keeps stale markers.
+    clear_death_markers(container)
+  elseif container then
+    local detached = player:remove_item(container)
+    if detached then
+      -- Keep only the active transaction marker on a failed map transfer so
+      -- recovery cannot select an old corpse or a prior transaction.
+      detached:set_var_str(DEATH_DROP_VAR, active_marker)
+      detached:set_var_str(DEATH_TRANSFER_VAR, "")
+      local failed = game_map:add_item(source, detached)
+      if failed then
+        player:add_item(failed)
+        return false
+      end
+    end
+  end
+  return true
+end
+
+-- Drop every inventory/worn/wielded root through the engine binding. Marked
+-- roots are recoverable if travel fails; only token charges are returned to
+-- inventory, never an entire unrelated container.
+local function stage_death_drop(storage, player)
+  local death_pos = player:get_pos_ms()
+  local game_map = gapi.get_map()
+  local serial = next_death_serial(storage)
+  local active_marker = "death:" .. tostring(serial)
+  storage.death_drop_marker = active_marker
+  storage.death_drop_location = { x = death_pos.x, y = death_pos.y, z = death_pos.z }
+
+  -- Mark the held roots before the engine detaches them.  Map stacks are
+  -- exposed as fresh userdata snapshots, so pointer/table identity cannot
+  -- distinguish these roots from pre-existing ground items after the drop.
+  for _, item in ipairs(player:all_items(false)) do
+    item:set_var_str(DEATH_DROP_VAR, active_marker)
+    item:set_var_str(DEATH_ROLE_VAR, "inventory")
+  end
+  if type(player.get_worn_items) == "function" then
+    for _, item in ipairs(player:get_worn_items()) do
+      item:set_var_str(DEATH_DROP_VAR, active_marker)
+      item:set_var_str(DEATH_ROLE_VAR, "worn")
+    end
+  end
+  for _, item in ipairs(player:all_items(false)) do
+    if type(player.is_wielding) == "function" and player:is_wielding(item) then
+      item:set_var_str(DEATH_DROP_VAR, active_marker)
+      item:set_var_str(DEATH_ROLE_VAR, "wielded")
+    end
+  end
+  if type(player.get_worn_items) == "function" then
+    for _, item in ipairs(player:get_worn_items()) do
+      if type(player.is_wielding) == "function" and player:is_wielding(item) then
+        item:set_var_str(DEATH_DROP_VAR, active_marker)
+        item:set_var_str(DEATH_ROLE_VAR, "wielded")
+      end
+    end
+  end
+  player:drop_all_items()
+
+  local dropped = {}
+  local after_stack = game_map:get_items_at(death_pos)
+  if after_stack then
+    for _, item in ipairs(after_stack:items()) do
+      if death_drop_marker(item) == active_marker then table.insert(dropped, item) end
+    end
+  end
+
+  local placed = true
+  for _, item in ipairs(dropped) do
+    local detached = game_map:detach_item_at(death_pos, item)
+    if detached then
+      local returned = extract_preserved_tokens(storage, player, game_map, death_pos, detached,
+                                                active_marker)
+      placed = returned and placed
+    end
+  end
+  return placed
+end
+
+-- Recover staged death belongings if destination travel fails. The map owns
+-- these items during the transition, so this remains safe across a save.
+local function recover_death_drop(storage, player)
+  local location = storage.death_drop_location
+  if not location then return 0 end
+  local active_marker = storage.death_drop_marker
+  if type(active_marker) ~= "string" or not active_marker:match("^death:%d+$") then
+    -- A legacy location may still accompany the old marker value "1", but it
+    -- is not a recoverable current transaction.
+    storage.death_drop_location = nil
+    storage.death_drop_marker = nil
+    return 0
+  end
+  local game_map = gapi.get_map()
+  local source = TripointBubMs.new(location.x, location.y, location.z)
+  local candidates = {}
+  local stack = game_map:get_items_at(source)
+  if stack then
+    for _, item in ipairs(stack:items()) do
+      if death_drop_marker(item) == active_marker then table.insert(candidates, item) end
+    end
+  end
+
+  local recovered = 0
+  for _, item in ipairs(candidates) do
+    local detached = game_map:detach_item_at(source, item)
+    if detached then
+      local role = death_drop_role(detached)
+      local marker = next_death_transfer_marker(storage)
+      clear_death_markers(detached)
+      detached:set_var_str(DEATH_TRANSFER_VAR, marker)
+      player:add_item(detached) -- Binding is void; reacquire a fresh Item handle.
+      local added = find_inventory_item(player, marker)
+      if added then
+        clear_death_markers(added)
+        recovered = recovered + 1
+        if role == "worn" and type(player.wear) == "function" then
+          player:wear(added, false)
+        elseif role == "wielded" and type(player.wield) == "function" then
+          player:wield(added)
+        end
+      end
+    end
+  end
+
+  -- A rejected source placement keeps its root inventory-owned. Restore its
+  -- equipped role too, rather than carrying death-exempt belongings home.
+  for _, item in ipairs(player:all_items(false)) do
+    if death_drop_marker(item) == active_marker then
+      local role = death_drop_role(item)
+      clear_death_markers(item)
+      recovered = recovered + 1
+      if role == "worn" then player:wear(item, false)
+      elseif role == "wielded" then player:wield(item) end
+    end
+  end
+  storage.death_drop_location = nil
+  storage.death_drop_marker = nil
+  return recovered
 end
 
 -- Resurrection handler - teleport player home after death
 function teleport.resurrect_at_home(storage, missions, warp_sickness)
   if not storage.home_location then
-    return  -- No home to resurrect at
+    return false  -- No home to resurrect at
   end
-
   util.debug_log("Sky Islands: Resurrecting at home")
 
   local player = gapi.get_avatar()
-  if not player then return end
+  if not player then return false end
 
-  -- Check for token bag and preserve tokens before dropping items
-  for item in pairs(items_preserved_on_death) do
-    items_preserved_on_death[item] = count_item_charges(player, item)
+  -- Stage the death penalty at the current source position before travel.
+  -- Preserved token items remain in the player's inventory exactly once.
+  if not stage_death_drop(storage, player) then
+    recover_death_drop(storage, player)
+    return false
   end
-
-  -- DROP ALL ITEMS before teleporting - this is the death penalty!
-  -- Items are dropped at the death location (lost forever)
-  player:drop_all_items()
   gapi.add_msg(locale.gettext("Your belongings scatter as reality tears you away..."))
+
+  -- If the engine rejects the destination, recover staged belongings and keep
+  -- the raid/counter state untouched so a later retry is safe.
+  if not return_to_home(storage) then
+    recover_death_drop(storage, player)
+    return false
+  end
 
   -- Clear any warped animals - they're lost on death
   if storage.warped_animals and #storage.warped_animals > 0 then
@@ -1009,20 +1595,12 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
       lost_count, lost_count > 1 and "s were" or " was"))
   end
 
-  -- Build home position from stored abs_ms coordinates
   local home_abs_ms = TripointAbsMs.new(
     storage.home_location.x,
     storage.home_location.y,
     storage.home_location.z
   )
-
-  -- Convert abs_ms to OMT for overmap placement
-  local home_omt = home_abs_ms:to_omt()
-  gapi.place_player_overmap_at(home_omt)
-
-  -- Convert abs_ms to local_ms for exact positioning
   local local_pos = gapi.get_map():abs_to_bub(home_abs_ms)
-  gapi.place_player_local_at(local_pos)
 
   -- Fail all raid missions on death
   missions.fail_all_raid_missions(player)
@@ -1042,17 +1620,10 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
   util.debug_log(string.format("Resurrected at home abs_ms: %d, %d, %d", home_abs_ms.x, home_abs_ms.y, home_abs_ms.z))
   util.debug_log(string.format("local pos: %d, %d, %d", local_pos.x, local_pos.y, local_pos.z))
 
-  -- Restore preserved items
-  local player_pos = player:get_pos_ms()
-  for item, count in pairs(items_preserved_on_death) do
-    if count > 0 then
-      util.debug_log(local_pos)
-      local item_id = ItypeId.new(item)
-      local items = gapi.create_item(item_id, count)
-      gapi.get_map():add_item(player_pos, items)
-    end
-    items_preserved_on_death[item] = 0
-  end
+  storage.death_drop_location = nil
+  storage.death_drop_marker = nil
+  teleport.cleanup_raid_dimension(storage)
+  return true
 end
 
 return teleport
