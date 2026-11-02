@@ -524,12 +524,13 @@ local function set_terrain_at_local_pos(coord, terrain_id)
   -- Create the tripoint at the specified local coordinates
   local player = gapi.get_avatar()
   local player_bub_ms_pos = player:get_pos_ms()
-  local player_bub_omt_pos = map:bub_to_abs(player_bub_ms_pos):to_omt():xy()
-  local pos = player_bub_omt_pos:project_combine(coord)
+  local player_abs_omt_pos = map:bub_to_abs(player_bub_ms_pos):to_omt()
+  local target_abs_omt_pos = TripointAbsOmt.new(player_abs_omt_pos.x, player_abs_omt_pos.y, coord.z)
+  local pos = target_abs_omt_pos:project_combine(coord:xy())
 
   -- Set the terrain
   local current_ter = map:get_ter_at(map:abs_to_bub(pos))
-  gapi.add_msg(locale.gettext("current ter at %s is %s"), map:abs_to_bub(pos), current_ter)
+  gapi.add_msg(string.format(locale.gettext("current ter at %s is %s"), map:abs_to_bub(pos), current_ter))
   local success = map:set_ter_at(map:abs_to_bub(pos), ter_int)
   if not success then
     gapi.add_msg(locale.gettext("WARNING: Failed to set terrain at position"))
