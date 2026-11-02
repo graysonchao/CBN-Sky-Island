@@ -84,14 +84,14 @@ function iuse.imprint_autodoc(who, item, pos)
   local player = gapi.get_avatar()
   if not player then return 0 end
   return imprint_furniture_copyplate(player, "f_autodoc",
-    "skyisland_autodoc_inert", "skyisland_autodoc_active", "Autodoc")
+    "skyisland_autodoc_inert", "skyisland_autodoc_active", locale.gettext("Autodoc"))
 end
 
 function iuse.imprint_autodoc_couch(who, item, pos)
   local player = gapi.get_avatar()
   if not player then return 0 end
   return imprint_furniture_copyplate(player, "f_autodoc_couch",
-    "skyisland_autodoc_couch_inert", "skyisland_autodoc_couch_active", "Autodoc Couch")
+    "skyisland_autodoc_couch_inert", "skyisland_autodoc_couch_active", locale.gettext("Autodoc Couch"))
 end
 
 -- Nanofabricator (terrain-based)
@@ -99,14 +99,14 @@ function iuse.imprint_nanofab_body(who, item, pos)
   local player = gapi.get_avatar()
   if not player then return 0 end
   return imprint_terrain_copyplate(player, "t_nanofab_body",
-    "skyisland_nanofab_body_inert", "skyisland_nanofab_body_active", "Nanofabricator")
+    "skyisland_nanofab_body_inert", "skyisland_nanofab_body_active", locale.gettext("Nanofabricator"))
 end
 
 function iuse.imprint_nanofab_panel(who, item, pos)
   local player = gapi.get_avatar()
   if not player then return 0 end
   return imprint_terrain_copyplate(player, "t_nanofab",
-    "skyisland_nanofab_panel_inert", "skyisland_nanofab_panel_active", "Nanofabricator Control Panel")
+    "skyisland_nanofab_panel_inert", "skyisland_nanofab_panel_active", locale.gettext("Nanofabricator Control Panel"))
 end
 
 -- CVD Machine (terrain-based)
@@ -114,14 +114,14 @@ function iuse.imprint_cvd_body(who, item, pos)
   local player = gapi.get_avatar()
   if not player then return 0 end
   return imprint_terrain_copyplate(player, "t_cvdbody",
-    "skyisland_cvd_body_inert", "skyisland_cvd_body_active", "CVD Machine")
+    "skyisland_cvd_body_inert", "skyisland_cvd_body_active", locale.gettext("CVD Machine"))
 end
 
 function iuse.imprint_cvd_panel(who, item, pos)
   local player = gapi.get_avatar()
   if not player then return 0 end
   return imprint_terrain_copyplate(player, "t_cvdmachine",
-    "skyisland_cvd_panel_inert", "skyisland_cvd_panel_active", "CVD Control Panel")
+    "skyisland_cvd_panel_inert", "skyisland_cvd_panel_active", locale.gettext("CVD Control Panel"))
 end
 
 return iuse

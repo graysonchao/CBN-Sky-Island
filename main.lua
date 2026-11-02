@@ -238,7 +238,7 @@ mod.use_warp_focus = function(who, item, pos)
         player:remove_item(shard_item)
       end
     end
-    gapi.add_msg("A warp shard crumbles to dust as the focus activates!")
+    gapi.add_msg(locale.gettext("A warp shard crumbles to dust as the focus activates!"))
   end
 
   -- Return home with all items (focus is NOT consumed)

@@ -701,12 +701,12 @@ function teleport.use_warp_obelisk(who, item, pos, storage, missions, warp_sickn
     util.debug_log(string.format("Found raid location at (%d, %d, %d)", dest_omt.x, dest_omt.y, dest_omt.z))
     util.debug_log(string.format("Found %s at z=%d (searched z=%d)", loc_config.terrain_type, dest_omt.z, loc_config.z_level))
   else
-    gapi.add_msg("WARNING: Could not find suitable terrain. Aborting warp.")
+    gapi.add_msg(locale.gettext("WARNING: Could not find suitable terrain. Aborting warp."))
     util.debug_log("ERROR: Terrain search failed!")
     -- Refund catalyst if we consumed one
     if loc_config.catalyst_item then
       who:add_item_with_id(ItypeId.new(loc_config.catalyst_item), 1)
-      gapi.add_msg("Your Labs Catalyst is returned.")
+      gapi.add_msg(locale.gettext("Your Labs Catalyst is returned."))
     end
     return 0
   end
