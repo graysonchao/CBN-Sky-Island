@@ -16,6 +16,11 @@ local iuse = require("iuse")
 -- Initialize storage defaults (only for new games)
 -- These will be overwritten by saved data on load
 storage.home_location = storage.home_location or nil
+storage.skyisland_storage_version = storage.skyisland_storage_version or 0
+storage.home_dimension_id = storage.home_dimension_id or nil
+storage.home_omt = storage.home_omt or nil
+storage.current_raid_dimension_id = storage.current_raid_dimension_id or nil
+storage.raid_dimension_serial = storage.raid_dimension_serial or 0
 storage.is_away_from_home = storage.is_away_from_home or false
 storage.warp_pulse_count = storage.warp_pulse_count or 0
 storage.raids_total = storage.raids_total or 0
@@ -199,6 +204,7 @@ mod.use_warp_focus = function(who, item, pos)
   end
 
   -- Mode 1: Costs a warp shard to use, and cannot be used near enemies
+  local shard_id
   if emergency_setting == 1 then
     -- Check for nearby enemies (10 tile radius)
     local player_pos = player:get_pos_ms()
@@ -222,28 +228,32 @@ mod.use_warp_focus = function(who, item, pos)
     end
 
     -- Check for warp shard
-    local shard_id = ItypeId.new("skyisland_warp_shard")
+    shard_id = ItypeId.new("skyisland_warp_shard")
     if not player:has_item_with_id(shard_id, false) then
       gapi.add_msg(locale.gettext("The focus requires a warp shard to activate!"))
       return 0
     end
-
-    -- Consume the shard (get item then remove it)
-    local shard_item = player:get_item_with_id(shard_id, false)
-    if shard_item then
-      -- For stackable items, reduce charges
-      if shard_item:is_stackable() and shard_item.charges > 1 then
-        shard_item:mod_charges(-1)
-      else
-        player:remove_item(shard_item)
-      end
-    end
-    gapi.add_msg("A warp shard crumbles to dust as the focus activates!")
   end
 
-  -- Return home with all items (focus is NOT consumed)
+  -- Return home with all items (focus is NOT consumed).  Consume the shard
+  -- only after the engine confirms the destination transition.
   gapi.add_msg(locale.gettext("The focus flares with brilliant light. You feel yourself being pulled skyward..."))
-  teleport.return_home_success(storage, missions, warp_sickness)
+  local returned = teleport.return_home_success(storage, missions, warp_sickness, true)
+  if returned then
+    if emergency_setting == 1 then
+      local shard_item = player:get_item_with_id(shard_id, false)
+      if shard_item then
+        if shard_item:is_stackable() and shard_item.charges > 1 then
+          shard_item:mod_charges(-1)
+        else
+          player:remove_item(shard_item)
+        end
+      end
+      gapi.add_msg(locale.gettext("A warp shard crumbles to dust as the focus activates!"))
+    end
+    -- Cleanup autosaves after caller-owned inventory changes.
+    teleport.cleanup_raid_dimension(storage)
+  end
   return 0  -- Don't consume the focus
 end
 
@@ -271,8 +281,19 @@ mod.use_skyward_beacon = function(who, item, pos)
 
   -- Beacon always works (it's the craftable 5-shard item)
   gapi.add_msg(locale.gettext("The beacon flares with brilliant light. You feel yourself being pulled skyward..."))
-  teleport.return_home_success(storage, missions, warp_sickness)
-  return 1  -- Consume the item
+  local returned = teleport.return_home_success(storage, missions, warp_sickness, true)
+  if not returned then return 0 end
+
+  -- Consume before cleanup so the engine's autosave records the final inventory.
+  if item then
+    if item:is_stackable() and item.charges > 1 then
+      item:mod_charges(-1)
+    else
+      player:remove_item(item)
+    end
+  end
+  teleport.cleanup_raid_dimension(storage)
+  return 0
 end
 
 -- Warp status crystal - show detailed expedition status
@@ -457,6 +478,11 @@ end
 mod.on_game_started = function()
   -- Reset to defaults for new game
   storage.home_location = nil
+  storage.skyisland_storage_version = 0
+  storage.home_dimension_id = nil
+  storage.home_omt = nil
+  storage.current_raid_dimension_id = nil
+  storage.raid_dimension_serial = 0
   storage.is_away_from_home = false
   storage.warp_pulse_count = 0
   storage.warp_pulse_accumulated = 0
@@ -466,6 +492,10 @@ mod.on_game_started = function()
 
   -- Register the global warp sickness hook (runs every minute, checks conditions)
   warp_sickness.register_global_hook(storage)
+
+  if not teleport.ensure_home_dimension(storage) then
+    teleport.migrate_legacy_storage(storage)
+  end
 
   util.debug_log("Sky Islands: New game started")
   gapi.add_msg(locale.gettext("Sky Islands PoC loaded! Use warp remote to start."))
@@ -479,6 +509,9 @@ mod.on_game_load = function()
 
   -- Register the global warp sickness hook (runs every minute, checks conditions)
   warp_sickness.register_global_hook(storage)
+  teleport.migrate_legacy_storage(storage)
+  teleport.restore_pending_animals(storage)
+  teleport.retry_staged_room_items(storage)
 
   if storage.is_away_from_home then
     gapi.add_msg(locale.gettext("Resuming expedition..."))
@@ -553,20 +586,24 @@ mod.on_character_death = function(params)
   local has_mote = player:has_item_with_id(mote_id, false)
 
   if has_mote then
-    -- Homeward mote saves you! Keep all items, consume mote
+    -- Homeward mote saves you! Keep all items; consume it only after the
+    -- destination transition succeeds.
     util.debug_log("Sky Islands: Homeward mote activated!")
-    local mote_item = player:get_item_with_id(mote_id, false)
-    if mote_item then
-      player:remove_item(mote_item)
-    end
     gapi.add_msg(locale.gettext("The homeward mote flares brilliantly, yanking you from death's grasp!"))
     gapi.add_msg(locale.gettext("You arrive home alive, with all your belongings intact."))
 
     -- Teleport home WITH items (use the success path)
-    teleport.return_home_success(storage, missions, warp_sickness)
-
-    -- Mote save doesn't count as win or loss - undo the win increment from return_home_success
-    storage.raids_won = (storage.raids_won or 1) - 1
+    local returned = teleport.return_home_success(storage, missions, warp_sickness, true)
+    if returned then
+      -- Consume only after a successful return; failed travel leaves the mote
+      -- and expedition state available for retry.
+      local current_mote = player:get_item_with_id(mote_id, false)
+      if current_mote then player:remove_item(current_mote) end
+      -- Mote save doesn't count as win or loss - undo the win increment from return_home_success.
+      storage.raids_won = math.max(0, (storage.raids_won or 1) - 1)
+      -- Cleanup autosaves after consuming the mote and undoing the reward.
+      teleport.cleanup_raid_dimension(storage)
+    end
   else
     -- Normal death - lose items, get resurrected at low HP
     teleport.resurrect_at_home(storage, missions, warp_sickness)
