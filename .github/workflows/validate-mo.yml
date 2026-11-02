@@ -1,0 +1,9 @@
+name: validate-mo
+on: pull_request
+permissions: { contents: read, pull-requests: read }
+jobs:
+  validate-mo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: scarf005/validate-mo@v1
