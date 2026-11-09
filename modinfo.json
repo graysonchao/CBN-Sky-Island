@@ -7,7 +7,7 @@
     "description": "Cataclysm BN port of the Sky Island mod. Raid-based gameplay inspired by Escape from Tarkov and Dark & Darker. This is a very early version!",
     "category": "content",
     "dependencies": [ "bn" ],
-    "version": "0.0.1-alpha",
+    "version": "0.1.0-alpha",
     "lua_api_version": 2
   }
 ]
