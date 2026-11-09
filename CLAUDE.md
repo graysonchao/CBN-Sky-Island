@@ -845,4 +845,9 @@ end)
 
 ---
 
+## Lua Ownership Validation
+
+- Match test doubles to the actual C++ binding's return values and ownership transfers, not the underlying C++ method.
+- Invalidate consumed detached handles in tests. Verify inventory, worn, wielded, and nested items against the source-tree engine before accepting ownership changes.
+
 *This document will be updated as the port progresses.*
