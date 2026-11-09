@@ -270,7 +270,8 @@ package.preload["heart"] = function() return {} end
 package.preload["upgrades"] = function() return {} end
 package.preload["iuse"] = function() return {} end
 package.preload["teleport"] = function()
-  return {
+  local teleport
+  teleport = {
     return_home_success = function(storage)
       state.return_calls = state.return_calls + 1
       if not state.return_ok then return false end
@@ -291,7 +292,11 @@ package.preload["teleport"] = function()
       storage.current_raid_dimension_id = nil
       return true
     end,
+    cleanup_raid_dimension_after_turn = function(storage)
+      table.insert(state.deferred_cleanups, function() teleport.cleanup_raid_dimension(storage) end)
+    end,
   }
+  return teleport
 end
 locale = { gettext = function(text) return text end }
 ItypeId = { new = function(id) return id end }
@@ -317,7 +322,7 @@ gapi = {
 game = { current_mod="sky", mod_runtime={ sky={} }, mod_storage={ sky={} }, hooks={ on_game_started={}, on_game_load={}, on_game_save={}, on_character_death={} } }
 function setup_main_case()
   state.return_ok = true; state.return_calls = 0; state.cleanup_calls = 0
-  state.removed = 0; state.resurrection_calls = 0
+  state.removed = 0; state.resurrection_calls = 0; state.deferred_cleanups = {}
   state.cleanup_saw_shard = nil; state.cleanup_saw_beacon = nil
   state.cleanup_saw_mote = nil; state.cleanup_saw_wins = nil
   player.inventory = {}
@@ -776,6 +781,8 @@ assert(state.cleanup_calls == 1 and not state.cleanup_saw_beacon)
 setup_main_case(); storage.difficulty_emergency_return = 2
 local mote = item("skyisland_homeward_mote"); player.inventory.skyisland_homeward_mote = mote
 assert(mod.on_character_death({}) == true)
+assert(state.cleanup_calls == 0 and #state.deferred_cleanups == 1)
+state.deferred_cleanups[1]()
 assert(state.cleanup_calls == 1 and not state.cleanup_saw_mote and state.cleanup_saw_wins == 4)
 ''')
 
@@ -1113,6 +1120,17 @@ assert(storage.is_away_from_home and storage.raids_lost == 0)
 assert(#player.worn_items == 1 and player.worn_items[1].id == "robe")
 assert(player.inventory.robe == nil)
 assert(storage.death_drop_marker == nil and storage.death_drop_location == nil)
+''')
+
+    def test_resurrection_deletes_raid_dimension_after_the_killing_turn(self):
+        run_fixture(self, r'''
+setup_case(); current_dim = "sky_island_raid_000001"
+local storage = fresh_storage(); storage.is_away_from_home = true
+storage.current_raid_dimension_id = "sky_island_raid_000001"
+assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
+assert(state.deleted == nil and #callbacks == 1)
+assert(callbacks[1]() == false and state.deleted == "sky_island_raid_000001")
+assert(storage.current_raid_dimension_id == nil)
 ''')
 
     def test_resurrection_drops_raid_belongings_at_source_and_preserves_tokens_once(self):
