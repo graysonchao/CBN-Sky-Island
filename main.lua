@@ -602,7 +602,7 @@ mod.on_character_death = function(params)
       -- Mote save doesn't count as win or loss - undo the win increment from return_home_success.
       storage.raids_won = math.max(0, (storage.raids_won or 1) - 1)
       -- Cleanup autosaves after consuming the mote and undoing the reward.
-      teleport.cleanup_raid_dimension(storage)
+      teleport.cleanup_raid_dimension_after_turn(storage)
     end
   else
     -- Normal death - lose items, get resurrected at low HP

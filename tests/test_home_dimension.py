@@ -1131,6 +1131,13 @@ assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
 assert(state.deleted == nil and #callbacks == 1)
 assert(callbacks[1]() == false and state.deleted == "sky_island_raid_000001")
 assert(storage.current_raid_dimension_id == nil)
+setup_case(); current_dim = "sky_island_raid_000001"
+storage = fresh_storage(); storage.is_away_from_home = true
+storage.current_raid_dimension_id = "sky_island_raid_000001"
+assert(teleport.resurrect_at_home(storage, missions, sickness) == true)
+storage.current_raid_dimension_id = "sky_island_raid_000002"
+assert(callbacks[1]() == false and state.deleted == nil)
+assert(storage.current_raid_dimension_id == "sky_island_raid_000002")
 ''')
 
     def test_resurrection_drops_raid_belongings_at_source_and_preserves_tokens_once(self):

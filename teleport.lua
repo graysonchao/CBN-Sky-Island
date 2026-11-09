@@ -633,6 +633,20 @@ function teleport.cleanup_raid_dimension(storage)
   return false
 end
 
+-- Death hooks run inside the killing attack, whose attacker belongs to the raid
+-- dimension. Delete the dimension after that turn's monster processing ends.
+---@param storage SkyIslandHomeStorage
+function teleport.cleanup_raid_dimension_after_turn(storage)
+  local raid_dimension_id = storage.current_raid_dimension_id
+  gapi.add_on_every_x_hook(TimeDuration.from_seconds(1), function()
+    -- A new expedition may start first; it deletes this raid itself.
+    if storage.current_raid_dimension_id == raid_dimension_id then
+      teleport.cleanup_raid_dimension(storage)
+    end
+    return false
+  end)
+end
+
 -- Helper: Get player position in OMT coordinates
 local function get_player_omt()
   local player = gapi.get_avatar()
@@ -1622,7 +1636,7 @@ function teleport.resurrect_at_home(storage, missions, warp_sickness)
 
   storage.death_drop_location = nil
   storage.death_drop_marker = nil
-  teleport.cleanup_raid_dimension(storage)
+  teleport.cleanup_raid_dimension_after_turn(storage)
   return true
 end
 
