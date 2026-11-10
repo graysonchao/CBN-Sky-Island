@@ -1,0 +1,3501 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CBN_Sky_Island\n"
+"POT-Creation-Date: 2026-11-02 02:47+0300\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ./construction_missions.json
+msgid "Sky Island Basement Construction"
+msgstr ""
+
+#. ~ Description for mission 'Sky Island Basement Construction'
+#: ./construction_missions.json
+msgid "Construct a basement level on your sky island."
+msgstr ""
+
+#: ./construction_missions.json
+msgid "Sky Island Expansion 1"
+msgstr ""
+
+#. ~ Description for mission 'Sky Island Expansion 1'
+#: ./construction_missions.json
+msgid ""
+"Expand your basement with cross-shaped corridors and a central room with "
+"skylight."
+msgstr ""
+
+#: ./construction_missions.json
+msgid "Sky Island Expansion 2"
+msgstr ""
+
+#. ~ Description for mission 'Sky Island Expansion 2'
+#: ./construction_missions.json
+msgid "Further expand your basement corridors."
+msgstr ""
+
+#: ./construction_missions.json
+msgid "Sky Island Expansion 3"
+msgstr ""
+
+#. ~ Description for mission 'Sky Island Expansion 3'
+#: ./construction_missions.json
+msgid "Expand your basement with a larger central room."
+msgstr ""
+
+#: ./construction_missions.json
+msgid "Sky Island Expansion 4"
+msgstr ""
+
+#. ~ Description for mission 'Sky Island Expansion 4'
+#: ./construction_missions.json
+msgid "Complete your basement expansion with maximum size."
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp floor into wood floor"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp floor into worked stone floor"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp floor into fine sand"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp: Build Autodoc (copyplate)"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp: Build Autodoc Couch (copyplate)"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp: Build Nanofabricator Body (copyplate)"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp: Build Nanofabricator Control Panel (copyplate)"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp: Build CVD Machine Body (copyplate)"
+msgstr ""
+
+#: ./constructions.json
+msgid "Warp: Build CVD Control Panel (copyplate)"
+msgstr ""
+
+#: ./effects.json
+msgid "Resurrection Sickness"
+msgstr ""
+
+#. ~ desc of effect 'skyisland_resurrection_sickness'
+#: ./effects.json
+msgid ""
+"Your body is recovering from death. Your limbs are being forcibly stabilized"
+" by mysterious energies."
+msgstr ""
+
+#. ~ Miss message for effect(s) 'Resurrection Sickness'.
+#: ./effects.json
+msgid "You feel your body forcibly reconstructing itself!"
+msgstr ""
+
+#. ~ Decay message for effect(s) 'Resurrection Sickness'.
+#: ./effects.json
+msgid "Your body has stabilized."
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Stability"
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Sickness"
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Nausea"
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Debilitation"
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Necrosis"
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Disintegration!"
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpsickness'
+#: ./effects.json
+msgid ""
+"You're fresh from your stay at your sanctuary island.  The intangible miasma"
+" of terra firma currently has no effect on you, and you feel fine.  This "
+"should last for several hours.  Stay too long, however, and you'll gradually"
+" begin to suffer ever-worsening debilitating effects."
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpsickness'
+#: ./effects.json
+msgid ""
+"You've overstayed your time earthside.  It's getting hard to concentrate, "
+"there's a painful ringing in your ears, and your muscles sting and jolt.  "
+"Every action feels delayed.  You need to warp home to refresh yourself, or "
+"this is going to get worse.  Probably within just a few hours."
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpsickness'
+#: ./effects.json
+msgid ""
+"You've stayed earthside too long.  Your body aches and your senses are "
+"dulling.  Every step feels like you're walking through thick mud and "
+"breathing hot tar.  You should warp home as soon as you can, or this is only"
+" going to get worse."
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpsickness'
+#: ./effects.json
+msgid ""
+"You've stayed earthside WAY too long!  Your body barely responds and your "
+"senses are slush.  The world itself feels barbed and frayed, and the very "
+"air is like breathing fiberglass.  If you want to survive, you need to warp "
+"home as soon as possible."
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpsickness'
+#: ./effects.json
+msgid ""
+"The very fabric of your being is unraveling!  You're in dire straits.  You "
+"need to get back to your sanctuary island NOW!"
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpsickness'
+#: ./effects.json
+msgid ""
+"You're going to die.  And if you weren't busy leaking blood out of every "
+"pore, you'd find a better way to emphasize just how badly you're dying.  "
+"Your only hope is to return home immediately."
+msgstr ""
+
+#: ./effects.json
+msgid "Disintegrating!"
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpdisintegration'
+#: ./effects.json
+msgid "Prolonged warp is destroying you.  You're coming apart."
+msgstr ""
+
+#. ~ Apply message for effect(s) 'Disintegrating!'.
+#: ./effects.json
+msgid "You're being unmade!"
+msgstr ""
+
+#. ~ Remove message for effect(s) 'Disintegrating!'.
+#: ./effects.json
+msgid ""
+"The rending of the warp has finally abated.  You feel like you exist again."
+msgstr ""
+
+#: ./effects.json
+msgid "Warp Cloak"
+msgstr ""
+
+#. ~ desc of effect 'skyisland_warpcloak'
+#: ./effects.json
+msgid ""
+"You are invisible and incorporeal for a brief time. Now's your chance to get"
+" to cover. You also won't take fall damage."
+msgstr ""
+
+#. ~ Apply message for effect(s) 'Warp Cloak'.
+#: ./effects.json
+msgid "Warp energy envelops you!"
+msgstr ""
+
+#. ~ Remove message for effect(s) 'Warp Cloak'.
+#: ./effects.json
+msgid "You fully materialize. You're not invisible anymore!"
+msgstr ""
+
+#. ~ Decay message for effect(s) 'Warp Cloak'.
+#: ./effects.json
+msgid "Your warpcloak is about to fade away."
+msgstr ""
+
+#: ./effects.json
+msgid "Warped Omniscience"
+msgstr ""
+
+#. ~ desc of effect 'skyisland_clairvoyance'
+#: ./effects.json
+msgid "Nothing escapes your sight."
+msgstr ""
+
+#. ~ Apply message for effect(s) 'Warped Omniscience'.
+#: ./effects.json
+msgid "Your vision expands until you see everything."
+msgstr ""
+
+#. ~ Remove message for effect(s) 'Warped Omniscience'.
+#: ./effects.json
+msgid "Your sight returns to normal."
+msgstr ""
+
+#: ./furniture.json ./items.json
+msgid "warp obelisk"
+msgid_plural "warp obelisks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for warp obelisk
+#: ./furniture.json
+msgid ""
+"A mysterious floating obelisk that pulses with otherworldly energy. You "
+"could examine it to initiate a warp expedition."
+msgstr ""
+
+#: ./furniture.json ./items.json
+msgid "return obelisk"
+msgid_plural "return obelisks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for return obelisk
+#: ./furniture.json
+msgid ""
+"A mysterious obelisk that can teleport you back home. Examine it to return "
+"to the Sky Island."
+msgstr ""
+
+#: ./furniture.json
+msgid "infinity tree"
+msgstr ""
+
+#. ~ Description for infinity tree
+#: ./furniture.json
+msgid ""
+"Purple-blue shimmers sparkle around the leaves of this small sapling. New growth seems to spring up in seconds, as if in a timelapse, and yet there never seem to be too many branches. It's always in equilibrium. Its strange nature allows you to push it around like furniture.\n"
+"\n"
+"The power of this tree allows you to produce raw wooden items from material tokens via the crafting menu. Just one of these could last forever."
+msgstr ""
+
+#: ./furniture.json
+msgid "infinity stone"
+msgstr ""
+
+#. ~ Description for infinity stone
+#: ./furniture.json
+msgid ""
+"Wisps of iridescent energy spark around this immense stone like miniature fireworks, leaving behind satisfying showers of pebbles. Clay and soil shift around its base, erupting in slow motion yet never overflowing.\n"
+"\n"
+"The power of this stone allows you to produce rocks and natural earthen items from material tokens via the crafting menu. Just one of these could last forever."
+msgstr ""
+
+#: ./furniture.json
+msgid "infinity ore"
+msgstr ""
+
+#. ~ Description for infinity ore
+#: ./furniture.json
+msgid ""
+"A roiling, rattling mass of ever-churning metal. Flares of purple energy arc around the formless pile like electricity, and in their wake, thin metal rods and struts jut out before disappearing into the half-molten heap which never seems to grow or diminish. Its strange nature allows you to shift it around like furniture.\n"
+"\n"
+"The power of this ore allows you to produce raw and basic metal items from material tokens via the crafting menu. Just one of these could last forever."
+msgstr ""
+
+#: ./furniture.json ./heart.lua ./items.json
+msgid "Heart of the Island"
+msgid_plural "Heart of the Islands"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for Heart of the Island
+#: ./furniture.json
+msgid ""
+"A swirling, surreal statue of organic shapes carved from dark stone. In your head, a voice speaks faintly. Despite its massive size, it's surprisingly easy to move around the island.\n"
+"\n"
+"You can examine it to access services and upgrades."
+msgstr ""
+
+#: ./heart.lua
+msgid "Novice"
+msgstr ""
+
+#: ./heart.lua
+msgid "Adept"
+msgstr ""
+
+#: ./heart.lua
+msgid "Master"
+msgstr ""
+
+#: ./heart.lua
+msgid "Casual"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp pulses every 30 minutes.\n"
+"Warp sickness after 4 hours, disintegration after 6 hours.\n"
+"More relaxed time limits for activities and reaching the exit."
+msgstr ""
+
+#: ./heart.lua
+msgid "Normal"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp pulses every 15 minutes.\n"
+"Warp sickness after 2 hours, disintegration after 3 hours.\n"
+"The intended way to play."
+msgstr ""
+
+#: ./heart.lua
+msgid "Hard"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp pulses every 10 minutes.\n"
+"Warp sickness after 1 hour 20 minutes, disintegration after 2 hours.\n"
+"Strict time limits, must prioritize the exit."
+msgstr ""
+
+#: ./heart.lua
+msgid "Impossible"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp pulses every 5 minutes.\n"
+"Warp sickness after 40 minutes, disintegration after 1 hour.\n"
+"Extremely tight time limits, no mercy."
+msgstr ""
+
+#: ./heart.lua
+msgid "Whole Room"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Everything in the extraction room returns with you.\n"
+"Resources are generally not a problem if you reach extraction."
+msgstr ""
+
+#: ./heart.lua
+msgid "Whole Room for a Cost"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Returns the whole room IF you have a Vortex Token.\n"
+"Otherwise only personal items return.\n"
+"Forces difficult choices about what to bring back."
+msgstr ""
+
+#: ./heart.lua
+msgid "Self Only"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Only what you're carrying returns with you.\n"
+"You must always make difficult choices about items."
+msgstr ""
+
+#: ./heart.lua
+msgid "Free Warp Focus"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp Home Focus works for FREE (reusable, no cost).\n"
+"Easiest mode - recommended for casual play.\n"
+"Skyward Beacon also works as normal."
+msgstr ""
+
+#: ./heart.lua
+msgid "Warp Focus Costs 1 Shard"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp Home Focus costs 1 warp shard each use.\n"
+"Cannot use if enemies are within 10 tiles.\n"
+"Skyward Beacon also works as normal."
+msgstr ""
+
+#: ./heart.lua
+msgid "Skyward Beacon Only"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Only crafted Skyward Beacons work (5 shards each).\n"
+"Warp Home Focus does not function.\n"
+"The default balanced option."
+msgstr ""
+
+#: ./heart.lua
+msgid "Extraction Only"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"NO emergency returns work at all.\n"
+"Only return obelisks can bring you home.\n"
+"Maximum challenge mode."
+msgstr ""
+
+#: ./heart.lua
+msgid "Stability I"
+msgstr ""
+
+#: ./heart.lua
+msgid "+2 bonus grace pulses"
+msgstr ""
+
+#: ./heart.lua ./items.json
+msgid "Warped Tincture"
+msgid_plural "Warped Tinctures"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./heart.lua
+msgid "Stability II"
+msgstr ""
+
+#: ./heart.lua
+msgid "+4 total bonus grace pulses"
+msgstr ""
+
+#: ./heart.lua
+msgid "Warped Elixir"
+msgstr ""
+
+#: ./heart.lua
+msgid "Stability III"
+msgstr ""
+
+#: ./heart.lua
+msgid "+6 total bonus grace pulses (MAX)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Warped Panacea"
+msgstr ""
+
+#: ./heart.lua
+msgid "Scouting I"
+msgstr ""
+
+#: ./heart.lua
+msgid "Reveal 3x3 area on landing"
+msgstr ""
+
+#: ./heart.lua ./items.json
+msgid "Scouting Lens"
+msgid_plural "Scouting Lenss"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./heart.lua
+msgid "Scouting II"
+msgstr ""
+
+#: ./heart.lua
+msgid "Reveal 5x5 area on landing (MAX)"
+msgstr ""
+
+#: ./heart.lua ./items.json
+msgid "Scouting Scope"
+msgid_plural "Scouting Scopes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./heart.lua
+msgid "Multiple Exits"
+msgstr ""
+
+#: ./heart.lua
+msgid "2 return obelisks per expedition"
+msgstr ""
+
+#: ./heart.lua ./items.json
+msgid "Escape Charm"
+msgid_plural "Escape Charms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./heart.lua
+msgid "Large Expeditions"
+msgstr ""
+
+#: ./heart.lua
+msgid "2x grace period, 125 token reward"
+msgstr ""
+
+#: ./heart.lua ./items.json
+msgid "Warped Hourglass"
+msgid_plural "Warped Hourglasss"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./heart.lua
+msgid "Extended Expeditions"
+msgstr ""
+
+#: ./heart.lua
+msgid "3x grace period, 200 token reward (MAX)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Warped Sundial"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expedition Missions"
+msgstr ""
+
+#: ./heart.lua
+msgid "1 bonus mission per expedition"
+msgstr ""
+
+#: ./heart.lua
+msgid "Warped Contract"
+msgstr ""
+
+#: ./heart.lua
+msgid "Two Missions"
+msgstr ""
+
+#: ./heart.lua
+msgid "2 bonus missions per expedition"
+msgstr ""
+
+#: ./heart.lua
+msgid "Reinforced Contract"
+msgstr ""
+
+#: ./heart.lua
+msgid "Three Missions"
+msgstr ""
+
+#: ./heart.lua
+msgid "3 bonus missions per expedition"
+msgstr ""
+
+#: ./heart.lua
+msgid "Sealed Contract"
+msgstr ""
+
+#: ./heart.lua
+msgid "Four Missions"
+msgstr ""
+
+#: ./heart.lua
+msgid "4 bonus missions per expedition"
+msgstr ""
+
+#: ./heart.lua
+msgid "Binding Contract"
+msgstr ""
+
+#: ./heart.lua
+msgid "Five Missions"
+msgstr ""
+
+#: ./heart.lua
+msgid "5 bonus missions per expedition (MAX)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Eternal Contract"
+msgstr ""
+
+#: ./heart.lua
+msgid "You need 4 warp shards to heal yourself."
+msgstr ""
+
+#: ./heart.lua
+msgid "You feel refreshed and restored!"
+msgstr ""
+
+#: ./heart.lua
+msgid "Construction"
+msgstr ""
+
+#: ./heart.lua
+msgid "Upgrades"
+msgstr ""
+
+#: ./heart.lua
+msgid "Services"
+msgstr ""
+
+#: ./heart.lua
+msgid "Difficulty Settings"
+msgstr ""
+
+#: ./heart.lua
+msgid "Information"
+msgstr ""
+
+#: ./heart.lua
+msgid "Rank-Up Challenges"
+msgstr ""
+
+#: ./heart.lua ./main.lua
+msgid "Close"
+msgstr ""
+
+#: ./heart.lua
+msgid "Heal me (4 Warp Shards)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Heal me (Free)"
+msgstr ""
+
+#: ./heart.lua
+msgid "View expedition statistics"
+msgstr ""
+
+#: ./heart.lua
+msgid "Back"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Success Rate: %d%%"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Failed Expeditions: %d\n"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Successful Returns: %d\n"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Total Expeditions: %d\n"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Current Rank: %s (%d)\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "=== Expedition Statistics ===\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "Upgrades (Craft items near Heart to unlock)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Stability: MAX (+%d pulses)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Stability: Level %d - Next: %s (craft %s)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Scouting: MAX (5x5 reveal)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Scouting: Level %d - Next: %s (craft %s)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Exits: Unlocked (2 per expedition)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Exits: Not unlocked - craft %s"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expedition Length: MAX (Extended available)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Expedition Length: Level %d - Next: %s (craft %s)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Bonus Missions: MAX (%d per expedition)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Bonus Missions: %d per expedition - Next: %s (craft %s)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Bonus Missions: Not unlocked - craft %s"
+msgstr ""
+
+#: ./heart.lua
+msgid "How do upgrades work?"
+msgstr ""
+
+#: ./heart.lua
+msgid "Bonus Missions is at maximum level (5 missions per expedition)."
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid ""
+"%s: %s\n"
+"Craft: %s"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expedition Length is at maximum (Extended Expeditions available)."
+msgstr ""
+
+#: ./heart.lua
+msgid "Multiple Exits is unlocked (2 return obelisks per expedition)."
+msgstr ""
+
+#: ./heart.lua
+msgid "Scouting is at maximum level (5x5 area revealed on landing)."
+msgstr ""
+
+#: ./heart.lua
+msgid "Stability is at maximum level (+6 bonus grace pulses)."
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Each upgrade requires different scavenged items. Check the crafting menu for"
+" requirements."
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"5. Activate the crafted item to unlock the upgrade\n"
+"\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "4. Craft the upgrade artifact (e.g., 'Warped Tincture')\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "3. Open the crafting menu (& key) near the Heart\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "2. Return home safely with your loot\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "1. Gather the required items during expeditions\n"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"To unlock upgrades, you must CRAFT special artifacts near the Heart of the Island.\n"
+"\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "=== How Upgrades Work ===\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "Explain rank-up system"
+msgstr ""
+
+#: ./heart.lua
+msgid "View my current rank"
+msgstr ""
+
+#: ./heart.lua
+msgid "Rank 1 Challenge: Proof of Determination"
+msgstr ""
+
+#: ./heart.lua
+msgid "Rank 2 Challenge: Proof of Mastery"
+msgstr ""
+
+#: ./heart.lua
+msgid "Completing this proves you have achieved ultimate mastery of survival."
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"- Must be crafted near the Heart\n"
+"\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- PRY quality 2\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- CUT_FINE quality 2\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- BUTCHER quality 16\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- 4 warp shards\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "Requirements:\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "=== Proof of Mastery ===\n"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Completing this proves you have mastered basic survival and tool-making."
+msgstr ""
+
+#: ./heart.lua
+msgid "- WRENCH quality 2\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- SAW_W quality 2\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- HAMMER quality 2\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "- 2 warp shards\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "=== Proof of Determination ===\n"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Rank 1 unlocks at 10 successful raids\n"
+"Rank 2 unlocks at 20 successful raids"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid ""
+"Current Rank: %s (%d)\n"
+"Successful Expeditions: %d\n"
+"\n"
+msgstr ""
+
+#: ./heart.lua
+msgid "Completing these challenges unlocks new recipes and capabilities. "
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"These require crafting special items near the Heart that demonstrate you "
+"have gathered the tools and skills needed to survive. "
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Beyond automatic rank progression, you can prove your mastery by completing "
+"rank-up challenges. "
+msgstr ""
+
+#: ./heart.lua
+msgid "What is this place?"
+msgstr ""
+
+#: ./heart.lua
+msgid "Explain expeditions"
+msgstr ""
+
+#: ./heart.lua
+msgid "Explain warp shards and tokens"
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Craft the infinity nodes first, deploy them on your island, then use them to"
+" craft resources from tokens."
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Material tokens (50 per successful expedition) can be converted into raw "
+"resources at infinity nodes. "
+msgstr ""
+
+#: ./heart.lua
+msgid "They're used for healing and upgrades. "
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Warp shards are earned by completing missions and searching for treasure. "
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Find the exit (marked with a return obelisk) and return home before it's too"
+" late!"
+msgstr ""
+
+#: ./heart.lua
+msgid "After 12 stages, you'll start taking damage. "
+msgstr ""
+
+#: ./heart.lua
+msgid "Every 5 minutes, warp sickness advances. "
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"You'll teleport to a random location with three missions: find the exit, "
+"kill enemies, and find warp shards. "
+msgstr ""
+
+#: ./heart.lua
+msgid "Use the Warp Obelisk to begin an expedition. "
+msgstr ""
+
+#: ./heart.lua
+msgid "If you die, you'll respawn here but lose everything you were carrying."
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Gather resources, complete missions, and return before warp sickness kills "
+"you. "
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Use the Warp Obelisk to teleport to the surface and begin expeditions. "
+msgstr ""
+
+#: ./heart.lua
+msgid "This floating island is your sanctuary. "
+msgstr ""
+
+#: ./heart.lua
+msgid "ERROR: Failed to create construction mission"
+msgstr ""
+
+#: ./heart.lua
+msgid "ERROR: Could not get map"
+msgstr ""
+
+#: ./heart.lua
+msgid "ERROR: Invalid terrain ID: "
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "current ter at %s is %s"
+msgstr ""
+
+#: ./heart.lua
+msgid "WARNING: Failed to set terrain at position"
+msgstr ""
+
+#: ./heart.lua
+msgid "Island Construction"
+msgstr ""
+
+#: ./heart.lua
+msgid "Basement - Already Built"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Build Basement (%d Material Tokens)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expansion 1 - Already Built"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Build Expansion 1 - Corridors (%d Material Tokens)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expansion 2 - Already Built"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Build Expansion 2 - Central Room (%d Material Tokens)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expansion 3 - Already Built"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Build Expansion 3 - Large Room (%d Material Tokens)"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expansion 4 - Already Built"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Build Expansion 4 - Maximum Size (%d Material Tokens)"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "You need %d material tokens to build the basement."
+msgstr ""
+
+#: ./heart.lua
+msgid "Construction beginning... The island trembles as new spaces form."
+msgstr ""
+
+#: ./heart.lua
+msgid "A basement has been carved into the island's depths!"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "You need %d material tokens for this expansion."
+msgstr ""
+
+#: ./heart.lua
+msgid "Expanding the basement..."
+msgstr ""
+
+#: ./heart.lua
+msgid ""
+"Cross-shaped corridors now extend from the central room! A skylight "
+"illuminates from above."
+msgstr ""
+
+#: ./heart.lua
+msgid "Widening the corridors..."
+msgstr ""
+
+#: ./heart.lua
+msgid "The corridors have been widened with additional rooms!"
+msgstr ""
+
+#: ./heart.lua
+msgid "Expanding the central room..."
+msgstr ""
+
+#: ./heart.lua
+msgid "The central room has been greatly enlarged!"
+msgstr ""
+
+#: ./heart.lua
+msgid "Final expansion underway..."
+msgstr ""
+
+#: ./heart.lua
+msgid "The basement has reached its maximum size! Your sanctuary is complete."
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Warp Pulse Timing: %s"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Return Obelisk Behavior: %s"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Emergency Return Options: %s"
+msgstr ""
+
+#: ./heart.lua
+msgid "Select Warp Pulse Timing"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Pulse timing set to %s (%d minute intervals)."
+msgstr ""
+
+#: ./heart.lua
+msgid "Select Return Obelisk Behavior"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Return obelisk behavior set to: %s"
+msgstr ""
+
+#: ./heart.lua
+msgid "Select Emergency Return Options"
+msgstr ""
+
+#: ./heart.lua
+#, c-format
+msgid "Emergency return options set to: %s"
+msgstr ""
+
+#: ./items.json
+msgid "sky island warp remote"
+msgid_plural "sky island warp remotes"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'sky island warp remote'}
+#: ./items.json
+msgid ""
+"A handheld device that can initiate warp expeditions. Debug/testing item "
+"only - spawn via debug menu if needed."
+msgstr ""
+
+#: ./items.json
+msgid "sky island return remote"
+msgid_plural "sky island return remotes"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'sky island return remote'}
+#: ./items.json
+msgid ""
+"A handheld device that can teleport you back to your home location. "
+"Debug/testing item only - spawn via debug menu if needed."
+msgstr ""
+
+#: ./items.json
+msgid "warp shard"
+msgid_plural "warp shards"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'warp shard'}
+#: ./items.json
+msgid ""
+"A small quantity of airy-thin material that resembles flaked obsidian. It "
+"glints with a purplish shimmer that seems to stretch beyond itself and into "
+"the air. These shards are the currency of your sanctuary island and can be "
+"exchanged for valuable upgrades."
+msgstr ""
+
+#: ./items.json
+msgid ""
+"Dummy item for Sky Island furniture. If you see this, then something went "
+"wrong."
+msgstr ""
+
+#: ./items.json
+msgid "material token"
+msgid_plural "material tokens"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'material token'}
+#: ./items.json
+msgid ""
+"A very tiny disc-shaped blue wafer. It seems to shift in your grasp, feeling"
+" one moment like a grain of sand, then a sharp metal fragment, then a wooden"
+" splinter. These miniature tokens are rewarded for surviving a raid, and can"
+" be crafted on your island for a large supply of common resources by using "
+"infinity nodes as a catalyst."
+msgstr ""
+
+#: ./items.json
+msgid "warped bag"
+msgid_plural "warped bags"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'warped bag'}
+#: ./items.json
+msgid "This is a template you shouldn't actually see."
+msgstr ""
+
+#: ./items.json
+msgid "warped hauler's harness"
+msgid_plural "warped hauler's harnesses"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': "warped hauler's harness"}
+#: ./items.json
+msgid ""
+"A looped pair of shimmering blue-black straps that can be worn over the "
+"shoulders like a harness. They can snugly fit a single item of nearly any "
+"size in comfort, and any burdens carried here feel twice as light. Ideal for"
+" squeezing one more bulky item home through the exit when your hands are "
+"already full, or even some container packed full of other items! Just beware"
+" you don't break your back doing it."
+msgstr ""
+
+#: ./items.json
+msgid "warped grass seeds"
+msgid_plural "warped grass seeds"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str_sp': 'warped grass seeds'}
+#: ./items.json
+msgid ""
+"While these are certainly imbued with warp, they don't seem to have any "
+"supernatural powers beyond just growing quickly. A nice option if you want "
+"to re-plant grass on your island, for decoration's sake."
+msgstr ""
+
+#: ./items.json
+msgid "vortex token"
+msgid_plural "vortex tokens"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'vortex token'}
+#: ./items.json
+msgid ""
+"This irregular purplish lump seems to slowly pull in air even while you hold"
+" it in your hand. If you have one with you when you activate the return "
+"obelisk and the obelisk is correctly configured, it will drag the entire "
+"contents of the room with you back up to your island."
+msgstr ""
+
+#: ./items.json
+msgid "warped animal carrier"
+msgid_plural "warped animal carriers"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'warped animal carrier'}
+#: ./items.json
+msgid ""
+"A hand-sized cage with a shimmering portal at its aperture. Despite being "
+"shaped more like a cat carrier, the power of warp enables it to capture "
+"creatures far bigger than you. This may be your best bet for bringing "
+"animals home to your island sanctuary. Activate to capture an adjacent "
+"animal, or to release a carried animal."
+msgstr ""
+
+#: ./items.json
+msgid "Autodoc copyplate (inert)"
+msgid_plural "Autodoc copyplates (inert)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Autodoc copyplate (inert)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the advanced "
+"tech found within a modern Autodoc, and can be used to create a working copy"
+" at your sanctuary. However, it is inert in its current state and must first"
+" be imprinted on a working Autodoc. To do so, find an Autodoc during an "
+"expedition and activate this item while standing next to it."
+msgstr ""
+
+#: ./items.json
+msgid "Autodoc copyplate (activated)"
+msgid_plural "Autodoc copyplates (activated)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Autodoc copyplate (activated)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the advanced "
+"tech found within a modern Autodoc, and can be used to create a working copy"
+" at your sanctuary. It has been successfully activated and can be used as "
+"the catalyst to create a new Autodoc at a location of your choosing using "
+"the construction menu. Requires an adjacent Autodoc Couch to function."
+msgstr ""
+
+#: ./items.json
+msgid "Autodoc Couch copyplate (inert)"
+msgid_plural "Autodoc Couch copyplates (inert)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Autodoc Couch copyplate (inert)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the patient "
+"interface couch used with an Autodoc. It is inert and must first be "
+"imprinted on a working Autodoc Couch. Find one during an expedition and "
+"activate this item while standing next to it."
+msgstr ""
+
+#: ./items.json
+msgid "Autodoc Couch copyplate (activated)"
+msgid_plural "Autodoc Couch copyplates (activated)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Autodoc Couch copyplate (activated)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the patient "
+"interface couch used with an Autodoc. It has been activated and can be used "
+"to create a new Autodoc Couch via the construction menu. Must be placed "
+"adjacent to an Autodoc to function."
+msgstr ""
+
+#: ./items.json
+msgid "Nanofabricator copyplate (inert)"
+msgid_plural "Nanofabricator copyplates (inert)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Nanofabricator copyplate (inert)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a Nanofabricator. It is inert and must first be imprinted on a working "
+"Nanofabricator body. Find one during an expedition and activate this item "
+"while standing next to it."
+msgstr ""
+
+#: ./items.json
+msgid "Nanofabricator copyplate (activated)"
+msgid_plural "Nanofabricator copyplates (activated)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Nanofabricator copyplate (activated)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a Nanofabricator. It has been activated and can be used to create a new "
+"Nanofabricator body via the construction menu. Must be placed adjacent to a "
+"Nanofabricator Control Panel to function."
+msgstr ""
+
+#: ./items.json
+msgid "Nanofabricator Control Panel copyplate (inert)"
+msgid_plural "Nanofabricator Control Panel copyplates (inert)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Nanofabricator Control Panel copyplate (inert)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a Nanofabricator. It is inert and must first be imprinted on a "
+"working Nanofabricator control panel. Find one during an expedition and "
+"activate this item while standing next to it."
+msgstr ""
+
+#: ./items.json
+msgid "Nanofabricator Control Panel copyplate (activated)"
+msgid_plural "Nanofabricator Control Panel copyplates (activated)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Nanofabricator Control Panel copyplate
+#. (activated)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a Nanofabricator. It has been activated and can be used to create a"
+" new Nanofabricator control panel via the construction menu. Must be placed "
+"adjacent to a Nanofabricator body to function."
+msgstr ""
+
+#: ./items.json
+msgid "CVD Machine copyplate (inert)"
+msgid_plural "CVD Machine copyplates (inert)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'CVD Machine copyplate (inert)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a CVD Machine. It is inert and must first be imprinted on a working CVD "
+"Machine body. Find one during an expedition and activate this item while "
+"standing next to it."
+msgstr ""
+
+#: ./items.json
+msgid "CVD Machine copyplate (activated)"
+msgid_plural "CVD Machine copyplates (activated)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'CVD Machine copyplate (activated)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a CVD Machine. It has been activated and can be used to create a new CVD "
+"Machine body via the construction menu. Must be placed adjacent to a CVD "
+"Control Panel to function."
+msgstr ""
+
+#: ./items.json
+msgid "CVD Control Panel copyplate (inert)"
+msgid_plural "CVD Control Panel copyplates (inert)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'CVD Control Panel copyplate (inert)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a CVD Machine. It is inert and must first be imprinted on a working"
+" CVD control panel. Find one during an expedition and activate this item "
+"while standing next to it."
+msgstr ""
+
+#: ./items.json
+msgid "CVD Control Panel copyplate (activated)"
+msgid_plural "CVD Control Panel copyplates (activated)"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'CVD Control Panel copyplate (activated)'}
+#: ./items.json
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a CVD Machine. It has been activated and can be used to create a "
+"new CVD control panel via the construction menu. Must be placed adjacent to "
+"a CVD Machine body to function."
+msgstr ""
+
+#: ./items.json
+msgid "Labs Catalyst"
+msgid_plural "Labs Catalysts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Labs Catalyst'}
+#: ./items.json
+msgid ""
+"A bit of warp power, a magnetic stripe keycard from a dangerous place, and a"
+" little hope, blended well. This item is required to begin a Labs "
+"expedition, and is consumed when leaving."
+msgstr ""
+
+#: ./items.json
+msgid "Heartseed"
+msgid_plural "Heartseeds"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Heartseed'}
+#: ./items.json
+msgid ""
+"A whorl of black stone that feels impossibly heavy for its size. Activate "
+"this on your island to place the Heart of the Island, the catalyst of future"
+" upgrades."
+msgstr ""
+
+#: ./items.json
+msgid "infinity tree sapling"
+msgid_plural "infinity tree saplings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'infinity tree sapling'}
+#: ./items.json
+msgid ""
+"A fragile little wisp of a sapling. Its leaves shake and quiver, shimmering "
+"with strange energies. Activate this on your island to place an infinity "
+"tree, which can be used as a catalyst to turn material tokens into wooden "
+"resources."
+msgstr ""
+
+#: ./items.json
+msgid "infinity stone source"
+msgid_plural "infinity stone sources"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'infinity stone source'}
+#: ./items.json
+msgid ""
+"A crackling little cluster of pebbles that spark as they knock together, "
+"tumbling about from forces unseen. Activate this on your island to place an "
+"infinity stone, which can be used as a catalyst to turn material tokens into"
+" stony and earthen resources."
+msgstr ""
+
+#: ./items.json
+msgid "infinity ore crucible"
+msgid_plural "infinity ore crucibles"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'infinity ore crucible'}
+#: ./items.json
+msgid ""
+"A miniature tangle of metal that resembles a dust bunny made of barbed wire."
+" It twists in upon itself endlessly, folding and unfolding in ways that "
+"don't seem possible. Activate this on your island to place an infinity ore, "
+"which can be used as a catalyst to turn material tokens into metal "
+"resources."
+msgstr ""
+
+#: ./items.json
+msgid "nearby infinity tree"
+msgid_plural "nearby infinity trees"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'nearby infinity tree'}
+#. ~ Description for {'str': 'nearby infinity stone'}
+#. ~ Description for {'str': 'nearby infinity ore'}
+#. ~ Description for {'str': 'Heart of the Island'}
+#: ./items.json
+msgid "This is a crafting_pseudo_item. If you have it, something is wrong."
+msgstr ""
+
+#: ./items.json
+msgid "nearby infinity stone"
+msgid_plural "nearby infinity stones"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./items.json
+msgid "nearby infinity ore"
+msgid_plural "nearby infinity ores"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ./items.json
+msgid "Proof of Determination"
+msgid_plural "Proof of Determinations"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Proof of Determination'}
+#: ./items.json
+msgid ""
+"A metaphysical artifact proving your determination to survive. Activate near"
+" the Heart of the Island to advance your rank."
+msgstr ""
+
+#: ./items.json
+msgid "Proof of Mastery"
+msgid_plural "Proof of Masterys"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Proof of Mastery'}
+#: ./items.json
+msgid ""
+"A metaphysical artifact proving your mastery of survival. Activate near the "
+"Heart of the Island to advance your rank."
+msgstr ""
+
+#. ~ Description for {'str': 'Warped Tincture'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Stability"
+" I: +1 bonus grace pulse (9 total)."
+msgstr ""
+
+#: ./items.json
+msgid "Surreal Shield"
+msgid_plural "Surreal Shields"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Surreal Shield'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Stability"
+" II: +2 total bonus grace pulses (10 total)."
+msgstr ""
+
+#: ./items.json
+msgid "Warpstream Plating"
+msgid_plural "Warpstream Platings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Warpstream Plating'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Stability"
+" III: +3 total bonus grace pulses (11 total)."
+msgstr ""
+
+#. ~ Description for {'str': 'Scouting Lens'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"I: Reveals a 3x3 area around your landing zone."
+msgstr ""
+
+#. ~ Description for {'str': 'Scouting Scope'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"II: Reveals a 5x5 area around your landing zone."
+msgstr ""
+
+#. ~ Description for {'str': 'Escape Charm'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Multiple "
+"Exits: Two return obelisks will spawn per expedition."
+msgstr ""
+
+#. ~ Description for {'str': 'Warped Hourglass'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Large "
+"Expeditions: Double grace period and 125 token reward."
+msgstr ""
+
+#: ./items.json
+msgid "Watch of Flowing Time"
+msgid_plural "Watch of Flowing Times"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Watch of Flowing Time'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Extended "
+"Expeditions: Triple grace period and 200 token reward."
+msgstr ""
+
+#: ./items.json
+msgid "Basement Locator"
+msgid_plural "Basement Locators"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Basement Locator'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Basement "
+"Starts: Begin expeditions in underground basements."
+msgstr ""
+
+#: ./items.json
+msgid "Rooftop Locator"
+msgid_plural "Rooftop Locators"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Rooftop Locator'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Rooftop "
+"Starts: Begin expeditions on building rooftops."
+msgstr ""
+
+#: ./items.json
+msgid "Laboratory Locator"
+msgid_plural "Laboratory Locators"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Laboratory Locator'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Lab "
+"Starts: Begin expeditions in underground science labs. Requires a Labs "
+"Catalyst each time."
+msgstr ""
+
+#: ./items.json
+msgid "Higher Viewpoint"
+msgid_plural "Higher Viewpoints"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Higher Viewpoint'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"Clairvoyance I: See everything near you for 20 seconds when beginning an "
+"expedition."
+msgstr ""
+
+#: ./items.json
+msgid "All-Seeing Effigy"
+msgid_plural "All-Seeing Effigy"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str_sp': 'All-Seeing Effigy'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"Clairvoyance II: See everything near you for 60 seconds when beginning an "
+"expedition."
+msgstr ""
+
+#: ./items.json
+msgid "Entry-level Contract"
+msgid_plural "Entry-level Contracts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Entry-level Contract'}
+#: ./items.json
+msgid ""
+"A contract signed in ink, showing the holder's will to fight. Activate near "
+"the Heart of the Island to unlock Expedition Missions: Every expedition now "
+"offers 1 randomly assigned bonus mission, which rewards warp shards on "
+"completion."
+msgstr ""
+
+#: ./items.json
+msgid "Survivor's Contract"
+msgid_plural "Survivor's Contracts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': "Survivor's Contract"}
+#: ./items.json
+msgid ""
+"A contract signed in zombie blood, proving the holder to be a true survivor."
+" Activate near the Heart of the Island to unlock Two Missions: Every "
+"expedition now offers 2 randomly assigned bonus missions."
+msgstr ""
+
+#: ./items.json
+msgid "Mercenary's Contract"
+msgid_plural "Mercenary's Contracts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': "Mercenary's Contract"}
+#: ./items.json
+msgid ""
+"A contract lined with gunpowder and gold. Whoever signed this must be a "
+"seasoned operator. Activate near the Heart of the Island to unlock Three "
+"Missions: Every expedition now offers 3 randomly assigned bonus missions."
+msgstr ""
+
+#: ./items.json
+msgid "Artisan's Contract"
+msgid_plural "Artisan's Contracts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': "Artisan's Contract"}
+#: ./items.json
+msgid ""
+"A finely-crafted contract, demonstrating that the holder can create as well "
+"as destroy. Activate near the Heart of the Island to unlock Four Missions: "
+"Every expedition now offers 4 randomly assigned bonus missions."
+msgstr ""
+
+#: ./items.json
+msgid "Post-human's Contract"
+msgid_plural "Post-human's Contracts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': "Post-human's Contract"}
+#: ./items.json
+msgid ""
+"A contract built from futuristic materials, proving that the holder is "
+"beyond human. Activate near the Heart of the Island to unlock Five Missions:"
+" Every expedition now offers 5 randomly assigned bonus missions."
+msgstr ""
+
+#: ./items.json
+msgid "Ordinator's Sigil"
+msgid_plural "Ordinator's Sigils"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': "Ordinator's Sigil"}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Harder "
+"Missions: More challenging bonus missions with greater rewards become "
+"available."
+msgstr ""
+
+#: ./items.json
+msgid "Will of the Island"
+msgid_plural "Will of the Islands"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Will of the Island'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Hardest "
+"Missions: The most dangerous bonus missions with the greatest rewards become"
+" available."
+msgstr ""
+
+#: ./items.json
+msgid "Vengeance of the Island"
+msgid_plural "Vengeance of the Islands"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Vengeance of the Island'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Slaughter"
+" Missions: A special mission will be assigned during each expedition, "
+"rewarding warp shards for killing specific types of enemies."
+msgstr ""
+
+#: ./items.json
+msgid "Inverted Gravity Bubble"
+msgid_plural "Inverted Gravity Bubbles"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Inverted Gravity Bubble'}
+#: ./items.json
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Landing "
+"Flight: While under the warpcloak effect on landing, you gain the power of "
+"flight for 60 seconds."
+msgstr ""
+
+#: ./items.json
+msgid "quickheal pill"
+msgid_plural "quickheal pills"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'quickheal pill'}
+#: ./items.json
+msgid ""
+"This pseudomagical pill will heal all your damaged parts, but only if "
+"consumed while on your sanctuary island. No reason to bring this into the "
+"field."
+msgstr ""
+
+#: ./items.json
+msgid "earthbound pill"
+msgid_plural "earthbound pills"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'earthbound pill'}
+#: ./items.json
+msgid ""
+"This pseudomagical pill extends the amount of time you can stay earthside by"
+" 4 pulses, or about 50% of a normal trip. They're precious, but should help "
+"buy time for a difficult extract."
+msgstr ""
+
+#: ./items.json
+msgid "homeward mote"
+msgid_plural "homeward motes"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'homeward mote'}
+#: ./items.json
+msgid ""
+"Though visibly little more than a glowing dustbunny, this strange ethereal mote of warp essence reveals, on closer inspection, something more. A tiny, twisting, half-visible thread of shimmering bluish-purple trails away into the sky and far out of sight, unimpeded by any obstacles.\n"
+"\n"
+"Taking this rare and valuable artifact with you on an expedition is essentially buying life insurance. If you die with this mote in your inventory, you will instead be restored to full health and brought home WITH all items and equipment carried. But this effect will only last for a single expedition. Even if you extract safely, any and all motes carried on your person when you return home will be DESTROYED."
+msgstr ""
+
+#: ./items.json
+msgid "skyward beacon"
+msgid_plural "skyward beacons"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'skyward beacon'}
+#: ./items.json
+msgid ""
+"This smooth purplish sphere seems like it wants to rise right out of your "
+"hand. If you activate it, you will return directly to the island with "
+"everything you are carrying."
+msgstr ""
+
+#: ./items.json
+msgid "warp status crystal"
+msgid_plural "warp status crystals"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'warp status crystal'}
+#: ./items.json
+msgid ""
+"A small crystalline orb that pulses with a faint inner light. When "
+"activated, it displays detailed information about your current warp status, "
+"including pulse count, time remaining, and the effects that will occur at "
+"each stage of warp sickness."
+msgstr ""
+
+#: ./items.json
+msgid "warped animal teleporter"
+msgid_plural "warped animal teleporters"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'warped animal teleporter'}
+#: ./items.json
+msgid ""
+"A hand-sized device with a shimmering portal at its core. Unlike a normal "
+"pet carrier, this device doesn't store the animal inside - it warps them "
+"directly to your sanctuary island, bypassing any weight limitations. "
+"Activate near a friendly creature to send it home. The creature will appear "
+"at your island when you return from your expedition."
+msgstr ""
+
+#: ./items.json
+msgid "warp home focus"
+msgid_plural "warp home foci"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'warp home focus', 'str_pl': 'warp home foci'}
+#: ./items.json
+msgid ""
+"A small crystalline focus imbued with the power of warp. When activated during an expedition, it can teleport you directly back to your sanctuary island. This item is NOT consumed on use.\n"
+"\n"
+"Behavior depends on your difficulty settings:\n"
+"- Free mode: Works instantly\n"
+"- Shard mode: Costs 1 warp shard, cannot use near enemies\n"
+"- Other modes: Does not function (use Skyward Beacon or find extraction)"
+msgstr ""
+
+#: ./items.json
+msgid "healing salve"
+msgid_plural "healing salves"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'healing salve'}
+#: ./items.json
+msgid ""
+"A lump of purplish goo, smooth but yielding, sculptable like clay. If you "
+"rub it on a wound, it will immediately heal some of the damage you have "
+"taken, but the air of the lower world destabilizes its structure and it will"
+" only last a single trip to the surface."
+msgstr ""
+
+#: ./items.json
+msgid "warp raft token"
+msgid_plural "warp raft tokens"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Use action unfold_vehicle.unfold_msg for {'str': 'warp raft token'}.
+#: ./items.json
+msgid ""
+"The token dissolves into swirling energy that coalesces into a shimmering "
+"raft!"
+msgstr ""
+
+#. ~ Description for {'str': 'warp raft token'}
+#: ./items.json
+msgid ""
+"A small token that pulses with aquatic energy. When activated, it unfolds "
+"into a small, slow raft."
+msgstr ""
+
+#: ./items.json
+msgid "wood-floor tokens"
+msgid_plural "wood-floor tokens"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str_sp': 'wood-floor tokens'}
+#: ./items.json
+msgid ""
+"A group of small squares of wood, smooth and polished. You can use them to "
+"transform a section of flooring into interlocking wooden planks."
+msgstr ""
+
+#: ./items.json
+msgid "flagstone tokens"
+msgid_plural "flagstone tokens"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str_sp': 'flagstone tokens'}
+#: ./items.json
+msgid ""
+"A group of small stone stones, rough to the touch. You can use them to "
+"transform a section of flooring into mortared flagstones."
+msgstr ""
+
+#: ./items.json
+msgid "sand tokens"
+msgid_plural "sand tokens"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str_sp': 'sand tokens'}
+#: ./items.json
+msgid ""
+"A group of small yellow stones, gritty to the touch yet seemingly nothing "
+"ever rubs off. You can use them to transform a section of flooring into fine"
+" sand."
+msgstr ""
+
+#: ./items.json
+msgid "Personal Sunblock"
+msgid_plural "Personal Sunblocks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Personal Sunblock'}
+#: ./items.json
+msgid "The island is protecting you against the sun as long as you are on it."
+msgstr ""
+
+#: ./items.json
+msgid "Personal Windblock"
+msgid_plural "Personal Windblocks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. ~ Description for {'str': 'Personal Windblock'}
+#: ./items.json
+msgid ""
+"The island is protecting you against the winds as long as you are on it."
+msgstr ""
+
+#: ./iuse.json
+msgid "Initiate warp expedition"
+msgstr ""
+
+#: ./iuse.json
+msgid "Return home"
+msgstr ""
+
+#: ./iuse.json
+msgid "Access Heart of the Island"
+msgstr ""
+
+#: ./iuse.json
+msgid "Activate Proof of Determination"
+msgstr ""
+
+#: ./iuse.json
+msgid "Activate Proof of Mastery"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Stability I"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Stability II"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Stability III"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Scouting I"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Scouting II"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Multiple Exits"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Large Expeditions"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Extended Expeditions"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Basement Starts"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Rooftop Starts"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Lab Starts"
+msgstr ""
+
+#: ./iuse.json
+msgid "Heal all wounds"
+msgstr ""
+
+#: ./iuse.json
+msgid "Extend expedition time"
+msgstr ""
+
+#: ./iuse.json
+msgid "Return to the sky"
+msgstr ""
+
+#: ./iuse.json
+msgid "Check warp status"
+msgstr ""
+
+#: ./iuse.json
+msgid "Warp creature home"
+msgstr ""
+
+#: ./iuse.json
+msgid "Cast Warp Home"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Scouting Clairvoyance I"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Scouting Clairvoyance II"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Bonus Missions I"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Bonus Missions II"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Bonus Missions III"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Bonus Missions IV"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Bonus Missions V"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Harder Missions"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Hardest Missions"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Slaughter Missions"
+msgstr ""
+
+#: ./iuse.json
+msgid "Unlock Landing Flight"
+msgstr ""
+
+#: ./iuse.json
+msgid "Imprint on Autodoc"
+msgstr ""
+
+#: ./iuse.json
+msgid "Imprint on Autodoc Couch"
+msgstr ""
+
+#: ./iuse.json
+msgid "Imprint on Nanofabricator"
+msgstr ""
+
+#: ./iuse.json
+msgid "Imprint on Nanofabricator Control Panel"
+msgstr ""
+
+#: ./iuse.json
+msgid "Imprint on CVD Machine"
+msgstr ""
+
+#: ./iuse.json
+msgid "Imprint on CVD Control Panel"
+msgstr ""
+
+#: ./iuse.lua
+#, c-format
+msgid ""
+"You need to be standing next to a working %s to imprint this copyplate."
+msgstr ""
+
+#: ./iuse.lua
+#, c-format
+msgid "The copyplate hums and glows as it absorbs the %s's schematics!"
+msgstr ""
+
+#: ./iuse.lua
+#, c-format
+msgid "You now have an activated %s copyplate."
+msgstr ""
+
+#: ./main.lua
+msgid "The quickheal pill only works on your sanctuary island."
+msgstr ""
+
+#: ./main.lua
+msgid "A warm sensation washes over you as your wounds heal."
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"You're not on an expedition. Save this for when you need more time "
+"earthside."
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"The pill dissolves on your tongue. You feel the warp's grip on you loosen. "
+"(+4 pulses of time)"
+msgstr ""
+
+#: ./main.lua
+msgid "The focus pulses weakly but cannot establish a connection."
+msgstr ""
+
+#: ./main.lua
+msgid "Your difficulty settings require a Skyward Beacon or extraction point."
+msgstr ""
+
+#: ./main.lua
+msgid "You're already home. The focus has no effect here."
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"Hostile creatures nearby disrupt the focus's energy. You cannot use it here!"
+msgstr ""
+
+#: ./main.lua
+msgid "The focus requires a warp shard to activate!"
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"The focus flares with brilliant light. You feel yourself being pulled "
+"skyward..."
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"The beacon flickers weakly but nothing happens. Emergency returns are "
+"disabled."
+msgstr ""
+
+#: ./main.lua
+msgid "You must find an extraction point (return obelisk) to escape."
+msgstr ""
+
+#: ./main.lua
+msgid "You're already home. The beacon has no effect here."
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"The beacon flares with brilliant light. You feel yourself being pulled "
+"skyward..."
+msgstr ""
+
+#: ./main.lua
+msgid "Warp Status Crystal"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid ""
+"Grace Period: %d pulses\n"
+"\n"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Current Pulse: %d\n"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Pulse Interval: %d minutes\n"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Difficulty: %s\n"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Current Expedition: %s\n"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Pulses until disintegration: %d"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "STATUS: %s (Intensity %d/%d)\n"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Time until sickness begins: ~%d minutes"
+msgstr ""
+
+#: ./main.lua ./warp_sickness.lua
+#, c-format
+msgid "Safe pulses remaining: %d\n"
+msgstr ""
+
+#: ./main.lua
+msgid "STATUS: STABLE\n"
+msgstr ""
+
+#: ./main.lua
+msgid "Stage 1: Warp Stability"
+msgstr ""
+
+#: ./main.lua
+msgid "Grace period. No effects. You feel fine."
+msgstr ""
+
+#: ./main.lua
+msgid "Stage 2: Warp Sickness"
+msgstr ""
+
+#: ./main.lua
+msgid "Intensity 1. -2 to all stats. Mild discomfort."
+msgstr ""
+
+#: ./main.lua
+msgid "Stage 3: Warp Nausea"
+msgstr ""
+
+#: ./main.lua
+msgid "Intensity 2. -4 to all stats. Growing pain."
+msgstr ""
+
+#: ./main.lua
+msgid "Stage 4: Warp Debilitation"
+msgstr ""
+
+#: ./main.lua
+msgid "Intensity 3. -6 to all stats. Severely impaired."
+msgstr ""
+
+#: ./main.lua
+msgid "Stage 5: Warp Necrosis"
+msgstr ""
+
+#: ./main.lua
+msgid "Intensity 4. -8 to all stats. Body failing."
+msgstr ""
+
+#: ./main.lua
+msgid "Stage 6: Warp Disintegration!"
+msgstr ""
+
+#: ./main.lua
+msgid "Intensity 5+. -10+ to stats. Constant damage. DEATH IMMINENT."
+msgstr ""
+
+#: ./main.lua
+msgid ""
+"You are HOME SAFE on your sanctuary island.\n"
+"\n"
+"The warp has no hold on you here."
+msgstr ""
+
+#: ./main.lua
+msgid "You need to set your home location first by using the warp obelisk."
+msgstr ""
+
+#: ./main.lua
+msgid "Select a creature to warp home:"
+msgstr ""
+
+#: ./main.lua ./teleport.lua
+msgid "Cancelled."
+msgstr ""
+
+#: ./main.lua
+msgid "There's no creature there."
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "The %s avoids your attempt to warp it!"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "The %s vanishes in a shimmer of light, warped to your island!"
+msgstr ""
+
+#: ./main.lua
+#, c-format
+msgid "Animals queued for arrival: %d"
+msgstr ""
+
+#: ./main.lua
+msgid "Sky Islands PoC loaded! Use warp remote to start."
+msgstr ""
+
+#: ./main.lua
+msgid "Resuming expedition..."
+msgstr ""
+
+#: ./main.lua
+msgid "The homeward mote flares brilliantly, yanking you from death's grasp!"
+msgstr ""
+
+#: ./main.lua
+msgid "You arrive home alive, with all your belongings intact."
+msgstr ""
+
+#: ./mapgen_sky_island.json
+msgid "sky island"
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Reach the exit portal!"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Reach the exit portal!'}'
+#: ./missions.json
+msgid ""
+"If you want to get home with your stuff, you'll need to reach the nearby "
+"exit portal. It's the only thing that can bring you back to your sanctuary "
+"island in one piece."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill 10 Zombies"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill 10 Zombies'}'
+#: ./missions.json
+msgid ""
+"Zombies have absorbed latent energies which must be released. Kill at least "
+"10 zombified creatures before returning to your sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill 50 Zombies"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill 50 Zombies'}'
+#: ./missions.json
+msgid ""
+"Zombies have absorbed latent energies which must be released. Kill at least "
+"50 zombified creatures before returning to your sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill 100 Zombies"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill 100 Zombies'}'
+#: ./missions.json
+msgid ""
+"Zombies have absorbed latent energies which must be released. Kill at least "
+"100 zombified creatures before returning to your sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill a Mi-Go"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill a Mi-Go'}'
+#: ./missions.json
+msgid ""
+"The mi-go have absorbed latent energies which must be released. Kill at "
+"least one mi-go creature before returning to your sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill 3 Nether Creatures"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill 3 Nether Creatures'}'
+#: ./missions.json
+msgid ""
+"A rift to another dimension has drained latent energies which must be "
+"released. Kill at least 3 nether-born creatures before returning to your "
+"sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill 5 Birds"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill 5 Birds'}'
+#: ./missions.json
+msgid ""
+"Even the local wildlife has started absorbing latent warp energy. Kill at "
+"least 5 non-zombie birds before returning to your sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill 5 Mammals"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill 5 Mammals'}'
+#: ./missions.json
+msgid ""
+"Even the local wildlife has started absorbing latent warp energy. Kill at "
+"least 5 non-zombie mammals before returning to your sanctuary."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Find the warp shards!"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Find the warp shards!'}'
+#: ./missions.json
+msgid ""
+"A very small cluster of warp energy has left shards behind at this location."
+" All you need to do is find and retrieve them. There may be threats nearby, "
+"but unlike most tasks, no special guards are on-site. A minimal reward, but "
+"little risk."
+msgstr ""
+
+#. ~ Mapgen creature name
+#: ./missions.json
+msgid "Marked"
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear zombie cluster"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear zombie cluster'}'
+#: ./missions.json
+msgid ""
+"A handful of zombies are congregating at a location where warp resonance is "
+"high. Clear them out for a minimal reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear zombie horde"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear zombie horde'}'
+#: ./missions.json
+msgid ""
+"A horde of low level zombies are congregating at a location where warp "
+"resonance is high. Clear them out for a small reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear evolved zombies"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear evolved zombies'}'
+#: ./missions.json
+msgid ""
+"A swarm of evolved zombies are congregating at a location where warp "
+"resonance is high. Clear them out for a medium reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear evolved horde"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear evolved horde'}'
+#: ./missions.json
+msgid ""
+"A huge horde of evolved zombies are congregating at a location where warp "
+"resonance is high. Clear them out for a large reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear fearsome zombies"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear fearsome zombies'}'
+#: ./missions.json
+msgid ""
+"A swarm of rather powerful zombies are congregating at a location where warp"
+" resonance is high. Clear them out for a large reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear elite zombies"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear elite zombies'}'
+#: ./missions.json
+msgid ""
+"A swarm of extremely dangerous zombies are congregating at a location where "
+"warp resonance is high. Clear them out for a very large reward of warp "
+"shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill zombie lord"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill zombie lord'}'
+#: ./missions.json
+msgid ""
+"A single supremely powerful zombie has been found at a location where warp "
+"resonance is high. Destroy it for a very large reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill zombie superteam"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill zombie superteam'}'
+#: ./missions.json
+msgid ""
+"A team of supremely powerful zombies has been found at a location where warp"
+" resonance is high. Destroy it for a very large reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill zombie leader + swarm"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill zombie leader + swarm'}'
+#: ./missions.json
+msgid ""
+"A supremely powerful zombie has been found at a location where warp "
+"resonance is high. Be warned that it will be accompanied by an elite swarm! "
+"Destroy them all for a huge reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill horde lord"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Kill horde lord'}'
+#: ./missions.json
+msgid ""
+"A supremely powerful zombie has been found at a location where warp "
+"resonance is high. Be warned that it will be accompanied by an massive horde"
+" of weaker zombies! Destroy them all for a huge reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Clear mi-go threat"
+msgstr ""
+
+#. ~ Description for mission '{'str': 'RAID: Clear mi-go threat'}'
+#. ~ Description for mission '{'str': 'RAID: Kill mi-go overlord'}'
+#: ./missions.json
+msgid ""
+"A group of lethal mi-gos are draining a location where warp resonance is "
+"high. Destroy them all for a very large reward of warp shards."
+msgstr ""
+
+#: ./missions.json
+msgid "RAID: Kill mi-go overlord"
+msgstr ""
+
+#: ./missions.lua
+#, c-format
+msgid "You completed a mission and were rewarded with %d warp shard%s."
+msgstr ""
+
+#: ./missions.lua
+msgid "Another exit portal has also been detected!"
+msgstr ""
+
+#: ./missions.lua
+msgid "Mission: Reach the exit portal!"
+msgstr ""
+
+#: ./missions.lua
+msgid "Find the warp shards"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear zombie cluster"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear zombie horde"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear fearsome zombies"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear elite zombies"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill zombie lord"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear mi-go threat"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear evolved zombies"
+msgstr ""
+
+#: ./missions.lua
+msgid "Clear evolved horde"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill zombie leader + swarm"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill horde lord"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill zombie superteam"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill mi-go overlord"
+msgstr ""
+
+#: ./missions.lua
+#, c-format
+msgid "Bonus Mission: %s!"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill 10 Zombies"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill 50 Zombies"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill 100 Zombies"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill 5 Birds"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill 5 Mammals"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill a Mi-Go"
+msgstr ""
+
+#: ./missions.lua
+msgid "Kill 3 Nether Creatures"
+msgstr ""
+
+#: ./missions.lua
+#, c-format
+msgid "Slaughter Mission: %s!"
+msgstr ""
+
+#: ./missions.lua
+#, c-format
+msgid "Mission failed: %s"
+msgstr ""
+
+#: ./missions.lua
+#, c-format
+msgid "Mission completed: %s"
+msgstr ""
+
+#: ./modinfo.json ./scenario.json
+msgid "Sky Island"
+msgstr ""
+
+#. ~ Description for Sky Island
+#: ./modinfo.json
+msgid ""
+"Cataclysm BN port of the Sky Island mod. Raid-based gameplay inspired by "
+"Escape from Tarkov and Dark & Darker. This is a very early version!"
+msgstr ""
+
+#. ~ Crafting recipes category name
+#: ./recipe_categories.json
+msgid "WARP"
+msgstr ""
+
+#. ~ Crafting recipes subcategory all
+#: ./recipe_categories.json
+msgid "ALL"
+msgstr ""
+
+#. ~ Crafting recipes subcategory of 'WARP' category
+#: ./recipe_categories.json
+msgid "MATERIALS"
+msgstr ""
+
+#. ~ Crafting recipes subcategory of 'WARP' category
+#: ./recipe_categories.json
+msgid "UPGRADES"
+msgstr ""
+
+#. ~ Crafting recipes subcategory of 'WARP' category
+#: ./recipe_categories.json
+msgid "PROOFS"
+msgstr ""
+
+#. ~ Scenario name for 'scenario_skyisland_warper'
+#: ./scenario.json
+msgctxt "scenario_male"
+msgid "Sky Island Warper"
+msgstr ""
+
+#. ~ Scenario name for 'scenario_skyisland_warper'
+#: ./scenario.json
+msgctxt "scenario_female"
+msgid "Sky Island Warper"
+msgstr ""
+
+#. ~ Scenario description for 'scenario_skyisland_warper'
+#: ./scenario.json
+msgctxt "scen_desc_male"
+msgid ""
+"As if the world ending wasn't enough, it seems some kind of extradimensional"
+" powers that be have taken an interest in you. You have been placed on a "
+"floating island high above the Earth, safe but isolated. Only by using the "
+"reality-bending powers of warp technology can you visit the world below in "
+"brief, randomly-targeted excursions. Venture down, gather supplies, and "
+"return with only what you can carry to upgrade your home base and your stash"
+" over time."
+msgstr ""
+
+#. ~ Scenario description for 'scenario_skyisland_warper'
+#: ./scenario.json
+msgctxt "scen_desc_female"
+msgid ""
+"As if the world ending wasn't enough, it seems some kind of extradimensional"
+" powers that be have taken an interest in you. You have been placed on a "
+"floating island high above the Earth, safe but isolated. Only by using the "
+"reality-bending powers of warp technology can you visit the world below in "
+"brief, randomly-targeted excursions. Venture down, gather supplies, and "
+"return with only what you can carry to upgrade your home base and your stash"
+" over time."
+msgstr ""
+
+#. ~ Scenario start_name for 'scenario_skyisland_warper'
+#: ./scenario.json
+msgctxt "start_name"
+msgid "Sky Island"
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "%d items from the red room were teleported home with you!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Quick Expedition"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Normal time limit (2 hours grace). Exits will be close together."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Large Expedition"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Double time limit (4 hours grace). Exits scattered over wider area."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Extended Expedition"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Triple time limit (6 hours grace). Exits very far away."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Field"
+msgstr ""
+
+#: ./teleport.lua
+msgid ""
+"Arrive in a barren field. Usually wilderness, but could be an empty lot in "
+"town."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Basement"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Arrive inside an underground basement. Usually suburbia."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Rooftop"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Arrive on a building roof. Usually houses, one story up."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Science Lab"
+msgstr ""
+
+#: ./teleport.lua
+msgid ""
+"Arrive in a subterranean science lab. DANGEROUS! Costs 1 Labs Catalyst. You "
+"will be sealed inside - bring an exit strategy!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "You feel reality shift around you..."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Warp energy lifts you into the air!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Your feet touch the ground as the warp flight fades."
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "%d island animal%s returned home safely!"
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "%d warped animal%s arrived at your island!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "You are already on an expedition!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "ERROR: Could not determine position!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Select Expedition Type"
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "%s (reward: %d tokens)"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Cancel"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Warp cancelled."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Select Starting Location"
+msgstr ""
+
+#: ./teleport.lua
+msgid " [No Catalyst]"
+msgstr ""
+
+#: ./teleport.lua
+msgid " (requires catalyst)"
+msgstr ""
+
+#: ./teleport.lua
+msgid "The Labs Catalyst crumbles to dust as dimensional barriers part..."
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "Initiating %s to %s..."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Searching for suitable location..."
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "Your scouting reveals a %dx%d area around the landing zone."
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "You arrive at the %s!"
+msgstr ""
+
+#: ./teleport.lua
+msgid ""
+"Find the red room exit portal to return home before warp sickness kills you."
+msgstr ""
+
+#: ./teleport.lua
+msgid "You are already home!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "ERROR: Home location not set!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Return home?"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Yes, return home"
+msgstr ""
+
+#: ./teleport.lua
+msgid "No, stay"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Only items you carry will return with you."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Without a Vortex Token, only items you carry will return with you."
+msgstr ""
+
+#: ./teleport.lua
+msgid ""
+"The Vortex Token crumbles as it pulls the room's contents into the warp!"
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "You've returned home safely! Earned %d material tokens."
+msgstr ""
+
+#: ./teleport.lua
+msgid "=== RANK UP ==="
+msgstr ""
+
+#: ./teleport.lua
+msgid "You have survived 20 expeditions and achieved Master rank!"
+msgstr ""
+
+#: ./teleport.lua
+msgid "New features and recipes may now be available."
+msgstr ""
+
+#: ./teleport.lua
+msgid "You have survived 10 expeditions and achieved Adept rank!"
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "Stats: %d/%d raids completed successfully"
+msgstr ""
+
+#: ./teleport.lua
+msgid "Your belongings scatter as reality tears you away..."
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid "%d warped animal%s lost in the void..."
+msgstr ""
+
+#: ./teleport.lua
+msgid "You respawn at home, naked and wounded!"
+msgstr ""
+
+#: ./terrain.json
+msgid "open air"
+msgstr ""
+
+#. ~ Description for open air
+#: ./terrain.json
+msgid ""
+"This is the edge of the island. A metaphysical border stops you from going "
+"over the edge yourself, but anything you drop here will be gone forever."
+msgstr ""
+
+#: ./terrain.json
+msgid "warped rock"
+msgstr ""
+
+#. ~ Description for warped rock
+#: ./terrain.json
+msgid ""
+"A sparkly-black stone that's glassy smooth to the touch. Seems "
+"indestructible by normal means."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your resistance to the chaos of the warpstream increases. In every future "
+"expedition, you will be able to endure an additional warp pulse and stay "
+"earthside longer. (9 pulses)"
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your resistance to the chaos of the warpstream increases. In every future "
+"expedition, you will be able to endure an additional warp pulse and stay "
+"earthside longer. (10 pulses)"
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your resistance to the chaos of the warpstream increases. In every future "
+"expedition, you will be able to endure an additional warp pulse and stay "
+"earthside longer. (11 pulses)"
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your vision expands. A 3x3 area around your landing zone will be revealed on"
+" future expeditions."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your foresight sharpens. A 5x5 area around your landing zone will be "
+"revealed on future expeditions."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"The paths multiply. Two return obelisks will now spawn per expedition, "
+"giving you more options to escape."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Large Expeditions are now available at the warp obelisk. You will have "
+"double the grace period before warp sickness sets in."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Extended Expeditions are now available. You will have triple the grace "
+"period for maximum exploration time."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Basement starts are now available at the warp obelisk. You can choose to "
+"begin expeditions in underground basements."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Rooftop starts are now available at the warp obelisk. You can choose to "
+"begin expeditions on building rooftops."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Lab starts are now available at the warp obelisk. You can choose to begin "
+"expeditions in underground science labs. Be warned: you will need a Labs "
+"Catalyst each time, and you will start sealed inside!"
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Scouting Clairvoyance I unlocked. You will see everything near you for 20 "
+"seconds when beginning an expedition."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Scouting Clairvoyance II unlocked. You will see everything near you for 60 "
+"seconds when beginning an expedition."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Expedition Missions unlocked. Every expedition now offers 1 randomly "
+"assigned bonus mission, which rewards warp shards on completion."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Two Missions unlocked. Every expedition now offers 2 randomly assigned bonus"
+" missions."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Three Missions unlocked. Every expedition now offers 3 randomly assigned "
+"bonus missions."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Four Missions unlocked. Every expedition now offers 4 randomly assigned "
+"bonus missions."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Five Missions unlocked. Every expedition now offers 5 randomly assigned "
+"bonus missions."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Harder Missions unlocked. More challenging bonus missions with greater "
+"rewards are now available."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Hardest Missions unlocked. The most dangerous bonus missions with the "
+"greatest rewards are now available."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Slaughter Missions unlocked. You will now receive a slaughter mission during"
+" each expedition, rewarding warp shards for killing specific types of "
+"enemies."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Landing Flight unlocked. While under the warpcloak effect on landing, you "
+"gain the power of flight for 60 seconds."
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your determination is proven! You have achieved the rank of Adept. Rank "
+"challenge complete!"
+msgstr ""
+
+#: ./upgrades.lua
+msgid ""
+"Your mastery is proven! You have achieved the highest rank. Rank challenge "
+"complete!"
+msgstr ""
+
+#: ./upgrades.lua
+msgid "ERROR: Unknown upgrade key: "
+msgstr ""
+
+#: ./upgrades.lua
+msgid "You have already unlocked this upgrade."
+msgstr ""
+
+#: ./upgrades.lua
+msgid "=== UPGRADE UNLOCKED ==="
+msgstr ""
+
+#: ./upgrades.lua
+msgid "You must unlock the previous tier of this upgrade first."
+msgstr ""
+
+#: ./upgrades.lua
+msgid "You need at least 10 successful expeditions to use this."
+msgstr ""
+
+#: ./upgrades.lua
+msgid "You need at least 20 successful expeditions to use this."
+msgstr ""
+
+#: ./vehicles.json
+msgid "warp raft"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"<color_light_red>[Warp Pulse] WARNING: This is your last safe pulse! The "
+"next pulse will begin warp sickness.</color>"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "[Press any key to continue]"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"The next pulse will begin warp sickness.\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "WARNING: This is your last safe pulse!\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"=== WARP PULSE ===\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"<color_yellow>[Warp Pulse] The warp begins to tug at you... Safe pulses "
+"remaining: %d (~%d min).</color>"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"Time until sickness: ~%d minutes\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"The warp begins to tug at you...\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"[Warp Pulse] You feel a faint tingling of warp energy. Safe pulses "
+"remaining: %d (~%d min)."
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"You feel a faint tingling of warp energy.\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to "
+"disintegration.</color>"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"Consider returning home soon.\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"Pulses until disintegration: %d\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid "Stats: -%d to all\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "The warp sickness grows stronger.\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"STATUS: %s (Intensity %d/6)\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"<color_red>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
+"disintegration!</color>"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"You MUST return home soon!\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "Your body is failing!\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"<color_red>[Warp Pulse] !!! WARP DISINTEGRATION !!! You are being "
+"unmade!</color>"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"GET TO THE EXIT IMMEDIATELY!\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "Your body is coming apart at the seams!\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "Your skin tears like tissue paper with every movement.\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"!!! WARP DISINTEGRATION !!!\n"
+"\n"
+msgstr ""

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: CBN_Sky_Island\n"
 "POT-Creation-Date: 2026-10-08 14:31+0300\n"
 "PO-Revision-Date: \n"
-"Last-Translator: midgardormr <donjonn@yandex.ru>\n"
+"Last-Translator: midgardormr <midgardormr@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,12 @@ msgstr "Расширение небесного острова, ч. 1"
 
 #. ~ Description for mission 'Sky Island Expansion 1'
 #: construction_missions.json
-msgid "Expand your basement with cross-shaped corridors and a central room with skylight."
-msgstr "Расширьте подвал, проложив коридоры в форме креста и обустроив центральную комнату с окном в потолке."
+msgid ""
+"Expand your basement with cross-shaped corridors and a central room with "
+"skylight."
+msgstr ""
+"Расширьте подвал, проложив коридоры в форме креста и обустроив центральную "
+"комнату с окном в потолке."
 
 #: construction_missions.json
 msgid "Sky Island Expansion 2"
@@ -64,7 +68,7 @@ msgstr "Превратить пол в деревянный"
 
 #: constructions.json
 msgid "Warp floor into worked stone floor"
-msgstr "Превратить пол в покрытие из обработанного камня"
+msgstr "Превратить пол в каменный"
 
 #: constructions.json
 msgid "Warp floor into fine sand"
@@ -88,11 +92,15 @@ msgstr "Искажение: установить консоль нанофабр
 
 #: constructions.json
 msgid "Warp: Build CVD Machine Body (copyplate)"
-msgstr "Искажение: установить корпус химического парофазного осадителя (копипластина)"
+msgstr ""
+"Искажение: установить корпус химического парофазного осадителя "
+"(копипластина)"
 
 #: constructions.json
 msgid "Warp: Build CVD Control Panel (copyplate)"
-msgstr "Искажение: установить консоль химического парофазного осадителя (копипластина)"
+msgstr ""
+"Искажение: установить консоль химического парофазного осадителя "
+"(копипластина)"
 
 #: effects.json
 msgid "Resurrection Sickness"
@@ -100,8 +108,12 @@ msgstr "Воскрешение: недомогание"
 
 #. ~ Description of effect 'Resurrection Sickness'.
 #: effects.json
-msgid "Your body is recovering from death. Your limbs are being forcibly stabilized by mysterious energies."
-msgstr "Ваше тело восстанавливается после смерти. Таинственные силы стабилизируют состояние ваших конечностей."
+msgid ""
+"Your body is recovering from death. Your limbs are being forcibly stabilized"
+" by mysterious energies."
+msgstr ""
+"Ваше тело восстанавливается после смерти. Таинственные силы стабилизируют "
+"состояние ваших конечностей."
 
 #. ~ Miss message for effect(s) 'Resurrection Sickness'.
 #: effects.json
@@ -119,8 +131,17 @@ msgstr "Устойчивость к искажению"
 
 #. ~ Description of effect 'Warp Stability'.
 #: effects.json
-msgid "You're fresh from your stay at your sanctuary island.  The intangible miasma of terra firma currently has no effect on you, and you feel fine.  This should last for several hours.  Stay too long, however, and you'll gradually begin to suffer ever-worsening debilitating effects."
-msgstr "Вы только что вернулись со своего острова-убежища. Незримая скверна земной тверди пока не оказывает на вас никакого воздействия, и вы чувствуете себя прекрасно. Это состояние продлится несколько часов. Однако если задержаться слишком надолго, ваше самочувствие начнёт постепенно ухудшаться, а изнурительные последствия будут становиться всё тяжелее."
+msgid ""
+"You're fresh from your stay at your sanctuary island.  The intangible miasma"
+" of terra firma currently has no effect on you, and you feel fine.  This "
+"should last for several hours.  Stay too long, however, and you'll gradually"
+" begin to suffer ever-worsening debilitating effects."
+msgstr ""
+"Вы только что вернулись со своего острова-убежища. Незримая скверна земной "
+"тверди пока не оказывает на вас никакого воздействия, и вы чувствуете себя "
+"прекрасно. Это состояние продлится несколько часов. Однако если задержаться "
+"слишком надолго, ваше самочувствие начнёт постепенно ухудшаться, а "
+"изнурительные последствия будут становиться всё тяжелее."
 
 #: effects.json
 msgid "Warp Sickness"
@@ -128,8 +149,17 @@ msgstr "Недомогание от искажения"
 
 #. ~ Description of effect 'Warp Sickness'.
 #: effects.json
-msgid "You've overstayed your time earthside.  It's getting hard to concentrate, there's a painful ringing in your ears, and your muscles sting and jolt.  Every action feels delayed.  You need to warp home to refresh yourself, or this is going to get worse.  Probably within just a few hours."
-msgstr "Вы слишком долго пробыли за пределами своего острова. Сосредоточиться становится всё труднее, в ушах стоит болезненный звон, а мышцы покалывает и сводит судорогами. Каждое ваше действие словно запаздывает. Вам необходимо переместиться обратно на остров, чтобы восстановить силы, иначе состояние продолжит ухудшаться. Скорее всего, уже в ближайшие несколько часов."
+msgid ""
+"You've overstayed your time earthside.  It's getting hard to concentrate, "
+"there's a painful ringing in your ears, and your muscles sting and jolt.  "
+"Every action feels delayed.  You need to warp home to refresh yourself, or "
+"this is going to get worse.  Probably within just a few hours."
+msgstr ""
+"Вы слишком долго пробыли за пределами своего острова. Сосредоточиться "
+"становится всё труднее, в ушах стоит болезненный звон, а мышцы покалывает и "
+"сводит судорогами. Каждое ваше действие словно запаздывает. Вам необходимо "
+"переместиться обратно на остров, чтобы восстановить силы, иначе состояние "
+"продолжит ухудшаться. Скорее всего, уже в ближайшие несколько часов."
 
 #: effects.json
 msgid "Warp Nausea"
@@ -137,8 +167,17 @@ msgstr "Тошнота от искажения"
 
 #. ~ Description of effect 'Warp Nausea'.
 #: effects.json
-msgid "You've stayed earthside too long.  Your body aches and your senses are dulling.  Every step feels like you're walking through thick mud and breathing hot tar.  You should warp home as soon as you can, or this is only going to get worse."
-msgstr "Вы слишком долго пробыли за пределами своего острова. Всё тело ноет, а чувства постепенно притупляются. Каждый шаг даётся так, словно вы бредёте по густой грязи, а вместо воздуха вдыхаете раскалённую смолу. Вам нужно как можно скорее переместиться обратно на остров, иначе состояние будет только ухудшаться."
+msgid ""
+"You've stayed earthside too long.  Your body aches and your senses are "
+"dulling.  Every step feels like you're walking through thick mud and "
+"breathing hot tar.  You should warp home as soon as you can, or this is only"
+" going to get worse."
+msgstr ""
+"Вы слишком долго пробыли за пределами своего острова. Всё тело ноет, а "
+"чувства постепенно притупляются. Каждый шаг даётся так, словно вы бредёте по"
+" густой грязи, а вместо воздуха вдыхаете раскалённую смолу. Вам нужно как "
+"можно скорее переместиться обратно на остров, иначе состояние будет только "
+"ухудшаться."
 
 #: effects.json
 msgid "Warp Debilitation"
@@ -146,8 +185,17 @@ msgstr "Истощение от искажения"
 
 #. ~ Description of effect 'Warp Debilitation'.
 #: effects.json
-msgid "You've stayed earthside WAY too long!  Your body barely responds and your senses are slush.  The world itself feels barbed and frayed, and the very air is like breathing fiberglass.  If you want to survive, you need to warp home as soon as possible."
-msgstr "Вы пробыли за пределами своего острова непозволительно долго! Тело почти перестало слушаться, а чувства окончательно притупились. Кажется, будто сам мир ощетинился острыми шипами и расползается по швам, а воздух словно наполнен стекловолокном. Если хотите выжить, необходимо как можно скорее переместиться обратно на остров."
+msgid ""
+"You've stayed earthside WAY too long!  Your body barely responds and your "
+"senses are slush.  The world itself feels barbed and frayed, and the very "
+"air is like breathing fiberglass.  If you want to survive, you need to warp "
+"home as soon as possible."
+msgstr ""
+"Вы пробыли за пределами своего острова непозволительно долго! Тело почти "
+"перестало слушаться, а чувства окончательно притупились. Кажется, будто сам "
+"мир ощетинился острыми шипами и расползается по швам, а воздух словно "
+"наполнен стекловолокном. Если хотите выжить, необходимо как можно скорее "
+"переместиться обратно на остров."
 
 #: effects.json
 msgid "Warp Necrosis"
@@ -155,8 +203,12 @@ msgstr "Некроз от искажения"
 
 #. ~ Description of effect 'Warp Necrosis'.
 #: effects.json
-msgid "The very fabric of your being is unraveling!  You're in dire straits.  You need to get back to your sanctuary island NOW!"
-msgstr "Ваша сущность распадается! Вы на грани гибели. Необходимо НЕМЕДЛЕННО вернуться на свой остров-убежище!"
+msgid ""
+"The very fabric of your being is unraveling!  You're in dire straits.  You "
+"need to get back to your sanctuary island NOW!"
+msgstr ""
+"Ваша сущность распадается! Вы на грани гибели. Необходимо НЕМЕДЛЕННО "
+"вернуться на свой остров-убежище!"
 
 #: effects.json
 msgid "Warp Disintegration!"
@@ -164,8 +216,14 @@ msgstr "Распад от искажения!"
 
 #. ~ Description of effect 'Warp Disintegration!'.
 #: effects.json
-msgid "You're going to die.  And if you weren't busy leaking blood out of every pore, you'd find a better way to emphasize just how badly you're dying.  Your only hope is to return home immediately."
-msgstr "Вы умираете. И если бы кровь не сочилась из каждой поры вашего тела, наверняка нашлись бы слова получше, чтобы описать, насколько всё плохо. Единственный шанс на спасение — немедленно вернуться на свой остров."
+msgid ""
+"You're going to die.  And if you weren't busy leaking blood out of every "
+"pore, you'd find a better way to emphasize just how badly you're dying.  "
+"Your only hope is to return home immediately."
+msgstr ""
+"Вы умираете. И если бы кровь не сочилась из каждой поры вашего тела, "
+"наверняка нашлись бы слова получше, чтобы описать, насколько всё плохо. "
+"Единственный шанс на спасение — немедленно вернуться на свой остров."
 
 #: effects.json
 msgid "Disintegrating!"
@@ -174,7 +232,9 @@ msgstr "Распад!"
 #. ~ Description of effect 'Disintegrating!'.
 #: effects.json
 msgid "Prolonged warp is destroying you.  You're coming apart."
-msgstr "Длительное воздействие искажения разрушает ваше тело. Вы буквально распадаетесь на части."
+msgstr ""
+"Длительное воздействие искажения разрушает ваше тело. Вы буквально "
+"распадаетесь на части."
 
 #. ~ Apply message for effect(s) 'Disintegrating!'.
 #: effects.json
@@ -183,8 +243,11 @@ msgstr "Вас буквально стирает из реальности!"
 
 #. ~ Remove message for effect(s) 'Disintegrating!'.
 #: effects.json
-msgid "The rending of the warp has finally abated.  You feel like you exist again."
-msgstr "Разрушительное воздействие искажения наконец прекратилось. Вы снова чувствуете себя частью реальности."
+msgid ""
+"The rending of the warp has finally abated.  You feel like you exist again."
+msgstr ""
+"Разрушительное воздействие искажения наконец прекратилось. Вы снова "
+"чувствуете себя частью реальности."
 
 #: effects.json
 msgid "Warp Cloak"
@@ -192,8 +255,12 @@ msgstr "Покров искажения"
 
 #. ~ Description of effect 'Warp Cloak'.
 #: effects.json
-msgid "You are invisible and incorporeal for a brief time. Now's your chance to get to cover. You also won't take fall damage."
-msgstr "На короткое время вы становитесь невидимыми и бестелесными. Это ваш шанс укрыться в безопасном месте. Кроме того, падения не причиняют вам урона."
+msgid ""
+"You are invisible and incorporeal for a brief time. Now's your chance to get"
+" to cover. You also won't take fall damage."
+msgstr ""
+"На короткое время вы становитесь невидимыми и бестелесными. Это ваш шанс "
+"укрыться в безопасном месте. Кроме того, падения не причиняют вам урона."
 
 #. ~ Apply message for effect(s) 'Warp Cloak'.
 #: effects.json
@@ -222,7 +289,8 @@ msgstr "Ничто не ускользает от вашего взгляда."
 #. ~ Apply message for effect(s) 'Warped Omniscience'.
 #: effects.json
 msgid "Your vision expands until you see everything."
-msgstr "Ваше поле зрения расширяется, пока вы не начинаете видеть абсолютно всё."
+msgstr ""
+"Ваше поле зрения расширяется, пока вы не начинаете видеть абсолютно всё."
 
 #. ~ Remove message for effect(s) 'Warped Omniscience'.
 #: effects.json
@@ -238,8 +306,12 @@ msgstr[2] "обелисков искажения"
 
 #. ~ Description for warp obelisk
 #: furniture.json
-msgid "A mysterious floating obelisk that pulses with otherworldly energy. You could examine it to initiate a warp expedition."
-msgstr "Таинственный парящий обелиск, пульсирующий потусторонней энергией. Осмотрите его, чтобы отправиться в экспедицию через искажение."
+msgid ""
+"A mysterious floating obelisk that pulses with otherworldly energy. You "
+"could examine it to initiate a warp expedition."
+msgstr ""
+"Таинственный парящий обелиск, пульсирующий потусторонней энергией. Осмотрите"
+" его, чтобы отправиться в экспедицию через искажение."
 
 #: furniture.json items.json
 msgid "return obelisk"
@@ -250,8 +322,12 @@ msgstr[2] "обелисков возвращения"
 
 #. ~ Description for return obelisk
 #: furniture.json
-msgid "A mysterious obelisk that can teleport you back home. Examine it to return to the Sky Island."
-msgstr "Таинственный обелиск, способный телепортировать вас домой. Осмотрите его, чтобы вернуться на небесный остров."
+msgid ""
+"A mysterious obelisk that can teleport you back home. Examine it to return "
+"to the Sky Island."
+msgstr ""
+"Таинственный обелиск, способный телепортировать вас домой. Осмотрите его, "
+"чтобы вернуться на небесный остров."
 
 #: furniture.json
 msgid "infinity tree"
@@ -511,7 +587,8 @@ msgstr "Устойчивость III"
 
 #: heart.lua
 msgid "+6 total bonus grace pulses (MAX)"
-msgstr "Всего +6 доп. импульса искажения до начала негативных эффектов (МАКС.)"
+msgstr ""
+"Всего +6 доп. импульсов искажения до начала негативных эффектов (МАКС.)"
 
 #: heart.lua
 msgid "Warped Panacea"
@@ -732,7 +809,8 @@ msgstr "=== Статистика экспедиций ===\n"
 
 #: heart.lua
 msgid "Upgrades (Craft items near Heart to unlock)"
-msgstr "Улучшения (для открытия изготавливайте предметы рядом с сердцем острова)"
+msgstr ""
+"Улучшения (для открытия изготавливайте предметы рядом с сердцем острова)"
 
 #: heart.lua
 #, c-format
@@ -764,12 +842,13 @@ msgstr "Выходы: не разблокированы — нужно изго�
 
 #: heart.lua
 msgid "Expedition Length: MAX (Extended available)"
-msgstr "Длительность экспедиции: МАКС. (доступно продление)"
+msgstr "Длительность экспедиции: МАКС. (доступны продлённые экспедиции)"
 
 #: heart.lua
 #, c-format
 msgid "Expedition Length: Level %d - Next: %s (craft %s)"
-msgstr "Длительность экспедиции: уровень %d — далее: %s (нужно изготовить: %s)"
+msgstr ""
+"Длительность экспедиции: уровень %d — далее: %s (нужно изготовить: %s)"
 
 #: heart.lua
 #, c-format
@@ -779,7 +858,8 @@ msgstr "Дополнительные задания: МАКС. (%d на эксп
 #: heart.lua
 #, c-format
 msgid "Bonus Missions: %d per expedition - Next: %s (craft %s)"
-msgstr "Дополнительные задания: %d на экспедицию — далее: %s (нужно изготовить: %s)"
+msgstr ""
+"Дополнительные задания: %d на экспедицию — далее: %s (нужно изготовить: %s)"
 
 #: heart.lua
 #, c-format
@@ -809,7 +889,8 @@ msgstr "Длительность экспедиции: МАКС. (доступе
 
 #: heart.lua
 msgid "Multiple Exits is unlocked (2 return obelisks per expedition)."
-msgstr "Несколько выходов: разблокировано (2 обелиска возвращения на экспедицию)."
+msgstr ""
+"Несколько выходов: разблокировано (2 обелиска возвращения на экспедицию)."
 
 #: heart.lua
 msgid "Scouting is at maximum level (5x5 area revealed on landing)."
@@ -817,11 +898,17 @@ msgstr "Разведка: МАКС. (при высадке открываетс�
 
 #: heart.lua
 msgid "Stability is at maximum level (+6 bonus grace pulses)."
-msgstr "Устойчивость: МАКС. (+6 дополнительных импульсов до начала негативных эффектов)."
+msgstr ""
+"Устойчивость: МАКС. (+6 дополнительных импульсов до начала негативных "
+"эффектов)."
 
 #: heart.lua
-msgid "Each upgrade requires different scavenged items. Check the crafting menu for requirements."
-msgstr "Для каждого улучшения нужны разные добытые предметы. Требования смотрите в меню изготовления."
+msgid ""
+"Each upgrade requires different scavenged items. Check the crafting menu for"
+" requirements."
+msgstr ""
+"Для каждого улучшения нужны разные добытые предметы. Требования смотрите в "
+"меню изготовления."
 
 #: heart.lua
 msgid ""
@@ -877,7 +964,9 @@ msgstr "Испытание (ранг 2): Проверка мастерства"
 
 #: heart.lua
 msgid "Completing this proves you have achieved ultimate mastery of survival."
-msgstr "Пройдя это испытание, вы докажете, что достигли высшего мастерства в выживании."
+msgstr ""
+"Пройдя это испытание, вы докажете, что достигли высшего мастерства в "
+"выживании."
 
 #: heart.lua
 msgid ""
@@ -912,8 +1001,11 @@ msgid "=== Proof of Mastery ===\n"
 msgstr "=== Проверка мастерства ===\n"
 
 #: heart.lua
-msgid "Completing this proves you have mastered basic survival and tool-making."
-msgstr "Пройдя это испытание, вы докажете, что освоили основы выживания и изготовления инструментов."
+msgid ""
+"Completing this proves you have mastered basic survival and tool-making."
+msgstr ""
+"Пройдя это испытание, вы докажете, что освоили основы выживания и "
+"изготовления инструментов."
 
 #: heart.lua
 msgid "- WRENCH quality 2\n"
@@ -959,12 +1051,21 @@ msgid "Completing these challenges unlocks new recipes and capabilities. "
 msgstr "Прохождение этих испытаний открывает новые рецепты и возможности. "
 
 #: heart.lua
-msgid "These require crafting special items near the Heart that demonstrate you have gathered the tools and skills needed to survive. "
-msgstr "Для этого нужно изготовить рядом с сердцем острова особые предметы, подтверждающие, что вы собрали необходимые инструменты и овладели навыками выживания. "
+msgid ""
+"These require crafting special items near the Heart that demonstrate you "
+"have gathered the tools and skills needed to survive. "
+msgstr ""
+"Для этого нужно изготовить рядом с сердцем острова особые предметы, "
+"подтверждающие, что вы собрали необходимые инструменты и овладели навыками "
+"выживания. "
 
 #: heart.lua
-msgid "Beyond automatic rank progression, you can prove your mastery by completing rank-up challenges. "
-msgstr "Помимо автоматического повышения ранга, вы можете доказать своё мастерство, пройдя специальные испытания. "
+msgid ""
+"Beyond automatic rank progression, you can prove your mastery by completing "
+"rank-up challenges. "
+msgstr ""
+"Помимо автоматического повышения ранга, вы можете доказать своё мастерство, "
+"пройдя специальные испытания. "
 
 #: heart.lua
 msgid "What is this place?"
@@ -979,24 +1080,38 @@ msgid "Explain warp shards and tokens"
 msgstr "Что такое осколки искажения и жетоны"
 
 #: heart.lua
-msgid "Craft the infinity nodes first, deploy them on your island, then use them to craft resources from tokens."
-msgstr "Сначала изготовьте бесконечные источники и разместите их на своём острове, а затем используйте их для изготовления ресурсов из жетонов."
+msgid ""
+"Craft the infinity nodes first, deploy them on your island, then use them to"
+" craft resources from tokens."
+msgstr ""
+"Сначала изготовьте бесконечные источники и разместите их на своём острове, а"
+" затем используйте их для изготовления ресурсов из жетонов."
 
 #: heart.lua
-msgid "Material tokens (50 per successful expedition) can be converted into raw resources at infinity nodes. "
-msgstr "Жетоны материалов (50 за каждую успешную экспедицию) можно превращать в сырьё с помощью бесконечных источников. "
+msgid ""
+"Material tokens (50 per successful expedition) can be converted into raw "
+"resources at infinity nodes. "
+msgstr ""
+"Жетоны материалов (50 за каждую успешную экспедицию) можно превращать в "
+"сырьё с помощью бесконечных источников. "
 
 #: heart.lua
 msgid "They're used for healing and upgrades. "
 msgstr "Они используются для исцеления и улучшений. "
 
 #: heart.lua
-msgid "Warp shards are earned by completing missions and searching for treasure. "
-msgstr "Осколки искажения можно получить за выполнение заданий и поиск сокровищ. "
+msgid ""
+"Warp shards are earned by completing missions and searching for treasure. "
+msgstr ""
+"Осколки искажения можно получить за выполнение заданий и поиск сокровищ. "
 
 #: heart.lua
-msgid "Find the exit (marked with a return obelisk) and return home before it's too late!"
-msgstr "Найдите выход, отмеченный обелиском возвращения, и вернитесь домой, пока не стало слишком поздно!"
+msgid ""
+"Find the exit (marked with a return obelisk) and return home before it's too"
+" late!"
+msgstr ""
+"Найдите выход, отмеченный обелиском возвращения, и вернитесь домой, пока не "
+"стало слишком поздно!"
 
 #: heart.lua
 msgid "After 12 stages, you'll start taking damage. "
@@ -1007,8 +1122,12 @@ msgid "Every 5 minutes, warp sickness advances. "
 msgstr "Каждые 5 минут недомогание от искажения усиливается. "
 
 #: heart.lua
-msgid "You'll teleport to a random location with three missions: find the exit, kill enemies, and find warp shards. "
-msgstr "Вы телепортируетесь в случайное место, где вам предстоит выполнить три задания: найти выход, убить врагов и собрать осколки искажения. "
+msgid ""
+"You'll teleport to a random location with three missions: find the exit, "
+"kill enemies, and find warp shards. "
+msgstr ""
+"Вы телепортируетесь в случайное место, где вам предстоит выполнить три "
+"задания: найти выход, убить врагов и собрать осколки искажения. "
 
 #: heart.lua
 msgid "Use the Warp Obelisk to begin an expedition. "
@@ -1016,15 +1135,23 @@ msgstr "Используйте обелиск искажения, чтобы н�
 
 #: heart.lua
 msgid "If you die, you'll respawn here but lose everything you were carrying."
-msgstr "Если вы погибнете, то возродитесь здесь, но потеряете всё, что было при вас."
+msgstr ""
+"Если вы погибнете, то возродитесь здесь, но потеряете всё, что было при вас."
 
 #: heart.lua
-msgid "Gather resources, complete missions, and return before warp sickness kills you. "
-msgstr "Собирайте ресурсы, выполняйте задания и возвращайтесь, пока недомогание от искажения не убило вас. "
+msgid ""
+"Gather resources, complete missions, and return before warp sickness kills "
+"you. "
+msgstr ""
+"Собирайте ресурсы, выполняйте задания и возвращайтесь, пока недомогание от "
+"искажения не убило вас. "
 
 #: heart.lua
-msgid "Use the Warp Obelisk to teleport to the surface and begin expeditions. "
-msgstr "Используйте обелиск искажения, чтобы телепортироваться на поверхность и отправиться в экспедицию. "
+msgid ""
+"Use the Warp Obelisk to teleport to the surface and begin expeditions. "
+msgstr ""
+"Используйте обелиск искажения, чтобы телепортироваться на поверхность и "
+"отправиться в экспедицию. "
 
 #: heart.lua
 msgid "This floating island is your sanctuary. "
@@ -1098,7 +1225,9 @@ msgstr "Расширение 4 — уже построено"
 #: heart.lua
 #, c-format
 msgid "Build Expansion 4 - Maximum Size (%d Material Tokens)"
-msgstr "Расширение 4 — увеличить подвал до максимального размера (%d жетонов материалов)"
+msgstr ""
+"Расширение 4 — увеличить подвал до максимального размера (%d жетонов "
+"материалов)"
 
 #: heart.lua
 #, c-format
@@ -1107,7 +1236,9 @@ msgstr "Для строительства подвала вам потребуе
 
 #: heart.lua
 msgid "Construction beginning... The island trembles as new spaces form."
-msgstr "Строительство начинается... Остров содрогается, и на нём возникают новые помещения."
+msgstr ""
+"Строительство начинается... Остров содрогается, и на нём возникают новые "
+"помещения."
 
 #: heart.lua
 msgid "A basement has been carved into the island's depths!"
@@ -1123,8 +1254,12 @@ msgid "Expanding the basement..."
 msgstr "Расширение подвала..."
 
 #: heart.lua
-msgid "Cross-shaped corridors now extend from the central room! A skylight illuminates from above."
-msgstr "Теперь от центрального зала в четыре стороны расходятся коридоры! Сверху через световой люк проникает свет."
+msgid ""
+"Cross-shaped corridors now extend from the central room! A skylight "
+"illuminates from above."
+msgstr ""
+"Теперь от центрального зала в четыре стороны расходятся коридоры! Сверху "
+"через световой люк проникает свет."
 
 #: heart.lua
 msgid "Widening the corridors..."
@@ -1148,7 +1283,8 @@ msgstr "Начинается заключительное расширение..
 
 #: heart.lua
 msgid "The basement has reached its maximum size! Your sanctuary is complete."
-msgstr "Подвал достиг максимального размера! Ваше убежище полностью обустроено."
+msgstr ""
+"Подвал достиг максимального размера! Ваше убежище полностью обустроено."
 
 #: heart.lua
 #, c-format
@@ -1201,8 +1337,13 @@ msgstr[2] "пультов небесного острова"
 
 #. ~ Description for {'str': 'sky island warp remote'}
 #: items.json
-msgid "A handheld device that can initiate warp expeditions. Debug/testing item only - spawn via debug menu if needed."
-msgstr "Портативное устройство, позволяющее начинать экспедиции через искажение. Предназначено исключительно для отладки и тестирования. При необходимости его можно создать через меню отладки."
+msgid ""
+"A handheld device that can initiate warp expeditions. Debug/testing item "
+"only - spawn via debug menu if needed."
+msgstr ""
+"Портативное устройство, позволяющее начинать экспедиции через искажение. "
+"Предназначено исключительно для отладки и тестирования. При необходимости "
+"его можно создать через меню отладки."
 
 #: items.json
 msgid "sky island return remote"
@@ -1213,8 +1354,13 @@ msgstr[2] "пультов возвращения на небесный остр�
 
 #. ~ Description for {'str': 'sky island return remote'}
 #: items.json
-msgid "A handheld device that can teleport you back to your home location. Debug/testing item only - spawn via debug menu if needed."
-msgstr "Портативное устройство, позволяющее телепортироваться домой. Предназначено исключительно для отладки и тестирования. При необходимости его можно создать через меню отладки."
+msgid ""
+"A handheld device that can teleport you back to your home location. "
+"Debug/testing item only - spawn via debug menu if needed."
+msgstr ""
+"Портативное устройство, позволяющее телепортироваться домой. Предназначено "
+"исключительно для отладки и тестирования. При необходимости его можно "
+"создать через меню отладки."
 
 #: items.json
 msgid "warp shard"
@@ -1225,8 +1371,16 @@ msgstr[2] "осколков искажения"
 
 #. ~ Description for {'str': 'warp shard', 'str_pl': 'warp shards'}
 #: items.json
-msgid "A small quantity of airy-thin material that resembles flaked obsidian. It glints with a purplish shimmer that seems to stretch beyond itself and into the air. These shards are the currency of your sanctuary island and can be exchanged for valuable upgrades."
-msgstr "Небольшая горстка невесомых чешуек, напоминающих осколки обсидиана. Они переливаются фиолетовым светом, который словно выходит за их пределы и растворяется в воздухе. Эти осколки служат валютой на вашем острове-убежище. Их можно обменять на ценные улучшения."
+msgid ""
+"A small quantity of airy-thin material that resembles flaked obsidian. It "
+"glints with a purplish shimmer that seems to stretch beyond itself and into "
+"the air. These shards are the currency of your sanctuary island and can be "
+"exchanged for valuable upgrades."
+msgstr ""
+"Небольшая горстка невесомых чешуек, напоминающих осколки обсидиана. Они "
+"переливаются фиолетовым светом, который словно выходит за их пределы и "
+"растворяется в воздухе. Эти осколки служат валютой на вашем острове-убежище."
+" Их можно обменять на ценные улучшения."
 
 #: items.json
 msgid "skyisland fake item"
@@ -1237,8 +1391,12 @@ msgstr[2] "фиктивных предметов небесного остров
 
 #. ~ Description for {'str': 'skyisland fake item'}
 #: items.json
-msgid "Dummy item for Sky Island furniture. If you see this, then something went wrong."
-msgstr "Служебный предмет для мебели Небесного острова. Если вы его видите, значит, что-то пошло не так."
+msgid ""
+"Dummy item for Sky Island furniture. If you see this, then something went "
+"wrong."
+msgstr ""
+"Служебный предмет для мебели Небесного острова. Если вы видите это, то что-"
+"то пошло не так."
 
 #: items.json
 msgid "material token"
@@ -1249,8 +1407,19 @@ msgstr[2] "жетонов материалов"
 
 #. ~ Description for {'str': 'material token', 'str_pl': 'material tokens'}
 #: items.json
-msgid "A very tiny disc-shaped blue wafer. It seems to shift in your grasp, feeling one moment like a grain of sand, then a sharp metal fragment, then a wooden splinter. These miniature tokens are rewarded for surviving a raid, and can be crafted on your island for a large supply of common resources by using infinity nodes as a catalyst."
-msgstr "Крошечный синий диск, тонкий, словно пластинка. В ваших руках он будто постоянно меняется: то ощущается песчинкой, то острым металлическим осколком, то деревянной щепкой. Эти миниатюрные жетоны выдаются за успешное возвращение из вылазки. На острове их можно использовать для изготовления большого количества обычных ресурсов, применяя бесконечные источники в качестве катализаторов."
+msgid ""
+"A very tiny disc-shaped blue wafer. It seems to shift in your grasp, feeling"
+" one moment like a grain of sand, then a sharp metal fragment, then a wooden"
+" splinter. These miniature tokens are rewarded for surviving a raid, and can"
+" be crafted on your island for a large supply of common resources by using "
+"infinity nodes as a catalyst."
+msgstr ""
+"Крошечный синий диск, тонкий, словно пластинка. В ваших руках он будто "
+"постоянно меняется: то ощущается песчинкой, то острым металлическим "
+"осколком, то деревянной щепкой. Эти миниатюрные жетоны выдаются за успешное "
+"возвращение из вылазки. На острове их можно использовать для изготовления "
+"большого количества обычных ресурсов, применяя бесконечные источники в "
+"качестве катализаторов."
 
 #: items.json
 msgid "warped bag"
@@ -1274,8 +1443,20 @@ msgstr[2] "искажённых грузовых упряжей"
 #. ~ Description for {'str': "warped hauler's harness", 'str_pl': "warped
 #. hauler's harnesses"}
 #: items.json
-msgid "A looped pair of shimmering blue-black straps that can be worn over the shoulders like a harness. They can snugly fit a single item of nearly any size in comfort, and any burdens carried here feel twice as light. Ideal for squeezing one more bulky item home through the exit when your hands are already full, or even some container packed full of other items! Just beware you don't break your back doing it."
-msgstr "Две соединённые петлями лямки, переливающиеся сине-чёрным светом. Их можно надеть на плечи, словно упряжь. Они позволяют удобно и надёжно закрепить один предмет практически любого размера, причём его вес будет ощущаться вдвое меньше. Идеально подходит, чтобы протащить через портал возвращения ещё одну громоздкую вещь, когда руки уже заняты. Можно даже прихватить целый контейнер, набитый другими предметами! Только смотрите, не надорвитесь."
+msgid ""
+"A looped pair of shimmering blue-black straps that can be worn over the "
+"shoulders like a harness. They can snugly fit a single item of nearly any "
+"size in comfort, and any burdens carried here feel twice as light. Ideal for"
+" squeezing one more bulky item home through the exit when your hands are "
+"already full, or even some container packed full of other items! Just beware"
+" you don't break your back doing it."
+msgstr ""
+"Две соединённые петлями лямки, переливающиеся сине-чёрным светом. Их можно "
+"надеть на плечи, словно упряжь. Они позволяют удобно и надёжно закрепить "
+"один предмет практически любого размера, причём его вес будет ощущаться "
+"вдвое меньше. Идеально подходит, чтобы протащить через портал возвращения "
+"ещё одну громоздкую вещь, когда руки уже заняты. Можно даже прихватить целый"
+" контейнер, набитый другими предметами! Только смотрите, не надорвитесь."
 
 #: items.json
 msgid "warped grass seeds"
@@ -1287,8 +1468,15 @@ msgstr[2] "искажённые семена травы"
 #. ~ Description for {'str': 'warped grass seeds', 'str_pl': 'warped grass
 #. seeds'}
 #: items.json
-msgid "While these are certainly imbued with warp, they don't seem to have any supernatural powers beyond just growing quickly. A nice option if you want to re-plant grass on your island, for decoration's sake."
-msgstr "Хотя эти семена определённо пропитаны энергией искажения, никаких сверхъестественных свойств, кроме быстрого роста, у них, похоже, нет. Отличный вариант, если вы хотите заново засеять свой остров травой ради красоты."
+msgid ""
+"While these are certainly imbued with warp, they don't seem to have any "
+"supernatural powers beyond just growing quickly. A nice option if you want "
+"to re-plant grass on your island, for decoration's sake."
+msgstr ""
+"Хотя эти семена определённо пропитаны энергией искажения, никаких "
+"сверхъестественных свойств, кроме быстрого роста, у них, похоже, нет. "
+"Отличный вариант, если вы хотите заново засеять свой остров травой ради "
+"красоты."
 
 #: items.json
 msgid "vortex token"
@@ -1299,8 +1487,16 @@ msgstr[2] "жетонов вихря"
 
 #. ~ Description for {'str': 'vortex token', 'str_pl': 'vortex tokens'}
 #: items.json
-msgid "This irregular purplish lump seems to slowly pull in air even while you hold it in your hand. If you have one with you when you activate the return obelisk and the obelisk is correctly configured, it will drag the entire contents of the room with you back up to your island."
-msgstr "Этот бесформенный фиолетовый комок словно медленно втягивает в себя воздух, даже когда вы держите его в руке. Если при активации обелиска возвращения у вас будет такой жетон, а сам обелиск будет правильно настроен, вихрь перенесёт вместе с вами на остров всё содержимое помещения."
+msgid ""
+"This irregular purplish lump seems to slowly pull in air even while you hold"
+" it in your hand. If you have one with you when you activate the return "
+"obelisk and the obelisk is correctly configured, it will drag the entire "
+"contents of the room with you back up to your island."
+msgstr ""
+"Этот бесформенный фиолетовый комок словно медленно втягивает в себя воздух, "
+"даже когда вы держите его в руке. Если при активации обелиска возвращения у "
+"вас будет такой жетон, а сам обелиск будет правильно настроен, вихрь "
+"перенесёт вместе с вами на остров всё содержимое помещения."
 
 #: items.json
 msgid "warped animal carrier"
@@ -1311,8 +1507,20 @@ msgstr[2] "искажённых переносок для животных"
 
 #. ~ Description for {'str': 'warped animal carrier'}
 #: items.json
-msgid "A hand-sized cage with a shimmering portal at its aperture. Despite being shaped more like a cat carrier, the power of warp enables it to capture creatures far bigger than you. This may be your best bet for bringing animals home to your island sanctuary. Activate to capture an adjacent animal, or to release a carried animal."
-msgstr "Устройство размером с ладонь, напоминающее небольшую клетку, в отверстии которой мерцает портал. Хотя по форме оно больше похоже на переноску для кошек, сила искажения позволяет помещать внутрь существ, которые намного крупнее вас. Пожалуй, это один из лучших способов доставить животных домой, на свой остров-убежище. Активируйте переноску рядом с животным, чтобы поймать его, или используйте её повторно, чтобы выпустить пойманное животное."
+msgid ""
+"A hand-sized cage with a shimmering portal at its aperture. Despite being "
+"shaped more like a cat carrier, the power of warp enables it to capture "
+"creatures far bigger than you. This may be your best bet for bringing "
+"animals home to your island sanctuary. Activate to capture an adjacent "
+"animal, or to release a carried animal."
+msgstr ""
+"Устройство размером с ладонь, напоминающее небольшую клетку, в отверстии "
+"которой мерцает портал. Хотя по форме оно больше похоже на переноску для "
+"кошек, сила искажения позволяет помещать внутрь существ, которые намного "
+"крупнее вас. Пожалуй, это один из лучших способов доставить животных домой, "
+"на свой остров-убежище. Активируйте переноску рядом с животным, чтобы "
+"поймать его, или используйте её повторно, чтобы выпустить пойманное "
+"животное."
 
 #: items.json
 msgid "Autodoc copyplate (inert)"
@@ -1324,8 +1532,18 @@ msgstr[2] "копипластин автодока (неактивны)"
 #. ~ Description for {'str': 'Autodoc copyplate (inert)', 'str_pl': 'Autodoc
 #. copyplates (inert)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the advanced tech found within a modern Autodoc, and can be used to create a working copy at your sanctuary. However, it is inert in its current state and must first be imprinted on a working Autodoc. To do so, find an Autodoc during an expedition and activate this item while standing next to it."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить передовые технологии современного автодока, позволяя создать его действующую копию на вашем острове-убежище. Однако пока пластина неактивна, и сначала на неё необходимо записать схему работающего автодока. Для этого найдите автодок во время экспедиции и активируйте копипластину, стоя рядом с ним."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the advanced "
+"tech found within a modern Autodoc, and can be used to create a working copy"
+" at your sanctuary. However, it is inert in its current state and must first"
+" be imprinted on a working Autodoc. To do so, find an Autodoc during an "
+"expedition and activate this item while standing next to it."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить передовые "
+"технологии современного автодока, позволяя создать его действующую копию на "
+"вашем острове-убежище. Однако пока пластина неактивна, и сначала на неё "
+"необходимо записать схему работающего автодока. Для этого найдите автодок во"
+" время экспедиции и активируйте копипластину, стоя рядом с ним."
 
 #: items.json
 msgid "Autodoc copyplate (activated)"
@@ -1337,8 +1555,19 @@ msgstr[2] "копипластин автодока (активированы)"
 #. ~ Description for {'str': 'Autodoc copyplate (activated)', 'str_pl':
 #. 'Autodoc copyplates (activated)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the advanced tech found within a modern Autodoc, and can be used to create a working copy at your sanctuary. It has been successfully activated and can be used as the catalyst to create a new Autodoc at a location of your choosing using the construction menu. Requires an adjacent Autodoc Couch to function."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить передовые технологии современного автодока, позволяя создать его действующую копию на вашем острове-убежище. Пластина успешно активирована и теперь может служить катализатором для строительства нового автодока в выбранном вами месте через меню строительства. Для работы автодока рядом с ним необходимо установить кушетку."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the advanced "
+"tech found within a modern Autodoc, and can be used to create a working copy"
+" at your sanctuary. It has been successfully activated and can be used as "
+"the catalyst to create a new Autodoc at a location of your choosing using "
+"the construction menu. Requires an adjacent Autodoc Couch to function."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить передовые "
+"технологии современного автодока, позволяя создать его действующую копию на "
+"вашем острове-убежище. Пластина успешно активирована и теперь может служить "
+"катализатором для строительства нового автодока в выбранном вами месте через"
+" меню строительства. Для работы автодока рядом с ним необходимо установить "
+"кушетку."
 
 #: items.json
 msgid "Autodoc Couch copyplate (inert)"
@@ -1350,8 +1579,17 @@ msgstr[2] "копипластин кушетки автодока (неакти�
 #. ~ Description for {'str': 'Autodoc Couch copyplate (inert)', 'str_pl':
 #. 'Autodoc Couch copyplates (inert)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the patient interface couch used with an Autodoc. It is inert and must first be imprinted on a working Autodoc Couch. Find one during an expedition and activate this item while standing next to it."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить кушетку для пациента, используемую вместе с автодоком. Пока пластина неактивна, и сначала на неё необходимо записать схему действующей кушетки автодока. Найдите такую кушетку во время экспедиции и активируйте копипластину, стоя рядом с ней."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the patient "
+"interface couch used with an Autodoc. It is inert and must first be "
+"imprinted on a working Autodoc Couch. Find one during an expedition and "
+"activate this item while standing next to it."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить кушетку "
+"для пациента, используемую вместе с автодоком. Пока пластина неактивна, и "
+"сначала на неё необходимо записать схему действующей кушетки автодока. "
+"Найдите такую кушетку во время экспедиции и активируйте копипластину, стоя "
+"рядом с ней."
 
 #: items.json
 msgid "Autodoc Couch copyplate (activated)"
@@ -1363,8 +1601,16 @@ msgstr[2] "копипластин кушетки автодока (активи�
 #. ~ Description for {'str': 'Autodoc Couch copyplate (activated)', 'str_pl':
 #. 'Autodoc Couch copyplates (activated)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the patient interface couch used with an Autodoc. It has been activated and can be used to create a new Autodoc Couch via the construction menu. Must be placed adjacent to an Autodoc to function."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить кушетку для пациента, используемую вместе с автодоком. Она уже активирована и позволяет создать новую кушетку автодока через меню строительства. Для работы кушетку необходимо установить вплотную к автодоку."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the patient "
+"interface couch used with an Autodoc. It has been activated and can be used "
+"to create a new Autodoc Couch via the construction menu. Must be placed "
+"adjacent to an Autodoc to function."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить кушетку "
+"для пациента, используемую вместе с автодоком. Она уже активирована и "
+"позволяет создать новую кушетку автодока через меню строительства. Для "
+"работы кушетку необходимо установить вплотную к автодоку."
 
 #: items.json
 msgid "Nanofabricator copyplate (inert)"
@@ -1376,8 +1622,16 @@ msgstr[2] "копипластин нанофабрикатора (неактив
 #. ~ Description for {'str': 'Nanofabricator copyplate (inert)', 'str_pl':
 #. 'Nanofabricator copyplates (inert)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the main unit of a Nanofabricator. It is inert and must first be imprinted on a working Nanofabricator body. Find one during an expedition and activate this item while standing next to it."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить основной блок нанофабрикатора. Пока пластина неактивна, и сначала на неё необходимо записать схему действующего нанофабрикатора. Найдите такой во время экспедиции и активируйте копипластину, стоя рядом с его корпусом."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a Nanofabricator. It is inert and must first be imprinted on a working "
+"Nanofabricator body. Find one during an expedition and activate this item "
+"while standing next to it."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить основной "
+"блок нанофабрикатора. Пока пластина неактивна, и сначала на неё необходимо "
+"записать схему действующего нанофабрикатора. Найдите такой во время "
+"экспедиции и активируйте копипластину, стоя рядом с его корпусом."
 
 #: items.json
 msgid "Nanofabricator copyplate (activated)"
@@ -1389,8 +1643,16 @@ msgstr[2] "копипластин нанофабрикатора (активир
 #. ~ Description for {'str': 'Nanofabricator copyplate (activated)', 'str_pl':
 #. 'Nanofabricator copyplates (activated)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the main unit of a Nanofabricator. It has been activated and can be used to create a new Nanofabricator body via the construction menu. Must be placed adjacent to a Nanofabricator Control Panel to function."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить основной блок нанофабрикатора. Она уже активирована и позволяет создать новый корпус нанофабрикатора через меню строительства. Для работы корпус необходимо установить вплотную к консоли нанофабрикатора."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a Nanofabricator. It has been activated and can be used to create a new "
+"Nanofabricator body via the construction menu. Must be placed adjacent to a "
+"Nanofabricator Control Panel to function."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить основной "
+"блок нанофабрикатора. Она уже активирована и позволяет создать новый корпус "
+"нанофабрикатора через меню строительства. Для работы корпус необходимо "
+"установить вплотную к консоли нанофабрикатора."
 
 #: items.json
 msgid "Nanofabricator Control Panel copyplate (inert)"
@@ -1402,8 +1664,16 @@ msgstr[2] "копипластин консоли нанофабрикатора 
 #. ~ Description for {'str': 'Nanofabricator Control Panel copyplate (inert)',
 #. 'str_pl': 'Nanofabricator Control Panel copyplates (inert)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the control panel of a Nanofabricator. It is inert and must first be imprinted on a working Nanofabricator control panel. Find one during an expedition and activate this item while standing next to it."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить консоль нанофабрикатора. Пока пластина неактивна, и сначала на неё необходимо записать схему действующей консоли. Найдите такую консоль во время экспедиции и активируйте копипластину, стоя рядом с ней."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a Nanofabricator. It is inert and must first be imprinted on a "
+"working Nanofabricator control panel. Find one during an expedition and "
+"activate this item while standing next to it."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить консоль "
+"нанофабрикатора. Пока пластина неактивна, и сначала на неё необходимо "
+"записать схему действующей консоли. Найдите такую консоль во время "
+"экспедиции и активируйте копипластину, стоя рядом с ней."
 
 #: items.json
 msgid "Nanofabricator Control Panel copyplate (activated)"
@@ -1416,8 +1686,16 @@ msgstr[2] "копипластин консоли нанофабрикатора 
 #. (activated)', 'str_pl': 'Nanofabricator Control Panel copyplates
 #. (activated)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the control panel of a Nanofabricator. It has been activated and can be used to create a new Nanofabricator control panel via the construction menu. Must be placed adjacent to a Nanofabricator body to function."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить консоль нанофабрикатора. Она уже активирована и позволяет создать новую консоль через меню строительства. Для работы консоль необходимо установить вплотную к корпусу нанофабрикатора."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a Nanofabricator. It has been activated and can be used to create a"
+" new Nanofabricator control panel via the construction menu. Must be placed "
+"adjacent to a Nanofabricator body to function."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить консоль "
+"нанофабрикатора. Она уже активирована и позволяет создать новую консоль "
+"через меню строительства. Для работы консоль необходимо установить вплотную "
+"к корпусу нанофабрикатора."
 
 #: items.json
 msgid "CVD Machine copyplate (inert)"
@@ -1429,8 +1707,16 @@ msgstr[2] "копипластин химического парофазного 
 #. ~ Description for {'str': 'CVD Machine copyplate (inert)', 'str_pl': 'CVD
 #. Machine copyplates (inert)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the main unit of a CVD Machine. It is inert and must first be imprinted on a working CVD Machine body. Find one during an expedition and activate this item while standing next to it."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить основной блок химического парофазного осадителя. Пока она неактивна, и сначала на неё необходимо записать схему действующего осадителя. Найдите такой во время экспедиции и активируйте копипластину, стоя рядом с его корпусом."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a CVD Machine. It is inert and must first be imprinted on a working CVD "
+"Machine body. Find one during an expedition and activate this item while "
+"standing next to it."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить основной "
+"блок химического парофазного осадителя. Пока она неактивна, и сначала на неё"
+" необходимо записать схему действующего осадителя. Найдите такой во время "
+"экспедиции и активируйте копипластину, стоя рядом с его корпусом."
 
 #: items.json
 msgid "CVD Machine copyplate (activated)"
@@ -1442,8 +1728,16 @@ msgstr[2] "копипластин химического парофазного 
 #. ~ Description for {'str': 'CVD Machine copyplate (activated)', 'str_pl':
 #. 'CVD Machine copyplates (activated)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the main unit of a CVD Machine. It has been activated and can be used to create a new CVD Machine body via the construction menu. Must be placed adjacent to a CVD Control Panel to function."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить основной блок химического парофазного осадителя. Она уже активирована и позволяет создать новый корпус осадителя через меню строительства. Для работы корпус необходимо установить вплотную к консоли химического парофазного осадителя."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the main unit of"
+" a CVD Machine. It has been activated and can be used to create a new CVD "
+"Machine body via the construction menu. Must be placed adjacent to a CVD "
+"Control Panel to function."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить основной "
+"блок химического парофазного осадителя. Она уже активирована и позволяет "
+"создать новый корпус осадителя через меню строительства. Для работы корпус "
+"необходимо установить вплотную к консоли химического парофазного осадителя."
 
 #: items.json
 msgid "CVD Control Panel copyplate (inert)"
@@ -1455,21 +1749,40 @@ msgstr[2] "копипластин консоли химического паро
 #. ~ Description for {'str': 'CVD Control Panel copyplate (inert)', 'str_pl':
 #. 'CVD Control Panel copyplates (inert)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the control panel of a CVD Machine. It is inert and must first be imprinted on a working CVD control panel. Find one during an expedition and activate this item while standing next to it."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить консоль химического парофазного осадителя. Пока она неактивна, и сначала на неё необходимо записать схему действующей консоли. Найдите такую консоль во время экспедиции и активируйте копипластину, стоя рядом с ней."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a CVD Machine. It is inert and must first be imprinted on a working"
+" CVD control panel. Find one during an expedition and activate this item "
+"while standing next to it."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить консоль "
+"химического парофазного осадителя. Пока она неактивна, и сначала на неё "
+"необходимо записать схему действующей консоли. Найдите такую консоль во "
+"время экспедиции и активируйте копипластину, стоя рядом с ней."
 
 #: items.json
 msgid "CVD Control Panel copyplate (activated)"
 msgid_plural "CVD Control Panel copyplates (activated)"
-msgstr[0] "копипластина консоли химического парофазного осадителя (активирована)"
-msgstr[1] "копипластины консоли химического парофазного осадителя (активированы)"
-msgstr[2] "копипластин консоли химического парофазного осадителя (активированы)"
+msgstr[0] ""
+"копипластина консоли химического парофазного осадителя (активирована)"
+msgstr[1] ""
+"копипластины консоли химического парофазного осадителя (активированы)"
+msgstr[2] ""
+"копипластин консоли химического парофазного осадителя (активированы)"
 
 #. ~ Description for {'str': 'CVD Control Panel copyplate (activated)',
 #. 'str_pl': 'CVD Control Panel copyplates (activated)'}
 #: items.json
-msgid "This strange obsidian-colored plate is capable of mimicking the control panel of a CVD Machine. It has been activated and can be used to create a new CVD control panel via the construction menu. Must be placed adjacent to a CVD Machine body to function."
-msgstr "Эта странная пластина обсидианового цвета способна воспроизводить консоль химического парофазного осадителя. Она уже активирована и позволяет создать новую консоль через меню строительства. Для работы консоль необходимо установить вплотную к корпусу химического парофазного осадителя."
+msgid ""
+"This strange obsidian-colored plate is capable of mimicking the control "
+"panel of a CVD Machine. It has been activated and can be used to create a "
+"new CVD control panel via the construction menu. Must be placed adjacent to "
+"a CVD Machine body to function."
+msgstr ""
+"Эта странная пластина обсидианового цвета способна воспроизводить консоль "
+"химического парофазного осадителя. Она уже активирована и позволяет создать "
+"новую консоль через меню строительства. Для работы консоль необходимо "
+"установить вплотную к корпусу химического парофазного осадителя."
 
 #: items.json
 msgid "Labs Catalyst"
@@ -1480,8 +1793,14 @@ msgstr[2] "катализаторов лаборатории"
 
 #. ~ Description for {'str': 'Labs Catalyst'}
 #: items.json
-msgid "A bit of warp power, a magnetic stripe keycard from a dangerous place, and a little hope, blended well. This item is required to begin a Labs expedition, and is consumed when leaving."
-msgstr "Немного энергии искажения, магнитная ключ-карта из какого-нибудь опасного места и капелька надежды. Всё тщательно перемешать. Этот предмет необходим для начала экспедиции в лабораторию и расходуется при отправлении."
+msgid ""
+"A bit of warp power, a magnetic stripe keycard from a dangerous place, and a"
+" little hope, blended well. This item is required to begin a Labs "
+"expedition, and is consumed when leaving."
+msgstr ""
+"Немного энергии искажения, магнитная ключ-карта из какого-нибудь опасного "
+"места и капелька надежды. Всё тщательно перемешать. Этот предмет необходим "
+"для начала экспедиции в лабораторию и расходуется при отправлении."
 
 #: items.json
 msgid "Heartseed"
@@ -1492,8 +1811,14 @@ msgstr[2] "семян сердца острова"
 
 #. ~ Description for {'str': 'Heartseed'}
 #: items.json
-msgid "A whorl of black stone that feels impossibly heavy for its size. Activate this on your island to place the Heart of the Island, the catalyst of future upgrades."
-msgstr "Закрученный спиралью кусочек чёрного камня, невероятно тяжёлый для своих размеров. Активируйте его на своём острове, чтобы установить сердце острова, которое позволит вам получать дальнейшие улучшения."
+msgid ""
+"A whorl of black stone that feels impossibly heavy for its size. Activate "
+"this on your island to place the Heart of the Island, the catalyst of future"
+" upgrades."
+msgstr ""
+"Закрученный спиралью кусочек чёрного камня, невероятно тяжёлый для своих "
+"размеров. Активируйте его на своём острове, чтобы установить сердце острова,"
+" которое позволит вам получать дальнейшие улучшения."
 
 #: items.json
 msgid "infinity tree sapling"
@@ -1504,8 +1829,16 @@ msgstr[2] "саженцев бесконечного дерева"
 
 #. ~ Description for {'str': 'infinity tree sapling'}
 #: items.json
-msgid "A fragile little wisp of a sapling. Its leaves shake and quiver, shimmering with strange energies. Activate this on your island to place an infinity tree, which can be used as a catalyst to turn material tokens into wooden resources."
-msgstr "Хрупкий, почти невесомый росток. Его листья дрожат и трепещут, переливаясь от странной энергии. Активируйте его на своём острове, чтобы вырастить бесконечное дерево. Оно послужит катализатором, позволяющим превращать жетоны материалов в древесные ресурсы."
+msgid ""
+"A fragile little wisp of a sapling. Its leaves shake and quiver, shimmering "
+"with strange energies. Activate this on your island to place an infinity "
+"tree, which can be used as a catalyst to turn material tokens into wooden "
+"resources."
+msgstr ""
+"Хрупкий, почти невесомый росток. Его листья дрожат и трепещут, переливаясь "
+"от странной энергии. Активируйте его на своём острове, чтобы вырастить "
+"бесконечное дерево. Оно послужит катализатором, позволяющим превращать "
+"жетоны материалов в древесные ресурсы."
 
 #: items.json
 msgid "infinity stone source"
@@ -1516,8 +1849,17 @@ msgstr[2] "источников бесконечного камня"
 
 #. ~ Description for {'str': 'infinity stone source'}
 #: items.json
-msgid "A crackling little cluster of pebbles that spark as they knock together, tumbling about from forces unseen. Activate this on your island to place an infinity stone, which can be used as a catalyst to turn material tokens into stony and earthen resources."
-msgstr "Небольшая кучка камешков, которые искрят и потрескивают, сталкиваясь друг с другом. Под действием невидимых сил они непрерывно перекатываются и кружатся. Активируйте этот предмет на своём острове, чтобы создать бесконечный камень. Он послужит катализатором, позволяющим превращать жетоны материалов в каменные и земляные ресурсы."
+msgid ""
+"A crackling little cluster of pebbles that spark as they knock together, "
+"tumbling about from forces unseen. Activate this on your island to place an "
+"infinity stone, which can be used as a catalyst to turn material tokens into"
+" stony and earthen resources."
+msgstr ""
+"Небольшая кучка камешков, которые искрят и потрескивают, сталкиваясь друг с "
+"другом. Под действием невидимых сил они непрерывно перекатываются и "
+"кружатся. Активируйте этот предмет на своём острове, чтобы создать "
+"бесконечный камень. Он послужит катализатором, позволяющим превращать жетоны"
+" материалов в каменные и земляные ресурсы."
 
 #: items.json
 msgid "infinity ore crucible"
@@ -1528,8 +1870,18 @@ msgstr[2] "тиглей бесконечной руды"
 
 #. ~ Description for {'str': 'infinity ore crucible'}
 #: items.json
-msgid "A miniature tangle of metal that resembles a dust bunny made of barbed wire. It twists in upon itself endlessly, folding and unfolding in ways that don't seem possible. Activate this on your island to place an infinity ore, which can be used as a catalyst to turn material tokens into metal resources."
-msgstr "Крошечный клубок металла, похожий на комок пыли из колючей проволоки. Он бесконечно скручивается, сворачивается и разворачивается, принимая, казалось бы, невозможные формы. Активируйте этот предмет на своём острове, чтобы создать источник бесконечной руды. Он послужит катализатором, позволяющим превращать жетоны материалов в металлические ресурсы."
+msgid ""
+"A miniature tangle of metal that resembles a dust bunny made of barbed wire."
+" It twists in upon itself endlessly, folding and unfolding in ways that "
+"don't seem possible. Activate this on your island to place an infinity ore, "
+"which can be used as a catalyst to turn material tokens into metal "
+"resources."
+msgstr ""
+"Крошечный клубок металла, похожий на комок пыли из колючей проволоки. Он "
+"бесконечно скручивается, сворачивается и разворачивается, принимая, казалось"
+" бы, невозможные формы. Активируйте этот предмет на своём острове, чтобы "
+"создать источник бесконечной руды. Он послужит катализатором, позволяющим "
+"превращать жетоны материалов в металлические ресурсы."
 
 #: items.json
 msgid "nearby infinity tree"
@@ -1544,7 +1896,9 @@ msgstr[2] "ближайших бесконечных деревьев"
 #. ~ Description for {'str': 'Heart of the Island'}
 #: items.json
 msgid "This is a crafting_pseudo_item. If you have it, something is wrong."
-msgstr "Это псевдопредмет для изготовления. Если он у вас есть, значит, что-то пошло не так."
+msgstr ""
+"Это псевдопредмет для изготовления. Если он у вас есть, значит, что-то пошло"
+" не так."
 
 #: items.json
 msgid "nearby infinity stone"
@@ -1569,8 +1923,12 @@ msgstr[2] "доказательств решимости"
 
 #. ~ Description for {'str': 'Proof of Determination'}
 #: items.json
-msgid "A metaphysical artifact proving your determination to survive. Activate near the Heart of the Island to advance your rank."
-msgstr "Метафизический артефакт, подтверждающий вашу решимость выжить. Активируйте его рядом с сердцем острова, чтобы повысить свой ранг."
+msgid ""
+"A metaphysical artifact proving your determination to survive. Activate near"
+" the Heart of the Island to advance your rank."
+msgstr ""
+"Метафизический артефакт, подтверждающий вашу решимость выжить. Активируйте "
+"его рядом с сердцем острова, чтобы повысить свой ранг."
 
 #: items.json
 msgid "Proof of Mastery"
@@ -1581,13 +1939,24 @@ msgstr[2] "доказательств мастерства"
 
 #. ~ Description for {'str': 'Proof of Mastery'}
 #: items.json
-msgid "A metaphysical artifact proving your mastery of survival. Activate near the Heart of the Island to advance your rank."
-msgstr "Метафизический артефакт, подтверждающий ваше мастерство выживания. Активируйте его рядом с сердцем острова, чтобы повысить свой ранг."
+msgid ""
+"A metaphysical artifact proving your mastery of survival. Activate near the "
+"Heart of the Island to advance your rank."
+msgstr ""
+"Метафизический артефакт, подтверждающий ваше мастерство выживания. "
+"Активируйте его рядом с сердцем острова, чтобы повысить свой ранг."
 
 #. ~ Description for {'str': 'Warped Tincture'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Stability I: +1 bonus grace pulse (9 total)."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Устойчивость I»: +1 дополнительный импульс безопасного периода (всего 9)."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Stability"
+" I: +1 bonus grace pulse (9 total)."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Устойчивость I»: +1 дополнительный импульс безопасного "
+"периода (всего 9)."
 
 #: items.json
 msgid "Surreal Shield"
@@ -1598,8 +1967,15 @@ msgstr[2] "сюрреалистических щитов"
 
 #. ~ Description for {'str': 'Surreal Shield'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Stability II: +2 total bonus grace pulses (10 total)."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Устойчивость II»: суммарный бонус — +2 импульса безопасного периода (всего 10)."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Stability"
+" II: +2 total bonus grace pulses (10 total)."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Устойчивость II»: суммарный бонус — +2 импульса безопасного "
+"периода (всего 10)."
 
 #: items.json
 msgid "Warpstream Plating"
@@ -1610,28 +1986,63 @@ msgstr[2] "обшивок потока искажения"
 
 #. ~ Description for {'str': 'Warpstream Plating'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Stability III: +3 total bonus grace pulses (11 total)."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Устойчивость III»: суммарный бонус — +3 импульса безопасного периода (всего 11)."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Stability"
+" III: +3 total bonus grace pulses (11 total)."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Устойчивость III»: суммарный бонус — +3 импульса безопасного"
+" периода (всего 11)."
 
 #. ~ Description for {'str': 'Scouting Lens'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Scouting I: Reveals a 3x3 area around your landing zone."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Разведку I». Это улучшение открывает участок карты размером 3×3 клетки вокруг места высадки."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"I: Reveals a 3x3 area around your landing zone."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Разведку I». Это улучшение открывает участок карты размером "
+"3×3 клетки вокруг места высадки."
 
 #. ~ Description for {'str': 'Scouting Scope'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Scouting II: Reveals a 5x5 area around your landing zone."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Разведку II». Это улучшение открывает участок карты размером 5×5 клеток вокруг места высадки."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"II: Reveals a 5x5 area around your landing zone."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Разведку II». Это улучшение открывает участок карты размером"
+" 5×5 клеток вокруг места высадки."
 
 #. ~ Description for {'str': 'Escape Charm'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Multiple Exits: Two return obelisks will spawn per expedition."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Несколько выходов»: во время каждой экспедиции будут появляться два обелиска возвращения."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Multiple "
+"Exits: Two return obelisks will spawn per expedition."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Несколько выходов»: во время каждой экспедиции будут "
+"появляться два обелиска возвращения."
 
 #. ~ Description for {'str': 'Warped Hourglass'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Large Expeditions: Double grace period and 125 token reward."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать большие экспедиции: удвоенный безопасный период и награда в 125 жетонов."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Large "
+"Expeditions: Double grace period and 125 token reward."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать большие экспедиции: удвоенный безопасный период и награда в "
+"125 жетонов."
 
 #: items.json
 msgid "Watch of Flowing Time"
@@ -1642,8 +2053,15 @@ msgstr[2] "часов текучего времени"
 
 #. ~ Description for {'str': 'Watch of Flowing Time'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Extended Expeditions: Triple grace period and 200 token reward."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать продлённые экспедиции: утроенный безопасный период и награда в 200 жетонов."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Extended "
+"Expeditions: Triple grace period and 200 token reward."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать продлённые экспедиции: утроенный безопасный период и награда "
+"в 200 жетонов."
 
 #: items.json
 msgid "Basement Locator"
@@ -1654,8 +2072,14 @@ msgstr[2] "локаторов подвалов"
 
 #. ~ Description for {'str': 'Basement Locator'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Basement Starts: Begin expeditions in underground basements."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать возможность начинать экспедиции в подвалах."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Basement "
+"Starts: Begin expeditions in underground basements."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать возможность начинать экспедиции в подвалах."
 
 #: items.json
 msgid "Rooftop Locator"
@@ -1666,8 +2090,14 @@ msgstr[2] "локаторов крыш"
 
 #. ~ Description for {'str': 'Rooftop Locator'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Rooftop Starts: Begin expeditions on building rooftops."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать возможность начинать экспедиции на крышах зданий."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Rooftop "
+"Starts: Begin expeditions on building rooftops."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать возможность начинать экспедиции на крышах зданий."
 
 #: items.json
 msgid "Laboratory Locator"
@@ -1678,20 +2108,37 @@ msgstr[2] "локаторов лабораторий"
 
 #. ~ Description for {'str': 'Laboratory Locator'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Lab Starts: Begin expeditions in underground science labs. Requires a Labs Catalyst each time."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать возможность начинать экспедиции в подземных научных лабораториях. Для каждой такой экспедиции потребуется катализатор лаборатории."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Lab "
+"Starts: Begin expeditions in underground science labs. Requires a Labs "
+"Catalyst each time."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать возможность начинать экспедиции в подземных научных "
+"лабораториях. Для каждой такой экспедиции потребуется катализатор "
+"лаборатории."
 
 #: items.json
 msgid "Higher Viewpoint"
 msgid_plural "Higher Viewpoints"
-msgstr[0] "возвышенная точка обзора"
-msgstr[1] "возвышенные точки обзора"
-msgstr[2] "возвышенных точек обзора"
+msgstr[0] "высшая точка обзора"
+msgstr[1] "высших точки обзора"
+msgstr[2] "высших точек обзора"
 
 #. ~ Description for {'str': 'Higher Viewpoint'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Scouting Clairvoyance I: See everything near you for 20 seconds when beginning an expedition."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Ясновидение разведчика I»: в течение первых 20 секунд экспедиции вы будете видеть всё вокруг себя."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"Clairvoyance I: See everything near you for 20 seconds when beginning an "
+"expedition."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Ясновидение разведчика I»: в течение первых 20 секунд "
+"экспедиции вы будете видеть всё вокруг себя."
 
 #: items.json
 msgid "All-Seeing Effigy"
@@ -1702,8 +2149,16 @@ msgstr[2] "всевидящих идолов"
 
 #. ~ Description for {'str_sp': 'All-Seeing Effigy'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Scouting Clairvoyance II: See everything near you for 60 seconds when beginning an expedition."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать «Ясновидение разведчика II»: в течение первых 60 секунд экспедиции вы будете видеть всё вокруг себя."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Scouting "
+"Clairvoyance II: See everything near you for 60 seconds when beginning an "
+"expedition."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать «Ясновидение разведчика II»: в течение первых 60 секунд "
+"экспедиции вы будете видеть всё вокруг себя."
 
 #: items.json
 msgid "Entry-level Contract"
@@ -1714,8 +2169,17 @@ msgstr[2] "контрактов новичка"
 
 #. ~ Description for {'str': 'Entry-level Contract'}
 #: items.json
-msgid "A contract signed in ink, showing the holder's will to fight. Activate near the Heart of the Island to unlock Expedition Missions: Every expedition now offers 1 randomly assigned bonus mission, which rewards warp shards on completion."
-msgstr "Подписанный чернилами контракт, свидетельствующий о готовности его владельца сражаться. Активируйте его рядом с сердцем острова, чтобы разблокировать задания экспедиций. Теперь в каждой экспедиции вам будет доступно одно случайное дополнительное задание, за выполнение которого полагаются осколки искажения."
+msgid ""
+"A contract signed in ink, showing the holder's will to fight. Activate near "
+"the Heart of the Island to unlock Expedition Missions: Every expedition now "
+"offers 1 randomly assigned bonus mission, which rewards warp shards on "
+"completion."
+msgstr ""
+"Подписанный чернилами контракт, свидетельствующий о готовности его владельца"
+" сражаться. Активируйте его рядом с сердцем острова, чтобы разблокировать "
+"задания экспедиций. Теперь в каждой экспедиции вам будет доступно одно "
+"случайное дополнительное задание, за выполнение которого полагаются осколки "
+"искажения."
 
 #: items.json
 msgid "Survivor's Contract"
@@ -1726,8 +2190,14 @@ msgstr[2] "контрактов выживальщика"
 
 #. ~ Description for {'str': "Survivor's Contract"}
 #: items.json
-msgid "A contract signed in zombie blood, proving the holder to be a true survivor. Activate near the Heart of the Island to unlock Two Missions: Every expedition now offers 2 randomly assigned bonus missions."
-msgstr "Контракт, подписанный кровью зомби и доказывающий, что его владелец — настоящий выживальщик. Активируйте его рядом с сердцем острова — теперь в каждой экспедиции вам будут доступны два случайных дополнительных задания."
+msgid ""
+"A contract signed in zombie blood, proving the holder to be a true survivor."
+" Activate near the Heart of the Island to unlock Two Missions: Every "
+"expedition now offers 2 randomly assigned bonus missions."
+msgstr ""
+"Контракт, подписанный кровью зомби и доказывающий, что его владелец — "
+"настоящий выживальщик. Активируйте его рядом с сердцем острова — теперь в "
+"каждой экспедиции вам будут доступны 2 случайных дополнительных задания."
 
 #: items.json
 msgid "Mercenary's Contract"
@@ -1738,8 +2208,14 @@ msgstr[2] "контрактов наёмника"
 
 #. ~ Description for {'str': "Mercenary's Contract"}
 #: items.json
-msgid "A contract lined with gunpowder and gold. Whoever signed this must be a seasoned operator. Activate near the Heart of the Island to unlock Three Missions: Every expedition now offers 3 randomly assigned bonus missions."
-msgstr "Контракт, украшенный порохом и золотом. Подпись на нём явно принадлежит опытному бойцу. Активируйте его рядом с сердцем острова — теперь в каждой экспедиции вам будут доступны три случайных дополнительных задания."
+msgid ""
+"A contract lined with gunpowder and gold. Whoever signed this must be a "
+"seasoned operator. Activate near the Heart of the Island to unlock Three "
+"Missions: Every expedition now offers 3 randomly assigned bonus missions."
+msgstr ""
+"Контракт, украшенный порохом и золотом. Подпись на нём явно принадлежит "
+"опытному бойцу. Активируйте его рядом с сердцем острова — теперь в каждой "
+"экспедиции вам будут доступны 3 случайных дополнительных задания."
 
 #: items.json
 msgid "Artisan's Contract"
@@ -1750,8 +2226,15 @@ msgstr[2] "контрактов ремесленника"
 
 #. ~ Description for {'str': "Artisan's Contract"}
 #: items.json
-msgid "A finely-crafted contract, demonstrating that the holder can create as well as destroy. Activate near the Heart of the Island to unlock Four Missions: Every expedition now offers 4 randomly assigned bonus missions."
-msgstr "Искусно изготовленный контракт, свидетельствующий о том, что его владелец умеет не только разрушать, но и созидать. Активируйте его рядом с сердцем острова — теперь в каждой экспедиции вам будут доступны четыре случайных дополнительных задания."
+msgid ""
+"A finely-crafted contract, demonstrating that the holder can create as well "
+"as destroy. Activate near the Heart of the Island to unlock Four Missions: "
+"Every expedition now offers 4 randomly assigned bonus missions."
+msgstr ""
+"Искусно изготовленный контракт, свидетельствующий о том, что его владелец "
+"умеет не только разрушать, но и созидать. Активируйте его рядом с сердцем "
+"острова — теперь в каждой экспедиции вам будут доступны 4 случайных "
+"дополнительных задания."
 
 #: items.json
 msgid "Post-human's Contract"
@@ -1762,8 +2245,15 @@ msgstr[2] "контрактов постчеловека"
 
 #. ~ Description for {'str': "Post-human's Contract"}
 #: items.json
-msgid "A contract built from futuristic materials, proving that the holder is beyond human. Activate near the Heart of the Island to unlock Five Missions: Every expedition now offers 5 randomly assigned bonus missions."
-msgstr "Контракт, изготовленный из футуристических материалов и подтверждающий выход за пределы человеческих возможностей. Активируйте его рядом с сердцем острова — теперь в каждой экспедиции вам будут доступны пять случайных дополнительных заданий."
+msgid ""
+"A contract built from futuristic materials, proving that the holder is "
+"beyond human. Activate near the Heart of the Island to unlock Five Missions:"
+" Every expedition now offers 5 randomly assigned bonus missions."
+msgstr ""
+"Контракт, изготовленный из футуристических материалов и подтверждающий выход"
+" за пределы человеческих возможностей. Активируйте его рядом с сердцем "
+"острова — теперь в каждой экспедиции вам будут доступны 5 случайных "
+"дополнительных заданий."
 
 #: items.json
 msgid "Ordinator's Sigil"
@@ -1774,8 +2264,16 @@ msgstr[2] "печатей ординатора"
 
 #. ~ Description for {'str': "Ordinator's Sigil"}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Harder Missions: More challenging bonus missions with greater rewards become available."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать сложные задания: вам станут доступны более трудные дополнительные задания с повышенными наградами."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Harder "
+"Missions: More challenging bonus missions with greater rewards become "
+"available."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать сложные задания: вам станут доступны более трудные "
+"дополнительные задания с повышенными наградами."
 
 #: items.json
 msgid "Will of the Island"
@@ -1786,8 +2284,16 @@ msgstr[2] "воль острова"
 
 #. ~ Description for {'str': 'Will of the Island'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Hardest Missions: The most dangerous bonus missions with the greatest rewards become available."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать самые сложные задания: вам станут доступны наиболее опасные дополнительные задания с самыми ценными наградами."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Hardest "
+"Missions: The most dangerous bonus missions with the greatest rewards become"
+" available."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать самые сложные задания: вам станут доступны самые опасные "
+"дополнительные задания с самыми ценными наградами."
 
 #: items.json
 msgid "Vengeance of the Island"
@@ -1798,8 +2304,17 @@ msgstr[2] "местей острова"
 
 #. ~ Description for {'str': 'Vengeance of the Island'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Slaughter Missions: A special mission will be assigned during each expedition, rewarding warp shards for killing specific types of enemies."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать задания на истребление: во время каждой экспедиции вы будете получать особое задание, за выполнение которого полагаются осколки искажения. Для этого потребуется уничтожать врагов определённых типов."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Slaughter"
+" Missions: A special mission will be assigned during each expedition, "
+"rewarding warp shards for killing specific types of enemies."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать задания на истребление: во время каждой экспедиции вы будете "
+"получать особое задание, за выполнение которого полагаются осколки "
+"искажения. Для этого потребуется уничтожать врагов определённых типов."
 
 #: items.json
 msgid "Inverted Gravity Bubble"
@@ -1810,8 +2325,16 @@ msgstr[2] "пузырей обратной гравитации"
 
 #. ~ Description for {'str': 'Inverted Gravity Bubble'}
 #: items.json
-msgid "This strange metaphysical artifact will empower the island and unlock a permanent upgrade. Activate near the Heart of the Island to unlock Landing Flight: While under the warpcloak effect on landing, you gain the power of flight for 60 seconds."
-msgstr "Этот странный метафизический артефакт усиливает остров и открывает постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы разблокировать полёт при высадке: в течение 60 секунд после приземления вы сможете летать, пока действует эффект покрова искажения."
+msgid ""
+"This strange metaphysical artifact will empower the island and unlock a "
+"permanent upgrade. Activate near the Heart of the Island to unlock Landing "
+"Flight: While under the warpcloak effect on landing, you gain the power of "
+"flight for 60 seconds."
+msgstr ""
+"Этот странный метафизический артефакт усиливает остров и открывает "
+"постоянное улучшение. Активируйте его рядом с сердцем острова, чтобы "
+"разблокировать полёт при высадке: в течение 60 секунд после приземления вы "
+"сможете летать, пока действует эффект покрова искажения."
 
 #: items.json
 msgid "quickheal pill"
@@ -1822,8 +2345,14 @@ msgstr[2] "таблеток быстрого исцеления"
 
 #. ~ Description for {'str': 'quickheal pill'}
 #: items.json
-msgid "This pseudomagical pill will heal all your damaged parts, but only if consumed while on your sanctuary island. No reason to bring this into the field."
-msgstr "Эта псевдомагическая таблетка исцеляет все повреждённые части тела, но только если принять её на своём острове-убежище. Брать её с собой в экспедицию нет никакого смысла."
+msgid ""
+"This pseudomagical pill will heal all your damaged parts, but only if "
+"consumed while on your sanctuary island. No reason to bring this into the "
+"field."
+msgstr ""
+"Эта псевдомагическая таблетка исцеляет все повреждённые части тела, но "
+"только если принять её на своём острове-убежище. Брать её с собой в "
+"экспедицию нет никакого смысла."
 
 #: items.json
 msgid "earthbound pill"
@@ -1834,8 +2363,15 @@ msgstr[2] "таблеток земного притяжения"
 
 #. ~ Description for {'str': 'earthbound pill'}
 #: items.json
-msgid "This pseudomagical pill extends the amount of time you can stay earthside by 4 pulses, or about 50% of a normal trip. They're precious, but should help buy time for a difficult extract."
-msgstr "Эта псевдомагическая таблетка продлевает время пребывания за пределами острова на 4 импульса — примерно на половину обычной продолжительности экспедиции. Такие таблетки очень ценны, но могут дать вам необходимое время для сложной эвакуации."
+msgid ""
+"This pseudomagical pill extends the amount of time you can stay earthside by"
+" 4 pulses, or about 50% of a normal trip. They're precious, but should help "
+"buy time for a difficult extract."
+msgstr ""
+"Эта псевдомагическая таблетка продлевает время пребывания за пределами "
+"острова на 4 импульса — примерно на половину обычной продолжительности "
+"экспедиции. Такие таблетки очень ценны, но могут дать вам необходимое время "
+"для сложной эвакуации."
 
 #: items.json
 msgid "homeward mote"
@@ -1851,7 +2387,7 @@ msgid ""
 "\n"
 "Taking this rare and valuable artifact with you on an expedition is essentially buying life insurance. If you die with this mote in your inventory, you will instead be restored to full health and brought home WITH all items and equipment carried. But this effect will only last for a single expedition. Even if you extract safely, any and all motes carried on your person when you return home will be DESTROYED."
 msgstr ""
-"На первый взгляд это всего лишь светящийся комочек пыли, но, присмотревшись к этой странной эфирной частице сущности искажения, можно заметить кое-что необычное. От неё тянется тончайшая, извивающаяся, едва различимая нить, мерцающая голубовато-фиолетовым светом. Она уходит высоко в небо и теряется где-то вдали, беспрепятственно проходя сквозь любые преграды.\n"
+"На первый взгляд это всего лишь светящийся комочек пыли, но, присмотревшись к этой странной эфирной частице эссенции искажения, можно заметить кое-что необычное. От неё тянется тончайшая, извивающаяся, едва различимая нить, мерцающая голубовато-фиолетовым светом. Она уходит высоко в небо и теряется где-то вдали, беспрепятственно проходя сквозь любые преграды.\n"
 "\n"
 "Взять этот редкий и ценный артефакт с собой в экспедицию — всё равно что застраховать собственную жизнь. Если вы погибнете, имея эту частицу в инвентаре, она вернёт вас домой, полностью восстановив здоровье и сохранив ВСЕ вещи и снаряжение, которые были при вас. Однако её сила действует лишь в течение одной экспедиции. Даже если вам удастся благополучно вернуться домой, ВСЕ частицы возвращения, которые вы взяли с собой, будут УНИЧТОЖЕНЫ."
 
@@ -1864,8 +2400,14 @@ msgstr[2] "небесных маяков"
 
 #. ~ Description for {'str': 'skyward beacon'}
 #: items.json
-msgid "This smooth purplish sphere seems like it wants to rise right out of your hand. If you activate it, you will return directly to the island with everything you are carrying."
-msgstr "Этот гладкий лиловый шар словно стремится вырваться из вашей руки и взмыть в воздух. Активируйте его, чтобы мгновенно вернуться на остров со всем, что несёте с собой."
+msgid ""
+"This smooth purplish sphere seems like it wants to rise right out of your "
+"hand. If you activate it, you will return directly to the island with "
+"everything you are carrying."
+msgstr ""
+"Этот гладкий лиловый шар словно стремится вырваться из вашей руки и взмыть в"
+" воздух. Активируйте его, чтобы мгновенно вернуться на остров со всем, что "
+"несёте с собой."
 
 #: items.json
 msgid "warp status crystal"
@@ -1876,8 +2418,16 @@ msgstr[2] "кристаллов состояния искажения"
 
 #. ~ Description for {'str': 'warp status crystal'}
 #: items.json
-msgid "A small crystalline orb that pulses with a faint inner light. When activated, it displays detailed information about your current warp status, including pulse count, time remaining, and the effects that will occur at each stage of warp sickness."
-msgstr "Небольшая кристаллическая сфера, внутри которой мерцает тусклый свет. При активации показывает подробную информацию о текущем состоянии искажения: количество прошедших импульсов, оставшееся время и эффекты, которые возникнут на каждой стадии недомогания от искажения."
+msgid ""
+"A small crystalline orb that pulses with a faint inner light. When "
+"activated, it displays detailed information about your current warp status, "
+"including pulse count, time remaining, and the effects that will occur at "
+"each stage of warp sickness."
+msgstr ""
+"Небольшая кристаллическая сфера, внутри которой мерцает тусклый свет. При "
+"активации показывает подробную информацию о текущем состоянии искажения: "
+"количество прошедших импульсов, оставшееся время и эффекты, которые "
+"возникнут на каждой стадии недомогания от искажения."
 
 #: items.json
 msgid "warped animal teleporter"
@@ -1888,8 +2438,18 @@ msgstr[2] "искажённых телепортаторов животных"
 
 #. ~ Description for {'str': 'warped animal teleporter'}
 #: items.json
-msgid "A hand-sized device with a shimmering portal at its core. Unlike a normal pet carrier, this device doesn't store the animal inside - it warps them directly to your sanctuary island, bypassing any weight limitations. Activate near a friendly creature to send it home. The creature will appear at your island when you return from your expedition."
-msgstr "Устройство размером с ладонь, в центре которого мерцает небольшой портал. В отличие от обычной переноски, оно не помещает животное внутрь, а мгновенно переносит его на ваш остров-убежище, независимо от веса. Активируйте устройство рядом с дружественным существом, чтобы отправить его домой. Когда вы вернётесь из экспедиции, существо будет ждать вас на острове."
+msgid ""
+"A hand-sized device with a shimmering portal at its core. Unlike a normal "
+"pet carrier, this device doesn't store the animal inside - it warps them "
+"directly to your sanctuary island, bypassing any weight limitations. "
+"Activate near a friendly creature to send it home. The creature will appear "
+"at your island when you return from your expedition."
+msgstr ""
+"Устройство размером с ладонь, в центре которого мерцает небольшой портал. В "
+"отличие от обычной переноски, оно не помещает животное внутрь, а мгновенно "
+"переносит его на ваш остров-убежище, независимо от веса. Активируйте "
+"устройство рядом с дружественным существом, чтобы отправить его домой. Когда"
+" вы вернётесь из экспедиции, существо будет ждать вас на острове."
 
 #: items.json
 msgid "warp home focus"
@@ -1924,8 +2484,16 @@ msgstr[2] "целебных мазей"
 
 #. ~ Description for {'str': 'healing salve'}
 #: items.json
-msgid "A lump of purplish goo, smooth but yielding, sculptable like clay. If you rub it on a wound, it will immediately heal some of the damage you have taken, but the air of the lower world destabilizes its structure and it will only last a single trip to the surface."
-msgstr "Комочек лиловой массы, гладкой и податливой, словно пластилин. Если нанести её на рану, часть повреждений мгновенно заживёт. Однако воздух нижнего мира нарушает её структуру, поэтому мазь сохраняет свои свойства лишь в течение одной вылазки на поверхность."
+msgid ""
+"A lump of purplish goo, smooth but yielding, sculptable like clay. If you "
+"rub it on a wound, it will immediately heal some of the damage you have "
+"taken, but the air of the lower world destabilizes its structure and it will"
+" only last a single trip to the surface."
+msgstr ""
+"Комочек лиловой массы, гладкой и податливой, словно пластилин. Если нанести "
+"её на рану, часть повреждений мгновенно заживёт. Однако воздух нижнего мира "
+"нарушает её структуру, поэтому мазь сохраняет свои свойства лишь в течение "
+"одной вылазки на поверхность."
 
 #: items.json
 msgid "warp raft token"
@@ -1936,49 +2504,72 @@ msgstr[2] "жетонов плота искажения"
 
 #. ~ Use action unfold_msg for {'str': 'warp raft token'}.
 #: items.json
-msgid "The token dissolves into swirling energy that coalesces into a shimmering raft!"
-msgstr "Жетон растворяется, превращаясь в вихрь энергии, из которого возникает мерцающий плот!"
+msgid ""
+"The token dissolves into swirling energy that coalesces into a shimmering "
+"raft!"
+msgstr ""
+"Жетон растворяется, превращаясь в вихрь энергии, из которого возникает "
+"мерцающий плот!"
 
 #. ~ Description for {'str': 'warp raft token'}
 #: items.json
-msgid "A small token that pulses with aquatic energy. When activated, it unfolds into a small, slow raft."
-msgstr "Небольшой жетон, пульсирующий водной энергией. При активации разворачивается в маленький тихоходный плот."
+msgid ""
+"A small token that pulses with aquatic energy. When activated, it unfolds "
+"into a small, slow raft."
+msgstr ""
+"Небольшой жетон, пульсирующий водной энергией. При активации разворачивается"
+" в маленький тихоходный плот."
 
 #: items.json
 msgid "wood-floor tokens"
 msgid_plural "wood-floor tokens"
 msgstr[0] "жетоны деревянного пола"
-msgstr[1] "жетонов деревянного пола"
+msgstr[1] "жетона деревянного пола"
 msgstr[2] "жетонов деревянного пола"
 
 #. ~ Description for {'str_sp': 'wood-floor tokens'}
 #: items.json
-msgid "A group of small squares of wood, smooth and polished. You can use them to transform a section of flooring into interlocking wooden planks."
-msgstr "Набор небольших гладких, отполированных деревянных пластинок. С их помощью можно превратить участок пола в настил из плотно подогнанных друг к другу досок."
+msgid ""
+"A group of small squares of wood, smooth and polished. You can use them to "
+"transform a section of flooring into interlocking wooden planks."
+msgstr ""
+"Набор небольших гладких, отполированных деревянных пластинок. С их помощью "
+"можно превратить участок пола в настил из плотно подогнанных друг к другу "
+"досок."
 
 #: items.json
 msgid "flagstone tokens"
 msgid_plural "flagstone tokens"
 msgstr[0] "жетоны каменного пола"
-msgstr[1] "жетонов каменного пола"
+msgstr[1] "жетона каменного пола"
 msgstr[2] "жетонов каменного пола"
 
 #. ~ Description for {'str_sp': 'flagstone tokens'}
 #: items.json
-msgid "A group of small stone stones, rough to the touch. You can use them to transform a section of flooring into mortared flagstones."
-msgstr "Набор небольших шероховатых камешков. С их помощью можно превратить участок пола в настил из каменных плит, скреплённых раствором."
+msgid ""
+"A group of small stone stones, rough to the touch. You can use them to "
+"transform a section of flooring into mortared flagstones."
+msgstr ""
+"Набор небольших шероховатых камешков. С их помощью можно превратить участок "
+"пола в настил из каменных плит, скреплённых раствором."
 
 #: items.json
 msgid "sand tokens"
 msgid_plural "sand tokens"
 msgstr[0] "жетоны песка"
-msgstr[1] "жетонов песка"
+msgstr[1] "жетона песка"
 msgstr[2] "жетонов песка"
 
 #. ~ Description for {'str_sp': 'sand tokens'}
 #: items.json
-msgid "A group of small yellow stones, gritty to the touch yet seemingly nothing ever rubs off. You can use them to transform a section of flooring into fine sand."
-msgstr "Набор небольших жёлтых камешков, шершавых на ощупь, но совершенно не осыпающихся. С их помощью можно превратить участок пола в покрытие из мелкого песка."
+msgid ""
+"A group of small yellow stones, gritty to the touch yet seemingly nothing "
+"ever rubs off. You can use them to transform a section of flooring into fine"
+" sand."
+msgstr ""
+"Набор небольших жёлтых камешков, шершавых на ощупь, но совершенно не "
+"осыпающихся. С их помощью можно превратить участок пола в покрытие из "
+"мелкого песка."
 
 #: items.json
 msgid "Personal Sunblock"
@@ -2001,7 +2592,8 @@ msgstr[2] "личных защит от ветра"
 
 #. ~ Description for {'str': 'Personal Windblock'}
 #: items.json
-msgid "The island is protecting you against the winds as long as you are on it."
+msgid ""
+"The island is protecting you against the winds as long as you are on it."
 msgstr "Пока вы находитесь на острове, он защищает вас от ветра."
 
 #: iuse.json
@@ -2162,8 +2754,11 @@ msgstr "Записать схему консоли химического пар
 
 #: iuse.lua
 #, c-format
-msgid "You need to be standing next to a working %s to imprint this copyplate."
-msgstr "Чтобы записать схему на эту копипластину, нужно находиться рядом с работающим устройством (%s)."
+msgid ""
+"You need to be standing next to a working %s to imprint this copyplate."
+msgstr ""
+"Чтобы записать схему на эту копипластину, нужно находиться рядом с "
+"работающим устройством (%s)."
 
 #: iuse.lua
 #, c-format
@@ -2177,19 +2772,28 @@ msgstr "Теперь у вас есть активированная копип�
 
 #: main.lua
 msgid "The quickheal pill only works on your sanctuary island."
-msgstr "Таблетка быстрого исцеления действует только на вашем острове-убежище."
+msgstr ""
+"Таблетка быстрого исцеления действует только на вашем острове-убежище."
 
 #: main.lua
 msgid "A warm sensation washes over you as your wounds heal."
 msgstr "По телу разливается приятное тепло, и ваши раны затягиваются."
 
 #: main.lua
-msgid "You're not on an expedition. Save this for when you need more time earthside."
-msgstr "Сейчас вы не в экспедиции. Приберегите это на случай, когда понадобится подольше оставаться за пределами острова."
+msgid ""
+"You're not on an expedition. Save this for when you need more time "
+"earthside."
+msgstr ""
+"Сейчас вы не в экспедиции. Приберегите это на случай, когда понадобится "
+"подольше оставаться за пределами острова."
 
 #: main.lua
-msgid "The pill dissolves on your tongue. You feel the warp's grip on you loosen. (+4 pulses of time)"
-msgstr "Таблетка растворяется на языке. Вы чувствуете, как хватка искажения ослабевает. (+4 импульса к времени экспедиции)"
+msgid ""
+"The pill dissolves on your tongue. You feel the warp's grip on you loosen. "
+"(+4 pulses of time)"
+msgstr ""
+"Таблетка растворяется на языке. Вы чувствуете, как хватка искажения "
+"ослабевает. (+4 импульса к времени экспедиции)"
 
 #: main.lua
 msgid "The focus pulses weakly but cannot establish a connection."
@@ -2197,39 +2801,57 @@ msgstr "Фокус слабо пульсирует, но не может уст�
 
 #: main.lua
 msgid "Your difficulty settings require a Skyward Beacon or extraction point."
-msgstr "При выбранных настройках сложности для возвращения требуется небесный маяк или точка эвакуации."
+msgstr ""
+"При выбранных настройках сложности для возвращения требуется небесный маяк "
+"или точка эвакуации."
 
 #: main.lua
 msgid "You're already home. The focus has no effect here."
 msgstr "Вы уже дома. Здесь фокус не действует."
 
 #: main.lua
-msgid "Hostile creatures nearby disrupt the focus's energy. You cannot use it here!"
-msgstr "Враждебные существа поблизости нарушают работу фокуса. Здесь его нельзя использовать!"
+msgid ""
+"Hostile creatures nearby disrupt the focus's energy. You cannot use it here!"
+msgstr ""
+"Враждебные существа поблизости нарушают работу фокуса. Здесь его нельзя "
+"использовать!"
 
 #: main.lua
 msgid "The focus requires a warp shard to activate!"
 msgstr "Для активации фокуса требуется осколок искажения!"
 
 #: main.lua
-msgid "The focus flares with brilliant light. You feel yourself being pulled skyward..."
-msgstr "Фокус вспыхивает ослепительным светом. Вы чувствуете, как неведомая сила тянет вас в небо..."
+msgid ""
+"The focus flares with brilliant light. You feel yourself being pulled "
+"skyward..."
+msgstr ""
+"Фокус вспыхивает ослепительным светом. Вы чувствуете, как неведомая сила "
+"тянет вас в небо..."
 
 #: main.lua
-msgid "The beacon flickers weakly but nothing happens. Emergency returns are disabled."
-msgstr "Маяк слабо мерцает, но ничего не происходит. Экстренное возвращение отключено."
+msgid ""
+"The beacon flickers weakly but nothing happens. Emergency returns are "
+"disabled."
+msgstr ""
+"Маяк слабо мерцает, но ничего не происходит. Экстренное возвращение "
+"отключено."
 
 #: main.lua
 msgid "You must find an extraction point (return obelisk) to escape."
-msgstr "Чтобы выбраться, необходимо найти точку эвакуации (обелиск возвращения)."
+msgstr ""
+"Чтобы выбраться, необходимо найти точку эвакуации (обелиск возвращения)."
 
 #: main.lua
 msgid "You're already home. The beacon has no effect here."
 msgstr "Вы уже дома. Здесь маяк не действует."
 
 #: main.lua
-msgid "The beacon flares with brilliant light. You feel yourself being pulled skyward..."
-msgstr "Маяк вспыхивает ослепительным светом. Вы чувствуете, как неведомая сила тянет вас в небо..."
+msgid ""
+"The beacon flares with brilliant light. You feel yourself being pulled "
+"skyward..."
+msgstr ""
+"Маяк вспыхивает ослепительным светом. Вы чувствуете, как неведомая сила "
+"тянет вас в небо..."
 
 #: main.lua
 msgid "Warp Status Crystal"
@@ -2326,7 +2948,8 @@ msgstr "Этап 5: Некроз от искажения"
 
 #: main.lua
 msgid "Intensity 4. -8 to all stats. Body failing."
-msgstr "Интенсивность 4. Все характеристики: -8. Организм начинает отказывать."
+msgstr ""
+"Интенсивность 4. Все характеристики: -8. Организм начинает отказывать."
 
 #: main.lua
 msgid "Stage 6: Warp Disintegration!"
@@ -2334,7 +2957,9 @@ msgstr "Этап 6: Распад от искажения!"
 
 #: main.lua
 msgid "Intensity 5+. -10+ to stats. Constant damage. DEATH IMMINENT."
-msgstr "Интенсивность 5+. Все характеристики: -10 и более. Постоянный урон. СМЕРТЬ БЛИЗКА."
+msgstr ""
+"Интенсивность 5+. Все характеристики: -10 и более. Постоянный урон. СМЕРТЬ "
+"БЛИЗКА."
 
 #: main.lua
 msgid ""
@@ -2348,7 +2973,8 @@ msgstr ""
 
 #: main.lua
 msgid "You need to set your home location first by using the warp obelisk."
-msgstr "Сначала необходимо указать местоположение дома с помощью обелиска искажения."
+msgstr ""
+"Сначала необходимо указать местоположение дома с помощью обелиска искажения."
 
 #: main.lua
 msgid "Select a creature to warp home:"
@@ -2379,7 +3005,8 @@ msgstr "Животные, ожидающие прибытия: %d"
 
 #: main.lua
 msgid "Sky Islands PoC loaded! Use warp remote to start."
-msgstr "Прототип Sky Islands загружен! Используйте пульт искажения, чтобы начать."
+msgstr ""
+"Прототип Sky Islands загружен! Используйте пульт искажения, чтобы начать."
 
 #: main.lua
 msgid "Resuming expedition..."
@@ -2387,7 +3014,9 @@ msgstr "Возобновление экспедиции..."
 
 #: main.lua
 msgid "The homeward mote flares brilliantly, yanking you from death's grasp!"
-msgstr "Частица возвращения вспыхивает ослепительным светом и вырывает вас из лап смерти!"
+msgstr ""
+"Частица возвращения вспыхивает ослепительным светом и вырывает вас из лап "
+"смерти!"
 
 #: main.lua
 msgid "You arrive home alive, with all your belongings intact."
@@ -2403,8 +3032,14 @@ msgstr "ВЫЛАЗКА: доберитесь до портала возвращ�
 
 #. ~ Description for mission '{'str': 'RAID: Reach the exit portal!'}'
 #: missions.json
-msgid "If you want to get home with your stuff, you'll need to reach the nearby exit portal. It's the only thing that can bring you back to your sanctuary island in one piece."
-msgstr "Если хотите вернуться домой вместе со своими вещами, вам нужно добраться до ближайшего портала возвращения. Только он позволит вам вернуться на свой остров-убежище целыми и невредимыми."
+msgid ""
+"If you want to get home with your stuff, you'll need to reach the nearby "
+"exit portal. It's the only thing that can bring you back to your sanctuary "
+"island in one piece."
+msgstr ""
+"Если хотите вернуться домой вместе со своими вещами, вам нужно добраться до "
+"ближайшего портала возвращения. Только он позволит вам вернуться на свой "
+"остров-убежище целыми и невредимыми."
 
 #: missions.json
 msgid "RAID: Kill 10 Zombies"
@@ -2412,8 +3047,12 @@ msgstr "ВЫЛАЗКА: убить 10 зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Kill 10 Zombies'}'
 #: missions.json
-msgid "Zombies have absorbed latent energies which must be released. Kill at least 10 zombified creatures before returning to your sanctuary."
-msgstr "Зомби впитали скрытую энергию, которую необходимо высвободить. Убейте не менее 10 зомбированных существ, прежде чем вернуться в своё убежище."
+msgid ""
+"Zombies have absorbed latent energies which must be released. Kill at least "
+"10 zombified creatures before returning to your sanctuary."
+msgstr ""
+"Зомби впитали скрытую энергию, которую необходимо высвободить. Убейте не "
+"менее 10 зомбированных существ, прежде чем вернуться в своё убежище."
 
 #: missions.json
 msgid "RAID: Kill 50 Zombies"
@@ -2421,8 +3060,12 @@ msgstr "ВЫЛАЗКА: убить 50 зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Kill 50 Zombies'}'
 #: missions.json
-msgid "Zombies have absorbed latent energies which must be released. Kill at least 50 zombified creatures before returning to your sanctuary."
-msgstr "Зомби впитали скрытую энергию, которую необходимо высвободить. Убейте не менее 50 зомбированных существ, прежде чем вернуться в своё убежище."
+msgid ""
+"Zombies have absorbed latent energies which must be released. Kill at least "
+"50 zombified creatures before returning to your sanctuary."
+msgstr ""
+"Зомби впитали скрытую энергию, которую необходимо высвободить. Убейте не "
+"менее 50 зомбированных существ, прежде чем вернуться в своё убежище."
 
 #: missions.json
 msgid "RAID: Kill 100 Zombies"
@@ -2430,8 +3073,12 @@ msgstr "ВЫЛАЗКА: убить 100 зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Kill 100 Zombies'}'
 #: missions.json
-msgid "Zombies have absorbed latent energies which must be released. Kill at least 100 zombified creatures before returning to your sanctuary."
-msgstr "Зомби впитали скрытую энергию, которую необходимо высвободить. Убейте не менее 100 зомбированных существ, прежде чем вернуться в своё убежище."
+msgid ""
+"Zombies have absorbed latent energies which must be released. Kill at least "
+"100 zombified creatures before returning to your sanctuary."
+msgstr ""
+"Зомби впитали скрытую энергию, которую необходимо высвободить. Убейте не "
+"менее 100 зомбированных существ, прежде чем вернуться в своё убежище."
 
 #: missions.json
 msgid "RAID: Kill a Mi-Go"
@@ -2439,8 +3086,12 @@ msgstr "ВЫЛАЗКА: убить одного ми-го"
 
 #. ~ Description for mission '{'str': 'RAID: Kill a Mi-Go'}'
 #: missions.json
-msgid "The mi-go have absorbed latent energies which must be released. Kill at least one mi-go creature before returning to your sanctuary."
-msgstr "Ми-го впитали скрытую энергию, которую необходимо высвободить. Убейте хотя бы одного ми-го, прежде чем вернуться в своё убежище."
+msgid ""
+"The mi-go have absorbed latent energies which must be released. Kill at "
+"least one mi-go creature before returning to your sanctuary."
+msgstr ""
+"Ми-го впитали скрытую энергию, которую необходимо высвободить. Убейте хотя "
+"бы одного ми-го, прежде чем вернуться в своё убежище."
 
 #: missions.json
 msgid "RAID: Kill 3 Nether Creatures"
@@ -2448,8 +3099,14 @@ msgstr "ВЫЛАЗКА: убить 3 потусторонних существ"
 
 #. ~ Description for mission '{'str': 'RAID: Kill 3 Nether Creatures'}'
 #: missions.json
-msgid "A rift to another dimension has drained latent energies which must be released. Kill at least 3 nether-born creatures before returning to your sanctuary."
-msgstr "Разлом в другое измерение поглотил скрытую энергию, которую необходимо высвободить. Убейте не менее 3 потусторонних существ, прежде чем вернуться в своё убежище."
+msgid ""
+"A rift to another dimension has drained latent energies which must be "
+"released. Kill at least 3 nether-born creatures before returning to your "
+"sanctuary."
+msgstr ""
+"Разлом в другое измерение поглотил скрытую энергию, которую необходимо "
+"высвободить. Убейте не менее 3 потусторонних существ, прежде чем вернуться в"
+" своё убежище."
 
 #: missions.json
 msgid "RAID: Kill 5 Birds"
@@ -2457,8 +3114,13 @@ msgstr "ВЫЛАЗКА: убить 5 птиц"
 
 #. ~ Description for mission '{'str': 'RAID: Kill 5 Birds'}'
 #: missions.json
-msgid "Even the local wildlife has started absorbing latent warp energy. Kill at least 5 non-zombie birds before returning to your sanctuary."
-msgstr "Даже местные дикие животные начали впитывать скрытую энергию искажения. Убейте не менее 5 птиц, не являющихся зомби, прежде чем вернуться в своё убежище."
+msgid ""
+"Even the local wildlife has started absorbing latent warp energy. Kill at "
+"least 5 non-zombie birds before returning to your sanctuary."
+msgstr ""
+"Даже местные дикие животные начали впитывать скрытую энергию искажения. "
+"Убейте не менее 5 птиц, не являющихся зомби, прежде чем вернуться в своё "
+"убежище."
 
 #: missions.json
 msgid "RAID: Kill 5 Mammals"
@@ -2466,8 +3128,13 @@ msgstr "ВЫЛАЗКА: убить 5 млекопитающих"
 
 #. ~ Description for mission '{'str': 'RAID: Kill 5 Mammals'}'
 #: missions.json
-msgid "Even the local wildlife has started absorbing latent warp energy. Kill at least 5 non-zombie mammals before returning to your sanctuary."
-msgstr "Даже местные дикие животные начали впитывать скрытую энергию искажения. Убейте не менее 5 млекопитающих, не являющихся зомби, прежде чем вернуться в своё убежище."
+msgid ""
+"Even the local wildlife has started absorbing latent warp energy. Kill at "
+"least 5 non-zombie mammals before returning to your sanctuary."
+msgstr ""
+"Даже местные дикие животные начали впитывать скрытую энергию искажения. "
+"Убейте не менее 5 млекопитающих, не являющихся зомби, прежде чем вернуться в"
+" своё убежище."
 
 #: missions.json
 msgid "RAID: Find the warp shards!"
@@ -2475,8 +3142,16 @@ msgstr "ВЫЛАЗКА: найти осколки искажения!"
 
 #. ~ Description for mission '{'str': 'RAID: Find the warp shards!'}'
 #: missions.json
-msgid "A very small cluster of warp energy has left shards behind at this location. All you need to do is find and retrieve them. There may be threats nearby, but unlike most tasks, no special guards are on-site. A minimal reward, but little risk."
-msgstr "Небольшое скопление энергии искажения оставило здесь несколько осколков. Вам нужно лишь найти и забрать их. Поблизости могут быть угрозы, но, в отличие от большинства подобных заданий, специальной охраны здесь нет. Награда скромная, зато и риск невелик."
+msgid ""
+"A very small cluster of warp energy has left shards behind at this location."
+" All you need to do is find and retrieve them. There may be threats nearby, "
+"but unlike most tasks, no special guards are on-site. A minimal reward, but "
+"little risk."
+msgstr ""
+"Небольшое скопление энергии искажения оставило здесь несколько осколков. Вам"
+" нужно лишь найти и забрать их. Поблизости могут быть угрозы, но, в отличие "
+"от большинства подобных заданий, специальной охраны здесь нет. Награда "
+"скромная, зато и риск невелик."
 
 #: missions.json
 msgid "RAID: Clear zombie cluster"
@@ -2484,8 +3159,12 @@ msgstr "ВЫЛАЗКА: уничтожить скопление зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Clear zombie cluster'}'
 #: missions.json
-msgid "A handful of zombies are congregating at a location where warp resonance is high. Clear them out for a minimal reward of warp shards."
-msgstr "Несколько зомби собрались в месте с сильным резонансом искажения. Уничтожьте их и получите небольшую награду в виде осколков искажения."
+msgid ""
+"A handful of zombies are congregating at a location where warp resonance is "
+"high. Clear them out for a minimal reward of warp shards."
+msgstr ""
+"Несколько зомби собрались в месте с сильным резонансом искажения. Уничтожьте"
+" их и получите небольшую награду в виде осколков искажения."
 
 #: missions.json
 msgid "RAID: Clear zombie horde"
@@ -2493,8 +3172,12 @@ msgstr "ВЫЛАЗКА: уничтожить орду зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Clear zombie horde'}'
 #: missions.json
-msgid "A horde of low level zombies are congregating at a location where warp resonance is high. Clear them out for a small reward of warp shards."
-msgstr "Орда слабых зомби собралась в месте с сильным резонансом искажения. Уничтожьте их и получите небольшую награду в виде осколков искажения."
+msgid ""
+"A horde of low level zombies are congregating at a location where warp "
+"resonance is high. Clear them out for a small reward of warp shards."
+msgstr ""
+"Орда слабых зомби собралась в месте с сильным резонансом искажения. "
+"Уничтожьте их и получите небольшую награду в виде осколков искажения."
 
 #: missions.json
 msgid "RAID: Clear evolved zombies"
@@ -2502,8 +3185,13 @@ msgstr "ВЫЛАЗКА: уничтожить эволюционировавши�
 
 #. ~ Description for mission '{'str': 'RAID: Clear evolved zombies'}'
 #: missions.json
-msgid "A swarm of evolved zombies are congregating at a location where warp resonance is high. Clear them out for a medium reward of warp shards."
-msgstr "Группа эволюционировавших зомби собралась в месте с сильным резонансом искажения. Уничтожьте их и получите умеренную награду в виде осколков искажения."
+msgid ""
+"A swarm of evolved zombies are congregating at a location where warp "
+"resonance is high. Clear them out for a medium reward of warp shards."
+msgstr ""
+"Группа эволюционировавших зомби собралась в месте с сильным резонансом "
+"искажения. Уничтожьте их и получите умеренную награду в виде осколков "
+"искажения."
 
 #: missions.json
 msgid "RAID: Clear evolved horde"
@@ -2511,8 +3199,13 @@ msgstr "ВЫЛАЗКА: уничтожить орду эволюциониров
 
 #. ~ Description for mission '{'str': 'RAID: Clear evolved horde'}'
 #: missions.json
-msgid "A huge horde of evolved zombies are congregating at a location where warp resonance is high. Clear them out for a large reward of warp shards."
-msgstr "Огромная орда эволюционировавших зомби собралась в месте с сильным резонансом искажения. Уничтожьте их и получите щедрую награду в виде осколков искажения."
+msgid ""
+"A huge horde of evolved zombies are congregating at a location where warp "
+"resonance is high. Clear them out for a large reward of warp shards."
+msgstr ""
+"Огромная орда эволюционировавших зомби собралась в месте с сильным "
+"резонансом искажения. Уничтожьте их и получите щедрую награду в виде "
+"осколков искажения."
 
 #: missions.json
 msgid "RAID: Clear fearsome zombies"
@@ -2520,8 +3213,13 @@ msgstr "ВЫЛАЗКА: уничтожить особо опасных зомб�
 
 #. ~ Description for mission '{'str': 'RAID: Clear fearsome zombies'}'
 #: missions.json
-msgid "A swarm of rather powerful zombies are congregating at a location where warp resonance is high. Clear them out for a large reward of warp shards."
-msgstr "Группа весьма сильных зомби собралась в месте с сильным резонансом искажения. Уничтожьте их и получите щедрую награду в виде осколков искажения."
+msgid ""
+"A swarm of rather powerful zombies are congregating at a location where warp"
+" resonance is high. Clear them out for a large reward of warp shards."
+msgstr ""
+"Группа весьма сильных зомби собралась в месте с сильным резонансом "
+"искажения. Уничтожьте их и получите щедрую награду в виде осколков "
+"искажения."
 
 #: missions.json
 msgid "RAID: Clear elite zombies"
@@ -2529,8 +3227,14 @@ msgstr "ВЫЛАЗКА: уничтожить элитных зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Clear elite zombies'}'
 #: missions.json
-msgid "A swarm of extremely dangerous zombies are congregating at a location where warp resonance is high. Clear them out for a very large reward of warp shards."
-msgstr "Группа чрезвычайно опасных зомби собралась в месте с сильным резонансом искажения. Уничтожьте их и получите очень щедрую награду в виде осколков искажения."
+msgid ""
+"A swarm of extremely dangerous zombies are congregating at a location where "
+"warp resonance is high. Clear them out for a very large reward of warp "
+"shards."
+msgstr ""
+"Группа чрезвычайно опасных зомби собралась в месте с сильным резонансом "
+"искажения. Уничтожьте их и получите очень щедрую награду в виде осколков "
+"искажения."
 
 #: missions.json
 msgid "RAID: Kill zombie lord"
@@ -2538,8 +3242,13 @@ msgstr "ВЫЛАЗКА: убить повелителя зомби"
 
 #. ~ Description for mission '{'str': 'RAID: Kill zombie lord'}'
 #: missions.json
-msgid "A single supremely powerful zombie has been found at a location where warp resonance is high. Destroy it for a very large reward of warp shards."
-msgstr "В месте с сильным резонансом искажения обнаружен один невероятно могущественный зомби. Уничтожьте его и получите очень щедрую награду в виде осколков искажения."
+msgid ""
+"A single supremely powerful zombie has been found at a location where warp "
+"resonance is high. Destroy it for a very large reward of warp shards."
+msgstr ""
+"В месте с сильным резонансом искажения обнаружен один невероятно "
+"могущественный зомби. Уничтожьте его и получите очень щедрую награду в виде "
+"осколков искажения."
 
 #: missions.json
 msgid "RAID: Kill zombie superteam"
@@ -2547,8 +3256,13 @@ msgstr "ВЫЛАЗКА: уничтожить элитный отряд зомб�
 
 #. ~ Description for mission '{'str': 'RAID: Kill zombie superteam'}'
 #: missions.json
-msgid "A team of supremely powerful zombies has been found at a location where warp resonance is high. Destroy it for a very large reward of warp shards."
-msgstr "В месте с сильным резонансом искажения обнаружен отряд невероятно могущественных зомби. Уничтожьте их и получите очень щедрую награду в виде осколков искажения."
+msgid ""
+"A team of supremely powerful zombies has been found at a location where warp"
+" resonance is high. Destroy it for a very large reward of warp shards."
+msgstr ""
+"В месте с сильным резонансом искажения обнаружен отряд невероятно "
+"могущественных зомби. Уничтожьте их и получите очень щедрую награду в виде "
+"осколков искажения."
 
 #: missions.json
 msgid "RAID: Kill zombie leader + swarm"
@@ -2556,8 +3270,14 @@ msgstr "ВЫЛАЗКА: убить предводителя зомби и его
 
 #. ~ Description for mission '{'str': 'RAID: Kill zombie leader + swarm'}'
 #: missions.json
-msgid "A supremely powerful zombie has been found at a location where warp resonance is high. Be warned that it will be accompanied by an elite swarm! Destroy them all for a huge reward of warp shards."
-msgstr "В месте с сильным резонансом искажения обнаружен невероятно могущественный зомби. Осторожно: его сопровождает орда элитных зомби! Уничтожьте их всех и получите огромную награду в виде осколков искажения."
+msgid ""
+"A supremely powerful zombie has been found at a location where warp "
+"resonance is high. Be warned that it will be accompanied by an elite swarm! "
+"Destroy them all for a huge reward of warp shards."
+msgstr ""
+"В месте с сильным резонансом искажения обнаружен невероятно могущественный "
+"зомби. Осторожно: его сопровождает орда элитных зомби! Уничтожьте их всех и "
+"получите огромную награду в виде осколков искажения."
 
 #: missions.json
 msgid "RAID: Kill horde lord"
@@ -2565,8 +3285,14 @@ msgstr "ВЫЛАЗКА: убить повелителя орды"
 
 #. ~ Description for mission '{'str': 'RAID: Kill horde lord'}'
 #: missions.json
-msgid "A supremely powerful zombie has been found at a location where warp resonance is high. Be warned that it will be accompanied by an massive horde of weaker zombies! Destroy them all for a huge reward of warp shards."
-msgstr "В месте с сильным резонансом искажения обнаружен невероятно могущественный зомби. Осторожно: его сопровождает огромная орда более слабых зомби! Уничтожьте их всех и получите огромную награду в виде осколков искажения."
+msgid ""
+"A supremely powerful zombie has been found at a location where warp "
+"resonance is high. Be warned that it will be accompanied by an massive horde"
+" of weaker zombies! Destroy them all for a huge reward of warp shards."
+msgstr ""
+"В месте с сильным резонансом искажения обнаружен невероятно могущественный "
+"зомби. Осторожно: его сопровождает огромная орда более слабых зомби! "
+"Уничтожьте их всех и получите огромную награду в виде осколков искажения."
 
 #: missions.json
 msgid "RAID: Clear mi-go threat"
@@ -2575,8 +3301,13 @@ msgstr "ВЫЛАЗКА: устранить угрозу ми-го"
 #. ~ Description for mission '{'str': 'RAID: Clear mi-go threat'}'
 #. ~ Description for mission '{'str': 'RAID: Kill mi-go overlord'}'
 #: missions.json
-msgid "A group of lethal mi-gos are draining a location where warp resonance is high. Destroy them all for a very large reward of warp shards."
-msgstr "Группа смертоносных ми-го поглощает энергию в месте с сильным резонансом искажения. Уничтожьте их всех и получите очень щедрую награду в виде осколков искажения."
+msgid ""
+"A group of lethal mi-gos are draining a location where warp resonance is "
+"high. Destroy them all for a very large reward of warp shards."
+msgstr ""
+"Группа смертоносных ми-го поглощает энергию в месте с сильным резонансом "
+"искажения. Уничтожьте их всех и получите очень щедрую награду в виде "
+"осколков искажения."
 
 #: missions.json
 msgid "RAID: Kill mi-go overlord"
@@ -2697,12 +3428,17 @@ msgstr "Задание выполнено: %s"
 
 #: modinfo.json scenario.json
 msgid "Sky Island"
-msgstr "Небесный остров"
+msgstr "Небесный остров "
 
 #. ~ Description for Sky Island
 #: modinfo.json
-msgid "Cataclysm BN port of the Sky Island mod. Raid-based gameplay inspired by Escape from Tarkov and Dark & Darker. This is a very early version!"
-msgstr "Версия мода Sky Island для Cataclysm: Bright Nights. Игровой процесс построен вокруг вылазок и вдохновлён Escape from Tarkov и Dark & Darker. Это очень ранняя версия мода!"
+msgid ""
+"Cataclysm BN port of the Sky Island mod. Raid-based gameplay inspired by "
+"Escape from Tarkov and Dark & Darker. This is a very early version!"
+msgstr ""
+"Версия мода Sky Island для «Катаклизм: Светлые Ночи». Игровой процесс "
+"построен вокруг вылазок и вдохновлён Escape from Tarkov и Dark & Darker. Это"
+" очень ранняя версия мода!"
 
 #: mutations.json
 msgid "Warp Flight"
@@ -2710,8 +3446,12 @@ msgstr "Полёт искажения"
 
 #. ~ Description for {'str': 'Warp Flight'}
 #: mutations.json
-msgid "Warp energy grants you the power of flight. This is a temporary effect from landing protection."
-msgstr "Энергия искажения дарует вам способность летать. Это временный эффект защиты при приземлении."
+msgid ""
+"Warp energy grants you the power of flight. This is a temporary effect from "
+"landing protection."
+msgstr ""
+"Энергия искажения дарует вам способность летать. Это временный эффект защиты"
+" при приземлении."
 
 #. ~ Crafting recipes category name
 #: recipe_categories.json
@@ -2753,14 +3493,42 @@ msgstr "Покорительница искажения"
 #. ~ Description for scenario 'Sky Island Warper' for a male character.
 #: scenario.json
 msgctxt "scen_desc_male"
-msgid "As if the world ending wasn't enough, it seems some kind of extradimensional powers that be have taken an interest in you. You have been placed on a floating island high above the Earth, safe but isolated. Only by using the reality-bending powers of warp technology can you visit the world below in brief, randomly-targeted excursions. Venture down, gather supplies, and return with only what you can carry to upgrade your home base and your stash over time."
-msgstr "Будто конца света было мало, тобой заинтересовались какие-то силы из других измерений. Они забросили тебя на парящий высоко над землёй остров. Здесь ты в безопасности, но в полной изоляции от остального мира. Лишь технологии искажения, способные менять саму реальность, позволяют тебе ненадолго возвращаться на землю, каждый раз оказываясь в случайном месте. Отправляйся вниз, собирай припасы и возвращайся со всем, что сможешь унести. Постепенно ты сможешь обустроить своё убежище и пополнить запасы."
+msgid ""
+"As if the world ending wasn't enough, it seems some kind of extradimensional"
+" powers that be have taken an interest in you. You have been placed on a "
+"floating island high above the Earth, safe but isolated. Only by using the "
+"reality-bending powers of warp technology can you visit the world below in "
+"brief, randomly-targeted excursions. Venture down, gather supplies, and "
+"return with only what you can carry to upgrade your home base and your stash"
+" over time."
+msgstr ""
+"Будто конца света было мало, тобой заинтересовались какие-то силы из других "
+"измерений. Они забросили тебя на парящий высоко над землёй остров. Здесь ты "
+"в безопасности, но в полной изоляции от остального мира. Лишь технологии "
+"искажения, способные менять саму реальность, позволяют тебе ненадолго "
+"возвращаться на землю, каждый раз оказываясь в случайном месте. Отправляйся "
+"вниз, собирай припасы и возвращайся со всем, что сможешь унести. Постепенно "
+"ты сможешь обустроить своё убежище и пополнить запасы."
 
 #. ~ Description for scenario 'Sky Island Warper' for a female character.
 #: scenario.json
 msgctxt "scen_desc_female"
-msgid "As if the world ending wasn't enough, it seems some kind of extradimensional powers that be have taken an interest in you. You have been placed on a floating island high above the Earth, safe but isolated. Only by using the reality-bending powers of warp technology can you visit the world below in brief, randomly-targeted excursions. Venture down, gather supplies, and return with only what you can carry to upgrade your home base and your stash over time."
-msgstr "Будто конца света было мало, тобой заинтересовались какие-то силы из других измерений. Они забросили тебя на парящий высоко над землёй остров. Здесь ты в безопасности, но в полной изоляции от остального мира. Лишь технологии искажения, способные менять саму реальность, позволяют тебе ненадолго возвращаться на землю, каждый раз оказываясь в случайном месте. Отправляйся вниз, собирай припасы и возвращайся со всем, что сможешь унести. Постепенно ты сможешь обустроить своё убежище и пополнить запасы."
+msgid ""
+"As if the world ending wasn't enough, it seems some kind of extradimensional"
+" powers that be have taken an interest in you. You have been placed on a "
+"floating island high above the Earth, safe but isolated. Only by using the "
+"reality-bending powers of warp technology can you visit the world below in "
+"brief, randomly-targeted excursions. Venture down, gather supplies, and "
+"return with only what you can carry to upgrade your home base and your stash"
+" over time."
+msgstr ""
+"Будто конца света было мало, тобой заинтересовались какие-то силы из других "
+"измерений. Они забросили тебя на парящий высоко над землёй остров. Здесь ты "
+"в безопасности, но в полной изоляции от остального мира. Лишь технологии "
+"искажения, способные менять саму реальность, позволяют тебе ненадолго "
+"возвращаться на землю, каждый раз оказываясь в случайном месте. Отправляйся "
+"вниз, собирай припасы и возвращайся со всем, что сможешь унести. Постепенно "
+"ты сможешь обустроить своё убежище и пополнить запасы."
 
 #. ~ Starting location for scenario 'Sky Island Warper'.
 #: scenario.json
@@ -2771,7 +3539,8 @@ msgstr "Небесный остров"
 #: teleport.lua
 #, c-format
 msgid "%d items from the red room were teleported home with you!"
-msgstr "Предметы из красной комнаты (%d) телепортировались домой вместе с вами!"
+msgstr ""
+"Предметы из красной комнаты (%d) телепортировались домой вместе с вами!"
 
 #: teleport.lua
 msgid "Quick Expedition"
@@ -2779,7 +3548,9 @@ msgstr "Короткая экспедиция"
 
 #: teleport.lua
 msgid "Normal time limit (2 hours grace). Exits will be close together."
-msgstr "Обычная продолжительность (2 часа до появления недомогания). Выходы расположены близко друг к другу."
+msgstr ""
+"Обычная продолжительность (2 часа до появления недомогания). Выходы "
+"расположены близко друг к другу."
 
 #: teleport.lua
 msgid "Large Expedition"
@@ -2787,7 +3558,9 @@ msgstr "Большая экспедиция"
 
 #: teleport.lua
 msgid "Double time limit (4 hours grace). Exits scattered over wider area."
-msgstr "Вдвое больше времени (4 часа до появления недомогания). Выходы разбросаны по более обширной территории."
+msgstr ""
+"Вдвое больше времени (4 часа до появления недомогания). Выходы разбросаны по"
+" более обширной территории."
 
 #: teleport.lua
 msgid "Extended Expedition"
@@ -2795,15 +3568,21 @@ msgstr "Продлённая экспедиция"
 
 #: teleport.lua
 msgid "Triple time limit (6 hours grace). Exits very far away."
-msgstr "Втрое больше времени (6 часов до появления недомогания). Выходы расположены очень далеко."
+msgstr ""
+"Втрое больше времени (6 часов до появления недомогания). Выходы расположены "
+"очень далеко."
 
 #: teleport.lua
 msgid "Field"
 msgstr "Поле"
 
 #: teleport.lua
-msgid "Arrive in a barren field. Usually wilderness, but could be an empty lot in town."
-msgstr "Вы начинаете экспедицию на пустыре. Обычно это открытая местность вдали от населённых пунктов, но иногда и незастроенный участок в городе."
+msgid ""
+"Arrive in a barren field. Usually wilderness, but could be an empty lot in "
+"town."
+msgstr ""
+"Вы начинаете экспедицию на пустыре. Обычно это открытая местность вдали от "
+"населённых пунктов, но иногда и незастроенный участок в городе."
 
 #: teleport.lua
 msgid "Basement"
@@ -2826,8 +3605,13 @@ msgid "Science Lab"
 msgstr "Научная лаборатория"
 
 #: teleport.lua
-msgid "Arrive in a subterranean science lab. DANGEROUS! Costs 1 Labs Catalyst. You will be sealed inside - bring an exit strategy!"
-msgstr "Вы начинаете экспедицию в подземной научной лаборатории. ОПАСНО! Требуется 1 катализатор лаборатории. Вы окажетесь заперты внутри — заранее продумайте, как выбраться!"
+msgid ""
+"Arrive in a subterranean science lab. DANGEROUS! Costs 1 Labs Catalyst. You "
+"will be sealed inside - bring an exit strategy!"
+msgstr ""
+"Вы начинаете экспедицию в подземной научной лаборатории. ОПАСНО! Требуется 1"
+" катализатор лаборатории. Вы окажетесь заперты внутри — заранее продумайте, "
+"как выбраться!"
 
 #: teleport.lua
 msgid "You feel reality shift around you..."
@@ -2839,7 +3623,8 @@ msgstr "Энергия искажения поднимает вас в возд�
 
 #: teleport.lua
 msgid "Your feet touch the ground as the warp flight fades."
-msgstr "Когда полёт под действием искажения заканчивается, ваши ноги касаются земли."
+msgstr ""
+"Когда полёт под действием искажения заканчивается, ваши ноги касаются земли."
 
 #: teleport.lua
 #, c-format
@@ -2890,7 +3675,9 @@ msgstr " (требуется катализатор)"
 
 #: teleport.lua
 msgid "The Labs Catalyst crumbles to dust as dimensional barriers part..."
-msgstr "Катализатор лаборатории рассыпается в прах, и барьеры между измерениями раздвигаются..."
+msgstr ""
+"Катализатор лаборатории рассыпается в прах, и барьеры между измерениями "
+"раздвигаются..."
 
 #: teleport.lua
 #, c-format
@@ -2904,7 +3691,8 @@ msgstr "Поиск подходящего места..."
 #: teleport.lua
 #, c-format
 msgid "Your scouting reveals a %dx%d area around the landing zone."
-msgstr "Благодаря разведке вам открывается область %dx%d вокруг места приземления."
+msgstr ""
+"Благодаря разведке вам открывается область %dx%d вокруг места приземления."
 
 #: teleport.lua
 #, c-format
@@ -2912,8 +3700,11 @@ msgid "You arrive at the %s!"
 msgstr "Вы прибываете на место: %s!"
 
 #: teleport.lua
-msgid "Find the red room exit portal to return home before warp sickness kills you."
-msgstr "Найдите портал возвращения в красной комнате и вернитесь домой, пока недомогание от искажения не убило вас."
+msgid ""
+"Find the red room exit portal to return home before warp sickness kills you."
+msgstr ""
+"Найдите портал возвращения в красной комнате и вернитесь домой, пока "
+"недомогание от искажения не убило вас."
 
 #: teleport.lua
 msgid "You are already home!"
@@ -2941,10 +3732,13 @@ msgstr "Вместе с вами вернутся только те предме
 
 #: teleport.lua
 msgid "Without a Vortex Token, only items you carry will return with you."
-msgstr "Без жетона вихря вместе с вами вернутся только те предметы, которые вы несёте с собой."
+msgstr ""
+"Без жетона вихря вместе с вами вернутся только те предметы, которые вы "
+"несёте с собой."
 
 #: teleport.lua
-msgid "The Vortex Token crumbles as it pulls the room's contents into the warp!"
+msgid ""
+"The Vortex Token crumbles as it pulls the room's contents into the warp!"
 msgstr "Жетон вихря рассыпается, затягивая содержимое комнаты в искажение!"
 
 #: teleport.lua
@@ -2975,7 +3769,9 @@ msgstr "Статистика: успешно завершено вылазок �
 
 #: teleport.lua
 msgid "Your belongings scatter as reality tears you away..."
-msgstr "Ваши вещи разлетаются в разные стороны, пока сама реальность вырывает вас отсюда..."
+msgstr ""
+"Ваши вещи разлетаются в разные стороны, пока сама реальность вырывает вас "
+"отсюда..."
 
 #: teleport.lua
 #, c-format
@@ -2992,8 +3788,12 @@ msgstr "открытое пространство"
 
 #. ~ Description for open air
 #: terrain.json
-msgid "This is the edge of the island. A metaphysical border stops you from going over the edge yourself, but anything you drop here will be gone forever."
-msgstr "Здесь заканчивается остров. Невидимая метафизическая преграда не даст вам упасть с края, но всё, что вы сюда сбросите, исчезнет навсегда."
+msgid ""
+"This is the edge of the island. A metaphysical border stops you from going "
+"over the edge yourself, but anything you drop here will be gone forever."
+msgstr ""
+"Здесь заканчивается остров. Невидимая метафизическая преграда не даст вам "
+"упасть с края, но всё, что вы сюда сбросите, исчезнет навсегда."
 
 #: terrain.json
 msgid "warped rock"
@@ -3001,104 +3801,218 @@ msgstr "искажённый камень"
 
 #. ~ Description for warped rock
 #: terrain.json
-msgid "A sparkly-black stone that's glassy smooth to the touch. Seems indestructible by normal means."
-msgstr "Чёрный камень с мерцающими искорками, гладкий на ощупь, словно стекло. Похоже, обычными способами его не разрушить."
+msgid ""
+"A sparkly-black stone that's glassy smooth to the touch. Seems "
+"indestructible by normal means."
+msgstr ""
+"Чёрный камень с мерцающими искорками, гладкий на ощупь, словно стекло. "
+"Похоже, обычными способами его не разрушить."
 
 #: upgrades.lua
-msgid "Your resistance to the chaos of the warpstream increases. In every future expedition, you will be able to endure an additional warp pulse and stay earthside longer. (9 pulses)"
-msgstr "Ваша устойчивость к хаосу потока искажения возрастает. Во всех последующих экспедициях вы сможете выдержать на один импульс искажения больше и дольше оставаться за пределами острова. (9 импульсов)"
+msgid ""
+"Your resistance to the chaos of the warpstream increases. In every future "
+"expedition, you will be able to endure an additional warp pulse and stay "
+"earthside longer. (9 pulses)"
+msgstr ""
+"Ваша устойчивость к хаосу потока искажения возрастает. Во всех последующих "
+"экспедициях вы сможете выдержать на один импульс искажения больше и дольше "
+"оставаться за пределами острова. (9 импульсов)"
 
 #: upgrades.lua
-msgid "Your resistance to the chaos of the warpstream increases. In every future expedition, you will be able to endure an additional warp pulse and stay earthside longer. (10 pulses)"
-msgstr "Ваша устойчивость к хаосу потока искажения возрастает. Во всех последующих экспедициях вы сможете выдержать на один импульс искажения больше и дольше оставаться за пределами острова. (10 импульсов)"
+msgid ""
+"Your resistance to the chaos of the warpstream increases. In every future "
+"expedition, you will be able to endure an additional warp pulse and stay "
+"earthside longer. (10 pulses)"
+msgstr ""
+"Ваша устойчивость к хаосу потока искажения возрастает. Во всех последующих "
+"экспедициях вы сможете выдержать на один импульс искажения больше и дольше "
+"оставаться за пределами острова. (10 импульсов)"
 
 #: upgrades.lua
-msgid "Your resistance to the chaos of the warpstream increases. In every future expedition, you will be able to endure an additional warp pulse and stay earthside longer. (11 pulses)"
-msgstr "Ваша устойчивость к хаосу потока искажения возрастает. Во всех последующих экспедициях вы сможете выдержать на один импульс искажения больше и дольше оставаться за пределами острова. (11 импульсов)"
+msgid ""
+"Your resistance to the chaos of the warpstream increases. In every future "
+"expedition, you will be able to endure an additional warp pulse and stay "
+"earthside longer. (11 pulses)"
+msgstr ""
+"Ваша устойчивость к хаосу потока искажения возрастает. Во всех последующих "
+"экспедициях вы сможете выдержать на один импульс искажения больше и дольше "
+"оставаться за пределами острова. (11 импульсов)"
 
 #: upgrades.lua
-msgid "Your vision expands. A 3x3 area around your landing zone will be revealed on future expeditions."
-msgstr "Ваше поле зрения расширяется. В будущих экспедициях вам будет открываться область 3×3 вокруг места приземления."
+msgid ""
+"Your vision expands. A 3x3 area around your landing zone will be revealed on"
+" future expeditions."
+msgstr ""
+"Ваше поле зрения расширяется. В будущих экспедициях вам будет открываться "
+"область 3×3 вокруг места приземления."
 
 #: upgrades.lua
-msgid "Your foresight sharpens. A 5x5 area around your landing zone will be revealed on future expeditions."
-msgstr "Вы лучше предвидите, что ждёт впереди. В будущих экспедициях вам будет открываться область 5×5 вокруг места приземления."
+msgid ""
+"Your foresight sharpens. A 5x5 area around your landing zone will be "
+"revealed on future expeditions."
+msgstr ""
+"Вы лучше предвидите, что ждёт впереди. В будущих экспедициях вам будет "
+"открываться область 5×5 вокруг места приземления."
 
 #: upgrades.lua
-msgid "The paths multiply. Two return obelisks will now spawn per expedition, giving you more options to escape."
-msgstr "Путей к спасению стало больше. Теперь в каждой экспедиции будут появляться два обелиска возвращения, и у вас будет больше возможностей выбраться."
+msgid ""
+"The paths multiply. Two return obelisks will now spawn per expedition, "
+"giving you more options to escape."
+msgstr ""
+"Путей к спасению стало больше. Теперь в каждой экспедиции будут появляться "
+"два обелиска возвращения, и у вас будет больше возможностей выбраться."
 
 #: upgrades.lua
-msgid "Large Expeditions are now available at the warp obelisk. You will have double the grace period before warp sickness sets in."
-msgstr "Большие экспедиции разблокированы. Теперь у обелиска искажения вы можете выбрать экспедицию, в которой до появления недомогания от искажения пройдёт вдвое больше времени."
+msgid ""
+"Large Expeditions are now available at the warp obelisk. You will have "
+"double the grace period before warp sickness sets in."
+msgstr ""
+"Большие экспедиции разблокированы. Теперь у обелиска искажения вы можете "
+"выбрать экспедицию, в которой до появления недомогания от искажения пройдёт "
+"вдвое больше времени."
 
 #: upgrades.lua
-msgid "Extended Expeditions are now available. You will have triple the grace period for maximum exploration time."
-msgstr "Продлённые экспедиции разблокированы. Теперь у вас будет втрое больше времени до появления недомогания от искажения, чтобы успеть исследовать как можно больше."
+msgid ""
+"Extended Expeditions are now available. You will have triple the grace "
+"period for maximum exploration time."
+msgstr ""
+"Продлённые экспедиции разблокированы. Теперь у вас будет втрое больше "
+"времени до появления недомогания от искажения, чтобы успеть исследовать как "
+"можно больше."
 
 #: upgrades.lua
-msgid "Basement starts are now available at the warp obelisk. You can choose to begin expeditions in underground basements."
-msgstr "Возможность начинать экспедиции в подвалах разблокирована. Теперь у обелиска искажения вы можете выбрать отправной точкой подвал здания."
+msgid ""
+"Basement starts are now available at the warp obelisk. You can choose to "
+"begin expeditions in underground basements."
+msgstr ""
+"Возможность начинать экспедиции в подвалах разблокирована. Теперь у обелиска"
+" искажения вы можете выбрать отправной точкой подвал здания."
 
 #: upgrades.lua
-msgid "Rooftop starts are now available at the warp obelisk. You can choose to begin expeditions on building rooftops."
-msgstr "Возможность начинать экспедиции на крышах разблокирована. Теперь у обелиска искажения вы можете выбрать отправной точкой крышу здания."
+msgid ""
+"Rooftop starts are now available at the warp obelisk. You can choose to "
+"begin expeditions on building rooftops."
+msgstr ""
+"Возможность начинать экспедиции на крышах разблокирована. Теперь у обелиска "
+"искажения вы можете выбрать отправной точкой крышу здания."
 
 #: upgrades.lua
-msgid "Lab starts are now available at the warp obelisk. You can choose to begin expeditions in underground science labs. Be warned: you will need a Labs Catalyst each time, and you will start sealed inside!"
-msgstr "Возможность начинать экспедиции в лабораториях разблокирована. Теперь у обелиска искажения вы можете выбрать отправной точкой подземную научную лабораторию. Но будьте осторожны: для каждой такой экспедиции потребуется катализатор лаборатории, а начинать вы будете в запертой лаборатории!"
+msgid ""
+"Lab starts are now available at the warp obelisk. You can choose to begin "
+"expeditions in underground science labs. Be warned: you will need a Labs "
+"Catalyst each time, and you will start sealed inside!"
+msgstr ""
+"Возможность начинать экспедиции в лабораториях разблокирована. Теперь у "
+"обелиска искажения вы можете выбрать отправной точкой подземную научную "
+"лабораторию. Но будьте осторожны: для каждой такой экспедиции потребуется "
+"катализатор лаборатории, а начинать вы будете в запертой лаборатории!"
 
 #: upgrades.lua
-msgid "Scouting Clairvoyance I unlocked. You will see everything near you for 20 seconds when beginning an expedition."
-msgstr "Ясновидение разведчика I разблокировано. В начале каждой экспедиции вы сможете видеть всё вокруг себя в течение 20 секунд."
+msgid ""
+"Scouting Clairvoyance I unlocked. You will see everything near you for 20 "
+"seconds when beginning an expedition."
+msgstr ""
+"Ясновидение разведчика I разблокировано. В начале каждой экспедиции вы "
+"сможете видеть всё вокруг себя в течение 20 секунд."
 
 #: upgrades.lua
-msgid "Scouting Clairvoyance II unlocked. You will see everything near you for 60 seconds when beginning an expedition."
-msgstr "Ясновидение разведчика II разблокировано. В начале каждой экспедиции вы сможете видеть всё вокруг себя в течение 60 секунд."
+msgid ""
+"Scouting Clairvoyance II unlocked. You will see everything near you for 60 "
+"seconds when beginning an expedition."
+msgstr ""
+"Ясновидение разведчика II разблокировано. В начале каждой экспедиции вы "
+"сможете видеть всё вокруг себя в течение 60 секунд."
 
 #: upgrades.lua
-msgid "Expedition Missions unlocked. Every expedition now offers 1 randomly assigned bonus mission, which rewards warp shards on completion."
-msgstr "Задания экспедиций разблокированы. Теперь в каждой экспедиции вам будет доступно 1 случайное дополнительное задание, за выполнение которого вы получите осколки искажения."
+msgid ""
+"Expedition Missions unlocked. Every expedition now offers 1 randomly "
+"assigned bonus mission, which rewards warp shards on completion."
+msgstr ""
+"Задания экспедиций разблокированы. Теперь в каждой экспедиции вам будет "
+"доступно 1 случайное дополнительное задание, за выполнение которого вы "
+"получите осколки искажения."
 
 #: upgrades.lua
-msgid "Two Missions unlocked. Every expedition now offers 2 randomly assigned bonus missions."
-msgstr "Два задания разблокированы. Теперь в каждой экспедиции вам будут доступны 2 случайных дополнительных задания."
+msgid ""
+"Two Missions unlocked. Every expedition now offers 2 randomly assigned bonus"
+" missions."
+msgstr ""
+"Два задания разблокированы. Теперь в каждой экспедиции вам будут доступны 2 "
+"случайных дополнительных задания."
 
 #: upgrades.lua
-msgid "Three Missions unlocked. Every expedition now offers 3 randomly assigned bonus missions."
-msgstr "Три задания разблокированы. Теперь в каждой экспедиции вам будут доступны 3 случайных дополнительных задания."
+msgid ""
+"Three Missions unlocked. Every expedition now offers 3 randomly assigned "
+"bonus missions."
+msgstr ""
+"Три задания разблокированы. Теперь в каждой экспедиции вам будут доступны 3 "
+"случайных дополнительных задания."
 
 #: upgrades.lua
-msgid "Four Missions unlocked. Every expedition now offers 4 randomly assigned bonus missions."
-msgstr "Четыре задания разблокированы. Теперь в каждой экспедиции вам будут доступны 4 случайных дополнительных задания."
+msgid ""
+"Four Missions unlocked. Every expedition now offers 4 randomly assigned "
+"bonus missions."
+msgstr ""
+"Четыре задания разблокированы. Теперь в каждой экспедиции вам будут доступны"
+" 4 случайных дополнительных задания."
 
 #: upgrades.lua
-msgid "Five Missions unlocked. Every expedition now offers 5 randomly assigned bonus missions."
-msgstr "Пять заданий разблокированы. Теперь в каждой экспедиции вам будет доступно 5 случайных дополнительных заданий."
+msgid ""
+"Five Missions unlocked. Every expedition now offers 5 randomly assigned "
+"bonus missions."
+msgstr ""
+"Пять заданий разблокированы. Теперь в каждой экспедиции вам будут доступны 5"
+" случайных дополнительных заданий."
 
 #: upgrades.lua
-msgid "Harder Missions unlocked. More challenging bonus missions with greater rewards are now available."
-msgstr "Задания повышенной сложности разблокированы. Теперь вам доступны более сложные дополнительные задания с более ценными наградами."
+msgid ""
+"Harder Missions unlocked. More challenging bonus missions with greater "
+"rewards are now available."
+msgstr ""
+"Задания повышенной сложности разблокированы. Теперь вам доступны более "
+"сложные дополнительные задания с более ценными наградами."
 
 #: upgrades.lua
-msgid "Hardest Missions unlocked. The most dangerous bonus missions with the greatest rewards are now available."
-msgstr "Самые сложные задания разблокированы. Теперь вам доступны самые опасные дополнительные задания с самыми ценными наградами."
+msgid ""
+"Hardest Missions unlocked. The most dangerous bonus missions with the "
+"greatest rewards are now available."
+msgstr ""
+"Самые сложные задания разблокированы. Теперь вам доступны самые опасные "
+"дополнительные задания с самыми ценными наградами."
 
 #: upgrades.lua
-msgid "Slaughter Missions unlocked. You will now receive a slaughter mission during each expedition, rewarding warp shards for killing specific types of enemies."
-msgstr "Задания на истребление разблокированы. Теперь во время каждой экспедиции вы будете получать задание на уничтожение определённых видов врагов с наградой в виде осколков искажения."
+msgid ""
+"Slaughter Missions unlocked. You will now receive a slaughter mission during"
+" each expedition, rewarding warp shards for killing specific types of "
+"enemies."
+msgstr ""
+"Задания на истребление разблокированы. Теперь во время каждой экспедиции вы "
+"будете получать задание на уничтожение определённых видов врагов с наградой "
+"в виде осколков искажения."
 
 #: upgrades.lua
-msgid "Landing Flight unlocked. While under the warpcloak effect on landing, you gain the power of flight for 60 seconds."
-msgstr "Полёт при приземлении разблокирован. Если при приземлении на вас действует эффект покрова искажения, вы получаете способность летать на 60 секунд."
+msgid ""
+"Landing Flight unlocked. While under the warpcloak effect on landing, you "
+"gain the power of flight for 60 seconds."
+msgstr ""
+"Полёт при приземлении разблокирован. Если при приземлении на вас действует "
+"эффект покрова искажения, вы получаете способность летать на 60 секунд."
 
 #: upgrades.lua
-msgid "Your determination is proven! You have achieved the rank of Adept. Rank challenge complete!"
-msgstr "Ваша решимость доказана! Вы достигли ранга Адепта. Испытание для повышения ранга пройдено!"
+msgid ""
+"Your determination is proven! You have achieved the rank of Adept. Rank "
+"challenge complete!"
+msgstr ""
+"Ваша решимость доказана! Вы достигли ранга Адепта. Испытание для повышения "
+"ранга пройдено!"
 
 #: upgrades.lua
-msgid "Your mastery is proven! You have achieved the highest rank. Rank challenge complete!"
-msgstr "Ваше мастерство доказано! Вы достигли высшего ранга. Испытание для повышения ранга пройдено!"
+msgid ""
+"Your mastery is proven! You have achieved the highest rank. Rank challenge "
+"complete!"
+msgstr ""
+"Ваше мастерство доказано! Вы достигли высшего ранга. Испытание для повышения"
+" ранга пройдено!"
 
 #: upgrades.lua
 msgid "ERROR: Unknown upgrade key: "
@@ -3118,23 +4032,29 @@ msgstr "Сначала необходимо разблокировать пре�
 
 #: upgrades.lua
 msgid "You need at least 10 successful expeditions to use this."
-msgstr "Для использования необходимо успешно завершить не менее 10 экспедиций."
+msgstr ""
+"Для использования необходимо успешно завершить не менее 10 экспедиций."
 
 #: upgrades.lua
 msgid "You need at least 20 successful expeditions to use this."
-msgstr "Для использования необходимо успешно завершить не менее 20 экспедиций."
+msgstr ""
+"Для использования необходимо успешно завершить не менее 20 экспедиций."
 
 #: vehicles.json
 msgid "warp raft"
 msgstr "плот искажения"
 
 #: warp_sickness.lua
-msgid "<color_light_red>[Warp Pulse] WARNING: This is your last safe pulse! The next pulse will begin warp sickness.</color>"
-msgstr "<color_light_red>[Импульс искажения] ВНИМАНИЕ! Это последний безопасный импульс! Следующий импульс вызовет недомогание от искажения.</color>"
+msgid ""
+"<color_light_red>[Warp Pulse] WARNING: This is your last safe pulse! The "
+"next pulse will begin warp sickness.</color>"
+msgstr ""
+"<color_light_red>[Импульс искажения] ВНИМАНИЕ! Это последний безопасный "
+"импульс! Следующий импульс вызовет недомогание от искажения.</color>"
 
 #: warp_sickness.lua
 msgid "[Press any key to continue]"
-msgstr "[Нажмите любую клавишу, чтобы продолжить]"
+msgstr "[Нажмите любую клавишу для продолжения]"
 
 #: warp_sickness.lua
 msgid ""
@@ -3158,8 +4078,12 @@ msgstr ""
 
 #: warp_sickness.lua
 #, c-format
-msgid "<color_yellow>[Warp Pulse] The warp begins to tug at you... Safe pulses remaining: %d (~%d min).</color>"
-msgstr "<color_yellow>[Импульс искажения] Вы чувствуете, как искажение начинает тянуть вас к себе... Безопасных импульсов осталось: %d (~%d мин).</color>"
+msgid ""
+"<color_yellow>[Warp Pulse] The warp begins to tug at you... Safe pulses "
+"remaining: %d (~%d min).</color>"
+msgstr ""
+"<color_yellow>[Импульс искажения] Вы чувствуете, как искажение начинает "
+"тянуть вас к себе... Безопасных импульсов осталось: %d (~%d мин).</color>"
 
 #: warp_sickness.lua
 #, c-format
@@ -3180,8 +4104,12 @@ msgstr ""
 
 #: warp_sickness.lua
 #, c-format
-msgid "[Warp Pulse] You feel a faint tingling of warp energy. Safe pulses remaining: %d (~%d min)."
-msgstr "[Импульс искажения] Вы чувствуете лёгкое покалывание от энергии искажения. Безопасных импульсов осталось: %d (~%d мин)."
+msgid ""
+"[Warp Pulse] You feel a faint tingling of warp energy. Safe pulses "
+"remaining: %d (~%d min)."
+msgstr ""
+"[Импульс искажения] Вы чувствуете лёгкое покалывание от энергии искажения. "
+"Безопасных импульсов осталось: %d (~%d мин)."
 
 #: warp_sickness.lua
 msgid ""
@@ -3193,8 +4121,12 @@ msgstr ""
 
 #: warp_sickness.lua
 #, c-format
-msgid "<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to disintegration.</color>"
-msgstr "<color_light_red>[Импульс искажения] СОСТОЯНИЕ: %s (%d/6). Характеристики: -%d. До распада осталось %d импульсов.</color>"
+msgid ""
+"<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to "
+"disintegration.</color>"
+msgstr ""
+"<color_light_red>[Импульс искажения] СОСТОЯНИЕ: %s (%d/6). Характеристики: "
+"-%d. До распада осталось %d импульсов.</color>"
 
 #: warp_sickness.lua
 msgid ""
@@ -3233,8 +4165,12 @@ msgstr ""
 
 #: warp_sickness.lua
 #, c-format
-msgid "<color_red>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to disintegration!</color>"
-msgstr "<color_red>[Импульс искажения] %s (%d/6). Характеристики: -%d. До распада осталось %d импульсов!</color>"
+msgid ""
+"<color_red>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
+"disintegration!</color>"
+msgstr ""
+"<color_red>[Импульс искажения] %s (%d/6). Характеристики: -%d. До распада "
+"осталось %d импульсов!</color>"
 
 #: warp_sickness.lua
 msgid ""
@@ -3249,8 +4185,12 @@ msgid "Your body is failing!\n"
 msgstr "Ваш организм отказывает!\n"
 
 #: warp_sickness.lua
-msgid "<color_red>[Warp Pulse] !!! WARP DISINTEGRATION !!! You are being unmade!</color>"
-msgstr "<color_red>[Импульс искажения] !!! РАСПАД ОТ ИСКАЖЕНИЯ !!! Ваше тело распадается!</color>"
+msgid ""
+"<color_red>[Warp Pulse] !!! WARP DISINTEGRATION !!! You are being "
+"unmade!</color>"
+msgstr ""
+"<color_red>[Импульс искажения] !!! РАСПАД ОТ ИСКАЖЕНИЯ !!! Вас буквально "
+"стирает из реальности!</color>"
 
 #: warp_sickness.lua
 msgid ""

@@ -13,6 +13,16 @@ game.iuse_functions["SKYISLAND_RETURN_OBELISK"] = {
   use = function(params) return mod.use_return_obelisk(params.user, params.item, params.pos) end
 }
 
+-- Furniture examine functions call Lua directly so dimension travel does not
+-- invalidate the temporary fake item used by use_furn_fake_item.
+game.examine_functions["SKYISLAND_WARP_OBELISK"] = function(params)
+  return mod.use_warp_obelisk(params.user, nil, params.pos)
+end
+
+game.examine_functions["SKYISLAND_RETURN_OBELISK"] = function(params)
+  return mod.use_return_obelisk(params.user, nil, params.pos)
+end
+
 game.iuse_functions["SKYISLAND_HEART_MENU"] = {
   use = function(params) return mod.use_heart_menu(params.user, params.item, params.pos) end
 }
@@ -164,23 +174,19 @@ game.iuse_functions["SKYISLAND_IMPRINT_CVD_PANEL"] = {
 }
 
 -- Register hooks
-table.insert(game.hooks.on_game_started, function(...)
+game.add_hook("on_game_started", function(...)
   return mod.on_game_started(...)
 end)
 
-table.insert(game.hooks.on_game_load, function(...)
+game.add_hook("on_game_load", function(...)
   return mod.on_game_load(...)
 end)
 
-table.insert(game.hooks.on_game_save, function(...)
+game.add_hook("on_game_save", function(...)
   return mod.on_game_save(...)
 end)
 
--- table.insert(game.hooks.on_char_death, function(...)
---   return mod.on_char_death(...)
--- end)
-
-table.insert(game.hooks.on_character_death, function(...)
+game.add_hook("on_character_death", function(...)
   return mod.on_character_death(...)
 end)
 

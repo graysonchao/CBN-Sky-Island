@@ -53,6 +53,7 @@ local function setup()
       to_omt = function() return position(0, 0, 0) end } end,
   }
   env.gapi = {
+    rng = function(low, high) return low end,
     get_avatar = function() return state.player end,
     get_map = function() return map end,
     get_monster_at = function() return nil end,
@@ -75,7 +76,7 @@ local function setup()
     return { add_type = function() end, set_search_range = function() end,
       set_search_layers = function() end }
   end }
-  env.overmapbuffer = { find_random = function() return nil end }
+  env.overmapbuffer = { find_closest = function() return nil end, find_random = function() return nil end }
   env.game = { current_mod = "sky_test", mod_runtime = { sky_test = {} },
     mod_storage = { sky_test = {} } }
   state.modules.util = { debug_log = function() end }
@@ -158,13 +159,13 @@ end)
 test("warp focus translates shard message and preserves cost", function()
   local s = setup()
   for _, name in ipairs({ "missions", "warp_sickness", "heart", "upgrades", "iuse" }) do s.modules[name] = {} end
-  s.modules.teleport = { return_home_success = function() s.returned_home = true end }
+  s.modules.teleport = { return_home_success = function() s.returned_home = true; return true end, cleanup_raid_dimension = function() s.cleaned = true end }
   local storage = s.env.game.mod_storage.sky_test
   storage.is_away_from_home = true
   storage.difficulty_emergency_return = 1
   s.load("main")
   equal(s.env.game.mod_runtime.sky_test.use_warp_focus(), 0)
-  equal(s.messages[1], s.tr("A warp shard crumbles to dust as the focus activates!"))
+  equal(s.messages[#s.messages], s.tr("A warp shard crumbles to dust as the focus activates!"))
   equal(s.charges, 1)
   equal(s.returned_home, true)
 end)
@@ -173,7 +174,7 @@ test("failed lab warp translates failure/refund and returns catalyst", function(
   local s = setup()
   local teleport = s.load("teleport")
   s.choices = { 1, 2 } -- short raid, then labs (the other locations are locked)
-  local storage = { home_location = { x = 0, y = 0, z = 0 }, labs_unlocked = true }
+  local storage = { home_location = { x = 0, y = 0, z = 0 }, home_omt = { x = 0, y = 0, z = 0 }, labs_unlocked = true }
   equal(teleport.use_warp_obelisk(s.player, nil, nil, storage, {}, {}), 0)
   equal(s.messages[#s.messages - 1], s.tr("WARNING: Could not find suitable terrain. Aborting warp."))
   equal(s.messages[#s.messages], s.tr("Your Labs Catalyst is returned."))
