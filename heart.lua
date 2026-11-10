@@ -705,7 +705,7 @@ local function get_setting_name(category, current_value, value_field)
       return setting.name
     end
   end
-  return "Unknown"
+  return locale.gettext("Unknown")
 end
 
 -- Difficulty settings main menu

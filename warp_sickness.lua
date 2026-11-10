@@ -26,16 +26,25 @@ end
 local EFFECT_WARP_SICKNESS = EffectTypeId.new("skyisland_warpsickness")
 local EFFECT_DISINTEGRATION = EffectTypeId.new("skyisland_warpdisintegration")
 
--- Status names for each intensity level
-local STATUS_NAMES = {
-  [0] = "Stable",
-  [1] = "Warp Sickness",
-  [2] = "Warp Nausea",
-  [3] = "Warp Debilitation",
-  [4] = "Warp Necrosis",
-  [5] = "Warp Disintegration",
-  [6] = "CRITICAL"
-}
+-- Translate status labels when displayed, so they follow the current language.
+---@param intensity integer
+---@return string
+local function get_status_name(intensity)
+  if intensity == 0 then
+    return locale.gettext("Stable")
+  elseif intensity == 1 then
+    return locale.gettext("Warp Sickness")
+  elseif intensity == 2 then
+    return locale.gettext("Warp Nausea")
+  elseif intensity == 3 then
+    return locale.gettext("Warp Debilitation")
+  elseif intensity == 4 then
+    return locale.gettext("Warp Necrosis")
+  elseif intensity == 5 then
+    return locale.gettext("Warp Disintegration")
+  end
+  return locale.gettext("CRITICAL")
+end
 
 -- Get current warp status info for display
 function warp_sickness.get_status_info(storage)
@@ -50,7 +59,7 @@ function warp_sickness.get_status_info(storage)
     in_grace_period = pulse <= grace_period,
     pulses_remaining = 0,
     current_intensity = 0,
-    status_name = "Stable",
+    status_name = get_status_name(0),
     pulses_to_disintegration = 0
   }
 
@@ -63,7 +72,7 @@ function warp_sickness.get_status_info(storage)
     else
       info.current_intensity = pulse - grace_period
     end
-    info.status_name = STATUS_NAMES[info.current_intensity] or "CRITICAL"
+    info.status_name = get_status_name(info.current_intensity)
     info.pulses_to_disintegration = math.max(0, MAX_WARP_SICKNESS_INTENSITY - info.current_intensity)
   end
 
@@ -155,7 +164,7 @@ local function process_warp_pulse(storage)
   -- Apply or update warp sickness effect
   player:add_effect(EFFECT_WARP_SICKNESS, TimeDuration.from_hours(999))
   local current_intensity = player:get_effect_int(EFFECT_WARP_SICKNESS)
-  local status_name = STATUS_NAMES[current_intensity] or "CRITICAL"
+  local status_name = get_status_name(current_intensity)
   local pulses_to_doom = MAX_WARP_SICKNESS_INTENSITY - current_intensity
 
   util.debug_log(string.format("Warp sickness applied/updated, intensity now: %d", current_intensity))
@@ -205,15 +214,15 @@ local function process_warp_pulse(storage)
       Color.c_light_red)
   else
     -- Mild - yellow
-    gapi.add_msg(string.format("<color_yellow>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to disintegration.</color>",
+    gapi.add_msg(string.format(locale.gettext("<color_yellow>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to disintegration.</color>"),
       status_name, current_intensity, current_intensity * 2, pulses_to_doom))
     show_pulse_dialog(
-      string.format("=== WARP PULSE ===\n\n" ..
-        "STATUS: %s (Intensity %d/6)\n\n" ..
-        "The warp begins to affect you.\n" ..
-        "Stats: -%d to all\n" ..
-        "Pulses until disintegration: %d\n\n" ..
-        "[Press any key to continue]",
+      string.format(locale.gettext("=== WARP PULSE ===\n\n") ..
+        locale.gettext("STATUS: %s (Intensity %d/6)\n\n") ..
+        locale.gettext("The warp begins to affect you.\n") ..
+        locale.gettext("Stats: -%d to all\n") ..
+        locale.gettext("Pulses until disintegration: %d\n\n") ..
+        locale.gettext("[Press any key to continue]"),
         status_name, current_intensity, current_intensity * 2, pulses_to_doom),
       Color.c_yellow)
   end
