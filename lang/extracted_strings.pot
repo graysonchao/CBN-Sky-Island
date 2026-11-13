@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CBN_Sky_Island\n"
-"POT-Creation-Date: 2026-11-02 02:47+0300\n"
+"POT-Creation-Date: 2026-11-13 19:38+0300\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,19 +116,19 @@ msgstr ""
 msgid "Warp Stability"
 msgstr ""
 
-#: ./effects.json
+#: ./effects.json ./warp_sickness.lua
 msgid "Warp Sickness"
 msgstr ""
 
-#: ./effects.json
+#: ./effects.json ./warp_sickness.lua
 msgid "Warp Nausea"
 msgstr ""
 
-#: ./effects.json
+#: ./effects.json ./warp_sickness.lua
 msgid "Warp Debilitation"
 msgstr ""
 
-#: ./effects.json
+#: ./effects.json ./warp_sickness.lua
 msgid "Warp Necrosis"
 msgstr ""
 
@@ -1132,6 +1132,10 @@ msgstr ""
 
 #: ./heart.lua
 msgid "The basement has reached its maximum size! Your sanctuary is complete."
+msgstr ""
+
+#: ./heart.lua
+msgid "Unknown"
 msgstr ""
 
 #: ./heart.lua
@@ -2281,6 +2285,30 @@ msgstr ""
 msgid "You now have an activated %s copyplate."
 msgstr ""
 
+#: ./iuse.lua
+msgid "Autodoc"
+msgstr ""
+
+#: ./iuse.lua
+msgid "Autodoc Couch"
+msgstr ""
+
+#: ./iuse.lua
+msgid "Nanofabricator"
+msgstr ""
+
+#: ./iuse.lua
+msgid "Nanofabricator Control Panel"
+msgstr ""
+
+#: ./iuse.lua
+msgid "CVD Machine"
+msgstr ""
+
+#: ./iuse.lua
+msgid "CVD Control Panel"
+msgstr ""
+
 #: ./main.lua
 msgid "The quickheal pill only works on your sanctuary island."
 msgstr ""
@@ -2326,6 +2354,10 @@ msgstr ""
 msgid ""
 "The focus flares with brilliant light. You feel yourself being pulled "
 "skyward..."
+msgstr ""
+
+#: ./main.lua
+msgid "A warp shard crumbles to dust as the focus activates!"
 msgstr ""
 
 #: ./main.lua
@@ -3005,7 +3037,22 @@ msgid ""
 msgstr ""
 
 #: ./teleport.lua
+msgid "ERROR: Could not enter the Sky Island pocket dimension."
+msgstr ""
+
+#: ./teleport.lua
 msgid "You feel reality shift around you..."
+msgstr ""
+
+#: ./teleport.lua
+msgid "ERROR: Could not return to the Sky Island home dimension."
+msgstr ""
+
+#: ./teleport.lua
+#, c-format
+msgid ""
+"ERROR: Could not delete expedition dimension '%s'. It will be retried before"
+" the next expedition."
 msgstr ""
 
 #: ./teleport.lua
@@ -3014,11 +3061,6 @@ msgstr ""
 
 #: ./teleport.lua
 msgid "Your feet touch the ground as the warp flight fades."
-msgstr ""
-
-#: ./teleport.lua
-#, c-format
-msgid "%d island animal%s returned home safely!"
 msgstr ""
 
 #: ./teleport.lua
@@ -3074,6 +3116,18 @@ msgstr ""
 
 #: ./teleport.lua
 msgid "Searching for suitable location..."
+msgstr ""
+
+#: ./teleport.lua
+msgid "WARNING: Could not create a fresh expedition dimension. Aborting warp."
+msgstr ""
+
+#: ./teleport.lua
+msgid "Your Labs Catalyst is returned."
+msgstr ""
+
+#: ./teleport.lua
+msgid "WARNING: Could not find suitable terrain. Aborting warp."
 msgstr ""
 
 #: ./teleport.lua
@@ -3363,6 +3417,18 @@ msgid "warp raft"
 msgstr ""
 
 #: ./warp_sickness.lua
+msgid "Warp Disintegration"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "Stable"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "CRITICAL"
+msgstr ""
+
+#: ./warp_sickness.lua
 msgid ""
 "<color_light_red>[Warp Pulse] WARNING: This is your last safe pulse! The "
 "next pulse will begin warp sickness.</color>"
@@ -3424,14 +3490,8 @@ msgstr ""
 #: ./warp_sickness.lua
 #, c-format
 msgid ""
-"<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to "
+"<color_yellow>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
 "disintegration.</color>"
-msgstr ""
-
-#: ./warp_sickness.lua
-msgid ""
-"Consider returning home soon.\n"
-"\n"
 msgstr ""
 
 #: ./warp_sickness.lua
@@ -3447,7 +3507,7 @@ msgid "Stats: -%d to all\n"
 msgstr ""
 
 #: ./warp_sickness.lua
-msgid "The warp sickness grows stronger.\n"
+msgid "The warp begins to affect you.\n"
 msgstr ""
 
 #: ./warp_sickness.lua
@@ -3455,6 +3515,23 @@ msgstr ""
 msgid ""
 "STATUS: %s (Intensity %d/6)\n"
 "\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+#, c-format
+msgid ""
+"<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to "
+"disintegration.</color>"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid ""
+"Consider returning home soon.\n"
+"\n"
+msgstr ""
+
+#: ./warp_sickness.lua
+msgid "The warp sickness grows stronger.\n"
 msgstr ""
 
 #: ./warp_sickness.lua
