@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CBN_Sky_Island\n"
-"POT-Creation-Date: 2026-10-08 14:31+0300\n"
+"POT-Creation-Date: 2026-11-13 19:38+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: midgardormr <midgardormr@gmail.com>\n"
 "Language-Team: \n"
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Resurrection Sickness"
 msgstr "Воскрешение: недомогание"
 
-#. ~ Description of effect 'Resurrection Sickness'.
+#. ~ desc of effect 'skyisland_resurrection_sickness'
 #: effects.json
 msgid ""
 "Your body is recovering from death. Your limbs are being forcibly stabilized"
@@ -129,7 +129,27 @@ msgstr "Состояние вашего тела стабилизировало�
 msgid "Warp Stability"
 msgstr "Устойчивость к искажению"
 
-#. ~ Description of effect 'Warp Stability'.
+#: effects.json warp_sickness.lua
+msgid "Warp Sickness"
+msgstr "Недомогание от искажения"
+
+#: effects.json warp_sickness.lua
+msgid "Warp Nausea"
+msgstr "Тошнота от искажения"
+
+#: effects.json warp_sickness.lua
+msgid "Warp Debilitation"
+msgstr "Истощение от искажения"
+
+#: effects.json warp_sickness.lua
+msgid "Warp Necrosis"
+msgstr "Некроз от искажения"
+
+#: effects.json
+msgid "Warp Disintegration!"
+msgstr "Распад от искажения!"
+
+#. ~ desc of effect 'skyisland_warpsickness'
 #: effects.json
 msgid ""
 "You're fresh from your stay at your sanctuary island.  The intangible miasma"
@@ -143,11 +163,7 @@ msgstr ""
 "слишком надолго, ваше самочувствие начнёт постепенно ухудшаться, а "
 "изнурительные последствия будут становиться всё тяжелее."
 
-#: effects.json
-msgid "Warp Sickness"
-msgstr "Недомогание от искажения"
-
-#. ~ Description of effect 'Warp Sickness'.
+#. ~ desc of effect 'skyisland_warpsickness'
 #: effects.json
 msgid ""
 "You've overstayed your time earthside.  It's getting hard to concentrate, "
@@ -161,11 +177,7 @@ msgstr ""
 "переместиться обратно на остров, чтобы восстановить силы, иначе состояние "
 "продолжит ухудшаться. Скорее всего, уже в ближайшие несколько часов."
 
-#: effects.json
-msgid "Warp Nausea"
-msgstr "Тошнота от искажения"
-
-#. ~ Description of effect 'Warp Nausea'.
+#. ~ desc of effect 'skyisland_warpsickness'
 #: effects.json
 msgid ""
 "You've stayed earthside too long.  Your body aches and your senses are "
@@ -179,11 +191,7 @@ msgstr ""
 "можно скорее переместиться обратно на остров, иначе состояние будет только "
 "ухудшаться."
 
-#: effects.json
-msgid "Warp Debilitation"
-msgstr "Истощение от искажения"
-
-#. ~ Description of effect 'Warp Debilitation'.
+#. ~ desc of effect 'skyisland_warpsickness'
 #: effects.json
 msgid ""
 "You've stayed earthside WAY too long!  Your body barely responds and your "
@@ -197,11 +205,7 @@ msgstr ""
 "наполнен стекловолокном. Если хотите выжить, необходимо как можно скорее "
 "переместиться обратно на остров."
 
-#: effects.json
-msgid "Warp Necrosis"
-msgstr "Некроз от искажения"
-
-#. ~ Description of effect 'Warp Necrosis'.
+#. ~ desc of effect 'skyisland_warpsickness'
 #: effects.json
 msgid ""
 "The very fabric of your being is unraveling!  You're in dire straits.  You "
@@ -210,11 +214,7 @@ msgstr ""
 "Ваша сущность распадается! Вы на грани гибели. Необходимо НЕМЕДЛЕННО "
 "вернуться на свой остров-убежище!"
 
-#: effects.json
-msgid "Warp Disintegration!"
-msgstr "Распад от искажения!"
-
-#. ~ Description of effect 'Warp Disintegration!'.
+#. ~ desc of effect 'skyisland_warpsickness'
 #: effects.json
 msgid ""
 "You're going to die.  And if you weren't busy leaking blood out of every "
@@ -229,7 +229,7 @@ msgstr ""
 msgid "Disintegrating!"
 msgstr "Распад!"
 
-#. ~ Description of effect 'Disintegrating!'.
+#. ~ desc of effect 'skyisland_warpdisintegration'
 #: effects.json
 msgid "Prolonged warp is destroying you.  You're coming apart."
 msgstr ""
@@ -253,7 +253,7 @@ msgstr ""
 msgid "Warp Cloak"
 msgstr "Покров искажения"
 
-#. ~ Description of effect 'Warp Cloak'.
+#. ~ desc of effect 'skyisland_warpcloak'
 #: effects.json
 msgid ""
 "You are invisible and incorporeal for a brief time. Now's your chance to get"
@@ -281,7 +281,7 @@ msgstr "Покров искажения вот-вот рассеется."
 msgid "Warped Omniscience"
 msgstr "Всеведение искажения"
 
-#. ~ Description of effect 'Warped Omniscience'.
+#. ~ desc of effect 'skyisland_clairvoyance'
 #: effects.json
 msgid "Nothing escapes your sight."
 msgstr "Ничто не ускользает от вашего взгляда."
@@ -342,7 +342,7 @@ msgid ""
 msgstr ""
 "Вокруг листьев этого небольшого деревца мерцают фиолетово-синие огоньки. Новые побеги появляются буквально за секунды, словно при ускоренной съёмке, но ветвей почему-то никогда не становится слишком много. Дерево всегда сохраняет равновесие. Благодаря своей необычной природе оно легко передвигается, словно обычная мебель.\n"
 "\n"
-"Его сила позволяет создавать простые деревянные предметы из жетонов материалов через меню изготовления предметов. Одного такого дерева хватит на целую вечность."
+"Его сила позволяет получать древесное сырьё и заготовки из жетонов материалов через меню изготовления. Одного такого дерева хватит на целую вечность."
 
 #: furniture.json
 msgid "infinity stone"
@@ -1287,6 +1287,10 @@ msgstr ""
 "Подвал достиг максимального размера! Ваше убежище полностью обустроено."
 
 #: heart.lua
+msgid "Unknown"
+msgstr "Неизвестно"
+
+#: heart.lua
 #, c-format
 msgid "Warp Pulse Timing: %s"
 msgstr "Интервал между импульсами искажения: %s"
@@ -1369,7 +1373,7 @@ msgstr[0] "осколок искажения"
 msgstr[1] "осколка искажения"
 msgstr[2] "осколков искажения"
 
-#. ~ Description for {'str': 'warp shard', 'str_pl': 'warp shards'}
+#. ~ Description for {'str': 'warp shard'}
 #: items.json
 msgid ""
 "A small quantity of airy-thin material that resembles flaked obsidian. It "
@@ -1382,14 +1386,6 @@ msgstr ""
 "растворяется в воздухе. Эти осколки служат валютой на вашем острове-убежище."
 " Их можно обменять на ценные улучшения."
 
-#: items.json
-msgid "skyisland fake item"
-msgid_plural "skyisland fake items"
-msgstr[0] "фиктивный предмет небесного острова"
-msgstr[1] "фиктивных предмета небесного острова"
-msgstr[2] "фиктивных предметов небесного острова"
-
-#. ~ Description for {'str': 'skyisland fake item'}
 #: items.json
 msgid ""
 "Dummy item for Sky Island furniture. If you see this, then something went "
@@ -1405,7 +1401,7 @@ msgstr[0] "жетон материалов"
 msgstr[1] "жетона материалов"
 msgstr[2] "жетонов материалов"
 
-#. ~ Description for {'str': 'material token', 'str_pl': 'material tokens'}
+#. ~ Description for {'str': 'material token'}
 #: items.json
 msgid ""
 "A very tiny disc-shaped blue wafer. It seems to shift in your grasp, feeling"
@@ -1440,8 +1436,7 @@ msgstr[0] "искажённая грузовая упряжь"
 msgstr[1] "искажённые грузовые упряжи"
 msgstr[2] "искажённых грузовых упряжей"
 
-#. ~ Description for {'str': "warped hauler's harness", 'str_pl': "warped
-#. hauler's harnesses"}
+#. ~ Description for {'str': "warped hauler's harness"}
 #: items.json
 msgid ""
 "A looped pair of shimmering blue-black straps that can be worn over the "
@@ -1465,8 +1460,7 @@ msgstr[0] "искажённые семена травы"
 msgstr[1] "искажённые семена травы"
 msgstr[2] "искажённые семена травы"
 
-#. ~ Description for {'str': 'warped grass seeds', 'str_pl': 'warped grass
-#. seeds'}
+#. ~ Description for {'str_sp': 'warped grass seeds'}
 #: items.json
 msgid ""
 "While these are certainly imbued with warp, they don't seem to have any "
@@ -1485,7 +1479,7 @@ msgstr[0] "жетон вихря"
 msgstr[1] "жетона вихря"
 msgstr[2] "жетонов вихря"
 
-#. ~ Description for {'str': 'vortex token', 'str_pl': 'vortex tokens'}
+#. ~ Description for {'str': 'vortex token'}
 #: items.json
 msgid ""
 "This irregular purplish lump seems to slowly pull in air even while you hold"
@@ -1529,8 +1523,7 @@ msgstr[0] "копипластина автодока (неактивна)"
 msgstr[1] "копипластины автодока (неактивны)"
 msgstr[2] "копипластин автодока (неактивны)"
 
-#. ~ Description for {'str': 'Autodoc copyplate (inert)', 'str_pl': 'Autodoc
-#. copyplates (inert)'}
+#. ~ Description for {'str': 'Autodoc copyplate (inert)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the advanced "
@@ -1552,8 +1545,7 @@ msgstr[0] "копипластина автодока (активирована)"
 msgstr[1] "копипластины автодока (активированы)"
 msgstr[2] "копипластин автодока (активированы)"
 
-#. ~ Description for {'str': 'Autodoc copyplate (activated)', 'str_pl':
-#. 'Autodoc copyplates (activated)'}
+#. ~ Description for {'str': 'Autodoc copyplate (activated)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the advanced "
@@ -1576,8 +1568,7 @@ msgstr[0] "копипластина кушетки автодока (неакт�
 msgstr[1] "копипластины кушетки автодока (неактивны)"
 msgstr[2] "копипластин кушетки автодока (неактивны)"
 
-#. ~ Description for {'str': 'Autodoc Couch copyplate (inert)', 'str_pl':
-#. 'Autodoc Couch copyplates (inert)'}
+#. ~ Description for {'str': 'Autodoc Couch copyplate (inert)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the patient "
@@ -1598,8 +1589,7 @@ msgstr[0] "копипластина кушетки автодока (актив�
 msgstr[1] "копипластины кушетки автодока (активированы)"
 msgstr[2] "копипластин кушетки автодока (активированы)"
 
-#. ~ Description for {'str': 'Autodoc Couch copyplate (activated)', 'str_pl':
-#. 'Autodoc Couch copyplates (activated)'}
+#. ~ Description for {'str': 'Autodoc Couch copyplate (activated)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the patient "
@@ -1619,8 +1609,7 @@ msgstr[0] "копипластина нанофабрикатора (неакти
 msgstr[1] "копипластины нанофабрикатора (неактивны)"
 msgstr[2] "копипластин нанофабрикатора (неактивны)"
 
-#. ~ Description for {'str': 'Nanofabricator copyplate (inert)', 'str_pl':
-#. 'Nanofabricator copyplates (inert)'}
+#. ~ Description for {'str': 'Nanofabricator copyplate (inert)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the main unit of"
@@ -1640,8 +1629,7 @@ msgstr[0] "копипластина нанофабрикатора (активи
 msgstr[1] "копипластины нанофабрикатора (активированы)"
 msgstr[2] "копипластин нанофабрикатора (активированы)"
 
-#. ~ Description for {'str': 'Nanofabricator copyplate (activated)', 'str_pl':
-#. 'Nanofabricator copyplates (activated)'}
+#. ~ Description for {'str': 'Nanofabricator copyplate (activated)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the main unit of"
@@ -1661,8 +1649,7 @@ msgstr[0] "копипластина консоли нанофабрикатор�
 msgstr[1] "копипластины консоли нанофабрикатора (неактивны)"
 msgstr[2] "копипластин консоли нанофабрикатора (неактивны)"
 
-#. ~ Description for {'str': 'Nanofabricator Control Panel copyplate (inert)',
-#. 'str_pl': 'Nanofabricator Control Panel copyplates (inert)'}
+#. ~ Description for {'str': 'Nanofabricator Control Panel copyplate (inert)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the control "
@@ -1683,7 +1670,6 @@ msgstr[1] "копипластины консоли нанофабрикатор�
 msgstr[2] "копипластин консоли нанофабрикатора (активированы)"
 
 #. ~ Description for {'str': 'Nanofabricator Control Panel copyplate
-#. (activated)', 'str_pl': 'Nanofabricator Control Panel copyplates
 #. (activated)'}
 #: items.json
 msgid ""
@@ -1704,8 +1690,7 @@ msgstr[0] "копипластина химического парофазног�
 msgstr[1] "копипластины химического парофазного осадителя (неактивны)"
 msgstr[2] "копипластин химического парофазного осадителя (неактивны)"
 
-#. ~ Description for {'str': 'CVD Machine copyplate (inert)', 'str_pl': 'CVD
-#. Machine copyplates (inert)'}
+#. ~ Description for {'str': 'CVD Machine copyplate (inert)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the main unit of"
@@ -1725,8 +1710,7 @@ msgstr[0] "копипластина химического парофазног�
 msgstr[1] "копипластины химического парофазного осадителя (активированы)"
 msgstr[2] "копипластин химического парофазного осадителя (активированы)"
 
-#. ~ Description for {'str': 'CVD Machine copyplate (activated)', 'str_pl':
-#. 'CVD Machine copyplates (activated)'}
+#. ~ Description for {'str': 'CVD Machine copyplate (activated)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the main unit of"
@@ -1746,8 +1730,7 @@ msgstr[0] "копипластина консоли химического пар
 msgstr[1] "копипластины консоли химического парофазного осадителя (неактивны)"
 msgstr[2] "копипластин консоли химического парофазного осадителя (неактивны)"
 
-#. ~ Description for {'str': 'CVD Control Panel copyplate (inert)', 'str_pl':
-#. 'CVD Control Panel copyplates (inert)'}
+#. ~ Description for {'str': 'CVD Control Panel copyplate (inert)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the control "
@@ -1770,8 +1753,7 @@ msgstr[1] ""
 msgstr[2] ""
 "копипластин консоли химического парофазного осадителя (активированы)"
 
-#. ~ Description for {'str': 'CVD Control Panel copyplate (activated)',
-#. 'str_pl': 'CVD Control Panel copyplates (activated)'}
+#. ~ Description for {'str': 'CVD Control Panel copyplate (activated)'}
 #: items.json
 msgid ""
 "This strange obsidian-colored plate is capable of mimicking the control "
@@ -2124,7 +2106,7 @@ msgstr ""
 msgid "Higher Viewpoint"
 msgid_plural "Higher Viewpoints"
 msgstr[0] "высшая точка обзора"
-msgstr[1] "высших точки обзора"
+msgstr[1] "высшие точки обзора"
 msgstr[2] "высших точек обзора"
 
 #. ~ Description for {'str': 'Higher Viewpoint'}
@@ -2502,7 +2484,7 @@ msgstr[0] "жетон плота искажения"
 msgstr[1] "жетона плота искажения"
 msgstr[2] "жетонов плота искажения"
 
-#. ~ Use action unfold_msg for {'str': 'warp raft token'}.
+#. ~ Use action unfold_vehicle.unfold_msg for {'str': 'warp raft token'}.
 #: items.json
 msgid ""
 "The token dissolves into swirling energy that coalesces into a shimmering "
@@ -2770,6 +2752,35 @@ msgstr "Копипластина гудит и светится, впитыва�
 msgid "You now have an activated %s copyplate."
 msgstr "Теперь у вас есть активированная копипластина для устройства (%s)."
 
+#: iuse.lua
+msgid "Autodoc"
+msgstr "Автодок"
+
+#: iuse.lua
+#| msgid "Imprint on Autodoc Couch"
+msgid "Autodoc Couch"
+msgstr "Кушетка автодока"
+
+#: iuse.lua
+#| msgid "Imprint on Nanofabricator"
+msgid "Nanofabricator"
+msgstr "Нанофабрикатор"
+
+#: iuse.lua
+#| msgid "Imprint on Nanofabricator Control Panel"
+msgid "Nanofabricator Control Panel"
+msgstr "Консоль нанофабрикатора"
+
+#: iuse.lua
+#| msgid "Imprint on CVD Machine"
+msgid "CVD Machine"
+msgstr "Химический парофазный осадитель"
+
+#: iuse.lua
+#| msgid "Imprint on CVD Control Panel"
+msgid "CVD Control Panel"
+msgstr "Консоль химического парофазного осадителя"
+
 #: main.lua
 msgid "The quickheal pill only works on your sanctuary island."
 msgstr ""
@@ -2827,6 +2838,10 @@ msgid ""
 msgstr ""
 "Фокус вспыхивает ослепительным светом. Вы чувствуете, как неведомая сила "
 "тянет вас в небо..."
+
+#: main.lua
+msgid "A warp shard crumbles to dust as the focus activates!"
+msgstr "При активации фокуса осколок искажения рассыпается в пыль!"
 
 #: main.lua
 msgid ""
@@ -3153,6 +3168,11 @@ msgstr ""
 "от большинства подобных заданий, специальной охраны здесь нет. Награда "
 "скромная, зато и риск невелик."
 
+#. ~ Mapgen creature name
+#: missions.json
+msgid "Marked"
+msgstr "Меченый"
+
 #: missions.json
 msgid "RAID: Clear zombie cluster"
 msgstr "ВЫЛАЗКА: уничтожить скопление зомби"
@@ -3428,7 +3448,7 @@ msgstr "Задание выполнено: %s"
 
 #: modinfo.json scenario.json
 msgid "Sky Island"
-msgstr "Небесный остров "
+msgstr "Небесный остров"
 
 #. ~ Description for Sky Island
 #: modinfo.json
@@ -3439,19 +3459,6 @@ msgstr ""
 "Версия мода Sky Island для «Катаклизм: Светлые Ночи». Игровой процесс "
 "построен вокруг вылазок и вдохновлён Escape from Tarkov и Dark & Darker. Это"
 " очень ранняя версия мода!"
-
-#: mutations.json
-msgid "Warp Flight"
-msgstr "Полёт искажения"
-
-#. ~ Description for {'str': 'Warp Flight'}
-#: mutations.json
-msgid ""
-"Warp energy grants you the power of flight. This is a temporary effect from "
-"landing protection."
-msgstr ""
-"Энергия искажения дарует вам способность летать. Это временный эффект защиты"
-" при приземлении."
 
 #. ~ Crafting recipes category name
 #: recipe_categories.json
@@ -3478,19 +3485,19 @@ msgstr "УЛУЧШЕНИЯ"
 msgid "PROOFS"
 msgstr "ДОКАЗАТЕЛЬСТВА"
 
-#. ~ Name for scenario 'Sky Island Warper' for a male character
+#. ~ Scenario name for 'scenario_skyisland_warper'
 #: scenario.json
 msgctxt "scenario_male"
 msgid "Sky Island Warper"
 msgstr "Покоритель искажения"
 
-#. ~ Name for scenario 'Sky Island Warper' for a female character
+#. ~ Scenario name for 'scenario_skyisland_warper'
 #: scenario.json
 msgctxt "scenario_female"
 msgid "Sky Island Warper"
 msgstr "Покорительница искажения"
 
-#. ~ Description for scenario 'Sky Island Warper' for a male character.
+#. ~ Scenario description for 'scenario_skyisland_warper'
 #: scenario.json
 msgctxt "scen_desc_male"
 msgid ""
@@ -3510,7 +3517,7 @@ msgstr ""
 "вниз, собирай припасы и возвращайся со всем, что сможешь унести. Постепенно "
 "ты сможешь обустроить своё убежище и пополнить запасы."
 
-#. ~ Description for scenario 'Sky Island Warper' for a female character.
+#. ~ Scenario description for 'scenario_skyisland_warper'
 #: scenario.json
 msgctxt "scen_desc_female"
 msgid ""
@@ -3530,7 +3537,7 @@ msgstr ""
 "вниз, собирай припасы и возвращайся со всем, что сможешь унести. Постепенно "
 "ты сможешь обустроить своё убежище и пополнить запасы."
 
-#. ~ Starting location for scenario 'Sky Island Warper'.
+#. ~ Scenario start_name for 'scenario_skyisland_warper'
 #: scenario.json
 msgctxt "start_name"
 msgid "Sky Island"
@@ -3614,8 +3621,27 @@ msgstr ""
 "как выбраться!"
 
 #: teleport.lua
+#| msgid "ERROR: Could not determine position!"
+msgid "ERROR: Could not enter the Sky Island pocket dimension."
+msgstr "ОШИБКА: Не удалось попасть в карманное измерение небесного острова."
+
+#: teleport.lua
 msgid "You feel reality shift around you..."
 msgstr "Вы чувствуете, как реальность вокруг вас меняется..."
+
+#: teleport.lua
+#| msgid "ERROR: Could not determine position!"
+msgid "ERROR: Could not return to the Sky Island home dimension."
+msgstr "ОШИБКА: Не удалось вернуться в домашнее измерение небесного острова."
+
+#: teleport.lua
+#, c-format
+msgid ""
+"ERROR: Could not delete expedition dimension '%s'. It will be retried before"
+" the next expedition."
+msgstr ""
+"ОШИБКА: Не удалось удалить измерение экспедиции «%s». Попытка будет "
+"повторена перед следующей экспедицией."
 
 #: teleport.lua
 msgid "Warp energy lifts you into the air!"
@@ -3625,11 +3651,6 @@ msgstr "Энергия искажения поднимает вас в возд�
 msgid "Your feet touch the ground as the warp flight fades."
 msgstr ""
 "Когда полёт под действием искажения заканчивается, ваши ноги касаются земли."
-
-#: teleport.lua
-#, c-format
-msgid "%d island animal%s returned home safely!"
-msgstr "Животные с острова (%d%s) благополучно вернулись домой!"
 
 #: teleport.lua
 #, c-format
@@ -3687,6 +3708,21 @@ msgstr "Начинается перемещение: %s → %s..."
 #: teleport.lua
 msgid "Searching for suitable location..."
 msgstr "Поиск подходящего места..."
+
+#: teleport.lua
+msgid "WARNING: Could not create a fresh expedition dimension. Aborting warp."
+msgstr ""
+"ВНИМАНИЕ: Не удалось создать новое измерение экспедиции. Перемещение "
+"отменено."
+
+#: teleport.lua
+msgid "Your Labs Catalyst is returned."
+msgstr "Катализатор лаборатории возвращён."
+
+#: teleport.lua
+msgid "WARNING: Could not find suitable terrain. Aborting warp."
+msgstr ""
+"ВНИМАНИЕ: Не удалось найти подходящую местность. Перемещение отменено."
 
 #: teleport.lua
 #, c-format
@@ -4045,6 +4081,19 @@ msgid "warp raft"
 msgstr "плот искажения"
 
 #: warp_sickness.lua
+#| msgid "Warp Disintegration!"
+msgid "Warp Disintegration"
+msgstr "Распад от искажения"
+
+#: warp_sickness.lua
+msgid "Stable"
+msgstr "Стабильно"
+
+#: warp_sickness.lua
+msgid "CRITICAL"
+msgstr "КРИТИЧЕСКОЕ СОСТОЯНИЕ"
+
+#: warp_sickness.lua
 msgid ""
 "<color_light_red>[Warp Pulse] WARNING: This is your last safe pulse! The "
 "next pulse will begin warp sickness.</color>"
@@ -4121,20 +4170,15 @@ msgstr ""
 
 #: warp_sickness.lua
 #, c-format
+#| msgid ""
+#| "<color_red>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
+#| "disintegration!</color>"
 msgid ""
-"<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to "
+"<color_yellow>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
 "disintegration.</color>"
 msgstr ""
-"<color_light_red>[Импульс искажения] СОСТОЯНИЕ: %s (%d/6). Характеристики: "
-"-%d. До распада осталось %d импульсов.</color>"
-
-#: warp_sickness.lua
-msgid ""
-"Consider returning home soon.\n"
-"\n"
-msgstr ""
-"Лучше вскоре вернуться домой.\n"
-"\n"
+"<color_yellow>[Импульс искажения] %s (%d/6). Характеристики: -%d. Импульсов "
+"до распада: %d.</color>"
 
 #: warp_sickness.lua
 #, c-format
@@ -4151,8 +4195,11 @@ msgid "Stats: -%d to all\n"
 msgstr "Все характеристики: -%d\n"
 
 #: warp_sickness.lua
-msgid "The warp sickness grows stronger.\n"
-msgstr "Недомогание от искажения усиливается.\n"
+#| msgid ""
+#| "The warp begins to tug at you...\n"
+#| "\n"
+msgid "The warp begins to affect you.\n"
+msgstr "Искажение начинает влиять на вас.\n"
 
 #: warp_sickness.lua
 #, c-format
@@ -4166,11 +4213,32 @@ msgstr ""
 #: warp_sickness.lua
 #, c-format
 msgid ""
+"<color_light_red>[Warp Pulse] STATUS: %s (%d/6). -%d stats. %d pulses to "
+"disintegration.</color>"
+msgstr ""
+"<color_light_red>[Импульс искажения] СОСТОЯНИЕ: %s (%d/6). Характеристики: "
+"-%d. Импульсов до распада: %d.</color>"
+
+#: warp_sickness.lua
+msgid ""
+"Consider returning home soon.\n"
+"\n"
+msgstr ""
+"Лучше вскоре вернуться домой.\n"
+"\n"
+
+#: warp_sickness.lua
+msgid "The warp sickness grows stronger.\n"
+msgstr "Недомогание от искажения усиливается.\n"
+
+#: warp_sickness.lua
+#, c-format
+msgid ""
 "<color_red>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
 "disintegration!</color>"
 msgstr ""
-"<color_red>[Импульс искажения] %s (%d/6). Характеристики: -%d. До распада "
-"осталось %d импульсов!</color>"
+"<color_red>[Импульс искажения] %s (%d/6). Характеристики: -%d. Импульсов до "
+"распада: %d!</color>"
 
 #: warp_sickness.lua
 msgid ""
@@ -4215,3 +4283,23 @@ msgid ""
 msgstr ""
 "!!! РАСПАД ОТ ИСКАЖЕНИЯ !!!\n"
 "\n"
+
+#~ msgid "skyisland fake item"
+#~ msgid_plural "skyisland fake items"
+#~ msgstr[0] "фиктивный предмет небесного острова"
+#~ msgstr[1] "фиктивных предмета небесного острова"
+#~ msgstr[2] "фиктивных предметов небесного острова"
+
+#~ msgid "Warp Flight"
+#~ msgstr "Полёт искажения"
+
+#~ msgid ""
+#~ "Warp energy grants you the power of flight. This is a temporary effect from "
+#~ "landing protection."
+#~ msgstr ""
+#~ "Энергия искажения дарует вам способность летать. Это временный эффект защиты"
+#~ " при приземлении."
+
+#, c-format
+#~ msgid "%d island animal%s returned home safely!"
+#~ msgstr "Животные с острова (%d%s) благополучно вернулись домой!"
