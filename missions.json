@@ -524,7 +524,7 @@
     "type": "mission_definition",
     "name": { "str": "RAID: Kill horde lord" },
     "goal": "MGOAL_KILL_MONSTERS",
-    "description": "A supremely powerful zombie has been found at a location where warp resonance is high. Be warned that it will be accompanied by an massive horde of weaker zombies! Destroy them all for a huge reward of warp shards.",
+    "description": "A supremely powerful zombie has been found at a location where warp resonance is high. Be warned that it will be accompanied by a massive horde of weaker zombies! Destroy them all for a huge reward of warp shards.",
     "difficulty": 0,
     "value": 0,
     "origins": [ "ORIGIN_GAME_START" ],
