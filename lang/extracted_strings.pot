@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CBN_Sky_Island\n"
-"POT-Creation-Date: 2026-11-13 19:38+0300\n"
+"POT-Creation-Date: 2026-11-22 16:11+0300\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -507,7 +507,7 @@ msgstr ""
 
 #: ./heart.lua ./items.json
 msgid "Scouting Lens"
-msgid_plural "Scouting Lenss"
+msgid_plural "Scouting Lenses"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -549,7 +549,7 @@ msgstr ""
 
 #: ./heart.lua ./items.json
 msgid "Warped Hourglass"
-msgid_plural "Warped Hourglasss"
+msgid_plural "Warped Hourglasses"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1601,11 +1601,12 @@ msgstr[1] ""
 
 #: ./items.json
 msgid "Proof of Determination"
-msgid_plural "Proof of Determinations"
+msgid_plural "Proofs of Determination"
 msgstr[0] ""
 msgstr[1] ""
 
-#. ~ Description for {'str': 'Proof of Determination'}
+#. ~ Description for {'str': 'Proof of Determination', 'str_pl': 'Proofs of
+#. Determination'}
 #: ./items.json
 msgid ""
 "A metaphysical artifact proving your determination to survive. Activate near"
@@ -1614,11 +1615,12 @@ msgstr ""
 
 #: ./items.json
 msgid "Proof of Mastery"
-msgid_plural "Proof of Masterys"
+msgid_plural "Proofs of Mastery"
 msgstr[0] ""
 msgstr[1] ""
 
-#. ~ Description for {'str': 'Proof of Mastery'}
+#. ~ Description for {'str': 'Proof of Mastery', 'str_pl': 'Proofs of
+#. Mastery'}
 #: ./items.json
 msgid ""
 "A metaphysical artifact proving your mastery of survival. Activate near the "
@@ -1661,7 +1663,7 @@ msgid ""
 " III: +3 total bonus grace pulses (11 total)."
 msgstr ""
 
-#. ~ Description for {'str': 'Scouting Lens'}
+#. ~ Description for {'str': 'Scouting Lens', 'str_pl': 'Scouting Lenses'}
 #: ./items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -1685,7 +1687,8 @@ msgid ""
 "Exits: Two return obelisks will spawn per expedition."
 msgstr ""
 
-#. ~ Description for {'str': 'Warped Hourglass'}
+#. ~ Description for {'str': 'Warped Hourglass', 'str_pl': 'Warped
+#. Hourglasses'}
 #: ./items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -1695,11 +1698,12 @@ msgstr ""
 
 #: ./items.json
 msgid "Watch of Flowing Time"
-msgid_plural "Watch of Flowing Times"
+msgid_plural "Watches of Flowing Time"
 msgstr[0] ""
 msgstr[1] ""
 
-#. ~ Description for {'str': 'Watch of Flowing Time'}
+#. ~ Description for {'str': 'Watch of Flowing Time', 'str_pl': 'Watches of
+#. Flowing Time'}
 #: ./items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -1767,11 +1771,12 @@ msgstr ""
 
 #: ./items.json
 msgid "All-Seeing Effigy"
-msgid_plural "All-Seeing Effigy"
+msgid_plural "All-Seeing Effigies"
 msgstr[0] ""
 msgstr[1] ""
 
-#. ~ Description for {'str_sp': 'All-Seeing Effigy'}
+#. ~ Description for {'str': 'All-Seeing Effigy', 'str_pl': 'All-Seeing
+#. Effigies'}
 #: ./items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -1868,11 +1873,11 @@ msgstr ""
 
 #: ./items.json
 msgid "Will of the Island"
-msgid_plural "Will of the Islands"
+msgid_plural "Will of the Island"
 msgstr[0] ""
 msgstr[1] ""
 
-#. ~ Description for {'str': 'Will of the Island'}
+#. ~ Description for {'str_sp': 'Will of the Island'}
 #: ./items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -1883,11 +1888,11 @@ msgstr ""
 
 #: ./items.json
 msgid "Vengeance of the Island"
-msgid_plural "Vengeance of the Islands"
+msgid_plural "Vengeance of the Island"
 msgstr[0] ""
 msgstr[1] ""
 
-#. ~ Description for {'str': 'Vengeance of the Island'}
+#. ~ Description for {'str_sp': 'Vengeance of the Island'}
 #: ./items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2072,8 +2077,8 @@ msgstr[1] ""
 #. ~ Description for {'str_sp': 'flagstone tokens'}
 #: ./items.json
 msgid ""
-"A group of small stone stones, rough to the touch. You can use them to "
-"transform a section of flooring into mortared flagstones."
+"A group of small stones, rough to the touch. You can use them to transform a"
+" section of flooring into mortared flagstones."
 msgstr ""
 
 #: ./items.json
@@ -2758,8 +2763,8 @@ msgstr ""
 #: ./missions.json
 msgid ""
 "A supremely powerful zombie has been found at a location where warp "
-"resonance is high. Be warned that it will be accompanied by an massive horde"
-" of weaker zombies! Destroy them all for a huge reward of warp shards."
+"resonance is high. Be warned that it will be accompanied by a massive horde "
+"of weaker zombies! Destroy them all for a huge reward of warp shards."
 msgstr ""
 
 #: ./missions.json

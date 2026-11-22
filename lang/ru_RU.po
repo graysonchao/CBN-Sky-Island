@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CBN_Sky_Island\n"
-"POT-Creation-Date: 2026-11-13 19:38+0300\n"
+"POT-Creation-Date: 2026-11-22 16:11+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: midgardormr <midgardormr@gmail.com>\n"
 "Language-Team: \n"
@@ -603,8 +603,10 @@ msgid "Reveal 3x3 area on landing"
 msgstr "Открывает область 3×3 при высадке"
 
 #: heart.lua items.json
+#| msgid "Scouting Lens"
+#| msgid_plural "Scouting Lenss"
 msgid "Scouting Lens"
-msgid_plural "Scouting Lenss"
+msgid_plural "Scouting Lenses"
 msgstr[0] "разведывательная линза"
 msgstr[1] "разведывательные линзы"
 msgstr[2] "разведывательных линз"
@@ -648,8 +650,10 @@ msgid "2x grace period, 125 token reward"
 msgstr "Удвоенный безопасный период, награда — 125 жетонов"
 
 #: heart.lua items.json
+#| msgid "Warped Hourglass"
+#| msgid_plural "Warped Hourglasss"
 msgid "Warped Hourglass"
-msgid_plural "Warped Hourglasss"
+msgid_plural "Warped Hourglasses"
 msgstr[0] "искажённые песочные часы"
 msgstr[1] "искажённых песочных часов"
 msgstr[2] "искажённых песочных часов"
@@ -1897,13 +1901,16 @@ msgstr[1] "ближайших источника бесконечной руды
 msgstr[2] "ближайших источников бесконечной руды"
 
 #: items.json
+#| msgid "Proof of Determination"
+#| msgid_plural "Proof of Determinations"
 msgid "Proof of Determination"
-msgid_plural "Proof of Determinations"
+msgid_plural "Proofs of Determination"
 msgstr[0] "доказательство решимости"
 msgstr[1] "доказательства решимости"
 msgstr[2] "доказательств решимости"
 
-#. ~ Description for {'str': 'Proof of Determination'}
+#. ~ Description for {'str': 'Proof of Determination', 'str_pl': 'Proofs of
+#. Determination'}
 #: items.json
 msgid ""
 "A metaphysical artifact proving your determination to survive. Activate near"
@@ -1913,13 +1920,16 @@ msgstr ""
 "его рядом с сердцем острова, чтобы повысить свой ранг."
 
 #: items.json
+#| msgid "Proof of Mastery"
+#| msgid_plural "Proof of Masterys"
 msgid "Proof of Mastery"
-msgid_plural "Proof of Masterys"
+msgid_plural "Proofs of Mastery"
 msgstr[0] "доказательство мастерства"
 msgstr[1] "доказательства мастерства"
 msgstr[2] "доказательств мастерства"
 
-#. ~ Description for {'str': 'Proof of Mastery'}
+#. ~ Description for {'str': 'Proof of Mastery', 'str_pl': 'Proofs of
+#. Mastery'}
 #: items.json
 msgid ""
 "A metaphysical artifact proving your mastery of survival. Activate near the "
@@ -1978,7 +1988,7 @@ msgstr ""
 "разблокировать «Устойчивость III»: суммарный бонус — +3 импульса безопасного"
 " периода (всего 11)."
 
-#. ~ Description for {'str': 'Scouting Lens'}
+#. ~ Description for {'str': 'Scouting Lens', 'str_pl': 'Scouting Lenses'}
 #: items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2014,7 +2024,8 @@ msgstr ""
 "разблокировать «Несколько выходов»: во время каждой экспедиции будут "
 "появляться два обелиска возвращения."
 
-#. ~ Description for {'str': 'Warped Hourglass'}
+#. ~ Description for {'str': 'Warped Hourglass', 'str_pl': 'Warped
+#. Hourglasses'}
 #: items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2027,13 +2038,16 @@ msgstr ""
 "125 жетонов."
 
 #: items.json
+#| msgid "Watch of Flowing Time"
+#| msgid_plural "Watch of Flowing Times"
 msgid "Watch of Flowing Time"
-msgid_plural "Watch of Flowing Times"
+msgid_plural "Watches of Flowing Time"
 msgstr[0] "часы текучего времени"
 msgstr[1] "часов текучего времени"
 msgstr[2] "часов текучего времени"
 
-#. ~ Description for {'str': 'Watch of Flowing Time'}
+#. ~ Description for {'str': 'Watch of Flowing Time', 'str_pl': 'Watches of
+#. Flowing Time'}
 #: items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2123,13 +2137,16 @@ msgstr ""
 "экспедиции вы будете видеть всё вокруг себя."
 
 #: items.json
+#| msgid "All-Seeing Effigy"
+#| msgid_plural "All-Seeing Effigy"
 msgid "All-Seeing Effigy"
-msgid_plural "All-Seeing Effigy"
+msgid_plural "All-Seeing Effigies"
 msgstr[0] "всевидящий идол"
 msgstr[1] "всевидящих идола"
 msgstr[2] "всевидящих идолов"
 
-#. ~ Description for {'str_sp': 'All-Seeing Effigy'}
+#. ~ Description for {'str': 'All-Seeing Effigy', 'str_pl': 'All-Seeing
+#. Effigies'}
 #: items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2258,13 +2275,15 @@ msgstr ""
 "дополнительные задания с повышенными наградами."
 
 #: items.json
+#| msgid "Will of the Island"
+#| msgid_plural "Will of the Islands"
 msgid "Will of the Island"
-msgid_plural "Will of the Islands"
+msgid_plural "Will of the Island"
 msgstr[0] "воля острова"
 msgstr[1] "воли острова"
 msgstr[2] "воль острова"
 
-#. ~ Description for {'str': 'Will of the Island'}
+#. ~ Description for {'str_sp': 'Will of the Island'}
 #: items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2278,13 +2297,15 @@ msgstr ""
 "дополнительные задания с самыми ценными наградами."
 
 #: items.json
+#| msgid "Vengeance of the Island"
+#| msgid_plural "Vengeance of the Islands"
 msgid "Vengeance of the Island"
-msgid_plural "Vengeance of the Islands"
+msgid_plural "Vengeance of the Island"
 msgstr[0] "месть острова"
 msgstr[1] "мести острова"
 msgstr[2] "местей острова"
 
-#. ~ Description for {'str': 'Vengeance of the Island'}
+#. ~ Description for {'str_sp': 'Vengeance of the Island'}
 #: items.json
 msgid ""
 "This strange metaphysical artifact will empower the island and unlock a "
@@ -2528,9 +2549,12 @@ msgstr[2] "жетонов каменного пола"
 
 #. ~ Description for {'str_sp': 'flagstone tokens'}
 #: items.json
+#| msgid ""
+#| "A group of small stone stones, rough to the touch. You can use them to "
+#| "transform a section of flooring into mortared flagstones."
 msgid ""
-"A group of small stone stones, rough to the touch. You can use them to "
-"transform a section of flooring into mortared flagstones."
+"A group of small stones, rough to the touch. You can use them to transform a"
+" section of flooring into mortared flagstones."
 msgstr ""
 "Набор небольших шероховатых камешков. С их помощью можно превратить участок "
 "пола в настил из каменных плит, скреплённых раствором."
@@ -2757,27 +2781,22 @@ msgid "Autodoc"
 msgstr "Автодок"
 
 #: iuse.lua
-#| msgid "Imprint on Autodoc Couch"
 msgid "Autodoc Couch"
 msgstr "Кушетка автодока"
 
 #: iuse.lua
-#| msgid "Imprint on Nanofabricator"
 msgid "Nanofabricator"
 msgstr "Нанофабрикатор"
 
 #: iuse.lua
-#| msgid "Imprint on Nanofabricator Control Panel"
 msgid "Nanofabricator Control Panel"
 msgstr "Консоль нанофабрикатора"
 
 #: iuse.lua
-#| msgid "Imprint on CVD Machine"
 msgid "CVD Machine"
 msgstr "Химический парофазный осадитель"
 
 #: iuse.lua
-#| msgid "Imprint on CVD Control Panel"
 msgid "CVD Control Panel"
 msgstr "Консоль химического парофазного осадителя"
 
@@ -3305,10 +3324,14 @@ msgstr "ВЫЛАЗКА: убить повелителя орды"
 
 #. ~ Description for mission '{'str': 'RAID: Kill horde lord'}'
 #: missions.json
+#| msgid ""
+#| "A supremely powerful zombie has been found at a location where warp "
+#| "resonance is high. Be warned that it will be accompanied by an massive horde"
+#| " of weaker zombies! Destroy them all for a huge reward of warp shards."
 msgid ""
 "A supremely powerful zombie has been found at a location where warp "
-"resonance is high. Be warned that it will be accompanied by an massive horde"
-" of weaker zombies! Destroy them all for a huge reward of warp shards."
+"resonance is high. Be warned that it will be accompanied by a massive horde "
+"of weaker zombies! Destroy them all for a huge reward of warp shards."
 msgstr ""
 "В месте с сильным резонансом искажения обнаружен невероятно могущественный "
 "зомби. Осторожно: его сопровождает огромная орда более слабых зомби! "
@@ -3621,7 +3644,6 @@ msgstr ""
 "как выбраться!"
 
 #: teleport.lua
-#| msgid "ERROR: Could not determine position!"
 msgid "ERROR: Could not enter the Sky Island pocket dimension."
 msgstr "ОШИБКА: Не удалось попасть в карманное измерение небесного острова."
 
@@ -3630,7 +3652,6 @@ msgid "You feel reality shift around you..."
 msgstr "Вы чувствуете, как реальность вокруг вас меняется..."
 
 #: teleport.lua
-#| msgid "ERROR: Could not determine position!"
 msgid "ERROR: Could not return to the Sky Island home dimension."
 msgstr "ОШИБКА: Не удалось вернуться в домашнее измерение небесного острова."
 
@@ -4081,7 +4102,6 @@ msgid "warp raft"
 msgstr "плот искажения"
 
 #: warp_sickness.lua
-#| msgid "Warp Disintegration!"
 msgid "Warp Disintegration"
 msgstr "Распад от искажения"
 
@@ -4170,9 +4190,6 @@ msgstr ""
 
 #: warp_sickness.lua
 #, c-format
-#| msgid ""
-#| "<color_red>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
-#| "disintegration!</color>"
 msgid ""
 "<color_yellow>[Warp Pulse] %s (%d/6). -%d stats. %d pulses to "
 "disintegration.</color>"
@@ -4195,9 +4212,6 @@ msgid "Stats: -%d to all\n"
 msgstr "Все характеристики: -%d\n"
 
 #: warp_sickness.lua
-#| msgid ""
-#| "The warp begins to tug at you...\n"
-#| "\n"
 msgid "The warp begins to affect you.\n"
 msgstr "Искажение начинает влиять на вас.\n"
 
